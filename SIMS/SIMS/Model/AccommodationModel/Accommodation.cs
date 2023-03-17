@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SIMS.Serializer;
 
-namespace SIMS.Model.AccommondationModel
+namespace SIMS.Model.AccommodationModel
 {
     public enum Type
     {
@@ -13,7 +13,7 @@ namespace SIMS.Model.AccommondationModel
         house,
         hut
     }
-    public class Accommondation : ISerializable
+    public class Accommodation : ISerializable
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -24,14 +24,15 @@ namespace SIMS.Model.AccommondationModel
         public int CancelDaysNumber { get; set; }
         public string PictureUrl { get; set; }
 
+        public User User { get; set; }
+
         public Accommodation()
         {
 
         }
 
-        public Accommodation(int id, string name, string location, Type acType, int maxGNum, int minDays, int cancelDays, string picture)
+        public Accommodation(string name, string location, Type acType, int maxGNum, int minDays, int cancelDays, string picture, User user)
         {
-            Id = id;
             Name = name;
             Location = location;
             Type = acType;
@@ -39,6 +40,7 @@ namespace SIMS.Model.AccommondationModel
             MinBookingDays = minDays;
             CancelDaysNumber = cancelDays;
             PictureUrl = picture;
+            User = user;
         }
 
         public string[] ToCSV()
@@ -53,6 +55,7 @@ namespace SIMS.Model.AccommondationModel
              MinBookingDays.ToString(),
              CancelDaysNumber.ToString(),
              PictureUrl,
+             User.Id.ToString(),
             };
             return csvValues;
         }
@@ -67,6 +70,7 @@ namespace SIMS.Model.AccommondationModel
             MinBookingDays = Convert.ToInt32(values[5]);
             CancelDaysNumber = Convert.ToInt32(values[6]);
             PictureUrl = values[7];
+            User = new User() { Id = Convert.ToInt32(values[8]) };
         }
     }
 }
