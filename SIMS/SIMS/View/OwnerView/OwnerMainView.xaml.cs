@@ -47,12 +47,12 @@ namespace SIMS.View.OwnerView
         }
 
         private void ShowUpdateAccommodationForm(object sender, RoutedEventArgs e)
-        {
+        {/*
             if (SelectedAccommodation != null)
             {
                 AccommondationRegistration updateAccommondationForm = new AccommondationRegistration(SelectedAccommodation, LoggedInUser);
                 updateAccommondationForm.Show();
-            }
+            }*/
         }
 
         private void DeleteAccommodationHandler(object sender, RoutedEventArgs e)

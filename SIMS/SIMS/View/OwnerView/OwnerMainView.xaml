@@ -17,18 +17,18 @@
         
         <ToolBar Grid.Row="0" Height="34">
             <Button Click="ShowCreateAccommodationForm" Margin="0">
-                <Image Source="../../Resources/Assets/add.png" Height="15" Width="15"/>
+                <Image Source="/View/OwnerView/add.png" Height="15" Width="15"/>
             </Button>
             <Button Click="ShowUpdateAccommodationForm" Margin="0">
-                <Image Source="../../Resources/Assets/pencil.png" Height="15" Width="15"/>
+                <Image Source="/View/OwnerView/pencil.png" Height="15" Width="15"/>
             </Button>
             <Button Click="DeleteAccommodationHandler" Margin="0">
-                <Image Source="../../Resources/Assets/trash-bin.png" Height="15" Width="15"/>
+                <Image Source="/View/OwnerView/trash-bin.png" Height="15" Width="15"/>
             </Button>
 
             <TextBox Width="100" HorizontalAlignment="Right" Text="{Binding Path=KontentPretrage, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <Button>
-                <Image Source="../../Resources/Assets/search.png" Height="15" Width="15"/>
+                <Image Source="/View/OwnerView/search.png" Height="15" Width="15"/>
             </Button>
 
         </ToolBar>
