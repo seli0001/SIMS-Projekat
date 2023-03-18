@@ -1,5 +1,6 @@
 ﻿using SIMS.Model;
 using SIMS.Repository;
+using SIMS.View.Guest2View;
 using SIMS.View.GuideView;
 using System;
 using System.Collections.Generic;
@@ -47,7 +48,9 @@ namespace SIMS
                     }
                     else if (user.Role == ROLE.Guest2)
                     {
-                        MessageBox.Show("Guest2");
+                        MainGuest2View mainGuest2View = new MainGuest2View();
+                        mainGuest2View.Show();
+                        Close();
                     }
                     else if (user.Role == ROLE.Guide)
                     {
