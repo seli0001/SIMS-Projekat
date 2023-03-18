@@ -8,42 +8,67 @@ using System.Threading.Tasks;
 
 namespace SIMS.Repository.GuideRepository
 {
-    class CheckPointRepository
+    class CheckpointRepository
     {
         private const string filePath = "../../../../SIMS/Resources/Data/CheckPoints.csv";
-        private readonly Serializer<CheckPoint> serializer;
+        private readonly Serializer<Checkpoint> serializer;
 
-        public CheckPointRepository()
+        public CheckpointRepository()
         {
-            serializer = new Serializer<CheckPoint>();
+            serializer = new Serializer<Checkpoint>();
         }
         
-        public List<CheckPoint> GetAll()
+        public int GetNextId(List<Checkpoint> checkpoints)
+        {
+            if(checkpoints.Count < 1)
+            {
+                return 0;
+            }
+            return checkpoints.Max(checkPoint => checkPoint.Id) + 1;
+        }
+        
+        public List<Checkpoint> GetAll()
         {
             return serializer.FromCSV(filePath);
         }
         
-        public List<CheckPoint> GetByTourId(int tourId)
+        public List<Checkpoint> GetByTourId(int tourId)
         {
-            List<CheckPoint> checkPoints = GetAll();
-            return checkPoints.Where(checkPoint => checkPoint.Tour.Id == tourId).ToList();
+            List<Checkpoint> checkpoints = GetAll();
+            return checkpoints.Where(checkPoint => checkPoint.Tour.Id == tourId).ToList();
         }
         
-        public void Save(CheckPoint checkPoint)
+        public void Save(Checkpoint checkpoint)
         {
-            List<CheckPoint> checkPoints = GetAll();
-            if (checkPoints == null)
+            List<Checkpoint> checkpoints = GetAll();
+            checkpoint.Id = GetNextId(checkpoints);
+
+            checkpoints.Add(checkpoint);
+            serializer.ToCSV(filePath, checkpoints);
+        }
+        
+        public void SaveAll(List<Checkpoint> checkpoints)
+        {
+            List<Checkpoint> allCheckpoints = GetAll();
+            int id = 0;
+            if (allCheckpoints != null)
             {
-                checkPoints = new List<CheckPoint>();
-                checkPoint.Id = 0;
+                id = allCheckpoints.Max(checkPoint => checkPoint.Id) + 1;
             }
             else
             {
-                checkPoint.Id = checkPoints.Max(checkPoint => checkPoint.Id) + 1;
+                allCheckpoints = new List<Checkpoint>();
             }
-
-            checkPoints.Add(checkPoint);
-            serializer.ToCSV(filePath, checkPoints);
+            
+            foreach (Checkpoint checkpoint in checkpoints)
+            {
+                checkpoint.Id = id;
+                allCheckpoints.Add(checkpoint);
+                id++;
+            }
+            
+            serializer.ToCSV(filePath, allCheckpoints);
         }
+        
     }
 }

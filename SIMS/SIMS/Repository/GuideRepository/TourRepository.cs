@@ -16,17 +16,26 @@ namespace SIMS.Repository.GuideRepository
 
         private readonly StartTimeRepository startTimeRepository;
         private readonly ImageRepository imageRepository;
-        private readonly CheckPointRepository checkPointRepository;
+        private readonly CheckpointRepository checkpointRepository;
         public TourRepository()
         {
             serializer = new Serializer<Tour>();
             locationRepository = new LocationRepository();
             startTimeRepository = new StartTimeRepository();
             imageRepository = new ImageRepository();
-            checkPointRepository = new CheckPointRepository();
+            checkpointRepository = new CheckpointRepository();
+        }
+        
+        public int GetNextId(List<Tour> tours)
+        {
+            if (tours.Count < 1)
+            {
+                return 0;
+            } 
+            return tours.Max(tour => tour.Id) + 1;
         }
 
-        public Tour GetTourById(int id)
+        public Tour GetById(int id)
         {
             List<Tour> tours = GetAll();
             Tour tour = tours.FirstOrDefault(tour => tour.Id == id);
@@ -34,7 +43,7 @@ namespace SIMS.Repository.GuideRepository
                 tour.Location = locationRepository.GetById(tour.Location.Id);
                 tour.StartTime = startTimeRepository.GetById(tour.StartTime.Id);
                 tour.Images = imageRepository.GetByTourId(tour.Id);
-                tour.CheckPoints = checkPointRepository.GetByTourId(tour.Id);
+                tour.Checkpoints = checkpointRepository.GetByTourId(tour.Id);
             }
 
             return tour;
@@ -48,7 +57,7 @@ namespace SIMS.Repository.GuideRepository
                 tour.Location = locationRepository.GetById(tour.Location.Id);
                 tour.StartTime = startTimeRepository.GetById(tour.StartTime.Id);
                 tour.Images = imageRepository.GetByTourId(tour.Id);
-                tour.CheckPoints = checkPointRepository.GetByTourId(tour.Id);
+                tour.Checkpoints = checkpointRepository.GetByTourId(tour.Id);
             }
 
             return tours;
@@ -57,16 +66,22 @@ namespace SIMS.Repository.GuideRepository
         public void Save(Tour tour)
         {
             List<Tour> tours = GetAll();
-            if(tours == null)
+            tour.Id = GetNextId(tours);
+            
+            foreach (var image in tour.Images)
             {
-                tours = new List<Tour>();
-                tour.Id = 0;
+                image.Tour = tour;
             }
-            else
+            foreach (var checkpoint in tour.Checkpoints)
             {
-                tour.Id = tours.Max(tour => tour.Id) + 1;
+                checkpoint.Tour = tour;
             }
-
+            
+            locationRepository.Save(tour.Location);
+            startTimeRepository.Save(tour.StartTime);
+            imageRepository.SaveAll(tour.Images);
+            checkpointRepository.SaveAll(tour.Checkpoints);
+            
             tours.Add(tour);
             serializer.ToCSV( filePath, tours);
         }

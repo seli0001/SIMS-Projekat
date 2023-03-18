@@ -17,6 +17,15 @@ namespace SIMS.Repository.GuideRepository
         {
             serializer = new Serializer<Image>();
         }
+        
+        public int GetNextId(List<Image> images)
+        {
+            if (images.Count < 1)
+            {
+                return 0;
+            }
+            return images.Max(image => image.Id) + 1;
+        }
 
         public List<Image> GetAll()
         {
@@ -32,18 +41,24 @@ namespace SIMS.Repository.GuideRepository
         public void Save(Image image)
         {
             List<Image> images = GetAll();
-            if (images == null)
-            {
-                images = new List<Image>();
-                image.Id = 0;
-            }
-            else
-            {
-                image.Id = images.Max(img => img.Id) + 1;
-            }
+            image.Id = GetNextId(images);
 
             images.Add(image);
             serializer.ToCSV(filePath, images);
+        }
+        
+        public void SaveAll(List<Image> newImages)
+        {
+            List<Image> allImages = GetAll();
+            int id = GetNextId(allImages);
+
+            foreach (var image in newImages)
+            {
+                image.Id = id;
+                allImages.Add(image);
+                id++;
+            }
+            serializer.ToCSV(filePath, allImages);
         }
     }
 }

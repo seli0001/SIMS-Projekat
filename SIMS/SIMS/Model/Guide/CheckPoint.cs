@@ -1,19 +1,20 @@
 using SIMS.Serializer;
+using System.ComponentModel;
 
 namespace SIMS.Model.Guide
 {
-    public class CheckPoint : ISerializable
+    public class Checkpoint : ISerializable
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public Tour Tour { get; set; }
 
-        public CheckPoint()
+        public Checkpoint()
         {
 
         }
 
-        public CheckPoint(int id, string name)
+        public Checkpoint(int id, string name)
         {
             Id = id;
             Name = name;

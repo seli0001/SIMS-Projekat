@@ -18,6 +18,15 @@ namespace SIMS.Repository.GuideRepository
             serializer = new Serializer<Location>();
         }
         
+        public int GetNextId(List<Location> locations)
+        {
+            if (locations.Count < 1)
+            {
+                return 0;
+            } 
+            return locations.Max(location => location.Id) + 1;
+        }
+        
         public Location GetById(int id)
         {
             List<Location> locations = GetAll();
@@ -32,15 +41,7 @@ namespace SIMS.Repository.GuideRepository
         public void Save(Location location)
         {
             List<Location> locations = GetAll();
-            if (locations == null)
-            {
-                locations = new List<Location>();
-                location.Id = 0;
-            }
-            else
-            {
-                location.Id = locations.Max(loc => loc.Id) + 1;
-            }
+            location.Id = GetNextId(locations);
             
             locations.Add(location);
             serializer.ToCSV(filePath, locations);

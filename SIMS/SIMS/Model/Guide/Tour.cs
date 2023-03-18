@@ -1,13 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using SIMS.Serializer;
 
 namespace SIMS.Model.Guide
 {
-    public class Tour : ISerializable
+    public class Tour : ISerializable, INotifyPropertyChanged
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -18,11 +20,20 @@ namespace SIMS.Model.Guide
         public StartTime StartTime { get; set; }
         public Location Location { get; set; }
         public List<Image> Images { get; set; }
-        public List<CheckPoint> CheckPoints { get; set; }
+        public List<Checkpoint> Checkpoints { get; set; }
 
         public Tour()
         {
+            StartTime = new StartTime();
+            Location = new Location();
+            Images = new List<Image>();
+            Checkpoints = new List<Checkpoint>();
+        }
 
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
         public string[] ToCSV()
@@ -52,5 +63,7 @@ namespace SIMS.Model.Guide
             StartTime = new StartTime() { Id = int.Parse(csvValues[6]) };
             Location = new Location() { Id = int.Parse(csvValues[7]) };
         }
+
+
     }
 }

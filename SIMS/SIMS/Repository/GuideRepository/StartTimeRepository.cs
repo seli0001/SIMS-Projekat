@@ -17,6 +17,15 @@ namespace SIMS.Repository.GuideRepository
         {
             serializer = new Serializer<StartTime>();
         }
+        
+        public int GetNextId(List<StartTime> startTimes)
+        {
+            if (startTimes.Count < 1)
+            {
+                return 0;
+            } 
+            return startTimes.Max(startTime => startTime.Id) + 1;
+        }
 
         public List<StartTime> GetAll()
         {
@@ -25,22 +34,14 @@ namespace SIMS.Repository.GuideRepository
         
         public StartTime GetById(int id)
         {
-            List<StartTime> startTimes = GetAllStartTimes();
+            List<StartTime> startTimes = GetAll();
             return startTimes.FirstOrDefault(startTime => startTime.Id == id);
         }
         
         public void Save(StartTime startTime)
         {
-            List<StartTime> startTimes = GetAllStartTimes();
-            if (startTimes == null)
-            {
-                startTimes = new List<StartTime>();
-                startTime.Id = 0;
-            }
-            else
-            {
-                startTime = startTimes.Max(time => time.Id) + 1;
-            }
+            List<StartTime> startTimes = GetAll();
+            startTime.Id = GetNextId(startTimes);
             
             startTimes.Add(startTime);
             serializer.ToCSV( filePath, startTimes);
