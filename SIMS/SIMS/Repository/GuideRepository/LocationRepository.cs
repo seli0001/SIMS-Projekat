@@ -10,12 +10,12 @@ namespace SIMS.Repository.GuideRepository
 {
     class LocationRepository
     {
-        private const string filePath = "../../../../SIMS/Resources/Data/Locations.csv";
-        private readonly Serializer<Location> serializer;
+        private const string _filePath = "../../../../SIMS/Resources/Data/Locations.csv";
+        private readonly Serializer<Location> _serializer;
 
         public LocationRepository()
         {
-            serializer = new Serializer<Location>();
+            _serializer = new Serializer<Location>();
         }
         
         public int GetNextId(List<Location> locations)
@@ -35,7 +35,7 @@ namespace SIMS.Repository.GuideRepository
         
         public List<Location> GetAll()
         {
-            return serializer.FromCSV(filePath);
+            return _serializer.FromCSV(_filePath);
         }
         
         public void Save(Location location)
@@ -44,7 +44,7 @@ namespace SIMS.Repository.GuideRepository
             location.Id = GetNextId(locations);
             
             locations.Add(location);
-            serializer.ToCSV(filePath, locations);
+            _serializer.ToCSV(_filePath, locations);
         }
     }
 }

@@ -10,12 +10,12 @@ namespace SIMS.Repository.GuideRepository
 {
     class ImageRepository
     {
-        private const string filePath = "../../../../SIMS/Resources/Data/Images.csv";
-        private readonly Serializer<Image> serializer;
+        private const string _filePath = "../../../../SIMS/Resources/Data/Images.csv";
+        private readonly Serializer<Image> _serializer;
 
         public ImageRepository()
         {
-            serializer = new Serializer<Image>();
+            _serializer = new Serializer<Image>();
         }
         
         public int GetNextId(List<Image> images)
@@ -29,7 +29,7 @@ namespace SIMS.Repository.GuideRepository
 
         public List<Image> GetAll()
         {
-            return serializer.FromCSV(filePath);
+            return _serializer.FromCSV(_filePath);
         }
         
         public List<Image> GetByTourId(int tourId)
@@ -44,7 +44,7 @@ namespace SIMS.Repository.GuideRepository
             image.Id = GetNextId(images);
 
             images.Add(image);
-            serializer.ToCSV(filePath, images);
+            _serializer.ToCSV(_filePath, images);
         }
         
         public void SaveAll(List<Image> newImages)
@@ -58,7 +58,7 @@ namespace SIMS.Repository.GuideRepository
                 allImages.Add(image);
                 id++;
             }
-            serializer.ToCSV(filePath, allImages);
+            _serializer.ToCSV(_filePath, allImages);
         }
     }
 }

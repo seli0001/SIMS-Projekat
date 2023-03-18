@@ -10,12 +10,12 @@ namespace SIMS.Repository.GuideRepository
 {
     public class StartTimeRepository
     {
-        private const string filePath = "../../../../SIMS/Resources/Data/StartTimes.csv";
-        private readonly Serializer<StartTime> serializer;
+        private const string _filePath = "../../../../SIMS/Resources/Data/StartTimes.csv";
+        private readonly Serializer<StartTime> _serializer;
 
         public StartTimeRepository()
         {
-            serializer = new Serializer<StartTime>();
+            _serializer = new Serializer<StartTime>();
         }
         
         public int GetNextId(List<StartTime> startTimes)
@@ -29,7 +29,7 @@ namespace SIMS.Repository.GuideRepository
 
         public List<StartTime> GetAll()
         {
-            return serializer.FromCSV(filePath);
+            return _serializer.FromCSV(_filePath);
         }
         
         public StartTime GetById(int id)
@@ -44,7 +44,7 @@ namespace SIMS.Repository.GuideRepository
             startTime.Id = GetNextId(startTimes);
             
             startTimes.Add(startTime);
-            serializer.ToCSV( filePath, startTimes);
+            _serializer.ToCSV( _filePath, startTimes);
         }
     }
 }

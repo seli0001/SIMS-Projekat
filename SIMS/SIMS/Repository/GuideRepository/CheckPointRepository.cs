@@ -10,12 +10,12 @@ namespace SIMS.Repository.GuideRepository
 {
     class CheckpointRepository
     {
-        private const string filePath = "../../../../SIMS/Resources/Data/CheckPoints.csv";
-        private readonly Serializer<Checkpoint> serializer;
+        private const string _filePath = "../../../../SIMS/Resources/Data/CheckPoints.csv";
+        private readonly Serializer<Checkpoint> _serializer;
 
         public CheckpointRepository()
         {
-            serializer = new Serializer<Checkpoint>();
+            _serializer = new Serializer<Checkpoint>();
         }
         
         public int GetNextId(List<Checkpoint> checkpoints)
@@ -29,7 +29,7 @@ namespace SIMS.Repository.GuideRepository
         
         public List<Checkpoint> GetAll()
         {
-            return serializer.FromCSV(filePath);
+            return _serializer.FromCSV(_filePath);
         }
         
         public List<Checkpoint> GetByTourId(int tourId)
@@ -44,7 +44,7 @@ namespace SIMS.Repository.GuideRepository
             checkpoint.Id = GetNextId(checkpoints);
 
             checkpoints.Add(checkpoint);
-            serializer.ToCSV(filePath, checkpoints);
+            _serializer.ToCSV(_filePath, checkpoints);
         }
         
         public void SaveAll(List<Checkpoint> checkpoints)
@@ -67,7 +67,7 @@ namespace SIMS.Repository.GuideRepository
                 id++;
             }
             
-            serializer.ToCSV(filePath, allCheckpoints);
+            _serializer.ToCSV(_filePath, allCheckpoints);
         }
         
     }

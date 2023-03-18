@@ -10,20 +10,19 @@ namespace SIMS.Repository.GuideRepository
 {
     class TourRepository
     {
-        private const string filePath = "../../../../SIMS/Resources/Data/Tours.csv";
-        private readonly Serializer<Tour> serializer;
-        private readonly LocationRepository locationRepository;
-
-        private readonly StartTimeRepository startTimeRepository;
-        private readonly ImageRepository imageRepository;
-        private readonly CheckpointRepository checkpointRepository;
+        private const string _filePath = "../../../../SIMS/Resources/Data/Tours.csv";
+        private readonly Serializer<Tour> _serializer;
+        private readonly LocationRepository _locationRepository;
+        private readonly StartTimeRepository _startTimeRepository;
+        private readonly ImageRepository _imageRepository;
+        private readonly CheckpointRepository _checkpointRepository;
         public TourRepository()
         {
-            serializer = new Serializer<Tour>();
-            locationRepository = new LocationRepository();
-            startTimeRepository = new StartTimeRepository();
-            imageRepository = new ImageRepository();
-            checkpointRepository = new CheckpointRepository();
+            _serializer = new Serializer<Tour>();
+            _locationRepository = new LocationRepository();
+            _startTimeRepository = new StartTimeRepository();
+            _imageRepository = new ImageRepository();
+            _checkpointRepository = new CheckpointRepository();
         }
         
         public int GetNextId(List<Tour> tours)
@@ -40,10 +39,10 @@ namespace SIMS.Repository.GuideRepository
             List<Tour> tours = GetAll();
             Tour tour = tours.FirstOrDefault(tour => tour.Id == id);
             if(tour != null){
-                tour.Location = locationRepository.GetById(tour.Location.Id);
-                tour.StartTime = startTimeRepository.GetById(tour.StartTime.Id);
-                tour.Images = imageRepository.GetByTourId(tour.Id);
-                tour.Checkpoints = checkpointRepository.GetByTourId(tour.Id);
+                tour.Location = _locationRepository.GetById(tour.Location.Id);
+                tour.StartTime = _startTimeRepository.GetById(tour.StartTime.Id);
+                tour.Images = _imageRepository.GetByTourId(tour.Id);
+                tour.Checkpoints = _checkpointRepository.GetByTourId(tour.Id);
             }
 
             return tour;
@@ -51,13 +50,13 @@ namespace SIMS.Repository.GuideRepository
 
         public List<Tour> GetAll()
         {
-            List<Tour> tours = serializer.FromCSV(filePath);
+            List<Tour> tours = _serializer.FromCSV(_filePath);
             foreach (Tour tour in tours)
             {
-                tour.Location = locationRepository.GetById(tour.Location.Id);
-                tour.StartTime = startTimeRepository.GetById(tour.StartTime.Id);
-                tour.Images = imageRepository.GetByTourId(tour.Id);
-                tour.Checkpoints = checkpointRepository.GetByTourId(tour.Id);
+                tour.Location = _locationRepository.GetById(tour.Location.Id);
+                tour.StartTime = _startTimeRepository.GetById(tour.StartTime.Id);
+                tour.Images = _imageRepository.GetByTourId(tour.Id);
+                tour.Checkpoints = _checkpointRepository.GetByTourId(tour.Id);
             }
 
             return tours;
@@ -77,13 +76,13 @@ namespace SIMS.Repository.GuideRepository
                 checkpoint.Tour = tour;
             }
             
-            locationRepository.Save(tour.Location);
-            startTimeRepository.Save(tour.StartTime);
-            imageRepository.SaveAll(tour.Images);
-            checkpointRepository.SaveAll(tour.Checkpoints);
+            _locationRepository.Save(tour.Location);
+            _startTimeRepository.Save(tour.StartTime);
+            _imageRepository.SaveAll(tour.Images);
+            _checkpointRepository.SaveAll(tour.Checkpoints);
             
             tours.Add(tour);
-            serializer.ToCSV( filePath, tours);
+            _serializer.ToCSV( _filePath, tours);
         }
     }
 }
