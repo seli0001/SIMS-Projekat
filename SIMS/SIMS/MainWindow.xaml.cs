@@ -1,5 +1,6 @@
 ﻿using SIMS.Model;
 using SIMS.Repository;
+using SIMS.View.GuideView;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,7 +51,9 @@ namespace SIMS
                     }
                     else if (user.Role == ROLE.Guide)
                     {
-                        MessageBox.Show("Guide");
+                        MainGuideView mainGuideView = new MainGuideView();
+                        mainGuideView.Show();
+                        Close();
                     }
                 }
                 else
