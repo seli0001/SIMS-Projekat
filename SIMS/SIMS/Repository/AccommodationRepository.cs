@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Xml.Linq;
 
 namespace SIMS.Repository
@@ -18,11 +19,15 @@ namespace SIMS.Repository
 
         private List<Accommodation> _accommodations;
 
+        private readonly LocationRepository _locationRepository;
+
         public AccommodationRepository()
         {
             _serializer = new Serializer<Accommodation>();
 
             _accommodations = _serializer.FromCSV(_filePath);
+
+            _locationRepository = new LocationRepository();
         }
 
         public List<Accommodation> GetAll()
@@ -71,6 +76,10 @@ namespace SIMS.Repository
         public List<Accommodation> GetByUser(User user)
         {
             _accommodations = _serializer.FromCSV(_filePath);
+            foreach(Accommodation accommodation in _accommodations)
+            {
+               accommodation.Location = _locationRepository.GetById(accommodation.Location.Id);
+            }
             return _accommodations.FindAll(c => c.User.Id == user.Id);
         }
 

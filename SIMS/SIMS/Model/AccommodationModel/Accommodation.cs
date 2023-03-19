@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using SIMS.Serializer;
 
 namespace SIMS.Model.AccommodationModel
@@ -17,12 +18,12 @@ namespace SIMS.Model.AccommodationModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Location { get; set; }
+        public Location Location { get; set; }
         public Type Type { get; set; }
         public int MaxGuestsNumber { get; set; }
         public int MinBookingDays { get; set; }
         public int CancelDaysNumber { get; set; }
-        public string PictureUrl { get; set; }
+        public List<Image> Images { get; set; }
 
         public User User { get; set; }
 
@@ -31,7 +32,7 @@ namespace SIMS.Model.AccommodationModel
 
         }
 
-        public Accommodation(string name, string location, Type acType, int maxGNum, int minDays, int cancelDays, string picture, User user)
+        public Accommodation(string name, Location location, Type acType, int maxGNum, int minDays, int cancelDays, User user)
         {
             Name = name;
             Location = location;
@@ -39,7 +40,6 @@ namespace SIMS.Model.AccommodationModel
             MaxGuestsNumber = maxGNum;
             MinBookingDays = minDays;
             CancelDaysNumber = cancelDays;
-            PictureUrl = picture;
             User = user;
         }
 
@@ -49,12 +49,11 @@ namespace SIMS.Model.AccommodationModel
             {
              Id.ToString(),
              Name,
-             Location,
              Type.ToString(),
              MaxGuestsNumber.ToString(),
              MinBookingDays.ToString(),
              CancelDaysNumber.ToString(),
-             PictureUrl,
+             Location.Id.ToString(),
              User.Id.ToString(),
             };
             return csvValues;
@@ -64,12 +63,11 @@ namespace SIMS.Model.AccommodationModel
         {
             Id = Convert.ToInt32(values[0]);
             Name = values[1];
-            Location = values[2];
-            Type = (Type)Enum.Parse(typeof(Type), values[3]);
-            MaxGuestsNumber = Convert.ToInt32(values[4]);
-            MinBookingDays = Convert.ToInt32(values[5]);
-            CancelDaysNumber = Convert.ToInt32(values[6]);
-            PictureUrl = values[7];
+            Type = (Type)Enum.Parse(typeof(Type), values[2]);
+            MaxGuestsNumber = Convert.ToInt32(values[3]);
+            MinBookingDays = Convert.ToInt32(values[4]);
+            CancelDaysNumber = Convert.ToInt32(values[5]);
+            Location = new Location() { Id = Convert.ToInt32(values[7]) };
             User = new User() { Id = Convert.ToInt32(values[8]) };
         }
     }

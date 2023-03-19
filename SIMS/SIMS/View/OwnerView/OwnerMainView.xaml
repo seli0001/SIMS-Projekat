@@ -40,12 +40,11 @@
                   AutoGenerateColumns="False" IsReadOnly="True"
                    Width="600" Height="340" Grid.Row="1">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Naziv" Binding="{Binding Name}" Width="150"></DataGridTextColumn>
-                <DataGridTextColumn Header="Lokacija" Binding="{Binding Location}" Width="100"></DataGridTextColumn>
-                <DataGridTextColumn Header= "Tip" Binding="{Binding Type}" Width="100"></DataGridTextColumn>
-                <DataGridTextColumn Header= "Maksimalni broj gostiju" Binding="{Binding MaxGuestsNumber}" Width="150"></DataGridTextColumn>
-                <DataGridTextColumn Header= "Slika" Binding="{Binding PictureUrl}" Width="100"></DataGridTextColumn>
-            </DataGrid.Columns>
+                <DataGridTextColumn Header="Naziv" Binding="{Binding Name}" Width="200"></DataGridTextColumn>
+                <DataGridTextColumn Header="Drzava" Binding="{Binding Location.Country}" Width="100"></DataGridTextColumn>
+                <DataGridTextColumn Header="Grad" Binding="{Binding Location.City}" Width="100"></DataGridTextColumn>
+                <DataGridTextColumn Header= "Tip" Binding="{Binding Type}" Width="*"></DataGridTextColumn>
+             </DataGrid.Columns>
         </DataGrid>
 
         <Grid  Grid.Row="3">

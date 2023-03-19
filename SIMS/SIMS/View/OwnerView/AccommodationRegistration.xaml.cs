@@ -21,6 +21,8 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using Type = SIMS.Model.AccommodationModel.Type;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.ObjectModel;
+using Microsoft.Win32;
 
 namespace SIMS.View.OwnerView
 {
@@ -33,7 +35,10 @@ namespace SIMS.View.OwnerView
 
         public Accommodation SelectedAccommodation { get; set; }
 
+        public ObservableCollection<BitmapImage> Images;
+
         private readonly AccommodationRepository _repository;
+        private readonly LocationRepository _locationRepository;
 
         private readonly int[] validator;
 
@@ -45,6 +50,7 @@ namespace SIMS.View.OwnerView
             LoggedInUser = user;
             validator = new int[6];
             _repository = new AccommodationRepository();
+            _locationRepository = new LocationRepository();
         }
 
        
@@ -57,6 +63,7 @@ namespace SIMS.View.OwnerView
             validator = new int[6];
             SelectedAccommodation = selectedAccommodation;
             _repository = new AccommodationRepository();
+            _locationRepository = new LocationRepository();
         }
 
         #region data
@@ -90,29 +97,58 @@ namespace SIMS.View.OwnerView
         }
 
 
-        private string _location;
-        public string Location
+        private string _city;
+        public string City
         {
-            get => _location;
+            get => _city;
             set
             {
-                if (value != _location)
+                if (value != _city)
                 {
                     if (!Regex.Match(value, @"\p{Lu}\p{Ll}{2,9}").Success)
                     {
-                        LocationValidator.Content = "Veliko pocetno slovo";
-                        LocationValidator.Visibility = Visibility.Visible;
+                        CityValidator.Content = "Veliko pocetno slovo";
+                        CityValidator.Visibility = Visibility.Visible;
                         validator[1] = 0;
                     }
                     else
                     {
-                        LocationValidator.Visibility = Visibility.Hidden;
+                        CityValidator.Visibility = Visibility.Hidden;
                         validator[1] = 1;
                     }
                     BtnSubmit.IsEnabled = true;
 
                     ValidatorTest();
-                    _location = value;
+                    _city = value;
+                    OnPropertyChanged();
+                }
+
+            }
+        }
+
+        private string _country;
+        public string Country
+        {
+            get => _country;
+            set
+            {
+                if (value != _country)
+                {
+                    if (!Regex.Match(value, @"\p{Lu}\p{Ll}{2,9}").Success)
+                    {
+                        CountryValidator.Content = "Veliko pocetno slovo";
+                        CountryValidator.Visibility = Visibility.Visible;
+                        validator[2] = 0;
+                    }
+                    else
+                    {
+                        CountryValidator.Visibility = Visibility.Hidden;
+                        validator[2] = 1;
+                    }
+                    BtnSubmit.IsEnabled = true;
+
+                    ValidatorTest();
+                    _country = value;
                     OnPropertyChanged();
                 }
 
@@ -235,26 +271,6 @@ namespace SIMS.View.OwnerView
         }
 
 
-        private string _picture;
-        public string Picture
-        {
-            get => _picture;
-            set
-            {
-                if (value != _picture)
-                {
-                    PictureValidator.Visibility = Visibility.Hidden;
-                    validator[5] = 1;
-                    BtnSubmit.IsEnabled = true;
-
-                    ValidatorTest();
-                    _picture = value;
-                    OnPropertyChanged();
-                }
-
-            }
-        }
-
         #endregion
 
         private void ValidatorTest()
@@ -267,6 +283,39 @@ namespace SIMS.View.OwnerView
                 }
             }
         }
+
+
+        private void AddImageFromFileDialog(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image files (*.png;*.jpeg)|*.png;*.jpeg|All files (*.*)|*.*";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                MessageBox.Show("Image is added");
+            }
+        }
+
+        private void RemoveImage(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        public void LoadImageFromPath(string path)
+        {
+            // Convert the path to a URI format
+            Uri uri = new Uri(path, UriKind.RelativeOrAbsolute);
+
+            // Set the BitmapImage source to the URI
+            BitmapImage bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+            bitmapImage.UriSource = uri;
+            bitmapImage.EndInit();
+
+            Images.Add(bitmapImage);
+        }
+
+
 
         private void SaveAccommodation(object sender, RoutedEventArgs e)
         {
@@ -288,7 +337,10 @@ namespace SIMS.View.OwnerView
             }
             else
             {
-                Accommodation newAccommodation = new Accommodation(AcName, Location, AccTypeEnum, MaxGuestNum, MinReservationDays, CancelDaysNumber, Picture, LoggedInUser);
+                Location newLocation = new Location(Country, City);
+                Location savedLocation = _locationRepository.Save(newLocation);
+
+                Accommodation newAccommodation = new Accommodation(AcName, savedLocation, AccTypeEnum, MaxGuestNum, MinReservationDays, CancelDaysNumber, LoggedInUser);
                 Accommodation savedAccommodation = _repository.Save(newAccommodation);
                 OwnerMainView.Accommodations.Add(savedAccommodation);
             }
