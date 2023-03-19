@@ -52,18 +52,16 @@ namespace SIMS.Repository.GuideRepository
         {
             List<Tour> tours = GetAll();
             List<Tour> alternativeTours = new List<Tour>();
-            //List<Tour> alternativeTour=GetAlternativeTours(tours,tour);
-
             return GetAlternativeTours(tours, alternativeTours, tour);
         }
 
         public List<Tour> GetAlternativeTours(List<Tour> tours, List<Tour> alternativeTours, Tour tour)
         {
-            foreach (Tour t in tours)
+            foreach (Tour foreachTour in tours)
             {
-                if (tour.Location.Id == t.Location.Id && tour.Id != t.Id)
+                if (tour.Location.Id == foreachTour.Location.Id && tour.Id != foreachTour.Id)
                 {
-                    alternativeTours.Add(t);
+                    alternativeTours.Add(foreachTour);
                 }
             }
             return alternativeTours;

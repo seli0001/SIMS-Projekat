@@ -30,10 +30,10 @@ namespace SIMS.View.Guest2View
         public int tbBox;
 
 
-        public BookingTourView(int freespace, Tour tourInput, int userid, int textbox)
+        public BookingTourView(int freespace, Tour tourinput, int userid, int textbox)
         {
             InitializeComponent();
-            tour = tourInput;
+            tour = tourinput;
             userId = userid;
             tbBox = textbox;
             _toursRepository = new TourRepository();
@@ -42,7 +42,7 @@ namespace SIMS.View.Guest2View
             MessageBox.Show("Ostalo je" + freeSpace.ToString() + "Mesta");
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void BookedClick(object sender, RoutedEventArgs e)
         {
             tour.NumberOfPeople = tour.NumberOfPeople + tbBox;
             _toursRepository.UpdateNumberOfPeople(tour, tour.Id);
@@ -51,7 +51,7 @@ namespace SIMS.View.Guest2View
             Close();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void BackToNumberFormClick(object sender, RoutedEventArgs e)
         {
             Close();
         }

@@ -49,8 +49,8 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="2" Content="Rezervisi" Background="Teal" Click="Button_Click_1"></Button>
-            <Button Grid.Column="3" Content="Odustani" Background="DarkRed" Click="Button_Click" Height="50" VerticalAlignment="Top"></Button>
+            <Button Grid.Column="2" Content="Rezervisi" Background="Teal" Click="NumberOfTourClick"></Button>
+            <Button Grid.Column="3" Content="Odustani" Background="DarkRed" Click="BackToMainForm" Height="50" VerticalAlignment="Top"></Button>
 
         </Grid>
     </Grid>

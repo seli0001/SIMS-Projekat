@@ -39,7 +39,7 @@ namespace SIMS.View.Guest2View
 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void BackToMainForm(object sender, RoutedEventArgs e)
         {
             MainGuest2View mainGuest2View = new MainGuest2View(userId);
             mainGuest2View.Show();
@@ -47,7 +47,7 @@ namespace SIMS.View.Guest2View
             Close();
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void NumberOfTourClick(object sender, RoutedEventArgs e)
         {
             NumberOfTourGuestView numberOfTourGuestView = new NumberOfTourGuestView(selectedTour, userId);
             numberOfTourGuestView.Show();
