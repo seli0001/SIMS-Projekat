@@ -43,14 +43,14 @@
 
         <TabControl Grid.Row="1" Margin="20">
             <TabItem Header="Ture">
-                <DataGrid Name="dgwTours" ItemsSource="{Binding tours, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" IsReadOnly="True">
+                <DataGrid Name="dgwTours" ItemsSource="{Binding tours, UpdateSourceTrigger=PropertyChanged}"  SelectedItem="{Binding selectedTour, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single" AutoGenerateColumns="False" IsReadOnly="True">
                     <DataGrid.Columns>
 
                         <DataGridTextColumn Header="Lokacija" Binding="{Binding Location.City}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Trajanje" Binding="{Binding Duration}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Jezik" Binding="{Binding Language}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Broj ljudi" Binding="{Binding MaxNumberOfPeople}"></DataGridTextColumn>
-
+                        <DataGridTextColumn Header="Datum" Binding="{Binding StartTime.Time}"></DataGridTextColumn>
                     </DataGrid.Columns>
 
 
@@ -77,7 +77,7 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="2" Content="Rezervisi" Background="Teal" ></Button>
+            <Button Grid.Column="2" Content="Rezervisi" Background="Teal" Click="Button_Click_1" ></Button>
             <Button Grid.Column="3" Content="Odustani" Background="DarkRed"></Button>
 
         </Grid>

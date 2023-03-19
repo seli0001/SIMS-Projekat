@@ -48,7 +48,7 @@ namespace SIMS
                     }
                     else if (user.Role == ROLE.Guest2)
                     {
-                        MainGuest2View mainGuest2View = new MainGuest2View();
+                        MainGuest2View mainGuest2View = new MainGuest2View(user.Id);
                         mainGuest2View.Show();
                         Close();
                     }

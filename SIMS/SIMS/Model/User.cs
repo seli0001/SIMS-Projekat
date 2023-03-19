@@ -15,7 +15,7 @@ namespace SIMS.Model
         Guide,
     }
     
-    internal class User : ISerializable
+    public class User : ISerializable
     {
         public int Id { get; set; }
         public string Username { get; set; }
