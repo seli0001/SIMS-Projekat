@@ -29,10 +29,10 @@ namespace SIMS.Model.AccommodationModel
 
         public Accommodation()
         {
-
+            Images = new List<Image>();
         }
 
-        public Accommodation(string name, Location location, Type acType, int maxGNum, int minDays, int cancelDays, User user)
+        public Accommodation(string name, Location location, Type acType, int maxGNum, int minDays, int cancelDays, User user, List<Image> images)
         {
             Name = name;
             Location = location;
@@ -41,6 +41,7 @@ namespace SIMS.Model.AccommodationModel
             MinBookingDays = minDays;
             CancelDaysNumber = cancelDays;
             User = user;
+            Images = images;
         }
 
         public string[] ToCSV()
@@ -67,8 +68,8 @@ namespace SIMS.Model.AccommodationModel
             MaxGuestsNumber = Convert.ToInt32(values[3]);
             MinBookingDays = Convert.ToInt32(values[4]);
             CancelDaysNumber = Convert.ToInt32(values[5]);
-            Location = new Location() { Id = Convert.ToInt32(values[7]) };
-            User = new User() { Id = Convert.ToInt32(values[8]) };
+            Location = new Location() { Id = Convert.ToInt32(values[6]) };
+            User = new User() { Id = Convert.ToInt32(values[7]) };
         }
     }
 }

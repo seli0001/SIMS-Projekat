@@ -23,6 +23,7 @@ using Type = SIMS.Model.AccommodationModel.Type;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.ObjectModel;
 using Microsoft.Win32;
+using Image = SIMS.Model.Image;
 
 namespace SIMS.View.OwnerView
 {
@@ -37,8 +38,11 @@ namespace SIMS.View.OwnerView
 
         public ObservableCollection<BitmapImage> Images;
 
+        private List<Image> _accommodationImages;
+
         private readonly AccommodationRepository _repository;
         private readonly LocationRepository _locationRepository;
+        private readonly ImageRepository _imageRepository;
 
         private readonly int[] validator;
 
@@ -51,6 +55,9 @@ namespace SIMS.View.OwnerView
             validator = new int[6];
             _repository = new AccommodationRepository();
             _locationRepository = new LocationRepository();
+            _imageRepository = new ImageRepository();
+            Images = new ObservableCollection<BitmapImage>();
+            _accommodationImages = new List<Image>();
         }
 
        
@@ -64,6 +71,9 @@ namespace SIMS.View.OwnerView
             SelectedAccommodation = selectedAccommodation;
             _repository = new AccommodationRepository();
             _locationRepository = new LocationRepository();
+            _imageRepository = new ImageRepository();
+            Images = new ObservableCollection<BitmapImage>();
+            _accommodationImages = new List<Image>();
         }
 
         #region data
@@ -193,12 +203,12 @@ namespace SIMS.View.OwnerView
                     {
                         MaxGuestNumValidator.Content = "Broj gostiju mora biti veci od 0";
                         MaxGuestNumValidator.Visibility = Visibility.Visible;
-                        validator[2] = 0;
+                        validator[3] = 0;
                     }
                     else
                     {
                         MaxGuestNumValidator.Visibility = Visibility.Hidden;
-                        validator[2] = 1;
+                        validator[3] = 1;
                     }
                     BtnSubmit.IsEnabled = true;
 
@@ -223,12 +233,12 @@ namespace SIMS.View.OwnerView
                     {
                         MinReservationDaysValidator.Content = "Broj dana mora biti veci od 0";
                         MinReservationDaysValidator.Visibility = Visibility.Visible;
-                        validator[3] = 0;
+                        validator[4] = 0;
                     }
                     else
                     {
                         MinReservationDaysValidator.Visibility = Visibility.Hidden;
-                        validator[3] = 1;
+                        validator[4] = 1;
                     }
                     BtnSubmit.IsEnabled = true;
 
@@ -253,12 +263,12 @@ namespace SIMS.View.OwnerView
                     {
                         CancelDaysNumberValidator.Content = "Broj dana mora biti veci od 0";
                         CancelDaysNumberValidator.Visibility = Visibility.Visible;
-                        validator[4] = 0;
+                        validator[5] = 0;
                     }
                     else
                     {
                         CancelDaysNumberValidator.Visibility = Visibility.Hidden;
-                        validator[4] = 1;
+                        validator[5] = 1;
                     }
                     BtnSubmit.IsEnabled = true;
 
@@ -269,6 +279,8 @@ namespace SIMS.View.OwnerView
 
             }
         }
+
+        
 
 
         #endregion
@@ -291,13 +303,18 @@ namespace SIMS.View.OwnerView
             openFileDialog.Filter = "Image files (*.png;*.jpeg)|*.png;*.jpeg|All files (*.*)|*.*";
             if (openFileDialog.ShowDialog() == true)
             {
-                MessageBox.Show("Image is added");
+                _accommodationImages.Add(new Image() { Path = openFileDialog.FileName });
+                LoadImageFromPath(openFileDialog.FileName);
             }
         }
 
         private void RemoveImage(object sender, RoutedEventArgs e)
         {
-            
+            if (imageListView.SelectedIndex != -1)
+            {
+                _accommodationImages.RemoveAt(imageListView.SelectedIndex);
+                Images.RemoveAt(imageListView.SelectedIndex);
+            }
         }
 
         public void LoadImageFromPath(string path)
@@ -340,8 +357,12 @@ namespace SIMS.View.OwnerView
                 Location newLocation = new Location(Country, City);
                 Location savedLocation = _locationRepository.Save(newLocation);
 
-                Accommodation newAccommodation = new Accommodation(AcName, savedLocation, AccTypeEnum, MaxGuestNum, MinReservationDays, CancelDaysNumber, LoggedInUser);
+
+                _accommodationImages = _imageRepository.SetId(_accommodationImages);
+
+                Accommodation newAccommodation = new Accommodation(AcName, savedLocation, AccTypeEnum, MaxGuestNum, MinReservationDays, CancelDaysNumber, LoggedInUser, _accommodationImages);
                 Accommodation savedAccommodation = _repository.Save(newAccommodation);
+                _imageRepository.SaveAll(_accommodationImages, savedAccommodation);
                 OwnerMainView.Accommodations.Add(savedAccommodation);
             }
 

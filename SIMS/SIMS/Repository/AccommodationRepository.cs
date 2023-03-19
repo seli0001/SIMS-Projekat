@@ -21,6 +21,8 @@ namespace SIMS.Repository
 
         private readonly LocationRepository _locationRepository;
 
+        private readonly ImageRepository _imageRepository;
+
         public AccommodationRepository()
         {
             _serializer = new Serializer<Accommodation>();
@@ -28,6 +30,8 @@ namespace SIMS.Repository
             _accommodations = _serializer.FromCSV(_filePath);
 
             _locationRepository = new LocationRepository();
+
+            _imageRepository = new ImageRepository();
         }
 
         public List<Accommodation> GetAll()
@@ -79,6 +83,10 @@ namespace SIMS.Repository
             foreach(Accommodation accommodation in _accommodations)
             {
                accommodation.Location = _locationRepository.GetById(accommodation.Location.Id);
+               foreach(Image image in _imageRepository.GetByAccommodationId(accommodation.Id))
+                {
+                    accommodation.Images.Add(image);
+                }
             }
             return _accommodations.FindAll(c => c.User.Id == user.Id);
         }
