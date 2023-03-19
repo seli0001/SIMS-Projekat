@@ -47,6 +47,8 @@ namespace SIMS.View.Guest2View
             tour.NumberOfPeople = tour.NumberOfPeople + tbBox;
             _toursRepository.UpdateNumberOfPeople(tour, tour.Id);
             _bookedToursRepository.Save(tour, userId);
+            MessageBox.Show("Uspesno ste rezervisali");
+            Close();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

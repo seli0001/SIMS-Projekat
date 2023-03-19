@@ -22,6 +22,6 @@
             <TextBox Name="tbNumber" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100"></TextBox>
         </Grid>
         <Button Grid.Row="1" Margin="5" Content="Rezervisi" HorizontalAlignment="Left" Width="150" Click="Button_Click"></Button>
-        <Button Grid.Row="1" Margin="5" Content="Odustani" HorizontalAlignment="Right" Width="150"></Button>
+        <Button Grid.Row="1" Margin="5" Content="Odustani" HorizontalAlignment="Right" Width="150" Click="Button_Click_1"></Button>
     </Grid>
 </Window>
