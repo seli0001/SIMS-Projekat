@@ -1,4 +1,5 @@
-﻿using SIMS.Model.Guide;
+﻿using SIMS.Model;
+using SIMS.Model.Guide;
 using SIMS.Repository.GuideRepository;
 using System;
 using System.Collections.Generic;
@@ -27,10 +28,15 @@ namespace SIMS.View.Guest2View
 
         public ObservableCollection<Tour> tours { get; set; }
 
-        public MainGuest2View()
+        public Tour selectedTour { get; set; }
+
+        public int userId;
+
+        public MainGuest2View(int userid)
         {
             InitializeComponent();
             DataContext = this;
+            userId = userid;
             _tourRepository = new TourRepository();
             tours = new ObservableCollection<Tour>(_tourRepository.GetAll());
         }
@@ -89,18 +95,11 @@ namespace SIMS.View.Guest2View
             return tours;
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            NumberOfTourGuestView numberOfTourGuestView = new NumberOfTourGuestView(selectedTour, userId);
+            numberOfTourGuestView.Show();
+            Close();
+        }
     }
 }

@@ -48,6 +48,23 @@ namespace SIMS.Repository.GuideRepository
             return tour;
         }
 
+        public void UpdateNumberOfPeople(Tour tour, int id)
+        {
+            List<Tour> tours = GetAll();
+
+            foreach (Tour foreachTour in tours)
+            {
+                if (foreachTour.Id == id)
+                {
+                    foreachTour.NumberOfPeople = foreachTour.NumberOfPeople + tour.NumberOfPeople;
+
+                }
+            }
+            _serializer.ToCSV(_filePath, tours);
+        }
+
+
+
         public List<Tour> GetAll()
         {
             List<Tour> tours = _serializer.FromCSV(_filePath);

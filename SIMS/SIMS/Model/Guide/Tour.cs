@@ -16,6 +16,7 @@ namespace SIMS.Model.Guide
         public string Description { get; set; }
         public string Language { get; set; }
         public int MaxNumberOfPeople { get; set; }
+        public int NumberOfPeople { get; set; }
         public int Duration { get; set; }
         public StartTime StartTime { get; set; }
         public Location Location { get; set; }
@@ -28,6 +29,7 @@ namespace SIMS.Model.Guide
             Location = new Location();
             Images = new List<Image>();
             Checkpoints = new List<Checkpoint>();
+            NumberOfPeople = 0;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -48,6 +50,7 @@ namespace SIMS.Model.Guide
             Duration.ToString(),
             StartTime.Id.ToString(),
             Location.Id.ToString(),
+            NumberOfPeople.ToString(),
         };
             return csvValues;
         }
@@ -62,6 +65,7 @@ namespace SIMS.Model.Guide
             Duration = int.Parse(csvValues[5]);
             StartTime = new StartTime() { Id = int.Parse(csvValues[6]) };
             Location = new Location() { Id = int.Parse(csvValues[7]) };
+            NumberOfPeople = int.Parse(csvValues[8]);
         }
 
 
