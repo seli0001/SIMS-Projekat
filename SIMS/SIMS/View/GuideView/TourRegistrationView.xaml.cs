@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using SIMS.Model;
 using SIMS.Model.Guide;
 using SIMS.Repository.GuideRepository;
 using System;
@@ -27,11 +28,12 @@ namespace SIMS.View.GuideView;
 public partial class TourRegistrationView : Window
 {
     private readonly TourRepository _tourRepository;
+    private readonly User _guide;
     public ObservableCollection<Checkpoint> Checkpoints;
     public ObservableCollection<BitmapImage> Images;
     public Tour Tour { get; set; }
 
-    public TourRegistrationView()
+    public TourRegistrationView(User guide)
     {
         InitializeComponent();
         _tourRepository = new TourRepository();
@@ -40,6 +42,7 @@ public partial class TourRegistrationView : Window
         Images = new ObservableCollection<BitmapImage>();
         imageListView.ItemsSource = Images;
         checkpointListView.ItemsSource = Checkpoints;
+        _guide = guide;
         DataContext = this;
     }
 
@@ -61,6 +64,7 @@ public partial class TourRegistrationView : Window
         if (CheckStartTime())
         {
             AddStartTime();
+            Tour.Guide = _guide;
             _tourRepository.Save(Tour);
             Close();
         }

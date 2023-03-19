@@ -78,6 +78,12 @@ namespace SIMS.Repository.GuideRepository
 
             return tours;
         }
+        
+        public List<Tour> GetAllByGuideId(int id)
+        {
+            List<Tour> tours = GetAll();
+            return tours.Where(tour => tour.Guide.Id == id).ToList();
+        }
 
         public void Save(Tour tour)
         {

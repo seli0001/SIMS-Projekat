@@ -3,12 +3,20 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.RightsManagement;
 using System.Text;
 using System.Threading.Tasks;
 using SIMS.Serializer;
+using SIMS.Model;
 
 namespace SIMS.Model.Guide
 {
+    public enum TourStatus
+    {
+        NOT_STARTED,
+        STARTED,
+        FINISHED
+    }
     public class Tour : ISerializable, INotifyPropertyChanged
     {
         public int Id { get; set; }
@@ -22,6 +30,8 @@ namespace SIMS.Model.Guide
         public Location Location { get; set; }
         public List<Image> Images { get; set; }
         public List<Checkpoint> Checkpoints { get; set; }
+        public User Guide { get; set; }
+        public TourStatus Status { get; set; }
 
         public Tour()
         {
@@ -51,6 +61,8 @@ namespace SIMS.Model.Guide
             StartTime.Id.ToString(),
             Location.Id.ToString(),
             NumberOfPeople.ToString(),
+            Guide.Id.ToString(),
+            Status.ToString(),
         };
             return csvValues;
         }
@@ -66,6 +78,8 @@ namespace SIMS.Model.Guide
             StartTime = new StartTime() { Id = int.Parse(csvValues[6]) };
             Location = new Location() { Id = int.Parse(csvValues[7]) };
             NumberOfPeople = int.Parse(csvValues[8]);
+            Guide = new User() { Id = int.Parse(csvValues[9]) };
+            Status = (TourStatus) Enum.Parse(typeof(TourStatus), csvValues[10]);
         }
 
 

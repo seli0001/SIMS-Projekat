@@ -54,7 +54,7 @@ namespace SIMS
                     }
                     else if (user.Role == ROLE.Guide)
                     {
-                        MainGuideView mainGuideView = new MainGuideView();
+                        MainGuideView mainGuideView = new MainGuideView(user);
                         mainGuideView.Show();
                         Close();
                     }
