@@ -8,7 +8,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Resources\Data\" />
+    <None Remove="View\OwnerView\add.png" />
+    <None Remove="View\OwnerView\close.png" />
+    <None Remove="View\OwnerView\pencil.png" />
+    <None Remove="View\OwnerView\search.png" />
+    <None Remove="View\OwnerView\trash-bin.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="View\OwnerView\add.png" />
+    <Resource Include="View\OwnerView\close.png" />
+    <Resource Include="View\OwnerView\pencil.png" />
+    <Resource Include="View\OwnerView\search.png" />
+    <Resource Include="View\OwnerView\trash-bin.png" />
   </ItemGroup>
 
 </Project>
