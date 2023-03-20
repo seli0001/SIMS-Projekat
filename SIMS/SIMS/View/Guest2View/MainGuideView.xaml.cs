@@ -34,7 +34,8 @@ namespace SIMS.View.GuideView
             _tourRepository = new TourRepository();
             Tours = new ObservableCollection<Tour>(GetTours());
             SelectedTour = new Tour();
-            StartTourButton.IsEnabled = false;
+            StartTourButton.IsEnabled = !HasTourInProgress();
+            ViewStartedTourButton.IsEnabled = HasTourInProgress();
             DataContext = this;
         }
         
@@ -57,6 +58,11 @@ namespace SIMS.View.GuideView
             {
                 Tours.Add(tour);
             }
+        }
+
+        public bool HasTourInProgress()
+        {
+            return Tours.FirstOrDefault(t => t.Status == TourStatus.STARTED) != null;
         }
 
         private void dataGridTours_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -83,7 +89,21 @@ namespace SIMS.View.GuideView
             StartTourButton.IsEnabled = false;
             _tourRepository.Update(SelectedTour);
             LiveTourTrackingView liveTourTrackingView = new LiveTourTrackingView(SelectedTour);
-            liveTourTrackingView.Show();
+            liveTourTrackingView.ShowDialog();
+            ViewStartedTourButton.IsEnabled = HasTourInProgress();
+        }
+
+        private void ViewStartedTourButton_Click(object sender, RoutedEventArgs e)
+        {
+            Tour tourInProgress = Tours.FirstOrDefault(t => t.Status == TourStatus.STARTED);
+            if (tourInProgress != null)
+            {
+                ViewStartedTourButton.IsEnabled = false;
+                LiveTourTrackingView liveTourTrackingView = new LiveTourTrackingView(tourInProgress);
+                liveTourTrackingView.ShowDialog();
+                
+            }
+            ViewStartedTourButton.IsEnabled = HasTourInProgress();
         }
     }
 }

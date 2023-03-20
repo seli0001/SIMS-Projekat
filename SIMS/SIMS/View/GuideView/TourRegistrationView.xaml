@@ -25,12 +25,12 @@
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
-                <RowDefinition Height="1.05*" />
+                <RowDefinition Height="1.4*" />
                 <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition />
+                <ColumnDefinition Width="1.3*" />
                 <ColumnDefinition Width="0.15*" />
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -58,15 +58,18 @@
                      Grid.Column="1" VerticalAlignment="Center" />
             <TextBox Text="{Binding Path=Tour.Location.Country, UpdateSourceTrigger=LostFocus}" Grid.Row="2"
                      Grid.Column="1" VerticalAlignment="Center" />
-            <TextBox Text="{Binding Path=Tour.Description, UpdateSourceTrigger=LostFocus}" AcceptsReturn="True" TextWrapping="Wrap" Grid.RowSpan="2"
+            <TextBox Text="{Binding Path=Tour.Description, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" Grid.RowSpan="2"
                      Grid.Row="3" Grid.Column="1" />
             <TextBox Text="{Binding Path=Tour.Language, UpdateSourceTrigger=LostFocus}" Grid.Row="5" Grid.Column="1"
                      VerticalAlignment="Center" />
-            <TextBox Text="{Binding Path=Tour.MaxNumberOfPeople, UpdateSourceTrigger=LostFocus}" Grid.Row="6"
+            <TextBox Name="maxNumberTextBox" Text="{Binding Path=Tour.MaxNumberOfPeople, UpdateSourceTrigger=LostFocus}" Grid.Row="6"
                      Grid.Column="1" VerticalAlignment="Center" />
-            <TextBox x:Name="time" Grid.Row="7" Grid.Column="1" VerticalAlignment="Bottom" />
-            <DatePicker x:Name="date" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="106"/>
-            <TextBox Text="{Binding Path=Tour.Duration, UpdateSourceTrigger=LostFocus}" Grid.Row="8" Grid.Column="1"
+            <ComboBox x:Name="hourComboBox" Grid.Row="7" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="18" Margin="0,0,0,40" Grid.RowSpan="2"></ComboBox>
+            <ComboBox x:Name="minutesComboBox" Grid.Row="7" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="18" Margin="0,0,0,40" Grid.RowSpan="2"></ComboBox>
+            <Button x:Name="AddDateButton" Grid.Row="7" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="18" Margin="0,0,0,40" Grid.RowSpan="2" Content="+" Width="28" Click="AddDateButton_Click"></Button>
+
+            <DatePicker x:Name="date" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="115" Margin="0,40,0,0" Grid.RowSpan="2"/>
+            <TextBox Name="durationTextBox" Text="{Binding Path=Tour.Duration, UpdateSourceTrigger=LostFocus}" Grid.Row="8" Grid.Column="1"
                      VerticalAlignment="Center" />
             <Button Content="Dodaj sliku" Grid.Column="4" Grid.Row="0" VerticalAlignment="Center" Click="AddImageFromFileDialog"  Width="80" />
             <Button Content="Obrisi sliku" Grid.Column="5" Grid.Row="0" VerticalAlignment="Center" Click="RemoveImage"  Width="80" />
