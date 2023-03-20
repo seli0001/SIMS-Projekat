@@ -1,4 +1,5 @@
-﻿using SIMS.Model;
+﻿using SIMS.View.FirstGuestView;
+using SIMS.Model;
 using SIMS.Repository;
 using SIMS.View.Guest2View;
 using SIMS.View.GuideView;
@@ -72,6 +73,12 @@ namespace SIMS
                 MessageBox.Show("Wrong username!");
             }
 
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            FirstGuestMainView firstGuestMainView = new FirstGuestMainView();
+            firstGuestMainView.Show();
         }
     }
 }

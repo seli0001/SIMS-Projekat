@@ -39,6 +39,16 @@ namespace SIMS.Repository
             return _serializer.FromCSV(_filePath);
         }
 
+        public List<Accommodation> GetForView()
+        {
+            _accommodations = _serializer.FromCSV(_filePath);
+            foreach (Accommodation accommodation in _accommodations)
+            {
+                accommodation.Location = _locationRepository.GetById(accommodation.Location.Id);
+            }
+            return _accommodations;
+        }
+
         public Accommodation Save(Accommodation accommodation)
         {
             accommodation.Id = NextId();

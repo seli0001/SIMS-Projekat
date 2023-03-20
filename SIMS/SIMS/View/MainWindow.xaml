@@ -31,6 +31,7 @@
             <PasswordBox Name="passwordBox" Grid.Row="1" Grid.Column="1" Height="25" VerticalAlignment="Center"/>
         </Grid>
         <Button Grid.Row="2" Content="SignIn"  HorizontalAlignment="Center" VerticalAlignment="Center" Height="20" Width="60" Click="SignIn"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="335,0,0,0" Grid.Row="2" VerticalAlignment="Center" Click="Button_Click"/>
 
     </Grid>
 </Window>
