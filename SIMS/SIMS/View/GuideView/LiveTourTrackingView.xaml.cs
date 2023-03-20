@@ -63,6 +63,8 @@ namespace SIMS.View.GuideView
             _checkpointRepository.Update(FirstCheckpoint);
             DataContext = this;
         }
+
+
         
         private void CheckCheckpoint_Click(object sender, RoutedEventArgs e)
         {
@@ -92,6 +94,17 @@ namespace SIMS.View.GuideView
                     _bookedTourRepository.Update(SelectedBookedTour);
                 }
                 
+            }
+        }
+
+        private void FinishTourButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(Tour.Status != TourStatus.FINISHED)
+            {
+                Tour.Status = TourStatus.FINISHED;
+                CheckpointButton.IsEnabled = false;
+                _tourRepository.Update(Tour);
+                MessageBox.Show("Tour is finished");
             }
         }
     }

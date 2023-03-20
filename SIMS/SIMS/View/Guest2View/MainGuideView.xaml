@@ -23,7 +23,8 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition Height="10*"></RowDefinition>
             </Grid.RowDefinitions>
-            <Button x:Name="StartTourButton" Content="Zapocni turu" HorizontalAlignment="Left" VerticalAlignment="Center" Click="StartTourButton_Click"></Button>
+            <Button x:Name="StartTourButton" Content="Zapocni turu" HorizontalAlignment="Left" VerticalAlignment="Center" Click="StartTourButton_Click" Padding="5"></Button>
+            <Button x:Name="ViewStartedTourButton" Content="Pogledj trenturnu turu" HorizontalAlignment="Right" VerticalAlignment="Center" Padding="5" Click="ViewStartedTourButton_Click"></Button>
             <DataGrid Grid.Row="1" x:Name="dataGridTours" ItemsSource="{Binding Tours, UpdateSourceTrigger=PropertyChanged}"  
                       SelectedItem="{Binding SelectedTour, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single" 
                       AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="dataGridTours_SelectionChanged">

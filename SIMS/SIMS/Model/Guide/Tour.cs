@@ -42,6 +42,8 @@ namespace SIMS.Model.Guide
             Images = new List<Image>();
             Checkpoints = new List<Checkpoint>();
             NumberOfPeople = 0;
+            MaxNumberOfPeople = 1;
+            Duration = 1;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
