@@ -41,7 +41,7 @@ namespace SIMS.View.Guest2View
             tours = new ObservableCollection<Tour>(_tourRepository.GetAll());
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void SearchClick(object sender, RoutedEventArgs e)
         {
             string duration = tbDuration.Text;
             string language = tbLanguage.Text;
@@ -95,7 +95,7 @@ namespace SIMS.View.Guest2View
             return tours;
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void NumberOfToursClick(object sender, RoutedEventArgs e)
         {
             NumberOfTourGuestView numberOfTourGuestView = new NumberOfTourGuestView(selectedTour, userId);
             numberOfTourGuestView.Show();

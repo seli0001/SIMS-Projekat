@@ -15,7 +15,7 @@
         <Label Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Da li zelite da potvrdite rezervaciju?"></Label>
         <Label HorizontalAlignment="Left"  VerticalAlignment="Center"  Margin="320,0,0,0"/>
 
-        <Button Grid.Row="1" Margin="5" Content="Potvrdi" HorizontalAlignment="Left" Width="150" Click="Button_Click_1"></Button>
-        <Button Grid.Row="1" Margin="5" Content="Promeni broj" HorizontalAlignment="Right" Width="150" Click="Button_Click"></Button>
+        <Button Grid.Row="1" Margin="5" Content="Potvrdi" HorizontalAlignment="Left" Width="150" Click="BookedClick"></Button>
+        <Button Grid.Row="1" Margin="5" Content="Promeni broj" HorizontalAlignment="Right" Width="150" Click="BackToNumberFormClick"></Button>
     </Grid>
 </Window>
