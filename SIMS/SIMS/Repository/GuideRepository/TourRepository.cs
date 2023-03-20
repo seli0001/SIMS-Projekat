@@ -48,6 +48,25 @@ namespace SIMS.Repository.GuideRepository
             return tour;
         }
 
+        public List<Tour> GetAlternative(Tour tour)
+        {
+            List<Tour> tours = GetAll();
+            List<Tour> alternativeTours = new List<Tour>();
+            return GetAlternativeTours(tours, alternativeTours, tour);
+        }
+
+        public List<Tour> GetAlternativeTours(List<Tour> tours, List<Tour> alternativeTours, Tour tour)
+        {
+            foreach (Tour foreachTour in tours)
+            {
+                if (tour.Location.Id == foreachTour.Location.Id && tour.Id != foreachTour.Id)
+                {
+                    alternativeTours.Add(foreachTour);
+                }
+            }
+            return alternativeTours;
+        }
+
         public void UpdateNumberOfPeople(Tour tour, int id)
         {
             List<Tour> tours = GetAll();
@@ -56,7 +75,7 @@ namespace SIMS.Repository.GuideRepository
             {
                 if (foreachTour.Id == id)
                 {
-                    foreachTour.NumberOfPeople = foreachTour.NumberOfPeople + tour.NumberOfPeople;
+                    foreachTour.NumberOfPeople =  tour.NumberOfPeople;
 
                 }
             }

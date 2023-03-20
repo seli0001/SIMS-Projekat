@@ -25,28 +25,39 @@ namespace SIMS.View.Guest2View
 
 
 
-        public NumberOfTourGuestView(Tour selectedTour, int userid)
+        public NumberOfTourGuestView(Tour selectedtour, int userid)
         {
             InitializeComponent();
-            tour = selectedTour;
+            tour = selectedtour;
             userId = userid;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void BookingTourViewClick(object sender, RoutedEventArgs e)
         {
-            if (tour.MaxNumberOfPeople < Convert.ToInt32(tbNumber.Text) && (tour.MaxNumberOfPeople - tour.NumberOfPeople) < Convert.ToInt32(tbNumber.Text))
+            if (tour.MaxNumberOfPeople < Convert.ToInt32(tbNumber.Text) || (tour.MaxNumberOfPeople - tour.NumberOfPeople) < Convert.ToInt32(tbNumber.Text))
             {
-                MessageBox.Show("Nema mesta!");
+                MessageBox.Show("Nema mesta,evo alternativa!");
+                AlternativeTourView alternativeTourView = new AlternativeTourView(tour, userId);
+                alternativeTourView.Show();
+                Close();
             }
             else
             {
-                int freeSpace = tour.MaxNumberOfPeople - Convert.ToInt32(tbNumber.Text);
+                int freeSpace = tour.MaxNumberOfPeople - Convert.ToInt32(tbNumber.Text)-tour.NumberOfPeople;
                 BookingTourView bookingTourView = new BookingTourView(freeSpace, tour, userId, Convert.ToInt32(tbNumber.Text));
                 bookingTourView.ShowDialog();
 
 
 
             }
+        }
+
+        private void BackToMainClick(object sender, RoutedEventArgs e)
+        {
+            MainGuest2View mainGuest2View = new MainGuest2View(userId);
+            mainGuest2View.Show();
+
+            Close();
         }
     }
 }
