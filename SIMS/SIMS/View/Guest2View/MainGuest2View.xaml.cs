@@ -38,13 +38,14 @@ namespace SIMS.View.Guest2View
             DataContext = this;
             userId = userid;
             _tourRepository = new TourRepository();
-            tours = new ObservableCollection<Tour>(_tourRepository.GetAll());
+            tours = new ObservableCollection<Tour>(_tourRepository.GetAll().Where(t=>t.Status.ToString().Equals("NOT_STARTED")));
         }
 
         private void SearchClick(object sender, RoutedEventArgs e)
         {
             string duration = tbDuration.Text;
             string language = tbLanguage.Text;
+           
             int numberOfPeople = 0;
           
             try
@@ -57,20 +58,20 @@ namespace SIMS.View.Guest2View
             }
                 
             string city = tbLocation.Text;
-
+            string country = tbCountry.Text;
             List<Tour> tours = _tourRepository.GetAll();
 
             List<Tour> filtratedTours= new List<Tour>();
 
 
-            filtratedTours = GetFiltratedTours(tours, city, duration, language, numberOfPeople);
+            filtratedTours = GetFiltratedTours(tours, city,country, duration, language, numberOfPeople);
             
         
             dgwTours.ItemsSource = filtratedTours;
         }
 
 
-        public List<Tour> GetFiltratedTours(List <Tour> tours,string city,string duration,string language,int numberOfPeople)
+        public List<Tour> GetFiltratedTours(List <Tour> tours,string city,string country,string duration,string language,int numberOfPeople)
         {
 
 
@@ -80,7 +81,8 @@ namespace SIMS.View.Guest2View
             && t.Duration.ToString().Equals(duration)
             && (t.MaxNumberOfPeople >= numberOfPeople)
             && t.Location.City.StartsWith(city, StringComparison.OrdinalIgnoreCase)
-
+            && t.Location.Country.StartsWith(country, StringComparison.OrdinalIgnoreCase)
+            && t.Status.ToString().Equals("NOT_STARTED")
             ).ToList();
             }
             else
@@ -88,7 +90,8 @@ namespace SIMS.View.Guest2View
             tours= tours.Where(t => t.Language.StartsWith(language, StringComparison.OrdinalIgnoreCase)
             && (t.MaxNumberOfPeople >= numberOfPeople)
             && t.Location.City.StartsWith(city, StringComparison.OrdinalIgnoreCase)
-
+            && t.Location.Country.StartsWith(country, StringComparison.OrdinalIgnoreCase)
+            && t.Status.ToString().Equals("NOT_STARTED")
             ).ToList();
             }
 
