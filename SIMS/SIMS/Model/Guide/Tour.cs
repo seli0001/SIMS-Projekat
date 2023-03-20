@@ -19,6 +19,8 @@ namespace SIMS.Model.Guide
     }
     public class Tour : ISerializable, INotifyPropertyChanged
     {
+        private TourStatus _status;
+
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -31,7 +33,7 @@ namespace SIMS.Model.Guide
         public List<Image> Images { get; set; }
         public List<Checkpoint> Checkpoints { get; set; }
         public User Guide { get; set; }
-        public TourStatus Status { get; set; }
+        public TourStatus Status { get => _status; set { _status = value; OnPropertyChanged(); } }
 
         public Tour()
         {
@@ -79,7 +81,7 @@ namespace SIMS.Model.Guide
             Location = new Location() { Id = int.Parse(csvValues[7]) };
             NumberOfPeople = int.Parse(csvValues[8]);
             Guide = new User() { Id = int.Parse(csvValues[9]) };
-            Status = (TourStatus) Enum.Parse(typeof(TourStatus), csvValues[10]);
+            Status = (TourStatus)Enum.Parse(typeof(TourStatus), csvValues[10]);
         }
 
 

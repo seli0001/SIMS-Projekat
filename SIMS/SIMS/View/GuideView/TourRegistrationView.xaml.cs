@@ -107,12 +107,18 @@ public partial class TourRegistrationView : Window
         Images.Add(bitmapImage);
     }
     
-
+    public int GetNextIndex()
+    {
+        return Checkpoints.Count == 0 ? 1 : Checkpoints.Max(checkpoint => checkpoint.Index) + 1;
+    }
+    
     private void AddNewCheckpoint(object sender, RoutedEventArgs e)
     {
         if (CheckPointTextBox.Text != "")
         {
             var checkPoint = new Checkpoint() { Name = CheckPointTextBox.Text };
+            checkPoint.Index = GetNextIndex();
+            checkPoint.IsChecked = false;
             Tour.Checkpoints.Add(checkPoint);
             Checkpoints.Add(checkPoint);
             CheckPointTextBox.Text = "";
@@ -127,4 +133,5 @@ public partial class TourRegistrationView : Window
             Checkpoints.RemoveAt(checkpointListView.SelectedIndex);
         }
     }
+    
 }

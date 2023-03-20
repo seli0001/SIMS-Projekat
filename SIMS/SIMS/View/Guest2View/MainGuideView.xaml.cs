@@ -61,7 +61,13 @@ namespace SIMS.View.GuideView
 
         private void dataGridTours_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(SelectedTour.Status == TourStatus.NOT_STARTED)
+            if (dataGridTours.SelectedIndex == -1)
+                return;
+            if(Tours.FirstOrDefault(t => t.Status == TourStatus.STARTED) != null)
+            {
+                StartTourButton.IsEnabled = false;
+            }
+            else if(SelectedTour.Status == TourStatus.NOT_STARTED)
             {
                 StartTourButton.IsEnabled = true;
             }
@@ -69,6 +75,15 @@ namespace SIMS.View.GuideView
             {
                 StartTourButton.IsEnabled = false;
             }
+        }
+
+        private void StartTourButton_Click(object sender, RoutedEventArgs e)
+        {
+            SelectedTour.Status = TourStatus.STARTED;
+            StartTourButton.IsEnabled = false;
+            _tourRepository.Update(SelectedTour);
+            LiveTourTrackingView liveTourTrackingView = new LiveTourTrackingView(SelectedTour);
+            liveTourTrackingView.Show();
         }
     }
 }
