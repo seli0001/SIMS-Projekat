@@ -1,0 +1,38 @@
+﻿<Window x:Class="SIMS.View.GuideView.MainGuideView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SIMS.View.GuideView"
+        mc:Ignorable="d"
+        Title="MainGuideView" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="10*"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="20*"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Button Grid.Column="1" Grid.Row="0" Content="Dodaj Turu" HorizontalAlignment="Center" Height="27"  VerticalAlignment="Center" Width="112" Click="RegisterTour"/>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="10*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Button x:Name="StartTourButton" Content="Zapocni turu" HorizontalAlignment="Left" VerticalAlignment="Center" Click="StartTourButton_Click"></Button>
+            <DataGrid Grid.Row="1" x:Name="dataGridTours" ItemsSource="{Binding Tours, UpdateSourceTrigger=PropertyChanged}"  
+                      SelectedItem="{Binding SelectedTour, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single" 
+                      AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="dataGridTours_SelectionChanged">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="*" Header="Naziv ture" Binding="{Binding Name}"></DataGridTextColumn>
+                    <DataGridTextColumn Width="*" Header="Vreme pocetka" Binding="{Binding StartTime.Time}"></DataGridTextColumn>
+                    <DataGridTextColumn Width="*" Header="Status" Binding="{Binding Status}"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</Window>
