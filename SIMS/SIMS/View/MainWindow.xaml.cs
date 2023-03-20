@@ -49,7 +49,9 @@ namespace SIMS
                     }
                     else if (user.Role == ROLE.Guest1)
                     {
-                        MessageBox.Show("Guest1");
+                        FirstGuestMainView firstGuestMainView = new FirstGuestMainView();
+                        firstGuestMainView.Show();
+                        Close();
                     }
                     else if (user.Role == ROLE.Guest2)
                     {

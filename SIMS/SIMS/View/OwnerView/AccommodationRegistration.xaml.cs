@@ -339,34 +339,27 @@ namespace SIMS.View.OwnerView
 
             if (SelectedAccommodation != null)
             {
-                /*
-                SelectedComment.Text = Text;
-                SelectedComment.CreationTime = DateTime.Now;
-                Comment updatedComment = _repository.Update(SelectedComment);
-                if (updatedComment != null)
-                {
-                    // Update observable collection
-                    int index = CommentsOverview.Comments.IndexOf(SelectedComment);
-                    CommentsOverview.Comments.Remove(SelectedComment);
-                    CommentsOverview.Comments.Insert(index, updatedComment);
-                }
-                */
+                //Code for previewing accommodation
             }
             else
             {
-                Location newLocation = new Location(Country, City);
-                Location savedLocation = _locationRepository.Save(newLocation);
-
-
-                _accommodationImages = _imageRepository.SetId(_accommodationImages);
-
-                Accommodation newAccommodation = new Accommodation(AcName, savedLocation, AccTypeEnum, MaxGuestNum, MinReservationDays, CancelDaysNumber, LoggedInUser, _accommodationImages);
-                Accommodation savedAccommodation = _repository.Save(newAccommodation);
-                _imageRepository.SaveAll(_accommodationImages, savedAccommodation);
-                OwnerMainView.Accommodations.Add(savedAccommodation);
+                StoreAccommodation();
             }
 
             Close();
+        }
+
+        private void StoreAccommodation()
+        {
+            Location newLocation = new Location(Country, City);
+            Location savedLocation = _locationRepository.Save(newLocation);
+
+            _accommodationImages = _imageRepository.SetId(_accommodationImages);
+
+            Accommodation newAccommodation = new Accommodation(AcName, savedLocation, AccTypeEnum, MaxGuestNum, MinReservationDays, CancelDaysNumber, LoggedInUser, _accommodationImages);
+            Accommodation savedAccommodation = _repository.Save(newAccommodation);
+            _imageRepository.SaveAll(_accommodationImages, savedAccommodation);
+            OwnerMainView.Accommodations.Add(savedAccommodation);
         }
 
         private void Cancel(object sender, RoutedEventArgs e)
