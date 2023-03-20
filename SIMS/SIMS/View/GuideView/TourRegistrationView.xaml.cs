@@ -32,7 +32,7 @@ public partial class TourRegistrationView : Window
     public ObservableCollection<Checkpoint> Checkpoints;
     public ObservableCollection<BitmapImage> Images;
     public Tour Tour { get; set; }
-
+    public List<DateTime> StartDates { get; set; }
     public TourRegistrationView(User guide)
     {
         InitializeComponent();
@@ -40,34 +40,100 @@ public partial class TourRegistrationView : Window
         Tour = new Tour();
         Checkpoints = new ObservableCollection<Checkpoint>();
         Images = new ObservableCollection<BitmapImage>();
+        StartDates = new List<DateTime>();
         imageListView.ItemsSource = Images;
         checkpointListView.ItemsSource = Checkpoints;
+        PopulateComboBoxes();
         _guide = guide;
         DataContext = this;
     }
 
-    public bool CheckStartTime()
+    public void PopulateComboBoxes()
     {
-        string pattern = @"^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$";
-        return date.SelectedDate != null && Regex.IsMatch(time.Text, pattern);
+        List<string> hours = new List<string>();
+        List<string> minutes = new List<string>();
+
+        // add the hours to the list
+        for (int i = 0; i < 24; i++)
+        {
+            hours.Add(i.ToString("00"));
+        }
+        for (int i = 0; i < 60; i += 5)
+        {
+            minutes.Add(i.ToString("00"));
+        }
+
+        
+        hourComboBox.ItemsSource = hours;
+        minutesComboBox.ItemsSource = minutes;
     }
 
-    public void AddStartTime()
+    public bool CheckStartTime(string time)
     {
-        string startTime = date.SelectedDate.Value.Date.ToShortDateString() + ' ' + time.Text;
-        Tour.StartTime.Time = DateTime.Parse(startTime);
+        string pattern = @"^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$";
+        return date.SelectedDate != null && Regex.IsMatch(time, pattern);
     }
+
 
     private void RegisterTour(object sender, RoutedEventArgs e)
     {
         
-        if (CheckStartTime())
+        if (IsValid())
         {
-            AddStartTime();
             Tour.Guide = _guide;
-            _tourRepository.Save(Tour);
+            foreach (var date in StartDates)
+            {
+                Tour.StartTime.Time = date;
+                _tourRepository.Save(Tour);
+            }
+            
             Close();
         }
+    }
+
+    public bool IsValid()
+    {
+        if (string.IsNullOrWhiteSpace(Tour.Name))
+        {
+            return false;
+        }
+        if (string.IsNullOrWhiteSpace(Tour.Location.City))
+        {
+            return false;
+        }
+        if (string.IsNullOrWhiteSpace(Tour.Location.Country))
+        {
+            return false;
+        }
+        if (string.IsNullOrWhiteSpace(Tour.Description))
+        {
+            return false;
+        }
+        if (string.IsNullOrWhiteSpace(Tour.Language))
+        {
+            return false;
+        }
+        if (string.IsNullOrWhiteSpace(Tour.Description))
+        {
+            return false;
+        }
+        if (Checkpoints.Count < 2)
+        {
+            return false;
+        }
+        if (StartDates.Count < 1)
+        {
+            return false;
+        }
+        if (!int.TryParse(maxNumberTextBox.Text, out int number))
+        {
+            return false;
+        }
+        if (!int.TryParse(durationTextBox.Text, out int number2))
+        {
+            return false;
+        }
+        return true;
     }
 
     private void AddImageFromFileDialog(object sender, RoutedEventArgs e)
@@ -133,5 +199,18 @@ public partial class TourRegistrationView : Window
             Checkpoints.RemoveAt(checkpointListView.SelectedIndex);
         }
     }
-    
+
+    private void AddDateButton_Click(object sender, RoutedEventArgs e)
+    {
+        string time = hourComboBox.SelectedItem + ":" + minutesComboBox.SelectedItem;
+        if (CheckStartTime(time))
+        {
+            string startTime = date.SelectedDate.Value.Date.ToShortDateString() + ' ' + time;
+            StartDates.Add(DateTime.Parse(startTime));
+            hourComboBox.SelectedIndex = -1;
+            minutesComboBox.SelectedIndex = -1;
+            date.SelectedDate = null;
+            MessageBox.Show("Uspesno ste dodali datum");
+        }
+    }
 }
