@@ -162,11 +162,9 @@ namespace SIMS.View.FirstGuestView
             if(_reservationRepository.AvailableAccommodation(reservation))
             {
                 _reservationRepository.Save(reservation);
+                MessageBox.Show("Accommodation " + SelectedAccommodation.Name + " successfully booked from " + FromDate.ToShortDateString() + " to " + FromDate.AddDays(TimeOfStay).ToShortDateString());
             }
-            else
-            {
-                _reservationRepository.GetFirstAvailableDate(reservation);
-            }
+            
 
         }
     }

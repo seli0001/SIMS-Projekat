@@ -34,12 +34,13 @@ namespace SIMS.Repository
             return reservations.FirstOrDefault(reservation => reservation.Id == id);
         }
 
-        public List<Reservation> GetByAccommodationId(int id)
+        public List<Reservation> GetByAccommodationsId(int id)
         {
             List<Reservation> reservations = GetAll();
             return reservations.Where(reservation => reservation.Accommodation.Id == id).ToList();
         }
 
+        
 
         public List<Reservation> GetAll()
         {
@@ -56,39 +57,76 @@ namespace SIMS.Repository
             return reservation;
         }
 
-        public Boolean AvailableAccommodation(Reservation reservation)
+        /*public Boolean AvailableAccommodation(Reservation reservation)
         {
-            List<Reservation> bookedReservations = GetByAccommodationId(reservation.Accommodation.Id);
+            List<Reservation> bookedReservations = GetByAccommodationsId(reservation.Accommodation.Id);
+
+            bookedReservations.Sort((r1, r2) => r1.FromDate.CompareTo(r2.FromDate));
+            Reservation lastReservation = bookedReservations[0];
+
+            foreach (Reservation bookedReservation in bookedReservations)
+            {
+                
+                if (reservation.FromDate >= lastReservation.FromDate && reservation.FromDate < lastReservation.ToDate && reservation.FromDate.AddDays(reservation.TimeOfStay) < bookedReservation.FromDate)
+                {
+                    MessageBox.Show("Unfortunately, we cannot book this for you because it is already booked in the given time. The first available day is " + GetFirstAvailableDate(reservation).ToString());
+                    return false;
+                }
+                lastReservation = bookedReservation;
+            }
+            return true;
+        }*/
+
+
+        public bool AvailableAccommodation(Reservation reservation)
+        {
+            List<Reservation> bookedReservations = GetByAccommodationsId(reservation.Accommodation.Id);
+
+            bookedReservations.Sort((r1, r2) => r1.FromDate.CompareTo(r2.FromDate));
+            Reservation lastReservation = new Reservation() { FromDate = DateTime.MinValue, ToDate = DateTime.MinValue }; 
+
             foreach (Reservation bookedReservation in bookedReservations)
             {
                 if (reservation.FromDate >= bookedReservation.FromDate && reservation.FromDate < bookedReservation.ToDate)
                 {
-                    MessageBox.Show("Unfortunately, we cannot book this for you because it is already booked in the given time. The first available day is " + bookedReservation.ToDate);
+                    
+                    MessageBox.Show("Unfortunately, we cannot book this for you because it is already booked in the given time. The first available day is " + GetFirstAvailableDate(reservation).ToString());
                     return false;
                 }
+                foreach (Reservation reservation1 in bookedReservations)
+                {
+                    if (reservation.FromDate.AddDays(reservation.TimeOfStay) > reservation1.FromDate && reservation.FromDate.AddDays(reservation.TimeOfStay) < reservation1.ToDate)
+                    {
+                        MessageBox.Show("Unfortunately, we cannot book this for you because it is already booked in the given time. The first available day is " + GetFirstAvailableDate(reservation).ToString());
+                        return false;
+                    }
+                }
             }
+
             return true;
         }
 
 
         public DateTime GetFirstAvailableDate(Reservation reservation)
         {
-            List<Reservation> bookedReservations = GetByAccommodationId(reservation.Accommodation.Id);
+            List<Reservation> bookedReservations = GetByAccommodationsId(reservation.Accommodation.Id);
 
             bookedReservations.Sort((r1, r2) => r1.FromDate.CompareTo(r2.FromDate));
 
-            DateTime availableDate = reservation.FromDate;
+            DateTime availableDateFrom = reservation.FromDate;
+            DateTime availableDateTo= reservation.ToDate;
 
             foreach (Reservation bookedReservation in bookedReservations)
             {
-                if (availableDate < bookedReservation.FromDate)
+                
+                if (availableDateFrom < bookedReservation.FromDate && availableDateFrom.AddDays(reservation.TimeOfStay) < bookedReservation.FromDate)
                 {
-                    return availableDate;
+                    return availableDateFrom;
                 }
 
-                availableDate = bookedReservation.ToDate;
+                availableDateFrom = bookedReservation.ToDate;
             }
-            return availableDate;
+            return availableDateFrom;
         }
 
     }
