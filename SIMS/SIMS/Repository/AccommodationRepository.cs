@@ -11,7 +11,7 @@ using System.Xml.Linq;
 
 namespace SIMS.Repository
 {
-    internal class AccommodationRepository
+    public class AccommodationRepository
     {
         private const string _filePath = "../../../../SIMS/Resources/Data/Accommodations.csv";
 

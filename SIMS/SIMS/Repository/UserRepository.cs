@@ -25,7 +25,14 @@ namespace SIMS.Repository
             List<User> users = GetAllUsers();
             return users.FirstOrDefault(user => user.Username == username);
         }
-        
+
+        public User GetById(int id)
+        {
+            List<User> users = GetAllUsers();
+            return users.FirstOrDefault(user => user.Id == id);
+        }
+
+
         public List<User> GetAllUsers()
         {
             return serializer.FromCSV(filePath);

@@ -16,11 +16,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="View\OwnerView\add.png" />
-    <Resource Include="View\OwnerView\close.png" />
-    <Resource Include="View\OwnerView\pencil.png" />
-    <Resource Include="View\OwnerView\search.png" />
-    <Resource Include="View\OwnerView\trash-bin.png" />
+    <Resource Include="View\OwnerView\Images\add.png" />
+    <Resource Include="View\OwnerView\Images\close.png" />
+    <Resource Include="View\OwnerView\Images\pencil.png" />
+    <Resource Include="View\OwnerView\Images\search.png" />
+    <Resource Include="View\OwnerView\Images\trash-bin.png" />
   </ItemGroup>
 
 </Project>
