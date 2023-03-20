@@ -32,7 +32,7 @@ namespace SIMS.Repository.GuideRepository
             return _serializer.FromCSV(_filePath);
         }
         
-        public List<Checkpoint> GetByTourId(int tourId)
+        public List<Checkpoint> GetAllByTourId(int tourId)
         {
             List<Checkpoint> checkpoints = GetAll();
             return checkpoints.Where(checkPoint => checkPoint.Tour.Id == tourId).ToList();
@@ -70,5 +70,12 @@ namespace SIMS.Repository.GuideRepository
             _serializer.ToCSV(_filePath, allCheckpoints);
         }
         
+        public void Update(Checkpoint checkpoint)
+        {
+            List<Checkpoint> checkpoints = GetAll();
+            checkpoints.RemoveAll(c => c.Id == checkpoint.Id);
+            checkpoints.Add(checkpoint);
+            _serializer.ToCSV(_filePath, checkpoints);
+        }
     }
 }

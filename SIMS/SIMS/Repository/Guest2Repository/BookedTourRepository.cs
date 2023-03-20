@@ -38,6 +38,12 @@ namespace SIMS.Repository.Guest2Repository
             }
             return bookedTours;
         }
+        
+        public List<BookedTour> GetAllByTourId(int tourId)
+        {
+            List<BookedTour> bookedTours = GetAll();
+            return bookedTours.Where(bookedTour => bookedTour.Tour.Id == tourId).ToList();
+        }
 
 
         private int GenerateId()
@@ -66,6 +72,14 @@ namespace SIMS.Repository.Guest2Repository
             bookedTour.UserId = iduser;
             bookedTour.Id = GenerateId();
 
+            bookedTours.Add(bookedTour);
+            _serializer.ToCSV(_filePath, bookedTours);
+        }
+        
+        public void Update(BookedTour bookedTour)
+        {
+            List<BookedTour> bookedTours = GetAll();
+            bookedTours.RemoveAll(b => b.Id == bookedTour.Id);
             bookedTours.Add(bookedTour);
             _serializer.ToCSV(_filePath, bookedTours);
         }

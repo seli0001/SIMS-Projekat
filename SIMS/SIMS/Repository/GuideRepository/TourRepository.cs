@@ -42,7 +42,7 @@ namespace SIMS.Repository.GuideRepository
                 tour.Location = _locationRepository.GetById(tour.Location.Id);
                 tour.StartTime = _startTimeRepository.GetById(tour.StartTime.Id);
                 tour.Images = _imageRepository.GetByTourId(tour.Id);
-                tour.Checkpoints = _checkpointRepository.GetByTourId(tour.Id);
+                tour.Checkpoints = _checkpointRepository.GetAllByTourId(tour.Id);
             }
 
             return tour;
@@ -92,10 +92,16 @@ namespace SIMS.Repository.GuideRepository
                 tour.Location = _locationRepository.GetById(tour.Location.Id);
                 tour.StartTime = _startTimeRepository.GetById(tour.StartTime.Id);
                 tour.Images = _imageRepository.GetByTourId(tour.Id);
-                tour.Checkpoints = _checkpointRepository.GetByTourId(tour.Id);
+                tour.Checkpoints = _checkpointRepository.GetAllByTourId(tour.Id);
             }
 
             return tours;
+        }
+        
+        public List<Tour> GetAllByGuideId(int id)
+        {
+            List<Tour> tours = GetAll();
+            return tours.Where(tour => tour.Guide.Id == id).ToList();
         }
 
         public void Save(Tour tour)
@@ -119,6 +125,14 @@ namespace SIMS.Repository.GuideRepository
             
             tours.Add(tour);
             _serializer.ToCSV( _filePath, tours);
+        }
+        
+        public void Update(Tour tour)
+        {
+            List<Tour> tours = GetAll();
+            tours.RemoveAll(t => t.Id == tour.Id);
+            tours.Add(tour);
+            _serializer.ToCSV(_filePath, tours);
         }
     }
 }
