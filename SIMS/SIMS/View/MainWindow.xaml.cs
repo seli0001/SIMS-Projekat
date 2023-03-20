@@ -3,6 +3,7 @@ using SIMS.Model;
 using SIMS.Repository;
 using SIMS.View.Guest2View;
 using SIMS.View.GuideView;
+using SIMS.View.OwnerView;
 using System;
 using System.Collections.Generic;
 using System.Linq;

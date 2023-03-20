@@ -64,7 +64,7 @@ namespace SIMS.Model.Guide
             Location.Id.ToString(),
             NumberOfPeople.ToString(),
             Guide.Id.ToString(),
-            Status.ToString(),
+            Status.ToString()
         };
             return csvValues;
         }
