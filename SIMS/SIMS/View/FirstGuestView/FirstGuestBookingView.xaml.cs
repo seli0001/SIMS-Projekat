@@ -35,10 +35,11 @@ namespace SIMS.View.FirstGuestView
 
         private readonly AccommodationRepository _repository;
         private readonly ReservationRepository _reservationRepository;
+        private User LoggedInUser { get; set; }
 
         private readonly int[] validator;
 
-        public FirstGuestBookingView(Accommodation selectedAccommodation)
+        public FirstGuestBookingView(Accommodation selectedAccommodation, User user)
         {
             InitializeComponent();
             Title = "Accommodation reservation";
@@ -47,6 +48,7 @@ namespace SIMS.View.FirstGuestView
             _repository = new AccommodationRepository();
             _reservationRepository = new ReservationRepository();
             SelectedAccommodation = selectedAccommodation;
+            LoggedInUser = user;
         }
 
 
@@ -158,7 +160,7 @@ namespace SIMS.View.FirstGuestView
 
         private void BtnBook_Click(object sender, RoutedEventArgs e)
         {
-            Reservation reservation = new Reservation(FromDate, FromDate.AddDays(TimeOfStay), SelectedAccommodation, TimeOfStay, NumberOfGuests);
+            Reservation reservation = new Reservation(FromDate, FromDate.AddDays(TimeOfStay), SelectedAccommodation, TimeOfStay, NumberOfGuests, LoggedInUser);
             if(_reservationRepository.AvailableAccommodation(reservation))
             {
                 _reservationRepository.Save(reservation);
