@@ -14,6 +14,7 @@ namespace SIMS.Model
         public string Comment { get; set; }
         public User User { get; set; }
         public Reservation Reservation { get; set; }
+        //Images
 
         public OwnerRating()
         {
