@@ -78,7 +78,7 @@ namespace SIMS.View.FirstGuestView
                     MessageBox.Show(SelectedAccommodation.Name.ToString());
                     MessageBox.Show("Accommodation booked");
                 }*/
-                FirstGuestBookingView firstGuestBookingView = new FirstGuestBookingView(SelectedAccommodation);
+                FirstGuestBookingView firstGuestBookingView = new FirstGuestBookingView(SelectedAccommodation, LoggedInUser);
                 firstGuestBookingView.Show();
             }
         }

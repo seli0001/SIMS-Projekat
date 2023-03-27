@@ -72,8 +72,6 @@ namespace SIMS.View.FirstGuestView
             }
         }
 
-
-
         private int _timeOfStay = 1;
         public int TimeOfStay
         {
@@ -131,8 +129,6 @@ namespace SIMS.View.FirstGuestView
             }
         }
 
-
-
         private void ValidatorTest()
         {
             foreach (int validation in validator)
@@ -143,11 +139,6 @@ namespace SIMS.View.FirstGuestView
                 }
             }
         }
-
-       
-
-
-
 
         public event PropertyChangedEventHandler PropertyChanged;
 
