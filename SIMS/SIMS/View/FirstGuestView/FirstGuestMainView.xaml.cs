@@ -41,13 +41,16 @@ namespace SIMS.View.FirstGuestView
 
         private readonly AccommodationRepository _repository;
 
-        public FirstGuestMainView()
+        private User LoggedInUser { get; set; }
+
+        public FirstGuestMainView(User user)
         {
             InitializeComponent();
             DataContext = this;
             cbSearch.ItemsSource = Enum.GetValues(typeof(Type));
             _repository = new AccommodationRepository();
             Accommodations = new ObservableCollection<Accommodation>(_repository.GetForView());
+            LoggedInUser = user;
 
         }
 

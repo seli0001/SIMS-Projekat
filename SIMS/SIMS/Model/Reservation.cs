@@ -18,6 +18,8 @@ namespace SIMS.Model
             public int TimeOfStay { get; set; }
             public int NumberOfGuests { get; set; }
 
+            public User User { get; set; }
+
 
             
 
@@ -27,13 +29,14 @@ namespace SIMS.Model
 
             }
 
-            public Reservation(DateTime fromDate, DateTime toDate, Accommodation accommodation, int timeOfStay, int numberOfGuests)
+            public Reservation(DateTime fromDate, DateTime toDate, Accommodation accommodation, int timeOfStay, int numberOfGuests, User user)
             {
                 FromDate = fromDate;
                 ToDate = toDate;
                 Accommodation= accommodation;
                 TimeOfStay= timeOfStay;
                 NumberOfGuests= numberOfGuests;
+                User = user;
             }
 
             public string[] ToCSV()
@@ -45,7 +48,8 @@ namespace SIMS.Model
                     ToDate.ToString(),
                     Accommodation.Id.ToString(),
                     TimeOfStay.ToString(),
-                    NumberOfGuests.ToString()
+                    NumberOfGuests.ToString(),
+                    User.Id.ToString(),
                 };
                 return csvValues;
             }
@@ -58,7 +62,9 @@ namespace SIMS.Model
                 Accommodation = new Accommodation() { Id = Convert.ToInt32(csvValues[3]) };
                 TimeOfStay = Convert.ToInt32(csvValues[4]);
                 NumberOfGuests= Convert.ToInt32(csvValues[5]);
-            }
+                User = new User() { Id = Convert.ToInt32(csvValues[6]) };
+
+        }
 
     }
 }
