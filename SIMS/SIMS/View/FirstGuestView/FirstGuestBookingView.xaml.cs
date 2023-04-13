@@ -37,6 +37,7 @@ namespace SIMS.View.FirstGuestView
 
         private readonly AccommodationRepository _repository;
         private readonly ReservationRepository _reservationRepository;
+        private User LoggedInUser { get; set; }
 
         private readonly int[] validator;
 
