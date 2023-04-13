@@ -38,17 +38,18 @@ namespace SIMS.View.FirstGuestView
         private readonly LocationRepository _locationRepository;
 
         public ObservableCollection<Accommodation> Accommodations { get; set; }
+        public User LoggedInUser { get; set; }
 
         private readonly AccommodationRepository _repository;
 
-        public FirstGuestMainView()
+        public FirstGuestMainView(User user)
         {
             InitializeComponent();
             DataContext = this;
             cbSearch.ItemsSource = Enum.GetValues(typeof(Type));
             _repository = new AccommodationRepository();
             Accommodations = new ObservableCollection<Accommodation>(_repository.GetForView());
-
+            LoggedInUser = user;
         }
 
 
@@ -73,11 +74,6 @@ namespace SIMS.View.FirstGuestView
             if (gridGuest.SelectedIndex != -1)
             {
                 MessageBoxResult result = MessageBox.Show("Are you sure?", "Booking accomodation", MessageBoxButton.YesNo);
-                /*if (MessageBoxResult.Yes == result)
-                {
-                    MessageBox.Show(SelectedAccommodation.Name.ToString());
-                    MessageBox.Show("Accommodation booked");
-                }*/
                 FirstGuestBookingView firstGuestBookingView = new FirstGuestBookingView(SelectedAccommodation, LoggedInUser);
                 firstGuestBookingView.Show();
             }
@@ -108,6 +104,10 @@ namespace SIMS.View.FirstGuestView
             gridGuest.ItemsSource = SearchResults(name, location, type, maxGuests, minDays);
         }
 
-        
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ShowReservations showReservations = new ShowReservations(LoggedInUser);
+            showReservations.Show();
+        }
     }
 }

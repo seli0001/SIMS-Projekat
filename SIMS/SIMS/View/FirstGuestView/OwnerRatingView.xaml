@@ -5,8 +5,53 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SIMS.View.FirstGuestView"
         mc:Ignorable="d"
-        Title="OwnerRatingView" Height="450" Width="800">
+        Title="OwnerRatingView" Height="700" Width="450">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="500"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Grid.Column="0" Width="250" Height="200" Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label VerticalAlignment="Top" Grid.Row="0" Grid.Column="0" Height="30">Cleanliness:</Label>
+            <Label VerticalAlignment="Top" Grid.Row="1" Grid.Column="0" Height="30">Respect:</Label>
+            <Label VerticalAlignment="Top" Grid.Row="2" Grid.Column="0" Height="30">Images:</Label>
+
+
+            <StackPanel Grid.Row="0" Grid.Column="1">
+                <TextBox Text="{Binding Path=Cleanliness, UpdateSourceTrigger=LostFocus}"
+                     Height="20"></TextBox>
+                <Label x:Name="CleanlinessValidator" FontSize="11" Grid.Row="0" Grid.Column="1" Foreground="Red" Visibility="Hidden">X00</Label>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Grid.Column="1">
+                <TextBox Text="{Binding Path=RulesRespect, UpdateSourceTrigger=LostFocus}" 
+                     Height="20"></TextBox>
+                <Label x:Name="RulesValidator" FontSize="11" Foreground="Red" Visibility="Hidden">Veliko pocetno slovo</Label>
+            </StackPanel>
+
+            <TextBox Text="{Binding Path=Comment, UpdateSourceTrigger=LostFocus}" AcceptsReturn="True" TextWrapping="Wrap" Grid.RowSpan="2"
+                     Grid.Row="3" Grid.Column="1" />
+
+
+
+        </Grid>
+
+        <Button x:Name="BtnSubmit" Content="Oceni" IsCancel="True" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="112,15,0,0"
+                Click="SaveRating" IsEnabled="True"/>
+        <Button  x:Name="BtnCancel" Content="Odustani" IsDefault="True" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="33,0,0,413" Click="BtnCancel_Click"/>
     </Grid>
 </Window>

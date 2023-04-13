@@ -41,6 +41,7 @@
         <Label Content="Type" HorizontalAlignment="Left" Margin="280,5,0,0" Height="30" VerticalAlignment="Top" Width="70"/>
         <Label Content="Guests" HorizontalAlignment="Left" Margin="405,5,0,0" Height="30" VerticalAlignment="Top" Width="70"/>
         <Label Content="Days" HorizontalAlignment="Left" Margin="520,5,0,0" Height="30" VerticalAlignment="Top" Width="70"/>
+        <Button Content="Show My Reservations" HorizontalAlignment="Left" Margin="458,444,0,0" VerticalAlignment="Top" Height="25" Width="132" Click="Button_Click"/>
 
 
 

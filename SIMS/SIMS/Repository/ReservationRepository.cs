@@ -39,8 +39,13 @@ namespace SIMS.Repository
             List<Reservation> reservations = GetAll();
             return reservations.Where(reservation => reservation.Accommodation.Id == id).ToList();
         }
+        public List<Reservation> GetByUserId(int id)
+        {
+            List<Reservation> reservations = GetAll();
+            return reservations.Where(reservation => reservation.User.Id == id).ToList();
+        }
 
-        
+
 
         public List<Reservation> GetAll()
         {
@@ -56,27 +61,6 @@ namespace SIMS.Repository
             _serializer.ToCSV(_filePath, reservations);
             return reservation;
         }
-
-        /*public Boolean AvailableAccommodation(Reservation reservation)
-        {
-            List<Reservation> bookedReservations = GetByAccommodationsId(reservation.Accommodation.Id);
-
-            bookedReservations.Sort((r1, r2) => r1.FromDate.CompareTo(r2.FromDate));
-            Reservation lastReservation = bookedReservations[0];
-
-            foreach (Reservation bookedReservation in bookedReservations)
-            {
-                
-                if (reservation.FromDate >= lastReservation.FromDate && reservation.FromDate < lastReservation.ToDate && reservation.FromDate.AddDays(reservation.TimeOfStay) < bookedReservation.FromDate)
-                {
-                    MessageBox.Show("Unfortunately, we cannot book this for you because it is already booked in the given time. The first available day is " + GetFirstAvailableDate(reservation).ToString());
-                    return false;
-                }
-                lastReservation = bookedReservation;
-            }
-            return true;
-        }*/
-
 
         public bool AvailableAccommodation(Reservation reservation)
         {

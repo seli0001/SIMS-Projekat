@@ -26,7 +26,6 @@ namespace SIMS.View.OwnerView
     /// </summary>
     public partial class GuestRatingView : Window, INotifyPropertyChanged
     {
-
         private readonly int[] validator;
         private readonly GuestRatingRepository _repository;
         public Reservation SelectedReservation { get; set; }
