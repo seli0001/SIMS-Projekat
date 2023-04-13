@@ -1,13 +1,9 @@
-﻿using SIMS.Model;
-using SIMS.Model.AccommodationModel;
-using SIMS.Repository;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,33 +13,34 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Xml.Linq;
+using SIMS.Model;
+using SIMS.Repository;
 
-namespace SIMS.View.OwnerView
+namespace SIMS.View.FirstGuestView
 {
     /// <summary>
-    /// Interaction logic for GuestRatingView.xaml
+    /// Interaction logic for OwnerRatingView.xaml
     /// </summary>
-    public partial class GuestRatingView : Window, INotifyPropertyChanged
+    public partial class OwnerRatingView : Window
     {
         private readonly int[] validator;
-        private readonly GuestRatingRepository _repository;
+        private readonly OwnerRatingRepository _repository;
         public Reservation SelectedReservation { get; set; }
         public User LoggedInUser { get; set; }
 
-        public GuestRatingView(Reservation selectedReservation, User user)
+        public OwnerRatingView(Reservation reservation, User user)
         {
             InitializeComponent();
-            Title = "Rate Guest";
             DataContext = this;
-            validator = new int[3];
-            SelectedReservation = selectedReservation;
-            _repository = new GuestRatingRepository();
             LoggedInUser = user;
+            validator = new int[3];
+            SelectedReservation = reservation;
+            _repository = new OwnerRatingRepository();
         }
 
-        #region data
 
+        #region data
+        
         private int _cleanliness = 1;
         public int Cleanliness
         {
@@ -57,7 +54,7 @@ namespace SIMS.View.OwnerView
                     {
                         CleanlinessValidator.Content = "Ocena mora biti (1-5)";
                         CleanlinessValidator.Visibility = Visibility.Visible;
-                        validator[0] = 0;
+                        validator[0] = 1;
                     }
                     else
                     {
@@ -87,7 +84,7 @@ namespace SIMS.View.OwnerView
                     {
                         RulesValidator.Content = "Ocena mora biti (1-5)";
                         RulesValidator.Visibility = Visibility.Visible;
-                        validator[1] = 0;
+                        validator[1] = 1;
                     }
                     else
                     {
@@ -115,7 +112,7 @@ namespace SIMS.View.OwnerView
                 {
                     if (value.Length == 0)
                     {
-                        validator[2] = 0;
+                        validator[2] = 1;
                     }
                     else
                     {
@@ -134,26 +131,13 @@ namespace SIMS.View.OwnerView
         #endregion
 
 
-
-        private void SaveRating(object sender, RoutedEventArgs e)
-        {
-            GuestRating newRating = new GuestRating(Cleanliness, RulesRespect, Comment, LoggedInUser, SelectedReservation);
-            GuestRating savedRating = _repository.Save(newRating);
-            Close();
-        }
-
-        private void Cancel(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-
         private void ValidatorTest()
         {
             foreach (int kon in validator)
             {
                 if (kon == 0)
                 {
-                    BtnSubmit.IsEnabled = false;
+                    //BtnSubmit.IsEnabled = false;
                 }
             }
         }
@@ -165,5 +149,18 @@ namespace SIMS.View.OwnerView
         }
 
 
+        private void SaveRating(object sender, RoutedEventArgs e)
+        {
+            OwnerRating newRating = new OwnerRating(Cleanliness, RulesRespect, Comment, LoggedInUser, SelectedReservation);
+            OwnerRating savedRating = _repository.Save(newRating);
+            Close();
+        }
+
+        
+
+        private void BtnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }

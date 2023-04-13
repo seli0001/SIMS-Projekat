@@ -1,7 +1,7 @@
-﻿using Microsoft.VisualBasic;
-using SIMS.Model;
+﻿using SIMS.Model;
 using SIMS.Model.AccommodationModel;
 using SIMS.Repository;
+using SIMS.View.OwnerView;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,16 +17,23 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace SIMS.View.OwnerView
+namespace SIMS.View.FirstGuestView
 {
     /// <summary>
-    /// Interaction logic for ShowAccommodation.xaml
+    /// Interaction logic for ShowReservations.xaml
     /// </summary>
-    public partial class ShowAccommodation : Window
+    public partial class ShowReservations : Window
     {
+
         public Accommodation SelectedAccommodation { get; set; }
 
         private Reservation _selectedReservation;
+
+        public User LoggedInUser { get; set; }
+
+        private ReservationRepository _reservationRepository;
+
+        public static ObservableCollection<Reservation> Reservations { get; set; }
         public Reservation SelectedReservation
         {
             get => _selectedReservation;
@@ -42,20 +49,17 @@ namespace SIMS.View.OwnerView
             }
         }
 
-        public static ObservableCollection<Reservation> Reservations { get; set; }
 
-        public User LoggedInUser { get; set; }
 
-        private ReservationRepository _reservationRepository;
-        public ShowAccommodation(Accommodation selectedAccommodation, User user)
+        public ShowReservations(User user)
         {
             InitializeComponent();
             DataContext = this;
             _reservationRepository = new ReservationRepository();
-            Reservations = new ObservableCollection<Reservation>(_reservationRepository.GetByAccommodationsId(selectedAccommodation.Id));
+            Reservations = new ObservableCollection<Reservation>(_reservationRepository.GetByUserId(user.Id));
             LoggedInUser = user;
         }
-        
+
         //Proverava da li je od date1 do date2 proslo vise od 5 dana
         private bool CompareDates(DateTime date1, DateTime date2)
         {
@@ -66,10 +70,18 @@ namespace SIMS.View.OwnerView
             else return true;
         }
 
-        private void ShowRatingForm(object sender, RoutedEventArgs e)
+        /*private void ShowRatingForm(object sender, RoutedEventArgs e)
         {
-            GuestRatingView guestRatingView = new GuestRatingView(SelectedReservation, LoggedInUser);
-            guestRatingView.Show();
+            OwnerRatingView ownerRatingView = new OwnerRatingView(LoggedInUser);
+            ownerRatingView.Show();
+        }*/
+
+        
+
+        private void RateButton_Click_2(object sender, RoutedEventArgs e)
+        {
+            OwnerRatingView ownerRatingView = new OwnerRatingView(SelectedReservation, LoggedInUser);
+            ownerRatingView.Show();
         }
     }
 }

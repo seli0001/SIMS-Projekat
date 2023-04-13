@@ -17,6 +17,7 @@ namespace SIMS.Model
             public Accommodation Accommodation { get; set; }
             public int TimeOfStay { get; set; }
             public int NumberOfGuests { get; set; }
+            public User User { get; set; }
 
             public User User { get; set; }
 
@@ -64,7 +65,7 @@ namespace SIMS.Model
                 NumberOfGuests= Convert.ToInt32(csvValues[5]);
                 User = new User() { Id = Convert.ToInt32(csvValues[6]) };
 
-        }
+            }
 
     }
 }

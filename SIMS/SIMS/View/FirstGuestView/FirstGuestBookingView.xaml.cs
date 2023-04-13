@@ -33,6 +33,8 @@ namespace SIMS.View.FirstGuestView
 
         public Accommodation SelectedAccommodation { get; set; }
 
+        public User LoggedInUser { get; set; }
+
         private readonly AccommodationRepository _repository;
         private readonly ReservationRepository _reservationRepository;
         private User LoggedInUser { get; set; }
@@ -73,8 +75,6 @@ namespace SIMS.View.FirstGuestView
                 _toDate = value;
             }
         }
-
-
 
         private int _timeOfStay = 1;
         public int TimeOfStay
@@ -133,8 +133,6 @@ namespace SIMS.View.FirstGuestView
             }
         }
 
-
-
         private void ValidatorTest()
         {
             foreach (int validation in validator)
@@ -145,11 +143,6 @@ namespace SIMS.View.FirstGuestView
                 }
             }
         }
-
-       
-
-
-
 
         public event PropertyChangedEventHandler PropertyChanged;
 

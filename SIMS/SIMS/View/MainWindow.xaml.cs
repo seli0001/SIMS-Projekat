@@ -49,7 +49,7 @@ namespace SIMS
                     }
                     else if (user.Role == ROLE.Guest1)
                     {
-                        FirstGuestMainView firstGuestMainView = new FirstGuestMainView();
+                        FirstGuestMainView firstGuestMainView = new FirstGuestMainView(user);
                         firstGuestMainView.Show();
                         Close();
                     }
@@ -80,7 +80,9 @@ namespace SIMS
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            FirstGuestMainView firstGuestMainView = new FirstGuestMainView();
+            User user = _userRepository.GetUserByUsername("Guest1");
+
+            FirstGuestMainView firstGuestMainView = new FirstGuestMainView(user);
             firstGuestMainView.Show();
         }
     }
