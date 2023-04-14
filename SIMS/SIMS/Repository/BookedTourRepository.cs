@@ -1,5 +1,5 @@
-﻿using SIMS.Model.Guest2;
-using SIMS.Model.Guide;
+﻿using SIMS.Domain.Model;
+using SIMS.Domain.Model.Guide;
 using SIMS.Repository.GuideRepository;
 using SIMS.Serializer;
 using System;
@@ -8,9 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SIMS.Repository.Guest2Repository
+namespace SIMS.Repository
 {
-     class BookedTourRepository
+    class BookedTourRepository
     {
         private const string _filePath = "../../../../SIMS/Resources/Data/BookedTours.csv";
 
@@ -38,7 +38,7 @@ namespace SIMS.Repository.Guest2Repository
             }
             return bookedTours;
         }
-        
+
         public List<BookedTour> GetAllByTourId(int tourId)
         {
             List<BookedTour> bookedTours = GetAll();
@@ -75,7 +75,7 @@ namespace SIMS.Repository.Guest2Repository
             bookedTours.Add(bookedTour);
             _serializer.ToCSV(_filePath, bookedTours);
         }
-        
+
         public void Update(BookedTour bookedTour)
         {
             List<BookedTour> bookedTours = GetAll();

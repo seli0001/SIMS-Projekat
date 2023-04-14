@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SIMS.Model.Guide;
+using SIMS.Domain.Model.Guide;
 using SIMS.Serializer;
 
 namespace SIMS.Repository.GuideRepository

@@ -1,5 +1,4 @@
-﻿using SIMS.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,16 +13,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using static System.Net.Mime.MediaTypeNames;
 using System.Xml.Linq;
-using SIMS.Model.AccommodationModel;
 using SIMS.Repository;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
-using Type = SIMS.Model.AccommodationModel.Type;
+using Type = SIMS.Domain.Model.AccommodationModel.Type;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.ObjectModel;
 using Microsoft.Win32;
-using Image = SIMS.Model.Image;
+using Image = SIMS.Domain.Model.Image;
+using SIMS.Domain.Model.AccommodationModel;
+using SIMS.Domain.Model;
 
 namespace SIMS.View.OwnerView
 {

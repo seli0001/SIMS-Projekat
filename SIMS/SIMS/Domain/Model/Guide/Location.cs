@@ -1,28 +1,28 @@
-﻿using SIMS.Model.AccommodationModel;
-using SIMS.Serializer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SIMS.Serializer;
 
-namespace SIMS.Model
+namespace SIMS.Domain.Model.Guide
 {
-    public class Image : ISerializable
+    public class Location : ISerializable
     {
         public int Id { get; set; }
-        public string Path { get; set; }
-        public Accommodation Accommodation { get; set; }
+        public string Country { get; set; }
+        public string City { get; set; }
 
-        public Image()
+        public Location()
         {
 
         }
 
-        public Image(int id, string path)
+        public Location(int id, string country, string city)
         {
             Id = id;
-            Path = path;
+            Country = country;
+            City = city;
         }
 
         public string[] ToCSV()
@@ -30,8 +30,8 @@ namespace SIMS.Model
             string[] csvValues =
             {
             Id.ToString(),
-            Path,
-            Accommodation.Id.ToString(),
+            Country,
+            City,
         };
             return csvValues;
         }
@@ -39,8 +39,8 @@ namespace SIMS.Model
         public void FromCSV(string[] csvValues)
         {
             Id = int.Parse(csvValues[0]);
-            Path = csvValues[1];
-            Accommodation = new Accommodation() { Id = int.Parse(csvValues[2]) };
+            Country = csvValues[1];
+            City = csvValues[2];
         }
     }
 }

@@ -23,4 +23,9 @@
     <Resource Include="View\OwnerView\Images\trash-bin.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Domain\RepositoryInterface\" />
+    <Folder Include="Injector\" />
+  </ItemGroup>
+
 </Project>

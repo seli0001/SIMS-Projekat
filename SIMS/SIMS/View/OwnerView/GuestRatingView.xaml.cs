@@ -1,5 +1,5 @@
-﻿using SIMS.Model;
-using SIMS.Model.AccommodationModel;
+﻿using SIMS.Domain.Model;
+using SIMS.Domain.Model.AccommodationModel;
 using SIMS.Repository;
 using System;
 using System.Collections.Generic;

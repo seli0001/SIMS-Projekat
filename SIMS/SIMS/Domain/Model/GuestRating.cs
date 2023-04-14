@@ -1,13 +1,15 @@
-﻿using SIMS.Serializer;
+﻿using SIMS.Domain.Model.AccommodationModel;
+using SIMS.Serializer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
-namespace SIMS.Model
+namespace SIMS.Domain.Model
 {
-    class OwnerRating : ISerializable
+    public class GuestRating : ISerializable
     {
         public int Id { get; set; }
         public int Cleanliness { get; set; }
@@ -15,14 +17,13 @@ namespace SIMS.Model
         public string Comment { get; set; }
         public User User { get; set; }
         public Reservation Reservation { get; set; }
-        //Images
 
-        public OwnerRating()
+        public GuestRating()
         {
 
         }
 
-        public OwnerRating(int cleanliness, int rulesRespect, string comment, User user, Reservation reservation)
+        public GuestRating(int cleanliness, int rulesRespect, string comment, User user, Reservation reservation)
         {
             Cleanliness = cleanliness;
             RulesRespect = rulesRespect;
@@ -54,5 +55,6 @@ namespace SIMS.Model
             User = new User() { Id = Convert.ToInt32(values[4]) };
             Reservation = new Reservation() { Id = Convert.ToInt32(values[5]) };
         }
+
     }
 }

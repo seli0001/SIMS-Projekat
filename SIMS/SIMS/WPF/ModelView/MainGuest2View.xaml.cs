@@ -1,5 +1,5 @@
-﻿using SIMS.Model;
-using SIMS.Model.Guide;
+﻿using SIMS.Domain.Model.Guide;
+using SIMS.Domain.Model;
 using SIMS.Repository.GuideRepository;
 using System;
 using System.Collections.Generic;
@@ -15,8 +15,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using SIMS.Service.Services;
 
-namespace SIMS.View.Guest2View
+namespace SIMS.WPF.ModelView
 {
     /// <summary>
     /// Interaction logic for MainGuest2View.xaml
@@ -24,7 +25,9 @@ namespace SIMS.View.Guest2View
     public partial class MainGuest2View : Window
     {
 
-        private readonly TourRepository _tourRepository;
+
+        private readonly TourService _tourService;
+
 
         public ObservableCollection<Tour> tours { get; set; }
 
@@ -37,8 +40,10 @@ namespace SIMS.View.Guest2View
             InitializeComponent();
             DataContext = this;
             userId = userid;
-            _tourRepository = new TourRepository();
-            tours = new ObservableCollection<Tour>(_tourRepository.GetAll().Where(t=>t.Status.ToString().Equals("NOT_STARTED")));
+  
+            _tourService=new TourService();
+             tours = new ObservableCollection<Tour>(_tourService.GetNotStarted());
+
         }
 
         private void SearchClick(object sender, RoutedEventArgs e)
@@ -59,8 +64,8 @@ namespace SIMS.View.Guest2View
                 
             string city = tbLocation.Text;
             string country = tbCountry.Text;
-            List<Tour> tours = _tourRepository.GetAll();
 
+            List<Tour> tours=_tourService.GetAll();
             List<Tour> filtratedTours= new List<Tour>();
 
 
