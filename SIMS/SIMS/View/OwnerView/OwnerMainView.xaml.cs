@@ -16,6 +16,9 @@ using System.Windows.Shapes;
 using System.Xml.Linq;
 using SIMS.Model.AccommodationModel;
 using SIMS.Repository;
+using System.Reflection.Emit;
+using System.Windows.Threading;
+using System.Threading;
 
 namespace SIMS.View.OwnerView
 {
@@ -31,13 +34,45 @@ namespace SIMS.View.OwnerView
         public User LoggedInUser { get; set; }
 
         private readonly AccommodationRepository _repository;
+        private readonly GuestRatingRepository _guestRatingRepository;
+
+        private string DateL;
+        private Timer timer;
         public OwnerMainView(User user)
         {
             InitializeComponent();
             DataContext = this;
             LoggedInUser = user;
             _repository = new AccommodationRepository();
+            _guestRatingRepository = new GuestRatingRepository();
             Accommodations = new ObservableCollection<Accommodation>(_repository.GetByUser(user));
+
+            startClock();
+            timer = new Timer(CheckCondition, null, TimeSpan.Zero, TimeSpan.FromSeconds(10));
+        }
+
+        private void CheckCondition(object? state)
+        {
+            //Checking is there is any unreviewed reservation
+            if (_guestRatingRepository.checkIfNotRated())
+            {
+                MessageBox.Show("You Have some Unreviewed reservations!");
+            }
+
+            //Checking for points (is it got above or below 4.5, for super owner)
+        }
+
+        private void startClock()
+        {
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += tickevent;
+            timer.Start();
+        }
+        private void tickevent(object sender, EventArgs e)
+        {
+            DateL = DateTime.Now.ToString("h:m dd.MM.yyyy");
+            DateLabel.Content = DateL;
         }
 
         private void ShowCreateAccommodationForm(object sender, RoutedEventArgs e)

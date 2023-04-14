@@ -19,12 +19,6 @@ namespace SIMS.Model
             public int NumberOfGuests { get; set; }
             public User User { get; set; }
 
-            public User User { get; set; }
-
-
-            
-
-
             public Reservation()
             {
 

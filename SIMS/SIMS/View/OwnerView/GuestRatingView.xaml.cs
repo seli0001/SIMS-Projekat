@@ -30,7 +30,6 @@ namespace SIMS.View.OwnerView
         private readonly GuestRatingRepository _repository;
         public Reservation SelectedReservation { get; set; }
         public User LoggedInUser { get; set; }
-
         public GuestRatingView(Reservation selectedReservation, User user)
         {
             InitializeComponent();
@@ -139,7 +138,9 @@ namespace SIMS.View.OwnerView
         {
             GuestRating newRating = new GuestRating(Cleanliness, RulesRespect, Comment, LoggedInUser, SelectedReservation);
             GuestRating savedRating = _repository.Save(newRating);
+             ShowAccommodation.Reservations.Remove(SelectedReservation);
             Close();
+            MessageBox.Show("You have successfully reviewed");
         }
 
         private void Cancel(object sender, RoutedEventArgs e)
