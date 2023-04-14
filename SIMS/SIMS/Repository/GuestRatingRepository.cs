@@ -86,5 +86,46 @@ namespace SIMS.Repository
             }
             return _ratings.FindAll(c => c.Reservation.Id == reservation.Id);
         }
+
+        public bool checkIfNotRated()
+        {
+            _ratings = _serializer.FromCSV(_filePath);
+            List<Reservation> reservations = _reservationRepository.GetAll();
+            foreach (GuestRating rating in _ratings)
+            {
+                rating.User = _userRepository.GetById(rating.User.Id);
+                rating.Reservation = _reservationRepository.GetById(rating.Reservation.Id);
+            }
+
+            foreach (Reservation reservation in reservations)
+            {
+                if (GetByReservation(reservation).Count == 0)
+                {
+                    if (CompareDates(DateTime.Today, reservation.ToDate))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public bool checkRatingForReservation(Reservation reservation)
+        {
+            _ratings = _serializer.FromCSV(_filePath);
+            foreach (GuestRating rating in _ratings)
+            {
+                if (rating.Reservation.Id == reservation.Id) return true;
+            }
+            return false;
+        }
+        private bool CompareDates(DateTime date1, DateTime date2)
+        {
+            if (date2 > date1) return false;
+            TimeSpan difference = date1 - date2;
+            int days = difference.Days;
+            if (days > 5) return false;
+            else return true;
+        }
     }
 }

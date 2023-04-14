@@ -25,25 +25,27 @@ namespace SIMS.View.OwnerView
     public partial class ShowAccommodation : Window
     {
         public Accommodation SelectedAccommodation { get; set; }
-
         private Reservation _selectedReservation;
+
+        private GuestRatingRepository _guestRatingRepository;
         public Reservation SelectedReservation
         {
             get => _selectedReservation;
 
             set
             {
+                if(value != null)
+                {
+
                 DateTime today = DateTime.Today;
 
                 if (CompareDates(today, value.ToDate)) RateButton.IsEnabled = true;
                 else RateButton.IsEnabled = false;
-
-                _selectedReservation = value;
+                   _selectedReservation = value;
+                }
             }
         }
-
         public static ObservableCollection<Reservation> Reservations { get; set; }
-
         public User LoggedInUser { get; set; }
 
         private ReservationRepository _reservationRepository;
@@ -52,7 +54,10 @@ namespace SIMS.View.OwnerView
             InitializeComponent();
             DataContext = this;
             _reservationRepository = new ReservationRepository();
-            Reservations = new ObservableCollection<Reservation>(_reservationRepository.GetByAccommodationsId(selectedAccommodation.Id));
+            _guestRatingRepository = new GuestRatingRepository();
+            Reservations = new ObservableCollection<Reservation>();
+            SelectedAccommodation = selectedAccommodation;
+            UpdateReservations();
             LoggedInUser = user;
         }
         
@@ -70,6 +75,20 @@ namespace SIMS.View.OwnerView
         {
             GuestRatingView guestRatingView = new GuestRatingView(SelectedReservation, LoggedInUser);
             guestRatingView.Show();
+        }
+
+        public void UpdateReservations()
+        {
+            List<Reservation> AllReservationsForAccommodation = new List<Reservation>(_reservationRepository.GetByAccommodationsId(SelectedAccommodation.Id));
+            Reservations.Clear();
+            foreach(Reservation res in AllReservationsForAccommodation)
+            {
+                if (!_guestRatingRepository.checkRatingForReservation(res))
+                {
+                    Reservations.Add(res);
+                }
+            }
+
         }
     }
 }

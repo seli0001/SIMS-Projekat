@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SIMS.Model
 {
-    class OwnerRating : ISerializable
+    public class OwnerRating : ISerializable
     {
         public int Id { get; set; }
         public int Cleanliness { get; set; }

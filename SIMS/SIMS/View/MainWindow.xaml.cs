@@ -85,5 +85,13 @@ namespace SIMS
             FirstGuestMainView firstGuestMainView = new FirstGuestMainView(user);
             firstGuestMainView.Show();
         }
+
+        private void Button2_Click(object sender, RoutedEventArgs e)
+        {
+            User user = _userRepository.GetUserByUsername("Sloba");
+
+            OwnerMainView ownerMainView = new OwnerMainView(user);
+            ownerMainView.Show();
+        }
     }
 }

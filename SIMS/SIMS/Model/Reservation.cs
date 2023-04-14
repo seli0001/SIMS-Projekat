@@ -14,16 +14,14 @@ namespace SIMS.Model
             public int Id { get; set; }
             public DateTime FromDate { get; set; }
             public DateTime ToDate { get; set; }
+            
+            //Accommodation has Owner User
             public Accommodation Accommodation { get; set; }
             public int TimeOfStay { get; set; }
             public int NumberOfGuests { get; set; }
+
+            //Guest User
             public User User { get; set; }
-
-            public User User { get; set; }
-
-
-            
-
 
             public Reservation()
             {

@@ -16,6 +16,8 @@ using System.Windows.Shapes;
 using System.Xml.Linq;
 using SIMS.Model.AccommodationModel;
 using SIMS.Repository;
+using System.Threading;
+using System.Windows.Threading;
 
 namespace SIMS.View.OwnerView
 {
@@ -27,6 +29,12 @@ namespace SIMS.View.OwnerView
         public static ObservableCollection<Accommodation> Accommodations { get; set; }
 
         public Accommodation SelectedAccommodation { get; set; }
+        private readonly GuestRatingRepository _guestRatingRepository;
+        private readonly OwnerRatingRepository _ownerRatingRepository;
+
+        private readonly AccommodationRepository _accommodationRepository;
+        private string DateL;
+        private Timer timer;
 
         public User LoggedInUser { get; set; }
 
@@ -37,7 +45,62 @@ namespace SIMS.View.OwnerView
             DataContext = this;
             LoggedInUser = user;
             _repository = new AccommodationRepository();
+            _guestRatingRepository = new GuestRatingRepository();
+            _ownerRatingRepository = new OwnerRatingRepository();
+            _accommodationRepository = new AccommodationRepository();
             Accommodations = new ObservableCollection<Accommodation>(_repository.GetByUser(user));
+
+            startClock();
+            timer = new Timer(CheckCondition, null, TimeSpan.Zero, TimeSpan.FromMinutes(1));
+        }
+
+        private void CheckCondition(object? state)
+        {
+            //Unreviewed Notification
+            if (_guestRatingRepository.checkIfNotRated())
+            {
+                MessageBox.Show("You Have some Unreviewed reservations!");
+            }
+
+            //Super owner
+            if (checkIsSuperOwner())
+            {
+                _accommodationRepository.makeSuperOwner(LoggedInUser);
+                MessageBox.Show("Congratulations You Have Became a SUPEROWNER!!!!");
+            }
+        }
+
+        private bool checkIsSuperOwner()
+        {
+            List<OwnerRating> ratings = new List<OwnerRating>(_ownerRatingRepository.GetAll());
+            return ratings.Count > 5 && checkRating(ratings);
+        }
+
+        private bool checkRating(List <OwnerRating> ratings)
+        {
+            double score = 0;
+            foreach (OwnerRating rating in ratings)
+            {
+                score += (rating.RulesRespect + rating.Cleanliness) / 2.0;
+            }
+            score /= ratings.Count;
+            if (score > 4.5) return true;
+            else return false;
+        }
+
+
+
+        private void startClock()
+        {
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += tickevent;
+            timer.Start();
+        }
+        private void tickevent(object sender, EventArgs e)
+        {
+            DateL = DateTime.Now.ToString("h:m dd.MM.yyyy");
+            DateLabel.Content = DateL;
         }
 
         private void ShowCreateAccommodationForm(object sender, RoutedEventArgs e)
@@ -64,6 +127,11 @@ namespace SIMS.View.OwnerView
                     Accommodations.Remove(SelectedAccommodation);
                 }
             }
+        }
+        private void ShowRatings(object sender, RoutedEventArgs e)
+        {
+            ShowRatings showRatings = new ShowRatings(LoggedInUser);
+            showRatings.Show();
         }
     }
 }

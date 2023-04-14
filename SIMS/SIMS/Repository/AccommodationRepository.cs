@@ -101,5 +101,35 @@ namespace SIMS.Repository
             return _accommodations.FindAll(c => c.User.Id == user.Id);
         }
 
+        public Accommodation GetById(int id)
+        {
+            _accommodations = _serializer.FromCSV(_filePath);
+            foreach (Accommodation accommodation in _accommodations)
+            {
+                accommodation.Location = _locationRepository.GetById(accommodation.Location.Id);
+                foreach (Image image in _imageRepository.GetByAccommodationId(accommodation.Id))
+                {
+                    accommodation.Images.Add(image);
+                }
+            }
+            return _accommodations.Find(c => c.Id == id);
+        }
+
+        
+        public void makeSuperOwner(User user)
+        {
+            _accommodations = GetByUser(user);
+            foreach (Accommodation accommodation in _accommodations)
+            {
+                accommodation.Location = _locationRepository.GetById(accommodation.Location.Id);
+                foreach (Image image in _imageRepository.GetByAccommodationId(accommodation.Id))
+                {
+                    accommodation.Images.Add(image);
+                }
+                accommodation.Super = true;
+                accommodation.Name = "*" + accommodation.Name;
+            }
+            _serializer.ToCSV(_filePath, _accommodations);
+        }
     }
 }

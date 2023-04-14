@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using SIMS.Model;
 using SIMS.Serializer;
 
@@ -84,5 +85,16 @@ namespace SIMS.Repository
             }
             return _ratings.FindAll(c => c.Reservation.Id == reservation.Id);
         }
+
+        public List<OwnerRating> GetByOwnerId(int id)
+        {
+            _ratings = _serializer.FromCSV(_filePath);
+            foreach (OwnerRating rating in _ratings)
+            {
+                rating.User = _userRepository.GetById(rating.User.Id);
+                rating.Reservation = _reservationRepository.GetById(rating.Reservation.Id);
+            }
+            return _ratings.FindAll(r => r.Reservation.Accommodation.User.Id == id);
+        }   
     }
 }
