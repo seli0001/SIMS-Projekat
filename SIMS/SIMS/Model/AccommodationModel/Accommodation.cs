@@ -40,7 +40,7 @@ namespace SIMS.Model.AccommodationModel
             MaxGuestsNumber = maxGNum;
             MinBookingDays = minDays;
             CancelDaysNumber = cancelDays;
-            Super = super;
+            Super = false;
             User = user;
             Images = images;
         }

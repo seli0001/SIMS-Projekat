@@ -28,10 +28,10 @@ namespace SIMS.Repository
             _serializer.ToCSV(_filePath, _owners);
             return superOwner;
         }
-        public void Delete(SuperOwner superOwner)
+        public void Delete(User user)
         {
             _owners = _serializer.FromCSV(_filePath);
-            SuperOwner founded = _owners.Find(c => c.Id == superOwner.Id);
+            SuperOwner founded = _owners.Find(c => c.Id == user.Id);
             _owners.Remove(founded);
             _serializer.ToCSV(_filePath, _owners);
         }

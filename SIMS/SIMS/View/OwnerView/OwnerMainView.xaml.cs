@@ -51,7 +51,7 @@ namespace SIMS.View.OwnerView
             Accommodations = new ObservableCollection<Accommodation>(_repository.GetByUser(user));
 
             startClock();
-            timer = new Timer(CheckCondition, null, TimeSpan.Zero, TimeSpan.FromMinutes(1));
+            timer = new Timer(CheckCondition, null, TimeSpan.Zero, TimeSpan.FromSeconds(10));
         }
 
         private void CheckCondition(object? state)
@@ -63,17 +63,31 @@ namespace SIMS.View.OwnerView
             }
 
             //Super owner
-            if (checkIsSuperOwner())
+            int temp = checkIsSuperOwner();
+            if (temp == 1)
             {
                 _accommodationRepository.makeSuperOwner(LoggedInUser);
                 MessageBox.Show("Congratulations You Have Became a SUPEROWNER!!!!");
+            }else if(temp == 0)
+            {
+                _accommodationRepository.deleteSuperOwner(LoggedInUser);
+                MessageBox.Show("You have lost superowner title");
             }
         }
 
-        private bool checkIsSuperOwner()
+        private int checkIsSuperOwner()
         {
             List<OwnerRating> ratings = new List<OwnerRating>(_ownerRatingRepository.GetAll());
-            return ratings.Count > 5 && checkRating(ratings);
+            SuperOwnerRepository sor = new SuperOwnerRepository();
+            if (sor.CheckById(LoggedInUser.Id))
+            {
+                if(!(ratings.Count > 5 && checkRating(ratings)))
+                 return 0;
+            }
+            else if (ratings.Count > 5 && checkRating(ratings))
+                return 1;
+
+            return 2;
         }
 
         private bool checkRating(List <OwnerRating> ratings)
