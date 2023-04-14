@@ -140,7 +140,7 @@ namespace SIMS.View.OwnerView
             GuestRating savedRating = _repository.Save(newRating);
              ShowAccommodation.Reservations.Remove(SelectedReservation);
             Close();
-            MessageBox.Show("You have successfully reviewed");
+            MessageBox.Show("You have successfully rated guest");
         }
 
         private void Cancel(object sender, RoutedEventArgs e)
