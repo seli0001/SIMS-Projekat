@@ -1,4 +1,4 @@
-﻿using SIMS.Model.Guide;
+﻿using SIMS.Domain.Model.Guide;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace SIMS.View.Guest2View
+namespace SIMS.WPF.ModelView
 {
     /// <summary>
     /// Interaction logic for NumberOfTourGuestView.xaml

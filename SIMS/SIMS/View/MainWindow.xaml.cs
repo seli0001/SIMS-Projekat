@@ -1,7 +1,7 @@
 ﻿using SIMS.View.FirstGuestView;
-using SIMS.Model;
 using SIMS.Repository;
-using SIMS.View.Guest2View;
+using SIMS.WPF.ModelView;
+
 using SIMS.View.GuideView;
 using SIMS.View.OwnerView;
 using System;
@@ -18,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SIMS.Domain.Model;
 
 namespace SIMS
 {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using SIMS.Serializer;
 
-namespace SIMS.Model.AccommodationModel
+namespace SIMS.Domain.Model.AccommodationModel
 {
     public enum Type
     {

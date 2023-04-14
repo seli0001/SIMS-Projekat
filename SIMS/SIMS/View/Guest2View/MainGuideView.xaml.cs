@@ -1,5 +1,4 @@
-﻿using SIMS.Model.Guide;
-using SIMS.Repository.GuideRepository;
+﻿using SIMS.Repository.GuideRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +12,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using SIMS.Model;
 using System.Collections.ObjectModel;
+using SIMS.Domain.Model.Guide;
+using SIMS.Domain.Model;
 
 namespace SIMS.View.GuideView
 {

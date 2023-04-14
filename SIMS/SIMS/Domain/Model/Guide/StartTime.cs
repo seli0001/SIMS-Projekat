@@ -1,27 +1,26 @@
-﻿using SIMS.Serializer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SIMS.Serializer;
 
-namespace SIMS.Model
+namespace SIMS.Domain.Model.Guide
 {
-    public class Location : ISerializable
+    public class StartTime : ISerializable
     {
         public int Id { get; set; }
-        public string Country { get; set; }
-        public string City { get; set; }
+        public DateTime Time { get; set; }
 
-        public Location()
+        public StartTime()
         {
 
         }
 
-        public Location(string country, string city)
+        public StartTime(int id, DateTime time)
         {
-            Country = country;
-            City = city;
+            Id = id;
+            Time = time;
         }
 
         public string[] ToCSV()
@@ -29,8 +28,7 @@ namespace SIMS.Model
             string[] csvValues =
             {
             Id.ToString(),
-            Country,
-            City,
+            Time.ToString(),
         };
             return csvValues;
         }
@@ -38,8 +36,7 @@ namespace SIMS.Model
         public void FromCSV(string[] csvValues)
         {
             Id = int.Parse(csvValues[0]);
-            Country = csvValues[1];
-            City = csvValues[2];
+            Time = DateTime.Parse(csvValues[1]);
         }
     }
 }

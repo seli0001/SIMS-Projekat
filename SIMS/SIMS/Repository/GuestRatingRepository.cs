@@ -1,5 +1,4 @@
-﻿using SIMS.Model.AccommodationModel;
-using SIMS.Model;
+﻿using SIMS.Domain.Model.AccommodationModel;
 using SIMS.Serializer;
 using System;
 using System.Collections.Generic;
@@ -7,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SIMS.Repository.GuideRepository;
+using SIMS.Domain.Model;
 
 namespace SIMS.Repository
 {

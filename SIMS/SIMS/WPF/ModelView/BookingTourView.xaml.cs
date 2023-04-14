@@ -1,6 +1,7 @@
-﻿using SIMS.Model.Guide;
-using SIMS.Repository.Guest2Repository;
+﻿using SIMS.Domain.Model.Guide;
+using SIMS.Repository;
 using SIMS.Repository.GuideRepository;
+using SIMS.Service.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,15 +16,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace SIMS.View.Guest2View
+namespace SIMS.WPF.ModelView
 {
     /// <summary>
     /// Interaction logic for BookingTourView.xaml
     /// </summary>
     public partial class BookingTourView : Window
     {
-        private readonly BookedTourRepository _bookedToursRepository;
-        private readonly TourRepository _toursRepository;
+    
+        private readonly BookedTourService _bookedTourService;    
+        private readonly TourService _tourService;
         public Tour tour { get; set; }
         public int freeSpace;
         public int userId;
@@ -36,8 +38,10 @@ namespace SIMS.View.Guest2View
             tour = tourinput;
             userId = userid;
             tbBox = textbox;
-            _toursRepository = new TourRepository();
-            _bookedToursRepository = new BookedTourRepository();
+           
+            _tourService=new TourService();
+          
+            _bookedTourService=new BookedTourService();
             freeSpace = freespace;
             MessageBox.Show("Ostalo je" + freeSpace.ToString() + "Mesta");
         }
@@ -45,8 +49,8 @@ namespace SIMS.View.Guest2View
         private void BookedClick(object sender, RoutedEventArgs e)
         {
             tour.NumberOfPeople = tour.NumberOfPeople + tbBox;
-            _toursRepository.UpdateNumberOfPeople(tour, tour.Id);
-            _bookedToursRepository.Save(tour, userId);
+            _tourService.UpdateNumberOfPeople(tour,tour.Id);
+            _bookedTourService.Save(tour, userId);
             MessageBox.Show("Uspesno ste rezervisali");
             Close();
         }

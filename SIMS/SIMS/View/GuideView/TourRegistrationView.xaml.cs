@@ -1,6 +1,6 @@
 ﻿using Microsoft.Win32;
-using SIMS.Model;
-using SIMS.Model.Guide;
+using SIMS.Domain.Model;
+using SIMS.Domain.Model.Guide;
 using SIMS.Repository.GuideRepository;
 using System;
 using System.Collections.Generic;
@@ -18,7 +18,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Image = SIMS.Model.Guide.Image;
+using Image = SIMS.Domain.Model.Guide.Image;
 
 namespace SIMS.View.GuideView;
 

@@ -1,6 +1,4 @@
-﻿using SIMS.Model;
-using SIMS.Model.AccommodationModel;
-using SIMS.Repository;
+﻿using SIMS.Repository;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,7 +19,8 @@ using System.Windows.Shapes;
 using System.Xml.Linq;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-
+using SIMS.Domain.Model.AccommodationModel;
+using SIMS.Domain.Model;
 
 namespace SIMS.View.FirstGuestView
 {
@@ -37,7 +36,7 @@ namespace SIMS.View.FirstGuestView
 
         private readonly AccommodationRepository _repository;
         private readonly ReservationRepository _reservationRepository;
-        private User LoggedInUser { get; set; }
+      //  private User LoggedInUser { get; set; }
 
         private readonly int[] validator;
 
