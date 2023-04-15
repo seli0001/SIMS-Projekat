@@ -13,5 +13,10 @@ namespace SIMS
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            Injector.Injector.BindComponents();
+        }   
+
     }
 }

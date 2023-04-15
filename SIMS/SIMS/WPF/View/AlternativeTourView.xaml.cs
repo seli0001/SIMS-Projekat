@@ -1,5 +1,4 @@
 ﻿using SIMS.Domain.Model.Guide;
-using SIMS.Repository.GuideRepository;
 using SIMS.Service.Services;
 using System;
 using System.Collections.Generic;
@@ -16,14 +15,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace SIMS.WPF.ModelView
+namespace SIMS.WPF.View
 {
     /// <summary>
     /// Interaction logic for AlternativeTourView.xaml
     /// </summary>
     public partial class AlternativeTourView : Window
     {
-       // private readonly TourRepository _tourRepository;
+        // private readonly TourRepository _tourRepository;
         private readonly TourService _tourService;
         public ObservableCollection<Tour> tours { get; set; }
 
@@ -36,9 +35,9 @@ namespace SIMS.WPF.ModelView
             DataContext = this;
             userId = user;
             //_tourRepository = new TourRepository();
-            _tourService=new TourService();
+            _tourService = new TourService();
             //tours = new ObservableCollection<Tour>(_tourRepository.GetAlternative(tour));
-             tours = new ObservableCollection<Tour>(_tourService.GetAlternative(tour));
+            tours = new ObservableCollection<Tour>(_tourService.GetAlternative(tour));
         }
 
         private void BackToMainForm(object sender, RoutedEventArgs e)
