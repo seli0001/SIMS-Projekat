@@ -1,6 +1,6 @@
 ﻿using SIMS.Domain.Model.Guide;
-using SIMS.Domain.Model;
-using SIMS.Repository.GuideRepository;
+using SIMS.Service.Services;
+
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,17 +15,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using SIMS.Service.Services;
 
-namespace SIMS.WPF.ModelView
+namespace SIMS.WPF.View
 {
     /// <summary>
     /// Interaction logic for MainGuest2View.xaml
     /// </summary>
     public partial class MainGuest2View : Window
     {
-
-
         private readonly TourService _tourService;
 
 
@@ -40,9 +37,9 @@ namespace SIMS.WPF.ModelView
             InitializeComponent();
             DataContext = this;
             userId = userid;
-  
-            _tourService=new TourService();
-             tours = new ObservableCollection<Tour>(_tourService.GetNotStarted());
+
+            _tourService = new TourService();
+            tours = new ObservableCollection<Tour>(_tourService.GetNotStarted());
 
         }
 
@@ -50,9 +47,9 @@ namespace SIMS.WPF.ModelView
         {
             string duration = tbDuration.Text;
             string language = tbLanguage.Text;
-           
+
             int numberOfPeople = 0;
-          
+
             try
             {
                 numberOfPeople = Convert.ToInt32(tbNumber.Text);
@@ -61,43 +58,43 @@ namespace SIMS.WPF.ModelView
             {
 
             }
-                
+
             string city = tbLocation.Text;
             string country = tbCountry.Text;
 
-            List<Tour> tours=_tourService.GetAll();
-            List<Tour> filtratedTours= new List<Tour>();
+            List<Tour> tours = _tourService.GetAll();
+            List<Tour> filtratedTours = new List<Tour>();
 
 
-            filtratedTours = GetFiltratedTours(tours, city,country, duration, language, numberOfPeople);
-            
-        
+            filtratedTours = GetFiltratedTours(tours, city, country, duration, language, numberOfPeople);
+
+
             dgwTours.ItemsSource = filtratedTours;
         }
 
 
-        public List<Tour> GetFiltratedTours(List <Tour> tours,string city,string country,string duration,string language,int numberOfPeople)
+        public List<Tour> GetFiltratedTours(List<Tour> tours, string city, string country, string duration, string language, int numberOfPeople)
         {
 
 
             if (duration != "")
             {
-            tours= tours.Where(t => t.Language.StartsWith(language, StringComparison.OrdinalIgnoreCase)
-            && t.Duration.ToString().Equals(duration)
-            && (t.MaxNumberOfPeople >= numberOfPeople)
-            && t.Location.City.StartsWith(city, StringComparison.OrdinalIgnoreCase)
-            && t.Location.Country.StartsWith(country, StringComparison.OrdinalIgnoreCase)
-            && t.Status.ToString().Equals("NOT_STARTED")
-            ).ToList();
+                tours = tours.Where(t => t.Language.StartsWith(language, StringComparison.OrdinalIgnoreCase)
+                && t.Duration.ToString().Equals(duration)
+                && (t.MaxNumberOfPeople >= numberOfPeople)
+                && t.Location.City.StartsWith(city, StringComparison.OrdinalIgnoreCase)
+                && t.Location.Country.StartsWith(country, StringComparison.OrdinalIgnoreCase)
+                && t.Status.ToString().Equals("NOT_STARTED")
+                ).ToList();
             }
             else
             {
-            tours= tours.Where(t => t.Language.StartsWith(language, StringComparison.OrdinalIgnoreCase)
-            && (t.MaxNumberOfPeople >= numberOfPeople)
-            && t.Location.City.StartsWith(city, StringComparison.OrdinalIgnoreCase)
-            && t.Location.Country.StartsWith(country, StringComparison.OrdinalIgnoreCase)
-            && t.Status.ToString().Equals("NOT_STARTED")
-            ).ToList();
+                tours = tours.Where(t => t.Language.StartsWith(language, StringComparison.OrdinalIgnoreCase)
+                && (t.MaxNumberOfPeople >= numberOfPeople)
+                && t.Location.City.StartsWith(city, StringComparison.OrdinalIgnoreCase)
+                && t.Location.Country.StartsWith(country, StringComparison.OrdinalIgnoreCase)
+                && t.Status.ToString().Equals("NOT_STARTED")
+                ).ToList();
             }
 
             return tours;
@@ -107,6 +104,13 @@ namespace SIMS.WPF.ModelView
         {
             NumberOfTourGuestView numberOfTourGuestView = new NumberOfTourGuestView(selectedTour, userId);
             numberOfTourGuestView.Show();
+            Close();
+        }
+
+        private void MenuClick(object sender, RoutedEventArgs e)
+        {
+            MenuGuest2 menuGuest2 = new MenuGuest2(userId);
+            menuGuest2.Show();
             Close();
         }
     }

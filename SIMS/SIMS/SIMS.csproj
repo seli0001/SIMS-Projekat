@@ -24,8 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Domain\RepositoryInterface\" />
-    <Folder Include="Injector\" />
+    <Folder Include="WPF\ModelView\" />
   </ItemGroup>
 
 </Project>

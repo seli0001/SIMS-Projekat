@@ -1,4 +1,5 @@
 ﻿using SIMS.Domain.Model.Guide;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace SIMS.WPF.ModelView
+namespace SIMS.WPF.View
 {
     /// <summary>
     /// Interaction logic for NumberOfTourGuestView.xaml
@@ -43,7 +44,7 @@ namespace SIMS.WPF.ModelView
             }
             else
             {
-                int freeSpace = tour.MaxNumberOfPeople - Convert.ToInt32(tbNumber.Text)-tour.NumberOfPeople;
+                int freeSpace = tour.MaxNumberOfPeople - Convert.ToInt32(tbNumber.Text) - tour.NumberOfPeople;
                 BookingTourView bookingTourView = new BookingTourView(freeSpace, tour, userId, Convert.ToInt32(tbNumber.Text));
                 bookingTourView.ShowDialog();
 
@@ -57,6 +58,13 @@ namespace SIMS.WPF.ModelView
             MainGuest2View mainGuest2View = new MainGuest2View(userId);
             mainGuest2View.Show();
 
+            Close();
+        }
+
+        private void UsingVoucher(object sender, RoutedEventArgs e)
+        {
+            UsingVouchers usingVaucher = new UsingVouchers(userId, tour);
+            usingVaucher.Show();
             Close();
         }
     }
