@@ -51,9 +51,9 @@ namespace SIMS.WPF.View
 
         private void ToursInProgressClick(object sender, RoutedEventArgs e)
         {
-          //  ToursInProgress toursInProgress = new ToursInProgress(userId);
-            //toursInProgress.Show();
-            //Close();
+            ToursInProgressView toursInProgress = new ToursInProgressView(userId);
+            toursInProgress.Show();
+            Close();
         }
 
         private void FinishedToursClick(object sender, RoutedEventArgs e)
