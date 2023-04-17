@@ -13,6 +13,11 @@
     <None Remove="View\OwnerView\pencil.png" />
     <None Remove="View\OwnerView\search.png" />
     <None Remove="View\OwnerView\trash-bin.png" />
+    <None Remove="WPF\View\OwnerView\Images\add.png" />
+    <None Remove="WPF\View\OwnerView\Images\close.png" />
+    <None Remove="WPF\View\OwnerView\Images\pencil.png" />
+    <None Remove="WPF\View\OwnerView\Images\search.png" />
+    <None Remove="WPF\View\OwnerView\Images\trash-bin.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +26,11 @@
     <Resource Include="View\OwnerView\Images\pencil.png" />
     <Resource Include="View\OwnerView\Images\search.png" />
     <Resource Include="View\OwnerView\Images\trash-bin.png" />
+    <Resource Include="WPF\View\OwnerView\Images\add.png" />
+    <Resource Include="WPF\View\OwnerView\Images\close.png" />
+    <Resource Include="WPF\View\OwnerView\Images\pencil.png" />
+    <Resource Include="WPF\View\OwnerView\Images\search.png" />
+    <Resource Include="WPF\View\OwnerView\Images\trash-bin.png" />
   </ItemGroup>
 
 </Project>

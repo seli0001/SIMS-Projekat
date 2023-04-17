@@ -1,56 +1,42 @@
-﻿using SIMS.Model;
+﻿using SIMS.Model.AccommodationModel;
+using SIMS.Model;
+using SIMS.Repository;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Xml.Linq;
-using SIMS.Model.AccommodationModel;
-using SIMS.Repository;
 using System.Threading;
 using System.Windows.Threading;
+using System.Windows;
+using SIMS.View.OwnerView;
+using System.Windows.Input;
 
-namespace SIMS.View.OwnerView
+namespace SIMS.WPF.ViewModel.OwnerViewModel
 {
-    /// <summary>
-    /// Interaction logic for OwnerMainView.xaml
-    /// </summary>
-    public partial class OwnerMainView : Window
+    public class OwnerMainViewModel : ViewModelBase
     {
         public static ObservableCollection<Accommodation> Accommodations { get; set; }
-
         public Accommodation SelectedAccommodation { get; set; }
+
+
         private readonly GuestRatingRepository _guestRatingRepository;
         private readonly OwnerRatingRepository _ownerRatingRepository;
-
         private readonly AccommodationRepository _accommodationRepository;
-        private string DateL;
+        
         private Timer timer;
 
         public User LoggedInUser { get; set; }
 
-        private readonly AccommodationRepository _repository;
-        public OwnerMainView(User user)
+        public OwnerMainViewModel(User user)
         {
-            InitializeComponent();
-            DataContext = this;
             LoggedInUser = user;
-            _repository = new AccommodationRepository();
+           
             _guestRatingRepository = new GuestRatingRepository();
             _ownerRatingRepository = new OwnerRatingRepository();
             _accommodationRepository = new AccommodationRepository();
-            Accommodations = new ObservableCollection<Accommodation>(_repository.GetByUser(user));
-
-            startClock();
+            Accommodations = new ObservableCollection<Accommodation>(_accommodationRepository.GetByUser(user));
             timer = new Timer(CheckCondition, null, TimeSpan.Zero, TimeSpan.FromSeconds(10));
         }
 
@@ -92,15 +78,14 @@ namespace SIMS.View.OwnerView
                 Accommodations.Add(acc);
             }
         }
-
         private int checkIsSuperOwner()
         {
             List<OwnerRating> ratings = new List<OwnerRating>(_ownerRatingRepository.GetAll());
             SuperOwnerRepository sor = new SuperOwnerRepository();
             if (sor.CheckById(LoggedInUser.Id))
             {
-                if(!(ratings.Count > 5 && checkRating(ratings)))
-                 return 0;
+                if (!(ratings.Count > 5 && checkRating(ratings)))
+                    return 0;
             }
             else if (ratings.Count > 5 && checkRating(ratings))
                 return 1;
@@ -108,7 +93,7 @@ namespace SIMS.View.OwnerView
             return 2;
         }
 
-        private bool checkRating(List <OwnerRating> ratings)
+        private bool checkRating(List<OwnerRating> ratings)
         {
             double score = 0;
             foreach (OwnerRating rating in ratings)
@@ -120,34 +105,55 @@ namespace SIMS.View.OwnerView
             else return false;
         }
 
-
-
-        private void startClock()
+        private ICommand _createAccommodationCommand;
+        public ICommand CreateAccommodationCommand
         {
-            DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(1);
-            timer.Tick += tickevent;
-            timer.Start();
-        }
-        private void tickevent(object sender, EventArgs e)
-        {
-            DateL = DateTime.Now.ToString("h:m dd.MM.yyyy");
-            DateLabel.Content = DateL;
+            get
+            {
+                return _createAccommodationCommand ?? (_createAccommodationCommand = new CommandBase(() => ShowCreateAccommodationForm(), true));
+            }
         }
 
-        private void ShowCreateAccommodationForm(object sender, RoutedEventArgs e)
+        private ICommand _updateAccommodationCommand;
+        public ICommand UpdateAccommodationCommand
+        {
+            get
+            {
+                return _updateAccommodationCommand ?? (_updateAccommodationCommand = new CommandBase(() => ShowUpdateAccommodationForm(), true));
+            }
+        }
+
+        private ICommand _deleteAccommodationCommand;
+        public ICommand DeleteAccommodationCommand
+        {
+            get
+            {
+                return _deleteAccommodationCommand ?? (_deleteAccommodationCommand = new CommandBase(() => DeleteAccommodationHandler(), true));
+            }
+        }
+
+        private ICommand _showRatings;
+        public ICommand ShowRatingsCommand
+        {
+            get
+            {
+                return _showRatings ?? (_showRatings = new CommandBase(() => ShowRatings(), true));
+            }
+        }
+
+        private void ShowCreateAccommodationForm()
         {
             AccommondationRegistration createAccommondationForm = new AccommondationRegistration(LoggedInUser);
             createAccommondationForm.Show();
         }
 
-        private void ShowUpdateAccommodationForm(object sender, RoutedEventArgs e)
+        private void ShowUpdateAccommodationForm()
         {
             ShowAccommodation showAccommodation = new ShowAccommodation(SelectedAccommodation, LoggedInUser);
             showAccommodation.Show();
         }
 
-        private void DeleteAccommodationHandler(object sender, RoutedEventArgs e)
+        private void DeleteAccommodationHandler()
         {
             if (SelectedAccommodation != null)
             {
@@ -155,15 +161,17 @@ namespace SIMS.View.OwnerView
                     MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    _repository.Delete(SelectedAccommodation);
+                    _accommodationRepository.Delete(SelectedAccommodation);
                     Accommodations.Remove(SelectedAccommodation);
                 }
             }
         }
-        private void ShowRatings(object sender, RoutedEventArgs e)
+        private void ShowRatings()
         {
             ShowRatings showRatings = new ShowRatings(LoggedInUser);
             showRatings.Show();
         }
+
+
     }
 }

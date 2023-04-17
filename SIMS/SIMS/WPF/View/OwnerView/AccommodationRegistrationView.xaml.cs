@@ -24,6 +24,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Collections.ObjectModel;
 using Microsoft.Win32;
 using Image = SIMS.Model.Image;
+using SIMS.WPF.ViewModel.OwnerViewModel;
 
 namespace SIMS.View.OwnerView
 {
@@ -359,7 +360,7 @@ namespace SIMS.View.OwnerView
             Accommodation newAccommodation = new Accommodation(AcName, savedLocation, AccTypeEnum, MaxGuestNum, MinReservationDays, CancelDaysNumber, LoggedInUser, _accommodationImages);
             Accommodation savedAccommodation = _repository.Save(newAccommodation);
             _imageRepository.SaveAll(_accommodationImages, savedAccommodation);
-            OwnerMainView.Accommodations.Add(savedAccommodation);
+            OwnerMainViewModel.Accommodations.Add(savedAccommodation);
         }
 
         private void Cancel(object sender, RoutedEventArgs e)

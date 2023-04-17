@@ -27,12 +27,11 @@
             <Label Grid.Row="0" Grid.Column="0" Height="30">Username:</Label>
             <Label Grid.Row="1" Grid.Column="0" Height="30">Password:</Label>
 
-            <TextBox Name="usernameTextBox" Grid.Row="0" Grid.Column="1"  Height="25" TextWrapping="Wrap" VerticalAlignment="Center"></TextBox>
-            <PasswordBox Name="passwordBox" Grid.Row="1" Grid.Column="1" Height="25" VerticalAlignment="Center"/>
+            <TextBox Text="{Binding Username}" Grid.Row="0" Grid.Column="1"  Height="25" TextWrapping="Wrap" VerticalAlignment="Center"></TextBox>
+            <TextBox Text="{Binding Password}"  Grid.Row="1" Grid.Column="1" Height="25" VerticalAlignment="Center"/>
         </Grid>
-        <Button Grid.Row="2" Content="SignIn"  HorizontalAlignment="Center" VerticalAlignment="Center" Height="20" Width="60" Click="SignIn"/>
-        <Button Content="Zuba" HorizontalAlignment="Left" Margin="335,0,0,0" Grid.Row="2" VerticalAlignment="Center" Click="Button_Click"/>
-        <Button Content="Sloba" HorizontalAlignment="Left" Margin="390,0,0,0" Grid.Row="2" VerticalAlignment="Center" Click="Button2_Click"/>
-
+        <Button Grid.Row="2" Content="SignIn"  HorizontalAlignment="Center" VerticalAlignment="Center" Height="20" Width="60" Command="{Binding SignInCommand}"/>
+        <Button Content="Zuba" HorizontalAlignment="Left" Margin="335,0,0,0" Grid.Row="2" VerticalAlignment="Center" Command="{Binding ZubaClickCommand}"/>
+        <Button Content="Sloba" HorizontalAlignment="Left" Margin="390,0,0,0" Grid.Row="2" VerticalAlignment="Center" Command="{Binding SlobaClickCommand}"/>
     </Grid>
 </Window>

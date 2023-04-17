@@ -16,22 +16,22 @@
 
         
         <ToolBar Grid.Row="0" Height="34">
-            <Button Click="ShowCreateAccommodationForm" Margin="0">
-                <Image Source="/View/OwnerView/Images/add.png" Height="15" Width="15"/>
+            <Button Command="{Binding CreateAccommodationCommand}" Margin="0">
+                <Image Source="/WPF/View/OwnerView/Images/add.png" Height="15" Width="15"/>
             </Button>
-            <Button Click="ShowUpdateAccommodationForm" Margin="0">
-                <Image Source="/View/OwnerView/Images/pencil.png" Height="15" Width="15"/>
+            <Button Command="{Binding UpdateAccommodationCommand}" Margin="0">
+                <Image Source="/WPF/View/OwnerView/Images/pencil.png" Height="15" Width="15"/>
             </Button>
-            <Button Click="DeleteAccommodationHandler" Margin="0">
-                <Image Source="/View/OwnerView/Images/trash-bin.png" Height="15" Width="15"/>
+            <Button Command="{Binding DeleteAccommodationCommand}" Margin="0">
+                <Image Source="/WPF/View/OwnerView/Images/trash-bin.png" Height="15" Width="15"/>
             </Button>
 
             <TextBox Width="100" HorizontalAlignment="Right" Text="{Binding Path=KontentPretrage, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <Button>
-                <Image Source="/View/OwnerView/Images/search.png" Height="15" Width="15"/>
+                <Image Source="/WPF/View/OwnerView/Images/search.png" Height="15" Width="15"/>
             </Button>
-            <Button Click="ShowRatings"  Width="100" Height="25" Content="Prikazi ocene"/>
-            <Button Click="ShowReschedulingRequests"  Width="200" Height="25" Content="Zahtevi za pomeranje rezervacije"/>
+            <Button Command="{Binding ShowRatingsCommand}"  Width="100" Height="25" Content="Prikazi ocene"/>
+            <Button Width="200" Height="25" Content="Zahtevi za pomeranje rezervacije"/>
 
         </ToolBar>
 
@@ -46,21 +46,8 @@
                 <DataGridTextColumn Header="Drzava" Binding="{Binding Location.Country}" Width="100"></DataGridTextColumn>
                 <DataGridTextColumn Header="Grad" Binding="{Binding Location.City}" Width="100"></DataGridTextColumn>
                 <DataGridTextColumn Header= "Tip" Binding="{Binding Type}" Width="*"></DataGridTextColumn>
-             </DataGrid.Columns>
+            </DataGrid.Columns>
         </DataGrid>
-
-        <Grid  Grid.Row="3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="1*" />
-            </Grid.ColumnDefinitions>
-
-            <Label HorizontalAlignment="Left" Grid.Column="0"  Content="Ime Vlasnika" />
-
-            <Label x:Name="DateLabel" HorizontalAlignment="Right" Grid.Column="1" Content="12/13/2002" />
-
-        </Grid>
-
 
     </Grid>
 </Window>
