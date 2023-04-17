@@ -21,7 +21,7 @@ namespace SIMS.Repository
 
         private List<GuestRating> _ratings;
 
-       public GuestRatingRepository()
+        public GuestRatingRepository()
         {
             _serializer = new Serializer<GuestRating>();
 
@@ -32,7 +32,13 @@ namespace SIMS.Repository
 
         public List<GuestRating> GetAll()
         {
-            return _serializer.FromCSV(_filePath);
+            _ratings = _serializer.FromCSV(_filePath);
+            foreach (GuestRating rating in _ratings)
+            {
+                rating.User = _userRepository.GetById(rating.User.Id);
+                rating.Reservation = _reservationRepository.GetById(rating.Reservation.Id);
+            }
+            return _ratings;
         }
 
         public GuestRating Save(GuestRating rating)
@@ -77,45 +83,21 @@ namespace SIMS.Repository
 
         public List<GuestRating> GetByReservation(Reservation reservation)
         {
-            _ratings = _serializer.FromCSV(_filePath);
-            foreach (GuestRating rating in _ratings)
-            {
-                rating.User = _userRepository.GetById(rating.User.Id);
-                rating.Reservation = _reservationRepository.GetById(rating.Reservation.Id);
-               
-            }
+            _ratings = GetAll();
             return _ratings.FindAll(c => c.Reservation.Id == reservation.Id);
         }
 
         public bool checkIfNotRated()
         {
-            _ratings = _serializer.FromCSV(_filePath);
+            _ratings = GetAll();
             List<Reservation> reservations = _reservationRepository.GetAll();
-            foreach (GuestRating rating in _ratings)
-            {
-                rating.User = _userRepository.GetById(rating.User.Id);
-                rating.Reservation = _reservationRepository.GetById(rating.Reservation.Id);
-            }
 
             foreach (Reservation reservation in reservations)
             {
-                if (GetByReservation(reservation).Count == 0)
+                if (GetByReservation(reservation).Count == 0 && CompareDates(DateTime.Today, reservation.ToDate))
                 {
-                    if (CompareDates(DateTime.Today, reservation.ToDate))
-                    {
-                        return true;
-                    }
+                    return true;
                 }
-            }
-            return false;
-        }
-
-        public bool checkRatingForReservation(Reservation reservation)
-        {
-            _ratings = _serializer.FromCSV(_filePath);
-            foreach (GuestRating rating in _ratings)
-            {
-                if (rating.Reservation.Id == reservation.Id) return true;
             }
             return false;
         }
@@ -127,5 +109,16 @@ namespace SIMS.Repository
             if (days > 5) return false;
             else return true;
         }
+
+        public bool checkRatingForReservation(Reservation reservation)
+        {
+            _ratings = GetAll();
+            foreach (GuestRating rating in _ratings)
+            {
+                if (rating.Reservation.Id == reservation.Id) return true;
+            }
+            return false;
+        }
+
     }
 }

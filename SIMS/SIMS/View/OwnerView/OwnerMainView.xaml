@@ -31,6 +31,7 @@
                 <Image Source="/View/OwnerView/Images/search.png" Height="15" Width="15"/>
             </Button>
             <Button Click="ShowRatings"  Width="100" Height="25" Content="Prikazi ocene"/>
+            <Button Click="ShowReschedulingRequests"  Width="200" Height="25" Content="Zahtevi za pomeranje rezervacije"/>
 
         </ToolBar>
 

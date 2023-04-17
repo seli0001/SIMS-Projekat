@@ -20,7 +20,7 @@
                   AutoGenerateColumns="False" IsReadOnly="True"
                   Width="450" Height="340" Grid.Row="1">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Id gosta" Binding="{Binding Id}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Id gosta" Binding="{Binding User.Id}" Width="*"></DataGridTextColumn>
                 <DataGridTextColumn Header="Cistoca" Binding="{Binding Cleanliness}" Width="*"></DataGridTextColumn>
                 <DataGridTextColumn Header="Korektnos" Binding="{Binding RulesRespect}" Width="*"></DataGridTextColumn>
              </DataGrid.Columns>

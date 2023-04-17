@@ -16,38 +16,39 @@ namespace SIMS.Repository
         private const string _filePath = "../../../../SIMS/Resources/Data/Accommodations.csv";
 
         private readonly Serializer<Accommodation> _serializer;
-
         private List<Accommodation> _accommodations;
 
         private readonly LocationRepository _locationRepository;
-
         private readonly ImageRepository _imageRepository;
         private readonly SuperOwnerRepository _superOwnerRepository;
 
         public AccommodationRepository()
         {
             _serializer = new Serializer<Accommodation>();
-
             _accommodations = _serializer.FromCSV(_filePath);
 
             _locationRepository = new LocationRepository();
-
             _imageRepository = new ImageRepository();
             _superOwnerRepository = new SuperOwnerRepository();
         }
 
         public List<Accommodation> GetAll()
         {
-            return _serializer.FromCSV(_filePath);
-        }
-
-        public List<Accommodation> GetForView()
-        {
             _accommodations = _serializer.FromCSV(_filePath);
             foreach (Accommodation accommodation in _accommodations)
             {
                 accommodation.Location = _locationRepository.GetById(accommodation.Location.Id);
+                foreach (Image image in _imageRepository.GetByAccommodationId(accommodation.Id))
+                {
+                    accommodation.Images.Add(image);
+                }
             }
+            return _accommodations;
+        }
+
+        public List<Accommodation> GetForView()
+        {
+            _accommodations = GetAll();
             return _accommodations;
         }
 
@@ -84,51 +85,30 @@ namespace SIMS.Repository
             Accommodation current = _accommodations.Find(c => c.Id == accommodation.Id);
             int index = _accommodations.IndexOf(current);
             _accommodations.Remove(current);
-            _accommodations.Insert(index, accommodation);       
+            _accommodations.Insert(index, accommodation);
             _serializer.ToCSV(_filePath, _accommodations);
             return accommodation;
         }
 
         public List<Accommodation> GetByUser(User user)
         {
-            _accommodations = _serializer.FromCSV(_filePath);
-            foreach(Accommodation accommodation in _accommodations)
-            {
-               accommodation.Location = _locationRepository.GetById(accommodation.Location.Id);
-               foreach(Image image in _imageRepository.GetByAccommodationId(accommodation.Id))
-                {
-                    accommodation.Images.Add(image);
-                }
-            }
+            _accommodations = GetAll();
             return _accommodations.FindAll(c => c.User.Id == user.Id);
         }
 
         public Accommodation GetById(int id)
         {
-            _accommodations = _serializer.FromCSV(_filePath);
-            foreach (Accommodation accommodation in _accommodations)
-            {
-                accommodation.Location = _locationRepository.GetById(accommodation.Location.Id);
-                foreach (Image image in _imageRepository.GetByAccommodationId(accommodation.Id))
-                {
-                    accommodation.Images.Add(image);
-                }
-            }
+            _accommodations = GetAll();
             return _accommodations.Find(c => c.Id == id);
         }
 
-        
+
         public void makeSuperOwner(User user)
         {
             _accommodations = GetByUser(user);
             _superOwnerRepository.Save(user);
             foreach (Accommodation accommodation in _accommodations)
             {
-                accommodation.Location = _locationRepository.GetById(accommodation.Location.Id);
-                foreach (Image image in _imageRepository.GetByAccommodationId(accommodation.Id))
-                {
-                    accommodation.Images.Add(image);
-                }
                 accommodation.Super = true;
                 accommodation.Name = "*" + accommodation.Name;
             }
@@ -141,13 +121,8 @@ namespace SIMS.Repository
             _superOwnerRepository.Delete(user);
             foreach (Accommodation accommodation in _accommodations)
             {
-                accommodation.Location = _locationRepository.GetById(accommodation.Location.Id);
-                foreach (Image image in _imageRepository.GetByAccommodationId(accommodation.Id))
-                {
-                    accommodation.Images.Add(image);
-                }
                 accommodation.Super = false;
-                accommodation.Name = accommodation.Name.Substring(1, accommodation.Name.Length-1);
+                accommodation.Name = accommodation.Name.Substring(1, accommodation.Name.Length - 1);
             }
             _serializer.ToCSV(_filePath, _accommodations);
         }

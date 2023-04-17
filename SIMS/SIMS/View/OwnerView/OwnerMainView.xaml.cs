@@ -66,12 +66,30 @@ namespace SIMS.View.OwnerView
             int temp = checkIsSuperOwner();
             if (temp == 1)
             {
-                _accommodationRepository.makeSuperOwner(LoggedInUser);
-                MessageBox.Show("Congratulations You Have Became a SUPEROWNER!!!!");
-            }else if(temp == 0)
+                App.Current.Dispatcher.Invoke((Action)delegate
+                {
+                    _accommodationRepository.makeSuperOwner(LoggedInUser);
+                    MessageBox.Show("Congratulations You Have Became a SUPEROWNER!!!!");
+                    UpdateUI();
+                });
+            }
+            else if (temp == 0)
             {
-                _accommodationRepository.deleteSuperOwner(LoggedInUser);
-                MessageBox.Show("You have lost superowner title");
+                App.Current.Dispatcher.Invoke((Action)delegate
+                {
+                    _accommodationRepository.deleteSuperOwner(LoggedInUser);
+                    MessageBox.Show("You have lost superowner title");
+                    UpdateUI();
+                });
+            }
+        }
+
+        private void UpdateUI()
+        {
+            Accommodations.Clear();
+            foreach (Accommodation acc in _accommodationRepository.GetAll())
+            {
+                Accommodations.Add(acc);
             }
         }
 
