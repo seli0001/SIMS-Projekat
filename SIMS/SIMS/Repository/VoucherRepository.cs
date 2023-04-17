@@ -14,37 +14,46 @@ namespace SIMS.Repository
         private const string _filePath = "../../../../SIMS/Resources/Data/Voucher.csv";
 
         private readonly Serializer<Voucher> _serializer;
-
+        public List<Voucher> vouchers;
         public VoucherRepository()
         {
             _serializer = new Serializer<Voucher>();
+            vouchers = _serializer.FromCSV(_filePath);
         }
 
-        public List<Voucher> GetByUserId(int id)
+        public void Delete(Voucher voucher)
         {
-            List<Voucher> vouchers = _serializer.FromCSV(_filePath);
-            List<Voucher> filteredVouchers = new List<Voucher>();
 
-            foreach (Voucher voucher in vouchers)
-            {
-                if (voucher.IdUser == id)
-                {
-                    filteredVouchers.Add(voucher);
-                }
+            Voucher founded = vouchers.Find(t => t.Id == voucher.Id);
+            vouchers.Remove(founded);
+            _serializer.ToCSV(_filePath, vouchers);
 
-            }
+        }
 
-            return filteredVouchers;
+        public List<Voucher> GetAll()
+        {
+            return _serializer.FromCSV(_filePath);
         }
 
         public void useIt(int voucherId)
         {
-            List<Voucher> vouchers = _serializer.FromCSV(_filePath);
             foreach (Voucher voucher in vouchers)
             {
                 if (voucher.Id == voucherId)
                 {
                     voucher.Status = true;
+                }
+            }
+            _serializer.ToCSV(_filePath, vouchers);
+        }
+
+        public void DontUseIt(int voucherId)
+        {
+            foreach (Voucher voucher in vouchers)
+            {
+                if (voucher.Id == voucherId)
+                {
+                    voucher.Status = false;
                 }
             }
             _serializer.ToCSV(_filePath, vouchers);

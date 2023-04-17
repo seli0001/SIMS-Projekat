@@ -32,7 +32,7 @@ namespace SIMS.WPF.View
             DataContext = this;
             this.userId = userId;
             _voucherService= new VoucherService();
-            vouchers = new ObservableCollection<Voucher>(_voucherService.GetByUserId(userId));
+            vouchers = new ObservableCollection<Voucher>(_voucherService.GetAll(userId));
         }
 
         private void MainGuest2ViewClick(object sender, RoutedEventArgs e)

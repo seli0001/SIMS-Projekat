@@ -20,6 +20,7 @@ namespace SIMS.WPF.View
     public partial class MenuGuest2 : Window
     {
 
+
         public int userId;
         public MenuGuest2(int userId)
         {
@@ -45,6 +46,20 @@ namespace SIMS.WPF.View
         {
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
+            Close();
+        }
+
+        private void ToursInProgressClick(object sender, RoutedEventArgs e)
+        {
+          //  ToursInProgress toursInProgress = new ToursInProgress(userId);
+            //toursInProgress.Show();
+            //Close();
+        }
+
+        private void FinishedToursClick(object sender, RoutedEventArgs e)
+        {
+            FinishedTours selectFinishedTour = new FinishedTours(userId);
+            selectFinishedTour.Show();
             Close();
         }
     }

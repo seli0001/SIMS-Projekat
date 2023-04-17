@@ -102,7 +102,7 @@ namespace SIMS.WPF.View
 
         private void NumberOfToursClick(object sender, RoutedEventArgs e)
         {
-            NumberOfTourGuestView numberOfTourGuestView = new NumberOfTourGuestView(selectedTour, userId);
+            NumberOfTourGuestView numberOfTourGuestView = new NumberOfTourGuestView(selectedTour, userId,100000);
             numberOfTourGuestView.Show();
             Close();
         }

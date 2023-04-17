@@ -9,7 +9,9 @@ namespace SIMS.Domain.RepositoryInterface
 {
     internal interface IVoucherRepository
     {
-        List<Voucher> GetByUserId(int id);
+        List<Voucher> GetAll();
         void useIt(int voucherId);
+        void DontUseIt(int voucherId);
+        void Delete(Voucher voucher);
     }
 }

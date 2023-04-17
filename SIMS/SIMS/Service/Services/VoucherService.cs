@@ -11,31 +11,53 @@ namespace SIMS.Service.Services
 {
     class VoucherService
     {
-        private  IVoucherRepository _voucherRepository;
-        public VoucherService() { 
-        _voucherRepository = Injector.Injector.CreateInstance<IVoucherRepository>();
-        }
-
-
-        public List<Voucher> GetAvailable(int userId)
+        private IVoucherRepository _voucherRepository;
+        public VoucherService()
         {
-            return _voucherRepository
-                .GetByUserId(userId)
-                .Where(v => !v.Status && v.ValiUntl > DateTime.Now)
-                .ToList();
+            _voucherRepository = Injector.Injector.CreateInstance<IVoucherRepository>();
         }
 
-        public List<Voucher> GetByUserId(int userId)
+
+        public List<Voucher> GetVouchers(int id)
         {
-            return _voucherRepository
-                .GetByUserId(userId)
-                .ToList();
+            List<Voucher> vouchers = _voucherRepository.GetAll();
+            List<Voucher> filteredVouchers = new List<Voucher>();
+
+            foreach (Voucher voucher in vouchers)
+            {
+                if (voucher.IdUser == id && voucher.ValiUntl > DateTime.Now)
+                {
+                    filteredVouchers.Add(voucher);
+                }
+                else if (voucher.ValiUntl < DateTime.Now)
+                {
+                    _voucherRepository.Delete(voucher);
+                }
+
+            }
+            return filteredVouchers;
         }
 
+        public List<Voucher> GetAvailable(int id)
+        {
+            List<Voucher> vouchers = GetVouchers(id);
+            return vouchers.Where(v => v.Status == false).ToList();
+        }
+
+        public List<Voucher> GetAll(int id)
+        {
+            List<Voucher> vouchers = GetVouchers(id);
+            return vouchers.ToList();
+        }
 
         public void useVoucher(int voucherId)
         {
             _voucherRepository.useIt(voucherId);
+        }
+
+        public void DontUseIt(int voucherId)
+        {
+            _voucherRepository.DontUseIt(voucherId);
         }
     }
 }

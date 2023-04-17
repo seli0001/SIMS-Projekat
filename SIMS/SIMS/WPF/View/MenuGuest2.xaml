@@ -34,8 +34,8 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <Button Grid.Column="0" Grid.Row="2" Content="Prati" Margin="20" ></Button>
-            <Button Grid.Column="1" Grid.Row="2" Content="Oceni" Margin="20" ></Button>
+            <Button Grid.Column="0" Grid.Row="2" Content="Prati" Margin="20" Click="ToursInProgressClick"></Button>
+            <Button Grid.Column="1" Grid.Row="2" Content="Oceni" Margin="20" Click="FinishedToursClick" ></Button>
             <Button Grid.Column="1" Grid.Row="3" Content="Vauceri" Margin="20" Click="AllVouchersClick"></Button>
 
         </Grid>

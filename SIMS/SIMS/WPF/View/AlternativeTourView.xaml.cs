@@ -22,7 +22,7 @@ namespace SIMS.WPF.View
     /// </summary>
     public partial class AlternativeTourView : Window
     {
-        // private readonly TourRepository _tourRepository;
+    
         private readonly TourService _tourService;
         public ObservableCollection<Tour> tours { get; set; }
 
@@ -34,9 +34,9 @@ namespace SIMS.WPF.View
             InitializeComponent();
             DataContext = this;
             userId = user;
-            //_tourRepository = new TourRepository();
+
             _tourService = new TourService();
-            //tours = new ObservableCollection<Tour>(_tourRepository.GetAlternative(tour));
+
             tours = new ObservableCollection<Tour>(_tourService.GetAlternative(tour));
         }
 
@@ -50,7 +50,7 @@ namespace SIMS.WPF.View
 
         private void NumberOfTourClick(object sender, RoutedEventArgs e)
         {
-            NumberOfTourGuestView numberOfTourGuestView = new NumberOfTourGuestView(selectedTour, userId);
+            NumberOfTourGuestView numberOfTourGuestView = new NumberOfTourGuestView(selectedTour, userId, 100000);
             numberOfTourGuestView.Show();
             Close();
         }

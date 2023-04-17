@@ -1,5 +1,5 @@
 ﻿using SIMS.Domain.Model.Guide;
-
+using SIMS.Service.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,14 +23,17 @@ namespace SIMS.WPF.View
     {
         public Tour tour { get; set; }
         public int userId { get; set; }
+        public int voucherId { get; set; }
 
+        private VoucherService _voucherService;
 
-
-        public NumberOfTourGuestView(Tour selectedtour, int userid)
+        public NumberOfTourGuestView(Tour selectedtour, int userid, int voucherId)
         {
             InitializeComponent();
             tour = selectedtour;
             userId = userid;
+            this.voucherId = voucherId;
+            _voucherService = new VoucherService();
         }
 
         private void BookingTourViewClick(object sender, RoutedEventArgs e)
@@ -55,6 +58,8 @@ namespace SIMS.WPF.View
 
         private void BackToMainClick(object sender, RoutedEventArgs e)
         {
+            //voucherServis -> ponisti Voucher -> false
+            _voucherService.DontUseIt(voucherId);
             MainGuest2View mainGuest2View = new MainGuest2View(userId);
             mainGuest2View.Show();
 

@@ -17,7 +17,9 @@ namespace SIMS.Injector
         public static void BindComponents()
         {
             VoucherRepository voucherRepository = new VoucherRepository();
+            TourRatingRepository tourRatingRepository = new TourRatingRepository();
             _implementations.Add(typeof(IVoucherRepository), voucherRepository);
+            _implementations.Add(typeof(ITourRatingRepository), tourRatingRepository);
         }
 
         public static T CreateInstance<T>()

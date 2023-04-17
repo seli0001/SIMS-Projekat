@@ -22,5 +22,16 @@ namespace SIMS.Service.Services
         {
             _bookedToursRepository.Save(tour, userId);
         }
+        public void Update(BookedTour bookedTour)
+        {
+            _bookedToursRepository.Update(bookedTour);
+        }
+
+        public List<BookedTour> GetUserFinished(int userId)
+        {
+            return _bookedToursRepository.GetAll().Where(t => t.UserId == userId && t.Tour.Status.ToString().Equals("FINISHED") && t.Review == false && t.Checkpoint != null).ToList();
+        }
+
+
     }
 }
