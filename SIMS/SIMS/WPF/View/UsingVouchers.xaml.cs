@@ -42,7 +42,7 @@ namespace SIMS.WPF.View
         
         private void BackClick(object sender, RoutedEventArgs e)
         {
-            NumberOfTourGuestView numberOfTour = new NumberOfTourGuestView(tour, userId);
+            NumberOfTourGuestView numberOfTour = new NumberOfTourGuestView(tour, userId, 100000);
             numberOfTour.Show();
             Close();
         }
@@ -57,7 +57,7 @@ namespace SIMS.WPF.View
         private void UseVoucherClick(object sender, RoutedEventArgs e)
         {
             _voucherService.useVoucher(selectedVoucher.Id);
-            NumberOfTourGuestView numberOfTour = new NumberOfTourGuestView(tour, userId);
+            NumberOfTourGuestView numberOfTour = new NumberOfTourGuestView(tour, userId, selectedVoucher.Id);
             numberOfTour.Show();
             Close();
         }
