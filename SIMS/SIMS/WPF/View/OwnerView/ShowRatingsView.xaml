@@ -1,0 +1,30 @@
+﻿<Window x:Class="SIMS.View.OwnerView.ShowRatingsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SIMS.View.OwnerView"
+        mc:Ignorable="d"
+        Title="ShowRatings" Height="480" Width="500" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Button x:Name="ShowRating" Margin="30" Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="100" Height="30" Content="Prikazi ocenu"/>
+
+        <DataGrid
+                  ItemsSource="{Binding Path=Ratings, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedItem="{Binding Path=SelectedRating, UpdateSourceTrigger=PropertyChanged}"
+                  AutoGenerateColumns="False" IsReadOnly="True"
+                  Width="450" Height="340" Grid.Row="1">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id gosta" Binding="{Binding User.Id}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Cistoca" Binding="{Binding Cleanliness}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Korektnos" Binding="{Binding RulesRespect}" Width="*"></DataGridTextColumn>
+             </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+</Window>

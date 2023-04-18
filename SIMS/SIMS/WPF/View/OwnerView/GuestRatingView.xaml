@@ -48,9 +48,9 @@
 
         <WrapPanel Grid.Row="1" HorizontalAlignment="Center">
             <Button x:Name="BtnSubmit" Content="Oceni" IsCancel="True" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20, 5, 20, 5"
-                Click="SaveRating" IsEnabled="False"/>
+                Command="{Binding SaveRatingCommand}" IsEnabled="{Binding IsEnabled}"/>
             <Button  x:Name="BtnCancel" Content="Odustani" IsDefault="True" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20, 5, 20, 5"
-                Click="Cancel"/>
+                Command="{Binding CancelCommand}"/>
         </WrapPanel>
     </Grid>
 </Window>

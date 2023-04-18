@@ -8,23 +8,32 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="View\OwnerView\add.png" />
-    <None Remove="View\OwnerView\close.png" />
-    <None Remove="View\OwnerView\pencil.png" />
-    <None Remove="View\OwnerView\search.png" />
-    <None Remove="View\OwnerView\trash-bin.png" />
+    <Compile Remove="WPF\ModelView\**" />
+    <EmbeddedResource Remove="WPF\ModelView\**" />
+    <None Remove="WPF\ModelView\**" />
+    <Page Remove="WPF\ModelView\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="View\OwnerView\Images\add.png" />
-    <Resource Include="View\OwnerView\Images\close.png" />
-    <Resource Include="View\OwnerView\Images\pencil.png" />
-    <Resource Include="View\OwnerView\Images\search.png" />
-    <Resource Include="View\OwnerView\Images\trash-bin.png" />
+    <None Remove="WPF\View\OwnerView\add.png" />
+    <None Remove="WPF\View\OwnerView\Images\add.png" />
+    <None Remove="WPF\View\OwnerView\Images\pencil.png" />
+    <None Remove="WPF\View\OwnerView\Images\search.png" />
+    <None Remove="WPF\View\OwnerView\Images\trash-bin.png" />
+    <None Remove="WPF\View\OwnerView\pencil.png" />
+    <None Remove="WPF\View\OwnerView\search.png" />
+    <None Remove="WPF\View\OwnerView\trash-bin.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="WPF\ModelView\" />
+    <Resource Include="WPF\View\OwnerView\add.png" />
+    <Resource Include="WPF\View\OwnerView\Images\add.png" />
+    <Resource Include="WPF\View\OwnerView\Images\pencil.png" />
+    <Resource Include="WPF\View\OwnerView\Images\search.png" />
+    <Resource Include="WPF\View\OwnerView\Images\trash-bin.png" />
+    <Resource Include="WPF\View\OwnerView\pencil.png" />
+    <Resource Include="WPF\View\OwnerView\search.png" />
+    <Resource Include="WPF\View\OwnerView\trash-bin.png" />
   </ItemGroup>
 
 </Project>

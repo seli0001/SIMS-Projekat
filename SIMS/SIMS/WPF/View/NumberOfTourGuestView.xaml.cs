@@ -69,8 +69,7 @@ namespace SIMS.WPF.View
         private void UsingVoucher(object sender, RoutedEventArgs e)
         {
             UsingVouchers usingVaucher = new UsingVouchers(userId, tour);
-            usingVaucher.Show();
-            Close();
+            usingVaucher.ShowDialog();
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SIMS.Domain.Model;
+using SIMS.Service.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,13 +21,39 @@ namespace SIMS.WPF.View
     /// </summary>
     public partial class MenuGuest2 : Window
     {
-
+        private readonly BookedTourService _bookedTourService;
+        public List<BookedTour> bookedTours;
 
         public int userId;
         public MenuGuest2(int userId)
         {
             InitializeComponent();
             this.userId = userId;
+            _bookedTourService = new BookedTourService();
+            CheckNotify();
+        }
+
+        public void CheckNotify()
+        {
+            bookedTours = _bookedTourService.GetByUser(userId);
+
+            foreach (BookedTour t in bookedTours)
+            {
+                if (t.Notify == (Notify)2 && t.Checkpoint != null)
+                {
+                    if (MessageBox.Show("Da li si prisni na" + t.Tour.Name + "?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+                    {
+                        t.Notify = (Notify)1;
+                        _bookedTourService.Update(t);
+                    }
+                    else
+                    {
+                        t.Notify = (Notify)0;
+                        _bookedTourService.Update(t);
+                    }
+
+                }
+            }
         }
 
         private void MainGuest2ViewClick(object sender, RoutedEventArgs e)

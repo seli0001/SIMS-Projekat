@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using SIMS.Domain.Model;
 using SIMS.Repository.GuideRepository;
 using SIMS.Repository;
+using Type = System.Type;
 
 namespace SIMS.View.GuideView
 {

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SIMS.View.OwnerView"
         mc:Ignorable="d"
+        x:Name="AccommodationRegistrationWindow"
          Title="AccommodationRegistration" Height="700" Width="550" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
@@ -34,19 +35,18 @@
             <Label Grid.Row="4" Grid.Column="0" Height="30">Maksimalni broj gostiju</Label>
             <Label Grid.Row="5" Grid.Column="0" Height="30">Minimalni broj dana za rezervaciju</Label>
             <Label Grid.Row="6" Grid.Column="0" Height="30">Koliko dana unapred je moguce otkazivanje</Label>
-            
+
 
             <StackPanel Grid.Row="0" Grid.Column="1">
-                <TextBox Text="{Binding Path=AcName, UpdateSourceTrigger=LostFocus}"
+                <TextBox Text="{Binding Path=AccommodationName, UpdateSourceTrigger=LostFocus}"
                      Height="20"></TextBox>
-                <Label x:Name="NameValidator" FontSize="11" Grid.Row="0" Grid.Column="1" Foreground="Red" Visibility="Hidden">X00</Label>
+                <Label FontSize="11" Grid.Row="0" Grid.Column="1" Foreground="Red" Visibility="{Binding NameValidator.Visibility}" Content="{Binding NameValidator.Content}" />
             </StackPanel>
-
             <StackPanel Grid.Row="1" Grid.Column="1">
                 <TextBox Text="{Binding Path=City, UpdateSourceTrigger=LostFocus}" 
                      Height="20"></TextBox>
                 <Label x:Name="CityValidator" FontSize="11" Foreground="Red" Visibility="Hidden">Veliko pocetno slovo</Label>
-            </StackPanel>
+                 </StackPanel>
 
             <StackPanel Grid.Row="2" Grid.Column="1">
                 <TextBox Text="{Binding Path=Country, UpdateSourceTrigger=LostFocus}" 
@@ -92,9 +92,9 @@
                 </Grid.ColumnDefinitions>
 
                 <Label HorizontalAlignment="Center" Content="Slike" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" />
-                <Button Content="Dodaj sliku" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Click="AddImageFromFileDialog"  Width="80" />
-                <Button Content="Obrisi sliku" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" Click="RemoveImage"  Width="80" />
-                <ListView x:Name="imageListView" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
+                <Button Command="{Binding AddImageCommand}" Content="Dodaj sliku" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Width="80" />
+                <Button Command="{Binding RemoveImageCommand}" Content="Obrisi sliku" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center"  Width="80" />
+                <ListView x:Name="imageListView" SelectedIndex="{Binding SelectedIndex}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel Orientation="Horizontal" />
@@ -102,7 +102,7 @@
                     </ListView.ItemsPanel>
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <Image Source="{Binding}" Width="100" Height="100" />
+                            <Image Source="{Binding Images}" Width="100" Height="100" />
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
@@ -110,10 +110,13 @@
         </Grid>
 
         <WrapPanel Grid.Row="1" HorizontalAlignment="Center">
-            <Button x:Name="BtnSubmit" Content="Potvrdi" IsCancel="True" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20, 5, 20, 5"
-                Click="SaveAccommodation" IsEnabled="False"/>
-            <Button  x:Name="BtnCancel" Content="Odustani" IsDefault="True" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20, 5, 20, 5"
-                Click="Cancel"/>
+            <Button Command="{Binding SaveAccommodationCommand}" x:Name="BtnSubmit" Content="Potvrdi" IsCancel="True" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20, 5, 20, 5"
+                IsEnabled="{Binding IsEnabled}"/>
+            <Button  x:Name="BtnCancel" Content="Odustani" 
+                     IsDefault="True" HorizontalAlignment="Left" 
+                     VerticalAlignment="Top" Margin="20, 5, 20, 5"
+                     Command="{Binding CloseWindowCommand}"
+                />
         </WrapPanel>
     </Grid>
 </Window>

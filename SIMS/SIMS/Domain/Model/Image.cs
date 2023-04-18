@@ -1,4 +1,4 @@
-﻿using SIMS.Domain.Model.AccommodationModel;
+﻿using SIMS.Domain.Model;
 using SIMS.Serializer;
 using System;
 using System.Collections.Generic;
@@ -31,7 +31,7 @@ namespace SIMS.Domain.Model
             {
             Id.ToString(),
             Path,
-            Accommodation.Id.ToString(),
+        //    Accommodation.Id.ToString(),
         };
             return csvValues;
         }
@@ -40,7 +40,7 @@ namespace SIMS.Domain.Model
         {
             Id = int.Parse(csvValues[0]);
             Path = csvValues[1];
-            Accommodation = new Accommodation() { Id = int.Parse(csvValues[2]) };
+        //    Accommodation = new Accommodation() { Id = int.Parse(csvValues[2]) };
         }
     }
 }

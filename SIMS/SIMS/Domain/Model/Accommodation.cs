@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using SIMS.Serializer;
 
-namespace SIMS.Domain.Model.AccommodationModel
+namespace SIMS.Domain.Model
 {
     public enum Type
     {
@@ -23,8 +23,8 @@ namespace SIMS.Domain.Model.AccommodationModel
         public int MaxGuestsNumber { get; set; }
         public int MinBookingDays { get; set; }
         public int CancelDaysNumber { get; set; }
+        public bool Super { get; set; }
         public List<Image> Images { get; set; }
-
         public User User { get; set; }
 
         public Accommodation()
@@ -40,6 +40,7 @@ namespace SIMS.Domain.Model.AccommodationModel
             MaxGuestsNumber = maxGNum;
             MinBookingDays = minDays;
             CancelDaysNumber = cancelDays;
+            Super = false;
             User = user;
             Images = images;
         }
@@ -54,6 +55,7 @@ namespace SIMS.Domain.Model.AccommodationModel
              MaxGuestsNumber.ToString(),
              MinBookingDays.ToString(),
              CancelDaysNumber.ToString(),
+             Super.ToString(),
              Location.Id.ToString(),
              User.Id.ToString(),
             };
@@ -68,8 +70,9 @@ namespace SIMS.Domain.Model.AccommodationModel
             MaxGuestsNumber = Convert.ToInt32(values[3]);
             MinBookingDays = Convert.ToInt32(values[4]);
             CancelDaysNumber = Convert.ToInt32(values[5]);
-            Location = new Location() { Id = Convert.ToInt32(values[6]) };
-            User = new User() { Id = Convert.ToInt32(values[7]) };
+            Super = Convert.ToBoolean(values[6]);
+            Location = new Location() { Id = Convert.ToInt32(values[7]) };
+            User = new User() { Id = Convert.ToInt32(values[8]) };
         }
     }
 }
