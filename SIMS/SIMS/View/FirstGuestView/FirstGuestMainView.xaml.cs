@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Xml.Linq;
 using SIMS.Repository;
-using SIMS.Domain.Model.AccommodationModel;
+using SIMS.Domain.Model;
 using SIMS.Domain.Model;
 
 namespace SIMS.View.FirstGuestView
