@@ -145,6 +145,11 @@ namespace SIMS.WPF.View
             bookedTour.Review = true;
             _bookedTourService.Update(bookedTour);
             _tourRatingService.Save(bookedTour, userId, znanjeVodica, jezikVodica, zanimljvist, _comment, images.ToList());
+            MessageBox.Show("Uspesno ste ocenili!");
+            MainGuest2View mainGuest2View = new MainGuest2View(userId);
+            mainGuest2View.Show();
+            Close();
+
         }
 
         private void BackToMainGuest2ViewClick(object sender, RoutedEventArgs e)
