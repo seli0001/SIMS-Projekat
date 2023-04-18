@@ -2,6 +2,7 @@
 using SIMS.Model;
 using SIMS.Repository;
 using System.Collections.ObjectModel;
+
 using System.Windows;
 
 namespace SIMS.View.FirstGuestView
