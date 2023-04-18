@@ -1,5 +1,6 @@
-﻿using SIMS.Model;
-using SIMS.Model.AccommodationModel;
+﻿using SIMS.Domain.Model;
+using SIMS.Model;
+using SIMS.Model;
 using SIMS.Serializer;
 using System;
 using System.Collections.Generic;

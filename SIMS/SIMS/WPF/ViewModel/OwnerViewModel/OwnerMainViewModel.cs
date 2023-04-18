@@ -82,8 +82,6 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
                 Accommodations.Add(acc);
             }
         }
-
-
         #region commands
 
         private ICommand _logOutCommand;
@@ -132,9 +130,6 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         }
 
         #endregion
-
-
-
         private void ShowCreateAccommodationForm()
         {
             AccommondationRegistration createAccommondationForm = new AccommondationRegistration(LoggedInUser);

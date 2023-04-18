@@ -1,4 +1,5 @@
 ﻿using SIMS.Domain.Model;
+using SIMS.Model;
 using SIMS.Repository;
 using System;
 using System.Collections.ObjectModel;
