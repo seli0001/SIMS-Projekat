@@ -1,5 +1,4 @@
-﻿using SIMS.Repository.GuideRepository;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,8 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
-using SIMS.Domain.Model.Guide;
 using SIMS.Domain.Model;
+using SIMS.Repository;
+using SIMS.WPF.View;
 
 namespace SIMS.View.GuideView
 {
@@ -26,6 +26,7 @@ namespace SIMS.View.GuideView
         private readonly User _guide;
         private readonly TourRepository _tourRepository;
         public ObservableCollection<Tour> Tours { get; set; }
+        public ObservableCollection<Tour> AllTours { get; set; }
         public Tour SelectedTour { get; set; }
         public MainGuideView(User guide)
         {
@@ -33,6 +34,7 @@ namespace SIMS.View.GuideView
             _guide = guide;
             _tourRepository = new TourRepository();
             Tours = new ObservableCollection<Tour>(GetTours());
+            AllTours = new ObservableCollection<Tour>(_tourRepository.GetAll());
             SelectedTour = new Tour();
             StartTourButton.IsEnabled = !HasTourInProgress();
             ViewStartedTourButton.IsEnabled = HasTourInProgress();
@@ -104,6 +106,15 @@ namespace SIMS.View.GuideView
                 
             }
             ViewStartedTourButton.IsEnabled = HasTourInProgress();
+        }
+
+        private void tourRatingButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(SelectedTour.Status == TourStatus.FINISHED)
+            {
+                TourReviewView tourReviewView = new TourReviewView(SelectedTour.Id);
+                tourReviewView.ShowDialog();
+            }
         }
     }
 }

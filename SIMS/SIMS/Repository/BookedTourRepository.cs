@@ -1,6 +1,4 @@
 ﻿using SIMS.Domain.Model;
-using SIMS.Domain.Model.Guide;
-using SIMS.Repository.GuideRepository;
 using SIMS.Serializer;
 using System;
 using System.Collections.Generic;
@@ -43,6 +41,12 @@ namespace SIMS.Repository
         {
             List<BookedTour> bookedTours = GetAll();
             return bookedTours.Where(bookedTour => bookedTour.Tour.Id == tourId).ToList();
+        }
+        
+        public BookedTour GetById(int id)
+        {
+            List<BookedTour> bookedTours = GetAll();
+            return bookedTours.Find(bookedTour => bookedTour.Id == id);
         }
 
 

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SIMS.Serializer;
 
-namespace SIMS.Domain.Model.Guide
+namespace SIMS.Domain.Model
 {
     public enum TourStatus
     {
@@ -29,7 +29,7 @@ namespace SIMS.Domain.Model.Guide
         public int Duration { get; set; }
         public StartTime StartTime { get; set; }
         public Location Location { get; set; }
-        public List<Image> Images { get; set; }
+        public List<ImageTour> Images { get; set; }
         public List<Checkpoint> Checkpoints { get; set; }
         public User Guide { get; set; }
         public TourStatus Status { get => _status; set { _status = value; OnPropertyChanged(); } }
@@ -38,7 +38,7 @@ namespace SIMS.Domain.Model.Guide
         {
             StartTime = new StartTime();
             Location = new Location();
-            Images = new List<Image>();
+            Images = new List<ImageTour>();
             Checkpoints = new List<Checkpoint>();
             NumberOfPeople = 0;
             MaxNumberOfPeople = 1;

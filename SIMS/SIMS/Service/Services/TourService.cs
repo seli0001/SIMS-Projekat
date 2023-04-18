@@ -1,5 +1,5 @@
-﻿using SIMS.Domain.Model.Guide;
-using SIMS.Repository.GuideRepository;
+﻿using SIMS.Domain.Model;
+using SIMS.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;

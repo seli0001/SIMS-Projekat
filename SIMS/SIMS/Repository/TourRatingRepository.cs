@@ -3,6 +3,7 @@ using SIMS.Domain.RepositoryInterface;
 using SIMS.Serializer;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,15 +15,21 @@ namespace SIMS.Repository
         private const string _filePath = "../../../../SIMS/Resources/Data/TourRating.csv";
 
         private readonly Serializer<TourRating> _serializer;
+        private readonly UserRepository _userRepository;
+        private readonly BookedTourRepository _bookedTourRepository;
 
         public TourRatingRepository()
         {
             _serializer = new Serializer<TourRating>();
+            _bookedTourRepository = new BookedTourRepository();
+            _userRepository = new UserRepository();
         }
 
         public List<TourRating> GetAll()
         {
-            return _serializer.FromCSV(_filePath);
+            List<TourRating> ratings = _serializer.FromCSV(_filePath);
+            ratings.ForEach(r => r.bookedTour = _bookedTourRepository.GetById(r.bookedTour.Id));
+            return ratings;
         }
 
         public int GenerateId()
@@ -41,6 +48,17 @@ namespace SIMS.Repository
             }
         }
 
+        public void Update(TourRating rating)
+        {
+            List<TourRating> reviews = GetAll();
+            int index = reviews.FindIndex(r => r.Id == rating.Id);
+            if (index == -1)
+            {
+                return;
+            }
+            reviews[index] = rating;
+            _serializer.ToCSV(_filePath, reviews);
+        }
 
         public void Save(BookedTour bookedTour, int idUser, int znanjeVodica, int jezikVodica, int zanimljivostTure, string com, List<string> images)
         {
@@ -51,9 +69,8 @@ namespace SIMS.Repository
             guestTourReview.GuideKnown = znanjeVodica;
             guestTourReview.TourReview = zanimljivostTure;
             guestTourReview.Comment = com;
-            guestTourReview.GuestId = idUser;
             guestTourReview.bookedTour = bookedTour;
-            guestTourReview.bookedTourId = bookedTour.Id;
+            guestTourReview.bookedTour.Id = bookedTour.Id;
             guestTourReview.Images = images;
             reviews.Add(guestTourReview);
             _serializer.ToCSV(_filePath, reviews);
