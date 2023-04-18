@@ -1,84 +1,68 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using static System.Net.Mime.MediaTypeNames;
-using System.Xml.Linq;
-using SIMS.Repository;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
-using Type = SIMS.Domain.Model.AccommodationModel.Type;
-using System.ComponentModel.DataAnnotations;
 using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
+using System.Windows;
+using System.Windows.Media.Imaging;
 using Microsoft.Win32;
-using Image = SIMS.Domain.Model.Image;
-using SIMS.Domain.Model.AccommodationModel;
+using Type = SIMS.Domain.Model.Type;
+using System.Windows.Input;
 using SIMS.Domain.Model;
+using SIMS.Service.UseCases;
+using SIMS.WPF.ViewModel.ViewModel;
 
-namespace SIMS.View.OwnerView
+namespace SIMS.WPF.ViewModel.OwnerViewModel
 {
-    /// <summary>
-    /// Interaction logic for AccommondationRegistration.xaml
-    /// </summary>
-    public partial class AccommondationRegistration : Window, INotifyPropertyChanged
+
+    
+    public class AccommodationRegistrationViewModel : ViewModelBase, IClose
     {
         public User LoggedInUser { get; set; }
-
         public Accommodation SelectedAccommodation { get; set; }
 
         public ObservableCollection<BitmapImage> Images;
-
         private List<Image> _accommodationImages;
 
-        private readonly AccommodationRepository _repository;
-        private readonly LocationRepository _locationRepository;
-        private readonly ImageRepository _imageRepository;
+        private readonly AccommodationService _accommodationService;
+        private readonly AccommodationImageService _imageService;
+        private readonly LocationService _locationService;
+        private readonly SuperOwnerService _superOwnerService;
+
 
         private readonly int[] validator;
 
-        public AccommondationRegistration(User user)
+        public AccommodationRegistrationViewModel(User user)
         {
-            InitializeComponent();
-            Title = "Create new accommondation";
-            DataContext = this;
             LoggedInUser = user;
             validator = new int[6];
-            _repository = new AccommodationRepository();
-            _locationRepository = new LocationRepository();
-            _imageRepository = new ImageRepository();
+
+            _accommodationService = new AccommodationService();
+            _imageService = new AccommodationImageService();
+            _locationService = new LocationService();
+            _superOwnerService = new SuperOwnerService();
+
             Images = new ObservableCollection<BitmapImage>();
             _accommodationImages = new List<Image>();
+
+            IsEnabled = false;
         }
 
-       
-        public AccommondationRegistration(Accommodation selectedAccommodation, User user)
-        {
-            InitializeComponent();
-            DataContext = this;
-            Title = "Update comment";
-            LoggedInUser = user;
-            validator = new int[6];
-            SelectedAccommodation = selectedAccommodation;
-            _repository = new AccommodationRepository();
-            _locationRepository = new LocationRepository();
-            _imageRepository = new ImageRepository();
-            Images = new ObservableCollection<BitmapImage>();
-            _accommodationImages = new List<Image>();
-        }
+
 
         #region data
+
+        private bool _isEnabled;
+        public bool IsEnabled
+        {
+            get => _isEnabled;
+            set
+            {
+                _isEnabled = value;
+                OnPropertyChanged();
+            }
+        }
         private string _name;
-        public string AcName
+        public string AccommodationName
         {
             get => _name;
             set
@@ -86,17 +70,17 @@ namespace SIMS.View.OwnerView
                 if (value != _name)
                 {
                     if (!Regex.Match(value, @"\p{Lu}\p{Ll}{2,9}").Success)
-                    {
+                    {/*
                         NameValidator.Content = "Veliko pocetno slovo";
-                        NameValidator.Visibility = Visibility.Visible;
+                        NameValidator.Visibility = Visibility.Visible;*/
                         validator[0] = 0;
                     }
                     else
                     {
-                        NameValidator.Visibility = Visibility.Hidden;
+                        //  NameValidator.Visibility = Visibility.Hidden;
                         validator[0] = 1;
                     }
-                    BtnSubmit.IsEnabled = true;
+                    IsEnabled = true;
 
                     ValidatorTest();
                     _name = value;
@@ -117,16 +101,16 @@ namespace SIMS.View.OwnerView
                 {
                     if (!Regex.Match(value, @"\p{Lu}\p{Ll}{2,9}").Success)
                     {
-                        CityValidator.Content = "Veliko pocetno slovo";
-                        CityValidator.Visibility = Visibility.Visible;
+                        //CityValidator.Content = "Veliko pocetno slovo";
+                        //CityValidator.Visibility = Visibility.Visible;
                         validator[1] = 0;
                     }
                     else
                     {
-                        CityValidator.Visibility = Visibility.Hidden;
+                        //CityValidator.Visibility = Visibility.Hidden;
                         validator[1] = 1;
                     }
-                    BtnSubmit.IsEnabled = true;
+                    IsEnabled = true;
 
                     ValidatorTest();
                     _city = value;
@@ -146,16 +130,16 @@ namespace SIMS.View.OwnerView
                 {
                     if (!Regex.Match(value, @"\p{Lu}\p{Ll}{2,9}").Success)
                     {
-                        CountryValidator.Content = "Veliko pocetno slovo";
-                        CountryValidator.Visibility = Visibility.Visible;
+                        //CountryValidator.Content = "Veliko pocetno slovo";
+                        //CountryValidator.Visibility = Visibility.Visible;
                         validator[2] = 0;
                     }
                     else
                     {
-                        CountryValidator.Visibility = Visibility.Hidden;
+                        //CountryValidator.Visibility = Visibility.Hidden;
                         validator[2] = 1;
                     }
-                    BtnSubmit.IsEnabled = true;
+                    IsEnabled = true;
 
                     ValidatorTest();
                     _country = value;
@@ -201,16 +185,16 @@ namespace SIMS.View.OwnerView
                 {
                     if (value < 1)
                     {
-                        MaxGuestNumValidator.Content = "Broj gostiju mora biti veci od 0";
-                        MaxGuestNumValidator.Visibility = Visibility.Visible;
+                        //MaxGuestNumValidator.Content = "Broj gostiju mora biti veci od 0";
+                        //MaxGuestNumValidator.Visibility = Visibility.Visible;
                         validator[3] = 0;
                     }
                     else
                     {
-                        MaxGuestNumValidator.Visibility = Visibility.Hidden;
+                        //MaxGuestNumValidator.Visibility = Visibility.Hidden;
                         validator[3] = 1;
                     }
-                    BtnSubmit.IsEnabled = true;
+                    IsEnabled = true;
 
                     ValidatorTest();
                     _maxGuestNum = value;
@@ -231,16 +215,16 @@ namespace SIMS.View.OwnerView
                 {
                     if (value < 1)
                     {
-                        MinReservationDaysValidator.Content = "Broj dana mora biti veci od 0";
-                        MinReservationDaysValidator.Visibility = Visibility.Visible;
+                        //MinReservationDaysValidator.Content = "Broj dana mora biti veci od 0";
+                        //MinReservationDaysValidator.Visibility = Visibility.Visible;
                         validator[4] = 0;
                     }
                     else
                     {
-                        MinReservationDaysValidator.Visibility = Visibility.Hidden;
+                        //MinReservationDaysValidator.Visibility = Visibility.Hidden;
                         validator[4] = 1;
                     }
-                    BtnSubmit.IsEnabled = true;
+                    IsEnabled = true;
 
                     ValidatorTest();
                     _minReservationDays = value;
@@ -261,16 +245,16 @@ namespace SIMS.View.OwnerView
                 {
                     if (value < 1)
                     {
-                        CancelDaysNumberValidator.Content = "Broj dana mora biti veci od 0";
-                        CancelDaysNumberValidator.Visibility = Visibility.Visible;
+                        //CancelDaysNumberValidator.Content = "Broj dana mora biti veci od 0";
+                        //CancelDaysNumberValidator.Visibility = Visibility.Visible;
                         validator[5] = 0;
                     }
                     else
                     {
-                        CancelDaysNumberValidator.Visibility = Visibility.Hidden;
+                        //CancelDaysNumberValidator.Visibility = Visibility.Hidden;
                         validator[5] = 1;
                     }
-                    BtnSubmit.IsEnabled = true;
+                    IsEnabled = true;
 
                     ValidatorTest();
                     _cancelDaysNumber = value;
@@ -280,10 +264,26 @@ namespace SIMS.View.OwnerView
             }
         }
 
-        
-
-
         #endregion
+
+
+        private ICommand _addImageCommand;
+        public ICommand AddImageCommand
+        {
+            get
+            {
+                return _addImageCommand ?? (_addImageCommand = new CommandBase(() => AddImageFromFileDialog(), true));
+            }
+        }
+
+        private ICommand _removeImageCommand;
+        public ICommand RemoveImageCommand
+        {
+            get
+            {
+                return _removeImageCommand ?? (_removeImageCommand = new CommandBase(() => RemoveImage(), true));
+            }
+        }
 
         private void ValidatorTest()
         {
@@ -291,13 +291,13 @@ namespace SIMS.View.OwnerView
             {
                 if (kon == 0)
                 {
-                    BtnSubmit.IsEnabled = false;
+
+                    IsEnabled = false;
                 }
             }
         }
 
-
-        private void AddImageFromFileDialog(object sender, RoutedEventArgs e)
+        public void AddImageFromFileDialog()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Image files (*.png;*.jpeg)|*.png;*.jpeg|All files (*.*)|*.*";
@@ -308,12 +308,22 @@ namespace SIMS.View.OwnerView
             }
         }
 
-        private void RemoveImage(object sender, RoutedEventArgs e)
+        private int _selectedIndex;
+        public int SelectedIndex
         {
-            if (imageListView.SelectedIndex != -1)
+            get => _selectedIndex;
+            set
             {
-                _accommodationImages.RemoveAt(imageListView.SelectedIndex);
-                Images.RemoveAt(imageListView.SelectedIndex);
+                _selectedIndex = value;
+                OnPropertyChanged();
+            }
+        }
+        private void RemoveImage()
+        {
+            if (SelectedIndex != -1)
+            {
+                _accommodationImages.RemoveAt(SelectedIndex);
+                Images.RemoveAt(SelectedIndex);
             }
         }
 
@@ -332,9 +342,26 @@ namespace SIMS.View.OwnerView
             Images.Add(bitmapImage);
         }
 
+        private ICommand _saveAccommodationCommand;
+        public ICommand SaveAccommodationCommand
+        {
+            get
+            {
+                return _saveAccommodationCommand ?? (_saveAccommodationCommand = new CommandBase(() => SaveAccommodation(), true));
+            }
+        }
 
+        private ICommand _closeWindowCommand;
+        public ICommand CloseWindowCommand
+        {
+            get
+            {
+                return _closeWindowCommand ?? (_closeWindowCommand = new CommandBase(() => Close(), true));
+            }
+        }
 
-        private void SaveAccommodation(object sender, RoutedEventArgs e)
+       
+        private void SaveAccommodation()
         {
 
             if (SelectedAccommodation != null)
@@ -351,27 +378,24 @@ namespace SIMS.View.OwnerView
 
         private void StoreAccommodation()
         {
-            Location newLocation = new Location(Country, City);
-            Location savedLocation = _locationRepository.Save(newLocation);
+            Location savedLocation = _locationService.Save(Country, City);
 
-            _accommodationImages = _imageRepository.SetId(_accommodationImages);
+            _accommodationImages = _imageService.SetId(_accommodationImages);
 
-            Accommodation newAccommodation = new Accommodation(AcName, savedLocation, AccTypeEnum, MaxGuestNum, MinReservationDays, CancelDaysNumber, LoggedInUser, _accommodationImages);
-            Accommodation savedAccommodation = _repository.Save(newAccommodation);
-            _imageRepository.SaveAll(_accommodationImages, savedAccommodation);
-            OwnerMainView.Accommodations.Add(savedAccommodation);
+            Accommodation savedAccommodation = _accommodationService.Save(AccommodationName, savedLocation, AccTypeEnum, MaxGuestNum,
+                MinReservationDays, CancelDaysNumber,
+                LoggedInUser, _accommodationImages);
+            if (_superOwnerService.CheckById(LoggedInUser.Id)) savedAccommodation = _accommodationService.makeSuper(savedAccommodation);
+            OwnerMainViewModel.Accommodations.Add(savedAccommodation);
+
+            _imageService.SaveAll(_accommodationImages);
         }
 
-        private void Cancel(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
+        public Action Close { 
+            get; 
+            set;
+            }
 
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }

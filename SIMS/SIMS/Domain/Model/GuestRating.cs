@@ -1,5 +1,4 @@
-﻿using SIMS.Domain.Model.AccommodationModel;
-using SIMS.Serializer;
+﻿using SIMS.Serializer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
