@@ -10,6 +10,13 @@ using SIMS.Serializer;
 
 namespace SIMS.Domain.Model
 {
+    public enum Notify
+    {
+        Accepted,
+        Reject,
+        NoAnswer
+    }
+
     public class BookedTour : ISerializable, INotifyPropertyChanged
     {
         public int Id { get; set; }
@@ -21,6 +28,7 @@ namespace SIMS.Domain.Model
         public int UserId { get; set; }
         public bool Review { get; set; }
         private Checkpoint _checkpoint;
+        public Notify Notify;
 
         public Checkpoint Checkpoint
         {
@@ -34,6 +42,7 @@ namespace SIMS.Domain.Model
             Tour = new Tour();
             User = new User();
             Review = false;
+            Notify = Notify.NoAnswer;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -50,7 +59,8 @@ namespace SIMS.Domain.Model
             TourId.ToString(),
             UserId.ToString(),
             Checkpoint != null ? Checkpoint.Id.ToString() : "",
-            Review.ToString()
+            Review.ToString(),
+             Notify.ToString()
         };
             return csvValues;
         }
@@ -62,6 +72,7 @@ namespace SIMS.Domain.Model
             UserId = int.Parse(csvValues[2]);
             Checkpoint = csvValues[3] == "" ? null : new Checkpoint() { Id = int.Parse(csvValues[3]) };
             Review = bool.Parse(csvValues[4]);
+            Notify = (Notify)Enum.Parse(typeof(Notify), csvValues[5]);
         }
     }
 }
