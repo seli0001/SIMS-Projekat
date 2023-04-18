@@ -13,7 +13,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using SIMS.Domain.Model.Guide;
 using SIMS.Domain.Model;
 using SIMS.Repository.GuideRepository;
 using SIMS.Repository;

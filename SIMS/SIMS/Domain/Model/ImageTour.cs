@@ -5,22 +5,23 @@ using System.Text;
 using System.Threading.Tasks;
 using SIMS.Serializer;
 
-namespace SIMS.Domain.Model.Guide
+namespace SIMS.Domain.Model
 {
-    public class StartTime : ISerializable
+    public class ImageTour : ISerializable
     {
         public int Id { get; set; }
-        public DateTime Time { get; set; }
+        public string Path { get; set; }
+        public Tour Tour { get; set; }
 
-        public StartTime()
+        public ImageTour()
         {
 
         }
 
-        public StartTime(int id, DateTime time)
+        public ImageTour(int id, string path)
         {
             Id = id;
-            Time = time;
+            Path = path;
         }
 
         public string[] ToCSV()
@@ -28,7 +29,8 @@ namespace SIMS.Domain.Model.Guide
             string[] csvValues =
             {
             Id.ToString(),
-            Time.ToString(),
+            Path,
+            Tour.Id.ToString(),
         };
             return csvValues;
         }
@@ -36,7 +38,8 @@ namespace SIMS.Domain.Model.Guide
         public void FromCSV(string[] csvValues)
         {
             Id = int.Parse(csvValues[0]);
-            Time = DateTime.Parse(csvValues[1]);
+            Path = csvValues[1];
+            Tour = new Tour() { Id = int.Parse(csvValues[2]) };
         }
     }
 }

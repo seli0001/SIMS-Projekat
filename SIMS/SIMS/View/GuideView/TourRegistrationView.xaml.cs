@@ -1,7 +1,6 @@
 ﻿using Microsoft.Win32;
 using SIMS.Domain.Model;
-using SIMS.Domain.Model.Guide;
-using SIMS.Repository.GuideRepository;
+using SIMS.Repository;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,7 +17,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Image = SIMS.Domain.Model.Guide.Image;
+using Image = SIMS.Domain.Model.ImageTour;
 
 namespace SIMS.View.GuideView;
 

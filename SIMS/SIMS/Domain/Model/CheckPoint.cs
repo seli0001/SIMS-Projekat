@@ -2,7 +2,7 @@ using SIMS.Serializer;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace SIMS.Domain.Model.Guide
+namespace SIMS.Domain.Model
 {
     public class Checkpoint : ISerializable, INotifyPropertyChanged
     {

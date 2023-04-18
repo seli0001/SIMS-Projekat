@@ -10,14 +10,7 @@ namespace SIMS.Domain.Model
     public class TourRating : ISerializable
     {
         public int Id { get; set; }
-        public int GuestId { get; set; }
-        public User Guest { get; set; }
-
-        public int GuideId { get; set; }
-
         public BookedTour bookedTour { get; set; }
-        public int bookedTourId { get; set; }
-        public User Guide { get; set; }
 
         //znanje vodiča (1-5), jezik vodiča (1-5), zanimljivost ture (1-5)
         public int GuideKnown { get; set; }
@@ -26,26 +19,26 @@ namespace SIMS.Domain.Model
 
         public string Comment { get; set; }
 
+        public bool Valid { get; set; }
+
         public List<string> Images { get; set; }
         public TourRating()
         {
-            Guest = new User();
             bookedTour = new BookedTour();
-            Guide = new User();
             Images = new List<String>();
+            Valid = true;
         }
 
         public TourRating(int Id, int bookedTourId, int GuideId, int GuestId, int GuideKnown, int GuideLanguage, int TourReview, string com, List<string> Images)
         {
             this.Id = Id;
-            this.bookedTourId = bookedTourId;
-            this.GuideId = GuideId;
-            this.GuestId = GuestId;
+            bookedTour = new BookedTour() { Id = bookedTourId };
             this.GuideKnown = GuideKnown;
             this.GuideLanguage = GuideLanguage;
             this.TourReview = TourReview;
             this.Comment = com;
             this.Images = Images;
+            this.Valid = true;
         }
 
 
@@ -54,14 +47,13 @@ namespace SIMS.Domain.Model
             string[] csvValues =
             {
             Id.ToString(),
-            bookedTourId.ToString(),
-            GuideId.ToString(),
-            GuestId.ToString(),
+            bookedTour.Id.ToString(),
             GuideKnown.ToString(),
             GuideLanguage.ToString(),
             TourReview.ToString(),
             Comment,
-            string.Join(",", Images)
+            string.Join(",", Images),
+            Valid.ToString()
         };
             return csvValues;
         }
@@ -69,15 +61,13 @@ namespace SIMS.Domain.Model
         public void FromCSV(string[] csvValues)
         {
             Id = int.Parse(csvValues[0]);
-            bookedTourId = int.Parse(csvValues[1]);
-            GuideId = int.Parse(csvValues[2]);
-            GuestId = int.Parse(csvValues[3]);
-            GuideKnown = int.Parse(csvValues[4]);
-            GuideLanguage = int.Parse(csvValues[5]);
-            TourReview = int.Parse(csvValues[6]);
-            Comment = csvValues[7];
-            Images = csvValues[8].Split(',').ToList();
-
+            bookedTour = new BookedTour() { Id = int.Parse(csvValues[1]) };
+            GuideKnown = int.Parse(csvValues[2]);
+            GuideLanguage = int.Parse(csvValues[3]);
+            TourReview = int.Parse(csvValues[4]);
+            Comment = csvValues[5];
+            Images = csvValues[6].Split(',').ToList();
+            Valid = bool.Parse(csvValues[7]);
         }
 
 

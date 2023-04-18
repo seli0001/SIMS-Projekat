@@ -1,4 +1,4 @@
-using SIMS.Domain.Model.Guide;
+using SIMS.Domain.Model;
 using SIMS.Serializer;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SIMS.Repository.GuideRepository
+namespace SIMS.Repository
 {
     public class StartTimeRepository
     {
@@ -17,13 +17,13 @@ namespace SIMS.Repository.GuideRepository
         {
             _serializer = new Serializer<StartTime>();
         }
-        
+
         public int GetNextId(List<StartTime> startTimes)
         {
             if (startTimes.Count < 1)
             {
                 return 0;
-            } 
+            }
             return startTimes.Max(startTime => startTime.Id) + 1;
         }
 
@@ -31,20 +31,20 @@ namespace SIMS.Repository.GuideRepository
         {
             return _serializer.FromCSV(_filePath);
         }
-        
+
         public StartTime GetById(int id)
         {
             List<StartTime> startTimes = GetAll();
             return startTimes.FirstOrDefault(startTime => startTime.Id == id);
         }
-        
+
         public void Save(StartTime startTime)
         {
             List<StartTime> startTimes = GetAll();
             startTime.Id = GetNextId(startTimes);
-            
+
             startTimes.Add(startTime);
-            _serializer.ToCSV( _filePath, startTimes);
+            _serializer.ToCSV(_filePath, startTimes);
         }
     }
 }

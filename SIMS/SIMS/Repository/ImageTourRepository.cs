@@ -1,4 +1,4 @@
-﻿using SIMS.Domain.Model.Guide;
+﻿using SIMS.Domain.Model;
 using SIMS.Serializer;
 using System;
 using System.Collections.Generic;
@@ -6,19 +6,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SIMS.Repository.GuideRepository
+namespace SIMS.Repository
 {
-    class ImageRepository
+    class ImageTourRepository
     {
         private const string _filePath = "../../../../SIMS/Resources/Data/Images.csv";
-        private readonly Serializer<Image> _serializer;
+        private readonly Serializer<ImageTour> _serializer;
 
-        public ImageRepository()
+        public ImageTourRepository()
         {
-            _serializer = new Serializer<Image>();
+            _serializer = new Serializer<ImageTour>();
         }
         
-        public int GetNextId(List<Image> images)
+        public int GetNextId(List<ImageTour> images)
         {
             if (images.Count < 1)
             {
@@ -27,29 +27,29 @@ namespace SIMS.Repository.GuideRepository
             return images.Max(image => image.Id) + 1;
         }
 
-        public List<Image> GetAll()
+        public List<ImageTour> GetAll()
         {
             return _serializer.FromCSV(_filePath);
         }
         
-        public List<Image> GetByTourId(int tourId)
+        public List<ImageTour> GetByTourId(int tourId)
         {
-            List<Image> images = GetAll();
+            List<ImageTour> images = GetAll();
             return images.Where(image => image.Tour.Id == tourId).ToList();
         }
         
-        public void Save(Image image)
+        public void Save(ImageTour image)
         {
-            List<Image> images = GetAll();
+            List<ImageTour> images = GetAll();
             image.Id = GetNextId(images);
 
             images.Add(image);
             _serializer.ToCSV(_filePath, images);
         }
         
-        public void SaveAll(List<Image> newImages)
+        public void SaveAll(List<ImageTour> newImages)
         {
-            List<Image> allImages = GetAll();
+            List<ImageTour> allImages = GetAll();
             int id = GetNextId(allImages);
 
             foreach (var image in newImages)

@@ -1,5 +1,4 @@
 ﻿using SIMS.Domain.Model;
-using SIMS.Domain.Model.Guide;
 using SIMS.Repository;
 using SIMS.Service.Services;
 using System;

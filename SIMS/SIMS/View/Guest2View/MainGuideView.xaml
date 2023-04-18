@@ -17,23 +17,51 @@
             <ColumnDefinition Width="20*"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Button Grid.Column="1" Grid.Row="0" Content="Dodaj Turu" HorizontalAlignment="Center" Height="27"  VerticalAlignment="Center" Width="112" Click="RegisterTour"/>
-        <Grid Grid.Row="1" Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition></RowDefinition>
-                <RowDefinition Height="10*"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Button x:Name="StartTourButton" Content="Zapocni turu" HorizontalAlignment="Left" VerticalAlignment="Center" Click="StartTourButton_Click" Padding="5"></Button>
-            <Button x:Name="ViewStartedTourButton" Content="Pogledj trenturnu turu" HorizontalAlignment="Right" VerticalAlignment="Center" Padding="5" Click="ViewStartedTourButton_Click"></Button>
-            <DataGrid Grid.Row="1" x:Name="dataGridTours" ItemsSource="{Binding Tours, UpdateSourceTrigger=PropertyChanged}"  
-                      SelectedItem="{Binding SelectedTour, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single" 
-                      AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="dataGridTours_SelectionChanged">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Width="*" Header="Naziv ture" Binding="{Binding Name}"></DataGridTextColumn>
-                    <DataGridTextColumn Width="*" Header="Vreme pocetka" Binding="{Binding StartTime.Time}"></DataGridTextColumn>
-                    <DataGridTextColumn Width="*" Header="Status" Binding="{Binding Status}"></DataGridTextColumn>
-                </DataGrid.Columns>
-            </DataGrid>
-        </Grid>
+
+        
+        <TabControl Grid.Row="1" Grid.Column="1">
+            <TabItem Header="Danasnje Ture">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition>
+                        </RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="10*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Button Grid.Row="0" Content="Dodaj Turu" HorizontalAlignment="Center" Height="27"  VerticalAlignment="Center" Width="112" Click="RegisterTour"/>
+
+                    <Button Grid.Row="1" x:Name="StartTourButton" Content="Zapocni turu" HorizontalAlignment="Left" VerticalAlignment="Center" Click="StartTourButton_Click" Padding="5"></Button>
+                    <Button Grid.Row="1" x:Name="ViewStartedTourButton" Content="Pogledj trenturnu turu" HorizontalAlignment="Right" VerticalAlignment="Center" Padding="5" Click="ViewStartedTourButton_Click"></Button>
+                    <DataGrid Grid.Row="2" x:Name="dataGridTours" ItemsSource="{Binding Tours, UpdateSourceTrigger=PropertyChanged}"  
+                          SelectedItem="{Binding SelectedTour, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single" 
+                          AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="dataGridTours_SelectionChanged">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Width="*" Header="Naziv ture" Binding="{Binding Name}"></DataGridTextColumn>
+                            <DataGridTextColumn Width="*" Header="Vreme pocetka" Binding="{Binding StartTime.Time}"></DataGridTextColumn>
+                            <DataGridTextColumn Width="*" Header="Status" Binding="{Binding Status}"></DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="Sve Ture">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                    <RowDefinition Height="10*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Button x:Name="tourRatingButton" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Prikazi recenzije" Click="tourRatingButton_Click"></Button>
+                <DataGrid Grid.Row="1" x:Name="dataGridAllTours" ItemsSource="{Binding AllTours, UpdateSourceTrigger=PropertyChanged}"  
+                          SelectedItem="{Binding SelectedTour, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single" 
+                          AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="dataGridTours_SelectionChanged">
+                    <DataGrid.Columns>
+                            <DataGridTextColumn Width="*" Header="Naziv ture" Binding="{Binding Name}"></DataGridTextColumn>
+                            <DataGridTextColumn Width="*" Header="Status" Binding="{Binding Status}"></DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+       
     </Grid>
 </Window>

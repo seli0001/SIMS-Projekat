@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SIMS.Domain.Model.Guide;
+using SIMS.Domain.Model;
+using SIMS.Repository.GuideRepository;
 using SIMS.Serializer;
 
-namespace SIMS.Repository.GuideRepository
+namespace SIMS.Repository
 {
     class TourRepository
     {
@@ -14,23 +15,23 @@ namespace SIMS.Repository.GuideRepository
         private readonly Serializer<Tour> _serializer;
         private readonly LocationRepository _locationRepository;
         private readonly StartTimeRepository _startTimeRepository;
-        private readonly ImageRepository _imageRepository;
+        private readonly ImageTourRepository _imageRepository;
         private readonly CheckpointRepository _checkpointRepository;
         public TourRepository()
         {
             _serializer = new Serializer<Tour>();
             _locationRepository = new LocationRepository();
             _startTimeRepository = new StartTimeRepository();
-            _imageRepository = new ImageRepository();
+            _imageRepository = new ImageTourRepository();
             _checkpointRepository = new CheckpointRepository();
         }
-        
+
         public int GetNextId(List<Tour> tours)
         {
             if (tours.Count < 1)
             {
                 return 0;
-            } 
+            }
             return tours.Max(tour => tour.Id) + 1;
         }
 
@@ -38,7 +39,8 @@ namespace SIMS.Repository.GuideRepository
         {
             List<Tour> tours = GetAll();
             Tour tour = tours.FirstOrDefault(tour => tour.Id == id);
-            if(tour != null){
+            if (tour != null)
+            {
                 tour.Location = _locationRepository.GetById(tour.Location.Id);
                 tour.StartTime = _startTimeRepository.GetById(tour.StartTime.Id);
                 tour.Images = _imageRepository.GetByTourId(tour.Id);
@@ -75,7 +77,7 @@ namespace SIMS.Repository.GuideRepository
             {
                 if (foreachTour.Id == id)
                 {
-                    foreachTour.NumberOfPeople =  tour.NumberOfPeople;
+                    foreachTour.NumberOfPeople = tour.NumberOfPeople;
 
                 }
             }
@@ -97,7 +99,7 @@ namespace SIMS.Repository.GuideRepository
 
             return tours;
         }
-        
+
         public List<Tour> GetAllByGuideId(int id)
         {
             List<Tour> tours = GetAll();
@@ -108,7 +110,7 @@ namespace SIMS.Repository.GuideRepository
         {
             List<Tour> tours = GetAll();
             tour.Id = GetNextId(tours);
-            
+
             foreach (var image in tour.Images)
             {
                 image.Tour = tour;
@@ -117,16 +119,16 @@ namespace SIMS.Repository.GuideRepository
             {
                 checkpoint.Tour = tour;
             }
-            
+
             _locationRepository.Save(tour.Location);
             _startTimeRepository.Save(tour.StartTime);
             _imageRepository.SaveAll(tour.Images);
             _checkpointRepository.SaveAll(tour.Checkpoints);
-            
+
             tours.Add(tour);
-            _serializer.ToCSV( _filePath, tours);
+            _serializer.ToCSV(_filePath, tours);
         }
-        
+
         public void Update(Tour tour)
         {
             List<Tour> tours = GetAll();
