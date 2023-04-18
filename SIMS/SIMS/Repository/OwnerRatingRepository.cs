@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using SIMS.Model;
+using SIMS.Domain.Model;
 using SIMS.Serializer;
 
 namespace SIMS.Repository
@@ -31,13 +31,19 @@ namespace SIMS.Repository
 
         public List<OwnerRating> GetAll()
         {
-            return _serializer.FromCSV(_filePath);
+            _ratings = _serializer.FromCSV(_filePath);
+            foreach (OwnerRating rating in _ratings)
+            {
+                rating.User = _userRepository.GetById(rating.User.Id);
+                rating.Reservation = _reservationRepository.GetById(rating.Reservation.Id);
+            }
+            return _ratings;
         }
 
         public OwnerRating Save(OwnerRating rating)
         {
             rating.Id = NextId();
-            _ratings = _serializer.FromCSV(_filePath);
+            _ratings = GetAll();
             _ratings.Add(rating);
             _serializer.ToCSV(_filePath, _ratings);
             return rating;
@@ -45,7 +51,7 @@ namespace SIMS.Repository
 
         public int NextId()
         {
-            _ratings = _serializer.FromCSV(_filePath);
+            _ratings = GetAll();
             if (_ratings.Count < 1)
             {
                 return 1;
@@ -55,7 +61,7 @@ namespace SIMS.Repository
 
         public void Delete(OwnerRating rating)
         {
-            _ratings = _serializer.FromCSV(_filePath);
+            _ratings = GetAll();
             OwnerRating founded = _ratings.Find(r => r.Id == rating.Id);
             if (founded == null) return;
             _ratings.Remove(founded);
@@ -64,7 +70,7 @@ namespace SIMS.Repository
 
         public OwnerRating Update(OwnerRating rating)
         {
-            _ratings = _serializer.FromCSV(_filePath);
+            _ratings = GetAll();
             OwnerRating current = _ratings.Find(r => r.Id == rating.Id);
             if (current == null) return null;
             int index = _ratings.IndexOf(current);
@@ -76,24 +82,13 @@ namespace SIMS.Repository
 
         public List<OwnerRating> GetByReservation(Reservation reservation)
         {
-            _ratings = _serializer.FromCSV(_filePath);
-            foreach (OwnerRating rating in _ratings)
-            {
-                rating.User = _userRepository.GetById(rating.User.Id);
-                rating.Reservation = _reservationRepository.GetById(rating.Reservation.Id);
-
-            }
+            _ratings = GetAll();
             return _ratings.FindAll(c => c.Reservation.Id == reservation.Id);
         }
 
         public List<OwnerRating> GetByOwnerId(int id)
         {
-            _ratings = _serializer.FromCSV(_filePath);
-            foreach (OwnerRating rating in _ratings)
-            {
-                rating.User = _userRepository.GetById(rating.User.Id);
-                rating.Reservation = _reservationRepository.GetById(rating.Reservation.Id);
-            }
+            _ratings = GetAll();
             return _ratings.FindAll(r => r.Reservation.Accommodation.User.Id == id);
         }   
     }

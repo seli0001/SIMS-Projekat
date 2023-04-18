@@ -1,0 +1,56 @@
+﻿<Window x:Class="SIMS.View.OwnerView.GuestRatingView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SIMS.View.OwnerView"
+        mc:Ignorable="d"
+        Title="GuestRating" Height="380" Width="370" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="300"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Grid.Column="0" Width="280" Height="200">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                 </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label VerticalAlignment="Top" Grid.Row="0" Grid.Column="0" Height="30">Cistoca</Label>
+            <Label VerticalAlignment="Top" Grid.Row="1" Grid.Column="0" Height="30">Postovanje pravila</Label>
+            <Label VerticalAlignment="Top" Grid.Row="2" Grid.Column="0" Height="30">Dodatan komentar</Label>
+            
+
+            <StackPanel Grid.Row="0" Grid.Column="1">
+                <TextBox Text="{Binding Path=Cleanliness, UpdateSourceTrigger=LostFocus}"
+                     Height="20"></TextBox>
+                <Label x:Name="CleanlinessValidator" FontSize="11" Grid.Row="0" Grid.Column="1" Foreground="Red" Visibility="Hidden">X00</Label>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Grid.Column="1">
+                <TextBox Text="{Binding Path=RulesRespect, UpdateSourceTrigger=LostFocus}" 
+                     Height="20"></TextBox>
+                <Label x:Name="RulesValidator" FontSize="11" Foreground="Red" Visibility="Hidden">Veliko pocetno slovo</Label>
+            </StackPanel>
+
+            <TextBox Text="{Binding Path=Comment, UpdateSourceTrigger=LostFocus}" AcceptsReturn="True" TextWrapping="Wrap" Grid.RowSpan="2"
+                     Grid.Row="3" Grid.Column="1" />
+
+       
+           
+        </Grid>
+
+        <WrapPanel Grid.Row="1" HorizontalAlignment="Center">
+            <Button x:Name="BtnSubmit" Content="Oceni" IsCancel="True" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20, 5, 20, 5"
+                Command="{Binding SaveRatingCommand}" IsEnabled="{Binding IsEnabled}"/>
+            <Button  x:Name="BtnCancel" Content="Odustani" IsDefault="True" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20, 5, 20, 5"
+                Command="{Binding CancelCommand}"/>
+        </WrapPanel>
+    </Grid>
+</Window>

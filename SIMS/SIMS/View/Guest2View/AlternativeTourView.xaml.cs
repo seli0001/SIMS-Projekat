@@ -1,4 +1,4 @@
-﻿using SIMS.Model.Guide;
+﻿using SIMS.Domain.Model;
 using SIMS.Repository.GuideRepository;
 using System;
 using System.Collections.Generic;
