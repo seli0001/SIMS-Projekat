@@ -1,11 +1,11 @@
-﻿using SIMS.Serializer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SIMS.Serializer;
 
-namespace SIMS.Model
+namespace SIMS.Domain.Model
 {
     public class Location : ISerializable
     {
@@ -17,9 +17,14 @@ namespace SIMS.Model
         {
 
         }
-
-        public Location(string country, string city)
+        public Location( string country, string city)
         {
+            Country = country;
+            City = city;
+        }
+        public Location(int id, string country, string city)
+        {
+            Id = id;
             Country = country;
             City = city;
         }

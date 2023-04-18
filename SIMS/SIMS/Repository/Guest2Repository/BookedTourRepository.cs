@@ -1,5 +1,4 @@
-﻿using SIMS.Model.Guest2;
-using SIMS.Model.Guide;
+﻿using SIMS.Domain.Model;
 using SIMS.Repository.GuideRepository;
 using SIMS.Serializer;
 using System;
@@ -10,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SIMS.Repository.Guest2Repository
 {
-     class BookedTourRepository
+    class BookedTourRepository
     {
         private const string _filePath = "../../../../SIMS/Resources/Data/BookedTours.csv";
 

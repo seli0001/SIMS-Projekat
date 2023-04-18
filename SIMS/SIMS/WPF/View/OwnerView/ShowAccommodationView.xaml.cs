@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualBasic;
-using SIMS.Model;
-using SIMS.Model.AccommodationModel;
+using SIMS.Domain.Model;
 using SIMS.Repository;
 using SIMS.WPF.ViewModel.OwnerViewModel;
 using System;

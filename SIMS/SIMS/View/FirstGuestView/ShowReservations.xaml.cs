@@ -1,5 +1,4 @@
-﻿using SIMS.Model;
-using SIMS.Model.AccommodationModel;
+﻿using SIMS.Domain.Model;
 using SIMS.Repository;
 using SIMS.View.OwnerView;
 using System;

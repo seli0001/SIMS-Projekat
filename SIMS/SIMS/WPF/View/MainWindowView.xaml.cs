@@ -1,5 +1,4 @@
 ﻿using SIMS.View.FirstGuestView;
-using SIMS.Model;
 using SIMS.Repository;
 using SIMS.View.Guest2View;
 using SIMS.View.GuideView;

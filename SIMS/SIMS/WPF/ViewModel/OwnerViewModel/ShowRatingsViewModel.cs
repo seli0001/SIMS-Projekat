@@ -1,5 +1,6 @@
-﻿using SIMS.Model;
+﻿using SIMS.Domain.Model;
 using SIMS.Repository;
+using SIMS.Service.UseCases;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,10 +11,10 @@ using System.Windows;
 
 namespace SIMS.WPF.ViewModel.OwnerViewModel
 {
-    public class ShowRatingsViewModel : ViewModelBase
+    public class ShowRatingsViewModel : OwnerViewModelBase
     {
         private readonly OwnerRatingRepository _ownerRatingRepository;
-        private readonly GuestRatingRepository _guestRatingRepository;
+        private readonly GuestRatingService _guestRatingService;
         public static ObservableCollection<OwnerRating> Ratings { get; set; }
         public OwnerRating SelectedRating { get; set; }
         public User Owner { get; set; }
@@ -21,7 +22,7 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         public ShowRatingsViewModel(User user)
         {
             _ownerRatingRepository = new OwnerRatingRepository();
-            _guestRatingRepository = new GuestRatingRepository();
+            _guestRatingService = new GuestRatingService();
             Owner = user;
             Ratings = new ObservableCollection<OwnerRating>();
             UpdateRatings();
@@ -43,7 +44,7 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
 
         private bool checkIfRated(OwnerRating rating)
         {
-            List<GuestRating> allRatings = new List<GuestRating>(_guestRatingRepository.GetAll());
+            List<GuestRating> allRatings = new List<GuestRating>(_guestRatingService.GetAll());
             foreach (GuestRating guestRating in allRatings)
             {
                 if (guestRating.Reservation.Id == rating.Reservation.Id)
@@ -54,7 +55,6 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             return false;
 
         }
-
         private void ShowRatingInfo(object sender, RoutedEventArgs e)
         {
 

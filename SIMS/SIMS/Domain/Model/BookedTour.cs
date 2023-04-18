@@ -5,12 +5,11 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using SIMS.Model.Guide;
 using SIMS.Serializer;
 
-namespace SIMS.Model.Guest2
+namespace SIMS.Domain.Model
 {
-    public  class BookedTour : ISerializable, INotifyPropertyChanged
+    public class BookedTour : ISerializable, INotifyPropertyChanged
     {
         public int Id { get; set; }
 
@@ -47,7 +46,7 @@ namespace SIMS.Model.Guest2
             Id.ToString(),
             TourId.ToString(),
             UserId.ToString(),
-            (Checkpoint != null) ? Checkpoint.Id.ToString() : ""
+            Checkpoint != null ? Checkpoint.Id.ToString() : ""
         };
             return csvValues;
         }
@@ -57,7 +56,7 @@ namespace SIMS.Model.Guest2
             Id = int.Parse(csvValues[0]);
             TourId = int.Parse(csvValues[1]);
             UserId = int.Parse(csvValues[2]);
-            Checkpoint = csvValues[3]== "" ? null :new Checkpoint() { Id = int.Parse(csvValues[3]) };
+            Checkpoint = csvValues[3] == "" ? null : new Checkpoint() { Id = int.Parse(csvValues[3]) };
         }
     }
 }

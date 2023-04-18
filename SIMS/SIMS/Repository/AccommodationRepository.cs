@@ -1,5 +1,4 @@
-﻿using SIMS.Model;
-using SIMS.Model.AccommodationModel;
+﻿using SIMS.Domain.Model;
 using SIMS.Serializer;
 using System;
 using System.Collections.Generic;
@@ -38,7 +37,7 @@ namespace SIMS.Repository
             foreach (Accommodation accommodation in _accommodations)
             {
                 accommodation.Location = _locationRepository.GetById(accommodation.Location.Id);
-                foreach (Image image in _imageRepository.GetByAccommodationId(accommodation.Id))
+                foreach (Image image in _imageRepository.GetByAccommodation(accommodation))
                 {
                     accommodation.Images.Add(image);
                 }
@@ -89,20 +88,11 @@ namespace SIMS.Repository
             _serializer.ToCSV(_filePath, _accommodations);
             return accommodation;
         }
-
         public List<Accommodation> GetByUser(User user)
         {
             _accommodations = GetAll();
             return _accommodations.FindAll(c => c.User.Id == user.Id);
         }
-
-        public Accommodation GetById(int id)
-        {
-            _accommodations = GetAll();
-            return _accommodations.Find(c => c.Id == id);
-        }
-
-
         public void makeSuperOwner(User user)
         {
             _accommodations = GetByUser(user);

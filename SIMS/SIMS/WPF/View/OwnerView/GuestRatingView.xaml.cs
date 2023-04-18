@@ -1,6 +1,4 @@
-﻿using SIMS.Model;
-using SIMS.Model.AccommodationModel;
-using SIMS.Repository;
+﻿using SIMS.Domain.Model;
 using SIMS.WPF.ViewModel.OwnerViewModel;
 using System;
 using System.Collections.Generic;

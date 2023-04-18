@@ -1,4 +1,4 @@
-﻿using SIMS.Model;
+﻿using SIMS.Domain.Model;
 using SIMS.Repository;
 using SIMS.WPF.ViewModel.OwnerViewModel;
 using System;

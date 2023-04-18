@@ -1,5 +1,4 @@
-﻿using SIMS.Model;
-using SIMS.Repository;
+﻿using SIMS.Repository;
 using SIMS.View.FirstGuestView;
 using SIMS.View.Guest2View;
 using SIMS.View.GuideView;
@@ -12,10 +11,12 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Input;
+using SIMS.WPF.ViewModel.OwnerViewModel;
+using SIMS.Domain.Model;
 
 namespace SIMS.WPF.ViewModel
 {
-    public class MainWindowViewModel : ViewModelBase
+    public class MainWindowViewModel : OwnerViewModelBase
     {
         private readonly UserRepository _userRepository;
 

@@ -1,6 +1,4 @@
-﻿using SIMS.Model.AccommodationModel;
-using SIMS.Model;
-using SIMS.Repository;
+﻿using SIMS.Repository;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,18 +10,20 @@ using System.Windows.Threading;
 using System.Windows;
 using SIMS.View.OwnerView;
 using System.Windows.Input;
+using SIMS.Domain.Model;
+using SIMS.Service.UseCases;
 
 namespace SIMS.WPF.ViewModel.OwnerViewModel
 {
-    public class OwnerMainViewModel : ViewModelBase
+    public class OwnerMainViewModel : OwnerViewModelBase
     {
         public static ObservableCollection<Accommodation> Accommodations { get; set; }
         public Accommodation SelectedAccommodation { get; set; }
 
+        private readonly GuestRatingService _guestRatingService;
+        private readonly AccommodationService _accommodationService;
 
-        private readonly GuestRatingRepository _guestRatingRepository;
         private readonly OwnerRatingRepository _ownerRatingRepository;
-        private readonly AccommodationRepository _accommodationRepository;
         
         private Timer timer;
 
@@ -32,48 +32,48 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         public OwnerMainViewModel(User user)
         {
             LoggedInUser = user;
-           
-            _guestRatingRepository = new GuestRatingRepository();
+
+            _guestRatingService = new GuestRatingService();
+            _accommodationService = new AccommodationService();
+
+
             _ownerRatingRepository = new OwnerRatingRepository();
-            _accommodationRepository = new AccommodationRepository();
-            Accommodations = new ObservableCollection<Accommodation>(_accommodationRepository.GetByUser(user));
-            timer = new Timer(CheckCondition, null, TimeSpan.Zero, TimeSpan.FromSeconds(10));
+            Accommodations = new ObservableCollection<Accommodation>(_accommodationService.GetByUser(user));
+            //timer = new Timer(CheckCondition, null, TimeSpan.Zero, TimeSpan.FromMinutes(2));
         }
 
         private void CheckCondition(object? state)
         {
-            //Unreviewed Notification
-            if (_guestRatingRepository.checkIfNotRated())
+            App.Current.Dispatcher.Invoke((Action)delegate
             {
-                MessageBox.Show("You Have some Unreviewed reservations!");
-            }
+                //Unreviewed Notification
+                if (_guestRatingService.checkIfNotRated())
+                {
+                    MessageBox.Show("You Have some Unreviewed reservations!");
+                }
 
-            //Super owner
-            int temp = checkIsSuperOwner();
-            if (temp == 1)
-            {
-                App.Current.Dispatcher.Invoke((Action)delegate
+                //Super owner
+                int temp = checkIsSuperOwner();
+                if (temp == 1)
                 {
-                    _accommodationRepository.makeSuperOwner(LoggedInUser);
-                    MessageBox.Show("Congratulations You Have Became a SUPEROWNER!!!!");
-                    UpdateUI();
-                });
-            }
-            else if (temp == 0)
-            {
-                App.Current.Dispatcher.Invoke((Action)delegate
+                        _accommodationService.makeSuperOwner(LoggedInUser);
+                        MessageBox.Show("Congratulations You Have Became a SUPEROWNER!!!!");
+                        UpdateUI();
+                }
+                else if (temp == 0)
                 {
-                    _accommodationRepository.deleteSuperOwner(LoggedInUser);
-                    MessageBox.Show("You have lost superowner title");
-                    UpdateUI();
-                });
-            }
+                
+                        _accommodationService.deleteSuperOwner(LoggedInUser);
+                        MessageBox.Show("You have lost superowner title");
+                        UpdateUI();
+                }
+            });
         }
 
         private void UpdateUI()
         {
             Accommodations.Clear();
-            foreach (Accommodation acc in _accommodationRepository.GetAll())
+            foreach (Accommodation acc in _accommodationService.GetAll())
             {
                 Accommodations.Add(acc);
             }
@@ -81,8 +81,8 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         private int checkIsSuperOwner()
         {
             List<OwnerRating> ratings = new List<OwnerRating>(_ownerRatingRepository.GetAll());
-            SuperOwnerRepository sor = new SuperOwnerRepository();
-            if (sor.CheckById(LoggedInUser.Id))
+            SuperOwnerService superOwnerService = new SuperOwnerService();
+            if (superOwnerService.CheckById(LoggedInUser.Id))
             {
                 if (!(ratings.Count > 5 && checkRating(ratings)))
                     return 0;
@@ -158,10 +158,10 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             if (SelectedAccommodation != null)
             {
                 MessageBoxResult result = MessageBox.Show("Are you sure?", "Delete comment",
-                    MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    _accommodationRepository.Delete(SelectedAccommodation);
+                    _accommodationService.Delete(SelectedAccommodation);
                     Accommodations.Remove(SelectedAccommodation);
                 }
             }
@@ -171,7 +171,5 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             ShowRatingsView showRatings = new ShowRatingsView(LoggedInUser);
             showRatings.Show();
         }
-
-
     }
 }

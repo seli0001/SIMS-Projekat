@@ -13,11 +13,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using SIMS.Model;
-using SIMS.Model.Guest2;
-using SIMS.Model.Guide;
+using SIMS.Domain.Model;
 using SIMS.Repository.Guest2Repository;
 using SIMS.Repository.GuideRepository;
+using Type = SIMS.Domain.Model.Type;
 
 namespace SIMS.View.GuideView
 {
@@ -32,9 +31,19 @@ namespace SIMS.View.GuideView
             return value != null;
         }
 
+        public object Convert(object value, System.Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return value;
+        }
+
+        public object ConvertBack(object value, System.Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
         }
     }
 

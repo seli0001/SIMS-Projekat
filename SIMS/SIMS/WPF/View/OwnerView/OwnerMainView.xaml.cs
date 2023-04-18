@@ -1,5 +1,4 @@
-﻿using SIMS.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -14,11 +13,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Xml.Linq;
-using SIMS.Model.AccommodationModel;
 using SIMS.Repository;
 using System.Threading;
 using System.Windows.Threading;
 using SIMS.WPF.ViewModel.OwnerViewModel;
+using SIMS.Domain.Model;
 
 namespace SIMS.View.OwnerView
 {

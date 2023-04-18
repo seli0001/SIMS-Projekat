@@ -1,6 +1,4 @@
-﻿using SIMS.Model.AccommodationModel;
-using SIMS.Model;
-using SIMS.Repository;
+﻿using SIMS.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,15 +8,17 @@ using System.Collections.ObjectModel;
 using SIMS.View.OwnerView;
 using System.Windows;
 using System.Windows.Input;
+using SIMS.Domain.Model;
+using SIMS.Service.UseCases;
 
 namespace SIMS.WPF.ViewModel.OwnerViewModel
 {
-    public class ShowAccommodationViewModel : ViewModelBase
+    public class ShowAccommodationViewModel : OwnerViewModelBase
     {
         public Accommodation SelectedAccommodation { get; set; }
         private Reservation _selectedReservation;
 
-        private GuestRatingRepository _guestRatingRepository;
+        private GuestRatingService _guestRatingService;
 
         private bool _isEnabled;
         public bool IsEnabled
@@ -55,7 +55,7 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         public ShowAccommodationViewModel(Accommodation selectedAccommodation, User user)
         {
             _reservationRepository = new ReservationRepository();
-            _guestRatingRepository = new GuestRatingRepository();
+            _guestRatingService = new GuestRatingService();
             Reservations = new ObservableCollection<Reservation>();
             SelectedAccommodation = selectedAccommodation;
             UpdateReservations();
@@ -68,7 +68,7 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             Reservations.Clear();
             foreach (Reservation res in AllReservationsForAccommodation)
             {
-                if (!_guestRatingRepository.checkRatingForReservation(res))
+                if (!_guestRatingService.checkRatingForReservation(res))
                 {
                     Reservations.Add(res);
                 }

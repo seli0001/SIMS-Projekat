@@ -1,5 +1,6 @@
-﻿using SIMS.Model;
+﻿using SIMS.Domain.Model;
 using SIMS.Repository;
+using SIMS.Service.UseCases;
 using SIMS.View.OwnerView;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,11 @@ using System.Windows.Input;
 
 namespace SIMS.WPF.ViewModel.OwnerViewModel
 {
-    public class GuestRatingViewModel : ViewModelBase
+    public class GuestRatingViewModel : OwnerViewModelBase
     {
         private readonly int[] validator;
         private readonly GuestRatingRepository _repository;
+        private readonly GuestRatingService _guestRatingService;
         public Reservation SelectedReservation { get; set; }
         public User LoggedInUser { get; set; }
 
@@ -23,6 +25,7 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             validator = new int[3];
             SelectedReservation = selectedReservation;
             _repository = new GuestRatingRepository();
+            _guestRatingService = new GuestRatingService();
             LoggedInUser = user;
             IsEnabled = false;
         }
@@ -163,8 +166,9 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
 
         private void SaveRating()
         {
-            GuestRating newRating = new GuestRating(Cleanliness, RulesRespect, Comment, LoggedInUser, SelectedReservation);
-            GuestRating savedRating = _repository.Save(newRating);
+            _guestRatingService.Save(new GuestRating(Cleanliness, RulesRespect, 
+                Comment, LoggedInUser, SelectedReservation));
+
             ShowAccommodationViewModel.Reservations.Remove(SelectedReservation);
             Cancel();
             MessageBox.Show("You have successfully reviewed");

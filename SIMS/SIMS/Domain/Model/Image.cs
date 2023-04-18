@@ -1,18 +1,17 @@
-﻿using SIMS.Model.AccommodationModel;
-using SIMS.Serializer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SIMS.Serializer;
 
-namespace SIMS.Model
+namespace SIMS.Domain.Model
 {
     public class Image : ISerializable
     {
         public int Id { get; set; }
         public string Path { get; set; }
-        public Accommodation Accommodation { get; set; }
+        public Tour Tour { get; set; }
 
         public Image()
         {
@@ -31,7 +30,7 @@ namespace SIMS.Model
             {
             Id.ToString(),
             Path,
-            Accommodation.Id.ToString(),
+            Tour.Id.ToString(),
         };
             return csvValues;
         }
@@ -40,7 +39,7 @@ namespace SIMS.Model
         {
             Id = int.Parse(csvValues[0]);
             Path = csvValues[1];
-            Accommodation = new Accommodation() { Id = int.Parse(csvValues[2]) };
+            Tour = new Tour() { Id = int.Parse(csvValues[2])};
         }
     }
 }

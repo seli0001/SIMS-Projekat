@@ -11,12 +11,8 @@ namespace SIMS.Serializer
     {
         private const char Delimiter = '|';
 
-        private static object _lockObject = new object();
-
         public void ToCSV(string fileName, List<T> objects)
         {
-            lock (_lockObject)
-            {
                 StringBuilder csv = new StringBuilder();
 
                 foreach (T obj in objects)
@@ -26,14 +22,11 @@ namespace SIMS.Serializer
                 }
 
                 File.WriteAllText(fileName, csv.ToString());
-            }
-
+            
         }
 
         public List<T> FromCSV(string fileName)
         {
-            lock (_lockObject)
-            {
                 List<T> objects = new List<T>();
 
                 foreach (string line in File.ReadLines(fileName))
@@ -45,7 +38,7 @@ namespace SIMS.Serializer
                 }
 
                 return objects;
-            }
+           
         }
     }
 }

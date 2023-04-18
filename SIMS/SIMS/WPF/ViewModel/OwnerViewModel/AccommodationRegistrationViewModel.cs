@@ -1,6 +1,4 @@
-﻿using SIMS.Model.AccommodationModel;
-using SIMS.Model;
-using SIMS.Repository;
+﻿using SIMS.Repository;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,12 +6,14 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
-using Type = SIMS.Model.AccommodationModel.Type;
+using Type = SIMS.Domain.Model.Type;
 using System.Windows.Input;
+using SIMS.Domain.Model;
+using SIMS.Service.UseCases;
 
 namespace SIMS.WPF.ViewModel.OwnerViewModel
 {
-    public class AccommodationRegistrationViewModel : ViewModelBase
+    public class AccommodationRegistrationViewModel : OwnerViewModelBase
     {
         public User LoggedInUser { get; set; }
         public Accommodation SelectedAccommodation { get; set; }
@@ -21,20 +21,22 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         public ObservableCollection<BitmapImage> Images;
         private List<Image> _accommodationImages;
 
-        private readonly AccommodationRepository _repository;
-        private readonly LocationRepository _locationRepository;
-        private readonly ImageRepository _imageRepository;
+        private readonly AccommodationService _accommodationService;
+        private readonly AccommodationImageService _imageService;
+        private readonly LocationService _locationService;
+
 
         private readonly int[] validator;
 
         public AccommodationRegistrationViewModel(User user)
         {
-
             LoggedInUser = user;
             validator = new int[6];
-            _repository = new AccommodationRepository();
-            _locationRepository = new LocationRepository();
-            _imageRepository = new ImageRepository();
+
+            _accommodationService = new AccommodationService();
+            _imageService = new AccommodationImageService();
+            _locationService = new LocationService();
+
             Images = new ObservableCollection<BitmapImage>();
             _accommodationImages = new List<Image>();
 
@@ -261,19 +263,6 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         #endregion
 
 
-
-        private void ValidatorTest()
-        {
-            foreach (int kon in validator)
-            {
-                if (kon == 0)
-                {
-
-                    IsEnabled = false;
-                }
-            }
-        }
-
         private ICommand _addImageCommand;
         public ICommand AddImageCommand
         {
@@ -292,7 +281,19 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             }
         }
 
-        private void AddImageFromFileDialog()
+        private void ValidatorTest()
+        {
+            foreach (int kon in validator)
+            {
+                if (kon == 0)
+                {
+
+                    IsEnabled = false;
+                }
+            }
+        }
+
+        public void AddImageFromFileDialog()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Image files (*.png;*.jpeg)|*.png;*.jpeg|All files (*.*)|*.*";
@@ -363,14 +364,16 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
 
         private void StoreAccommodation()
         {
-            Location newLocation = new Location(Country, City);
-            Location savedLocation = _locationRepository.Save(newLocation);
-            _accommodationImages = _imageRepository.SetId(_accommodationImages);
+            Location savedLocation = _locationService.Save(Country, City);
 
-            Accommodation newAccommodation = new Accommodation(AccommodationName, savedLocation, AccTypeEnum, MaxGuestNum, MinReservationDays, CancelDaysNumber, LoggedInUser, _accommodationImages);
-            Accommodation savedAccommodation = _repository.Save(newAccommodation);
-            _imageRepository.SaveAll(_accommodationImages, savedAccommodation);
+            _accommodationImages = _imageService.SetId(_accommodationImages);
+
+            Accommodation savedAccommodation = _accommodationService.Save(AccommodationName, savedLocation, AccTypeEnum, MaxGuestNum,
+                MinReservationDays, CancelDaysNumber,
+                LoggedInUser, _accommodationImages);
             OwnerMainViewModel.Accommodations.Add(savedAccommodation);
+
+            _imageService.SaveAll(_accommodationImages);
         }
 
         private void Cancel(object sender, RoutedEventArgs e)
