@@ -71,7 +71,7 @@ namespace SIMS.Repository
             guestTourReview.Comment = com;
             guestTourReview.bookedTour = bookedTour;
             guestTourReview.bookedTour.Id = bookedTour.Id;
-            guestTourReview.GuideId = bookedTour.Tour.Guide.Id;
+            guestTourReview.bookedTour.Tour.Guide.Id = bookedTour.Tour.Guide.Id;
             guestTourReview.Images = images;
             reviews.Add(guestTourReview);
             _serializer.ToCSV(_filePath, reviews);
