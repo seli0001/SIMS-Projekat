@@ -1,0 +1,83 @@
+﻿<Window x:Class="SIMS.WPF.View.RateTourView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SIMS.WPF.View"
+        mc:Ignorable="d"
+        Title="RateTourView" Height="750" Width="430">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+
+            <ToolBar>
+                <Button Click="BackToMenuClick">Meni</Button>
+                <Button Content="                                                                       "></Button>
+                <Button >Nazad</Button>
+                <Button Click="BackToMainGuest2ViewClick" >Glavni prozor</Button>
+            </ToolBar>
+
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel  Grid.Column="0" Margin="40,40,18,40">
+                <Label>Znanje vodica</Label>
+                <RadioButton GroupName="Opcije" Checked="RadioButton_Checked">1</RadioButton>
+                <RadioButton  GroupName="Opcije" Checked="RadioButton_Checked_1">2</RadioButton>
+                <RadioButton  GroupName="Opcije" Checked="RadioButton_Checked_2" >3</RadioButton>
+                <RadioButton  GroupName="Opcije" Checked="RadioButton_Checked_3">4</RadioButton>
+                <RadioButton  GroupName="Opcije" Checked="RadioButton_Checked_4">5</RadioButton>
+
+            </StackPanel>
+
+            <StackPanel  Grid.Column="1" Margin="40,40,18,40">
+                <Label>Jezik vodica</Label>
+                <RadioButton GroupName="Opcije1"  Checked="RadioButton_Checked_5">1</RadioButton>
+                <RadioButton  GroupName="Opcije1"  Checked="RadioButton_Checked_6">2</RadioButton>
+                <RadioButton  GroupName="Opcije1" Checked="RadioButton_Checked_9">3</RadioButton>
+                <RadioButton  GroupName="Opcije1"  Checked="RadioButton_Checked_7">4</RadioButton>
+                <RadioButton  GroupName="Opcije1"  Checked="RadioButton_Checked_8">5</RadioButton>
+            </StackPanel>
+
+            <StackPanel  Grid.Column="2" Margin="40,40,18,40">
+                <Label>Zanimljivost</Label>
+                <RadioButton GroupName="Opcije2" Checked="RadioButton_Checked_10">1</RadioButton>
+                <RadioButton  GroupName="Opcije2"  Checked="RadioButton_Checked_11">2</RadioButton>
+                <RadioButton  GroupName="Opcije2" Checked="RadioButton_Checked_12">3</RadioButton>
+                <RadioButton  GroupName="Opcije2" Checked="RadioButton_Checked_13">4</RadioButton>
+                <RadioButton  GroupName="Opcije2"  Checked="RadioButton_Checked_14">5</RadioButton>
+            </StackPanel>
+
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Label>Ostavi komentar:</Label>
+            <TextBox TextWrapping="Wrap" AcceptsReturn="True" Height="150" Margin="20" Text="{Binding Path=Commet, UpdateSourceTrigger=PropertyChanged}"/>
+
+
+        </Grid>
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0" Name="tbImage"></TextBox>
+            <Button Grid.Column="1" Click="AddImageClick">Dodaj sliku</Button>
+        </Grid>
+        <Grid  Grid.Row="6">
+            <Button Click="RateTourClick">Oceni</Button>
+        </Grid>
+    </Grid>
+</Window>

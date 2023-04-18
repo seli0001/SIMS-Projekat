@@ -13,11 +13,11 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using SIMS.Model;
-using SIMS.Model.Guest2;
-using SIMS.Model.Guide;
-using SIMS.Repository.Guest2Repository;
+using SIMS.Domain.Model.Guide;
+using SIMS.Domain.Model;
 using SIMS.Repository.GuideRepository;
+using SIMS.Repository;
+using Type = System.Type;
 
 namespace SIMS.View.GuideView
 {

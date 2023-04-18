@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SIMS.Model;
+using SIMS.Domain.Model;
 
 namespace SIMS.Repository
 {
@@ -16,6 +16,10 @@ namespace SIMS.Repository
         public LocationRepository()
         {
             _serializer = new Serializer<Location>();
+        }
+        public List<Location> GetAll()
+        {
+            return _serializer.FromCSV(_filePath);
         }
 
         public int GetNextId(List<Location> locations)
@@ -32,12 +36,6 @@ namespace SIMS.Repository
             List<Location> locations = GetAll();
             return locations.FirstOrDefault(location => location.Id == id);
         }
-
-        public List<Location> GetAll()
-        {
-            return _serializer.FromCSV(_filePath);
-        }
-
         public Location Save(Location location)
         {
             List<Location> locations = GetAll();

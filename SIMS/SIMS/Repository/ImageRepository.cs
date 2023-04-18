@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SIMS.Model;
-using SIMS.Model.AccommodationModel;
+using SIMS.Domain.Model;
 
 namespace SIMS.Repository
 {
@@ -47,11 +46,6 @@ namespace SIMS.Repository
 
             return images;
         }
-        public List<Image> GetByAccommodationId(int accommodationId)
-        {
-            List<Image> images = GetAll();
-            return images.Where(image => image.Accommodation.Id == accommodationId).ToList();
-        }
 
         public void Save(Image image)
         {
@@ -62,7 +56,7 @@ namespace SIMS.Repository
             _serializer.ToCSV(_filePath, images);
         }
 
-        public List<Image> SaveAll(List<Image> newImages, Accommodation accommodation)
+        public List<Image> SaveAll(List<Image> newImages)
         {
             List<Image> allImages = GetAll();
             int id = GetNextId(allImages);
@@ -70,12 +64,35 @@ namespace SIMS.Repository
             foreach (var image in newImages)
             {
                 image.Id = id;
-                image.Accommodation = accommodation;
                 allImages.Add(image);
                 id++;
             }
             _serializer.ToCSV(_filePath, allImages);
             return allImages;
+        }
+
+        public List<Image> GetByAccommodation(Accommodation accommodation)
+        {
+            List<Image> Allimages = GetAll();
+            List<Image> images = new List<Image>();
+            foreach (Image image in Allimages)
+            {
+                if (checkIfAccommodationImage(image, accommodation)) images.Add(image);
+            }
+            return images;
+        }
+
+        //Provera da li je prosledjena slika, slika od prosledjenog smestaja
+        private bool checkIfAccommodationImage(Image image, Accommodation accommodation)
+        {
+            foreach (Image accommodationImage in accommodation.Images)
+            {
+                if (image.Id == accommodationImage.Id)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

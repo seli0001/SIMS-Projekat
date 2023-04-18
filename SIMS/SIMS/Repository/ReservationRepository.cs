@@ -1,4 +1,4 @@
-﻿using SIMS.Model;
+﻿using SIMS.Domain.Model;
 using SIMS.Serializer;
 using System;
 using System.Collections.Generic;
@@ -13,10 +13,12 @@ namespace SIMS.Repository
     {
         private const string _filePath = "../../../../SIMS/Resources/Data/Reservations.csv";
         private readonly Serializer<Reservation> _serializer;
+        private readonly AccommodationRepository _accommodationRepository;
 
         public ReservationRepository()
         {
             _serializer = new Serializer<Reservation>();
+            _accommodationRepository = new AccommodationRepository();
         }
 
         public int GetNextId(List<Reservation> reservations)
@@ -31,6 +33,10 @@ namespace SIMS.Repository
         public Reservation GetById(int id)
         {
             List<Reservation> reservations = GetAll();
+            foreach(Reservation res in reservations)
+            {
+                res.Accommodation = _accommodationRepository.GetById(res.Accommodation.Id);
+            }
             return reservations.FirstOrDefault(reservation => reservation.Id == id);
         }
 
@@ -44,8 +50,6 @@ namespace SIMS.Repository
             List<Reservation> reservations = GetAll();
             return reservations.Where(reservation => reservation.User.Id == id).ToList();
         }
-
-
 
         public List<Reservation> GetAll()
         {

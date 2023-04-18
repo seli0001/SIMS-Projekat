@@ -1,12 +1,11 @@
-﻿using SIMS.Model.AccommodationModel;
-using SIMS.Model;
-using SIMS.Serializer;
+﻿using SIMS.Serializer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SIMS.Repository.GuideRepository;
+using SIMS.Domain.Model;
 
 namespace SIMS.Repository
 {
@@ -21,7 +20,7 @@ namespace SIMS.Repository
 
         private List<GuestRating> _ratings;
 
-       public GuestRatingRepository()
+        public GuestRatingRepository()
         {
             _serializer = new Serializer<GuestRating>();
 
@@ -32,13 +31,19 @@ namespace SIMS.Repository
 
         public List<GuestRating> GetAll()
         {
-            return _serializer.FromCSV(_filePath);
+            _ratings = _serializer.FromCSV(_filePath);
+            foreach (GuestRating rating in _ratings)
+            {
+                rating.User = _userRepository.GetById(rating.User.Id);
+                rating.Reservation = _reservationRepository.GetById(rating.Reservation.Id);
+            }
+            return _ratings;
         }
 
         public GuestRating Save(GuestRating rating)
         {
             rating.Id = NextId();
-            _ratings = _serializer.FromCSV(_filePath);
+            _ratings = GetAll();
             _ratings.Add(rating);
             _serializer.ToCSV(_filePath, _ratings);
             return rating;
@@ -46,7 +51,7 @@ namespace SIMS.Repository
 
         public int NextId()
         {
-            _ratings = _serializer.FromCSV(_filePath);
+            _ratings = GetAll();
             if (_ratings.Count < 1)
             {
                 return 1;
@@ -56,7 +61,7 @@ namespace SIMS.Repository
 
         public void Delete(GuestRating rating)
         {
-            _ratings = _serializer.FromCSV(_filePath);
+            _ratings = GetAll();
             GuestRating founded = _ratings.Find(r => r.Id == rating.Id);
             if (founded == null) return;
             _ratings.Remove(founded);
@@ -65,7 +70,7 @@ namespace SIMS.Repository
 
         public GuestRating Update(GuestRating rating)
         {
-            _ratings = _serializer.FromCSV(_filePath);
+            _ratings = GetAll();
             GuestRating current = _ratings.Find(r => r.Id == rating.Id);
             if (current == null) return null;
             int index = _ratings.IndexOf(current);
@@ -73,18 +78,6 @@ namespace SIMS.Repository
             _ratings.Insert(index, rating);
             _serializer.ToCSV(_filePath, _ratings);
             return rating;
-        }
-
-        public List<GuestRating> GetByReservation(Reservation reservation)
-        {
-            _ratings = _serializer.FromCSV(_filePath);
-            foreach (GuestRating rating in _ratings)
-            {
-                rating.User = _userRepository.GetById(rating.User.Id);
-                rating.Reservation = _reservationRepository.GetById(rating.Reservation.Id);
-               
-            }
-            return _ratings.FindAll(c => c.Reservation.Id == reservation.Id);
         }
     }
 }

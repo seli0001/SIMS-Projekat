@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SIMS.Model;
+using SIMS.Domain.Model;
 using SIMS.Serializer;
 
 namespace SIMS.Repository
