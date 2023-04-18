@@ -31,6 +31,7 @@ namespace SIMS.WPF.View
             InitializeComponent();
             DataContext = this;
             this.userId = userId;
+            selectedTour = new BookedTour();
             _bookedTourService = new BookedTourService();
             tours = new ObservableCollection<BookedTour>(_bookedTourService.GetUserFinished(userId));
         }
