@@ -11,33 +11,41 @@ namespace SIMS.Serializer
     {
         private const char Delimiter = '|';
 
+        private static object _lockObject = new object();
+
         public void ToCSV(string fileName, List<T> objects)
         {
-            StringBuilder csv = new StringBuilder();
-
-            foreach (T obj in objects)
+            lock (_lockObject)
             {
-                string line = string.Join(Delimiter.ToString(), obj.ToCSV());
-                csv.AppendLine(line);
-            }
+                StringBuilder csv = new StringBuilder();
 
-            File.WriteAllText(fileName, csv.ToString());
+                foreach (T obj in objects)
+                {
+                    string line = string.Join(Delimiter.ToString(), obj.ToCSV());
+                    csv.AppendLine(line);
+                }
+
+                File.WriteAllText(fileName, csv.ToString());
+            }
 
         }
 
         public List<T> FromCSV(string fileName)
         {
-            List<T> objects = new List<T>();
-
-            foreach (string line in File.ReadLines(fileName))
+            lock (_lockObject)
             {
-                string[] csvValues = line.Split(Delimiter);
-                T obj = new T();
-                obj.FromCSV(csvValues);
-                objects.Add(obj);
-            }
+                List<T> objects = new List<T>();
 
-            return objects;
+                foreach (string line in File.ReadLines(fileName))
+                {
+                    string[] csvValues = line.Split(Delimiter);
+                    T obj = new T();
+                    obj.FromCSV(csvValues);
+                    objects.Add(obj);
+                }
+
+                return objects;
+            }
         }
     }
 }

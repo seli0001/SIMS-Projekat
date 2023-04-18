@@ -21,16 +21,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="View\OwnerView\Images\add.png" />
-    <Resource Include="View\OwnerView\Images\close.png" />
-    <Resource Include="View\OwnerView\Images\pencil.png" />
-    <Resource Include="View\OwnerView\Images\search.png" />
-    <Resource Include="View\OwnerView\Images\trash-bin.png" />
     <Resource Include="WPF\View\OwnerView\Images\add.png" />
     <Resource Include="WPF\View\OwnerView\Images\close.png" />
     <Resource Include="WPF\View\OwnerView\Images\pencil.png" />
     <Resource Include="WPF\View\OwnerView\Images\search.png" />
     <Resource Include="WPF\View\OwnerView\Images\trash-bin.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="View\OwnerView\" />
   </ItemGroup>
 
 </Project>

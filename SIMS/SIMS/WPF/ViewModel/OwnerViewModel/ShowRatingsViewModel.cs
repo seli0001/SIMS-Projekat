@@ -7,32 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
-namespace SIMS.View.OwnerView
+namespace SIMS.WPF.ViewModel.OwnerViewModel
 {
-    /// <summary>
-    /// Interaction logic for ShowRatings.xaml
-    /// </summary>
-    public partial class ShowRatings : Window
+    public class ShowRatingsViewModel : ViewModelBase
     {
         private readonly OwnerRatingRepository _ownerRatingRepository;
         private readonly GuestRatingRepository _guestRatingRepository;
         public static ObservableCollection<OwnerRating> Ratings { get; set; }
-
         public OwnerRating SelectedRating { get; set; }
-
         public User Owner { get; set; }
-        public ShowRatings(User user)
+
+        public ShowRatingsViewModel(User user)
         {
-            InitializeComponent();
-            DataContext = this;
             _ownerRatingRepository = new OwnerRatingRepository();
             _guestRatingRepository = new GuestRatingRepository();
             Owner = user;
@@ -57,9 +44,9 @@ namespace SIMS.View.OwnerView
         private bool checkIfRated(OwnerRating rating)
         {
             List<GuestRating> allRatings = new List<GuestRating>(_guestRatingRepository.GetAll());
-            foreach(GuestRating guestRating in allRatings)
+            foreach (GuestRating guestRating in allRatings)
             {
-                if(guestRating.Reservation.Id == rating.Reservation.Id)
+                if (guestRating.Reservation.Id == rating.Reservation.Id)
                 {
                     return true;
                 }

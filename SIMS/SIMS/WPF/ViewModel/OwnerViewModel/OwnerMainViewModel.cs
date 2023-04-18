@@ -149,7 +149,7 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
 
         private void ShowUpdateAccommodationForm()
         {
-            ShowAccommodation showAccommodation = new ShowAccommodation(SelectedAccommodation, LoggedInUser);
+            ShowAccommodationView showAccommodation = new ShowAccommodationView(SelectedAccommodation, LoggedInUser);
             showAccommodation.Show();
         }
 
@@ -168,7 +168,7 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         }
         private void ShowRatings()
         {
-            ShowRatings showRatings = new ShowRatings(LoggedInUser);
+            ShowRatingsView showRatings = new ShowRatingsView(LoggedInUser);
             showRatings.Show();
         }
 
