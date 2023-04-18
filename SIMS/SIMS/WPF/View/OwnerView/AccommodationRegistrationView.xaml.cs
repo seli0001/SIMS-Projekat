@@ -10,7 +10,6 @@ namespace SIMS.View.OwnerView
     /// </summary>
     public partial class AccommondationRegistration : Window
     {
-      
         public AccommondationRegistration(User user)
         {
             InitializeComponent();
@@ -26,7 +25,5 @@ namespace SIMS.View.OwnerView
                 };
             }
         }
-
-
     }
 }

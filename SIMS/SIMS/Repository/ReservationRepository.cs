@@ -71,7 +71,7 @@ namespace SIMS.Repository
             List<Reservation> bookedReservations = GetByAccommodationsId(reservation.Accommodation.Id);
 
             bookedReservations.Sort((r1, r2) => r1.FromDate.CompareTo(r2.FromDate));
-            Reservation lastReservation = new Reservation() { FromDate = DateTime.MinValue, ToDate = DateTime.MinValue }; 
+            Reservation lastReservation = new Reservation() { FromDate = DateOnly.MinValue, ToDate = DateOnly.MinValue }; 
 
             foreach (Reservation bookedReservation in bookedReservations)
             {
@@ -95,14 +95,14 @@ namespace SIMS.Repository
         }
 
 
-        public DateTime GetFirstAvailableDate(Reservation reservation)
+        public DateOnly GetFirstAvailableDate(Reservation reservation)
         {
             List<Reservation> bookedReservations = GetByAccommodationsId(reservation.Accommodation.Id);
 
             bookedReservations.Sort((r1, r2) => r1.FromDate.CompareTo(r2.FromDate));
 
-            DateTime availableDateFrom = reservation.FromDate;
-            DateTime availableDateTo= reservation.ToDate;
+            DateOnly availableDateFrom = reservation.FromDate;
+            DateOnly availableDateTo= reservation.ToDate;
 
             foreach (Reservation bookedReservation in bookedReservations)
             {

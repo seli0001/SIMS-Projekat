@@ -29,7 +29,7 @@ namespace SIMS.View.FirstGuestView
 
             set
             {
-                DateTime today = DateTime.Today;
+                DateOnly today = DateOnly.FromDateTime(DateTime.Today);
 
                 if (CompareDates(today, value.ToDate)) RateButton.IsEnabled = true;
                 else RateButton.IsEnabled = false;
@@ -48,8 +48,10 @@ namespace SIMS.View.FirstGuestView
             LoggedInUser = user;
         }
 
-        private bool CompareDates(DateTime date1, DateTime date2)
+        private bool CompareDates(DateOnly date11, DateOnly date22)
         {
+            DateTime date1 = date11.ToDateTime(new TimeOnly());
+            DateTime date2 = date22.ToDateTime(new TimeOnly());
             if (date2 > date1) return false;
             TimeSpan difference = date1 - date2;
             int days = difference.Days;

@@ -17,8 +17,6 @@ namespace SIMS.Repository
         private const string _filePath = "../../../../SIMS/Resources/Data/ReschedulingRequests.csv";
 
         private readonly Serializer<ReschedulingRequests> _serializer;
-
-        private readonly UserRepository _userRepository;
         private readonly ReservationRepository _reservationRepository;
 
         private List<ReschedulingRequests> _requests;
@@ -28,31 +26,34 @@ namespace SIMS.Repository
             _serializer = new Serializer<ReschedulingRequests>();
 
             _requests = _serializer.FromCSV(_filePath);
-            _userRepository = new UserRepository();
             _reservationRepository = new ReservationRepository();
         }
 
         public List<ReschedulingRequests> GetAll()
         {
-            return _serializer.FromCSV(_filePath);
+            _requests = _serializer.FromCSV(_filePath);
+            foreach (ReschedulingRequests req in _requests)
+            {
+                req.Reservation = _reservationRepository.GetById(req.Reservation.Id);
+            }
+            return _requests;
         }
 
         public List<ReschedulingRequests> GetByUserId(int id)
         {
-            List<ReschedulingRequests> reschedulingRequests = GetAll();
-            List<Reservation> reservations = _reservationRepository.GetByUserId(id);
-            foreach(Reservation reservation in reservations)
+            _requests = GetAll();
+            List<ReschedulingRequests> allRequests = new List<ReschedulingRequests>();
+            foreach(ReschedulingRequests req in _requests)
             {
-                reschedulingRequests.Where(reschedulingRequest => reschedulingRequest.Reservation == reservation);
+                if (req.Reservation.Accommodation.User.Id == id) allRequests.Add(req);
             }
-            return reschedulingRequests;
-
+            return allRequests;
         }
 
         public ReschedulingRequests Save(ReschedulingRequests request)
         {
             request.Id = NextId();
-            _requests = _serializer.FromCSV(_filePath);
+            _requests = GetAll();
             _requests.Add(request);
             _serializer.ToCSV(_filePath, _requests);
             return request;
@@ -70,7 +71,7 @@ namespace SIMS.Repository
 
         public void Delete(ReschedulingRequests request)
         {
-            _requests = _serializer.FromCSV(_filePath);
+            _requests = GetAll();
             ReschedulingRequests founded = _requests.Find(r => r.Id == request.Id);
             if (founded == null) return;
             _requests.Remove(founded);
@@ -79,7 +80,7 @@ namespace SIMS.Repository
 
         public ReschedulingRequests Update(ReschedulingRequests request)
         {
-            _requests = _serializer.FromCSV(_filePath);
+            _requests = GetAll();
             ReschedulingRequests current = _requests.Find(r => r.Id == request.Id);
             if (current == null) return null;
             int index = _requests.IndexOf(current);

@@ -13,10 +13,10 @@
         </Grid.RowDefinitions>
 
         <WrapPanel Grid.Row="0">
-            <Button   Margin="30"  Width="100"
+            <Button Command="{Binding AcceptRequestCommand}"  Margin="30"  Width="100"
                       Height="30" Content="Odobri zahtev"/>
             
-            <Button   Width="100" Height="30"
+            <Button Command="{Binding RejectRequestCommand}"  Width="100" Height="30"
                       Content="Ponisti zahtev"/>
         </WrapPanel>
 
@@ -26,11 +26,11 @@
                   AutoGenerateColumns="False" IsReadOnly="True"
                   Width="630" Height="340" Grid.Row="1">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Smestaj" Binding="{Binding }" Width="*"></DataGridTextColumn>
-                <DataGridTextColumn Header="Pocetak" Binding="{Binding }" Width="*"></DataGridTextColumn>
-                <DataGridTextColumn Header="Kraj" Binding="{Binding }" Width="*"></DataGridTextColumn>
-                <DataGridTextColumn Header="Novi pocetak" Binding="{Binding }" Width="*"></DataGridTextColumn>
-                <DataGridTextColumn Header="Novi kraj" Binding="{Binding }" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Smestaj" Binding="{Binding Reservation.Accommodation.Name}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Pocetak" Binding="{Binding Reservation.FromDate}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Kraj" Binding="{Binding Reservation.ToDate}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Novi pocetak" Binding="{Binding FromDate}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Novi kraj" Binding="{Binding ToDate}" Width="*"></DataGridTextColumn>
                 <DataGridTextColumn Header="Raspolozivost" Binding="{Binding }" Width="*"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>

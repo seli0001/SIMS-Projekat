@@ -36,9 +36,9 @@ namespace SIMS.View.FirstGuestView
         }
 
 
-        private DateTime _fromDate = DateTime.Now;
+        private DateOnly _fromDate = DateOnly.FromDateTime(DateTime.Now);
 
-        public DateTime FromDate
+        public DateOnly FromDate
         {
             get => _fromDate;
             set
@@ -47,9 +47,9 @@ namespace SIMS.View.FirstGuestView
             }
         }
 
-        private DateTime _toDate = DateTime.Now;
+        private DateOnly _toDate = DateOnly.FromDateTime(DateTime.Now);
 
-        public DateTime ToDate
+        public DateOnly ToDate
         {
             get => _toDate;
             set

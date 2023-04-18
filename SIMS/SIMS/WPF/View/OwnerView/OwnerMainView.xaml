@@ -32,7 +32,7 @@
             </Button>
             
             <Button Command="{Binding ShowRatingsCommand}"  Width="100" Height="25" Content="Prikazi ocene"/>
-            <Button Width="190" Height="25" Content="Zahtevi za pomeranje rezervacije" HorizontalAlignment="Left"/>
+            <Button Command="{Binding ShowRequestsCommand}" Width="190" Height="25" Content="Zahtevi za pomeranje rezervacije" HorizontalAlignment="Left"/>
             <Button Command="{Binding LogOutCommand}" Width="50" Height="25" Content="Log out" HorizontalAlignment="Right" VerticalAlignment="Stretch"/>
             
 

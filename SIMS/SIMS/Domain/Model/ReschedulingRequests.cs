@@ -8,23 +8,32 @@ using System.Threading.Tasks;
 
 namespace SIMS.Model
 {
+    public enum Status
+    {
+        WAITING,
+        APPROVED,
+        REJECTED
+    }
+
     public class ReschedulingRequests:ISerializable
     {
         public int Id { get; set; }
         public Reservation Reservation { get; set; }
-        public DateTime FromDate { get; set; }
-        public DateTime ToDate { get; set; }
+        public DateOnly FromDate { get; set; }
+        public DateOnly ToDate { get; set; }
+        public Status Status { get; set; }
 
         public ReschedulingRequests()
         {
 
         }
 
-        public ReschedulingRequests(Reservation reservation, DateTime fromDate, DateTime toDate)
+        public ReschedulingRequests(Reservation reservation, DateOnly fromDate, DateOnly toDate)
         {
             Reservation = reservation;
             FromDate = fromDate;
             ToDate = toDate;
+            Status = Status.WAITING;
         }
 
         public string[] ToCSV()
@@ -33,8 +42,9 @@ namespace SIMS.Model
             {
                 Id.ToString(),
                 Reservation.Id.ToString(),
-                FromDate.ToString(),
-                ToDate.ToString(),
+                FromDate.ToString("dd-MM-yyyy"),
+                ToDate.ToString("dd-MM-yyyy"),
+                Status.ToString(),
             };
             return csvValues;
         }
@@ -43,8 +53,9 @@ namespace SIMS.Model
         {
             Id = Convert.ToInt32(values[0]);
             Reservation = new Reservation() { Id = Convert.ToInt32(values[1]) };
-            FromDate = DateTime.Parse(values[2]);
-            ToDate = DateTime.Parse(values[3]);
+            FromDate = DateOnly.Parse(values[2]);
+            ToDate = DateOnly.Parse(values[3]);
+            Status = (Status)Enum.Parse(typeof(Status), values[4]);
         }
     }
 }

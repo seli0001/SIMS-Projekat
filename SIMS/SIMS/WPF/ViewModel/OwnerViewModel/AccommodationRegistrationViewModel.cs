@@ -47,8 +47,6 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             IsEnabled = false;
         }
 
-
-
         #region data
 
         private bool _isEnabled;
@@ -265,7 +263,6 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         }
 
         #endregion
-
 
         private ICommand _addImageCommand;
         public ICommand AddImageCommand

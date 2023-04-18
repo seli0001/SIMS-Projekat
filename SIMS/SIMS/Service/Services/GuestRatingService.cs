@@ -54,15 +54,18 @@ namespace SIMS.Service.UseCases
 
             foreach (Reservation reservation in reservations)
             {
-                if (GetByReservation(reservation).Count == 0 && CompareDates(DateTime.Today, reservation.ToDate))
+                if (GetByReservation(reservation).Count == 0 && CompareDates(DateOnly.FromDateTime(DateTime.Today), reservation.ToDate))
                 {
                     return true;
                 }
             }
             return false;
         }
-        private bool CompareDates(DateTime date1, DateTime date2)
+        private bool CompareDates(DateOnly date11, DateOnly date22)
         {
+            DateTime date1 = date11.ToDateTime(new TimeOnly());
+            DateTime date2 = date22.ToDateTime(new TimeOnly());
+
             if (date2 > date1) return false;
             TimeSpan difference = date1 - date2;
             int days = difference.Days;
