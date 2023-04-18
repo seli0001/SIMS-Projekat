@@ -8,11 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="View\OwnerView\add.png" />
-    <None Remove="View\OwnerView\close.png" />
-    <None Remove="View\OwnerView\pencil.png" />
-    <None Remove="View\OwnerView\search.png" />
-    <None Remove="View\OwnerView\trash-bin.png" />
     <None Remove="WPF\View\OwnerView\Images\add.png" />
     <None Remove="WPF\View\OwnerView\Images\close.png" />
     <None Remove="WPF\View\OwnerView\Images\pencil.png" />
@@ -30,7 +25,6 @@
 
   <ItemGroup>
     <Folder Include="Domain\RepositoryInterfaces\" />
-    <Folder Include="View\OwnerView\" />
   </ItemGroup>
 
 </Project>

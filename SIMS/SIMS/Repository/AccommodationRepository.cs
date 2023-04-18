@@ -45,6 +45,12 @@ namespace SIMS.Repository
             return _accommodations;
         }
 
+        public Accommodation GetById(int id)
+        {
+            _accommodations = GetAll();
+            return _accommodations.Find(c => c.Id == id);
+        }
+
         public List<Accommodation> GetForView()
         {
             _accommodations = GetAll();

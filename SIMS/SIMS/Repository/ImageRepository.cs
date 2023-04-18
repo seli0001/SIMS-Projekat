@@ -10,7 +10,7 @@ namespace SIMS.Repository
 {
     public class ImageRepository
     {
-        private const string _filePath = "../../../../SIMS/Resources/Data/AccommodationImages.csv";
+        private const string _filePath = "../../../../SIMS/Resources/Data/Images.csv";
         private readonly Serializer<Image> _serializer;
 
         public ImageRepository()

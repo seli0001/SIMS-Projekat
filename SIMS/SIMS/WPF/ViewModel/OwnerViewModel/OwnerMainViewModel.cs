@@ -12,6 +12,7 @@ using SIMS.View.OwnerView;
 using System.Windows.Input;
 using SIMS.Domain.Model;
 using SIMS.Service.UseCases;
+using SIMS.Service;
 
 namespace SIMS.WPF.ViewModel.OwnerViewModel
 {
@@ -22,6 +23,7 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
 
         private readonly GuestRatingService _guestRatingService;
         private readonly AccommodationService _accommodationService;
+        private readonly OwnerMainService _ownerMainService;
 
         private readonly OwnerRatingRepository _ownerRatingRepository;
         
@@ -35,25 +37,29 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
 
             _guestRatingService = new GuestRatingService();
             _accommodationService = new AccommodationService();
-
+            _ownerMainService = new OwnerMainService();
 
             _ownerRatingRepository = new OwnerRatingRepository();
             Accommodations = new ObservableCollection<Accommodation>(_accommodationService.GetByUser(user));
-            //timer = new Timer(CheckCondition, null, TimeSpan.Zero, TimeSpan.FromMinutes(2));
+            timer = new Timer(CheckCondition, null, TimeSpan.Zero, TimeSpan.FromSeconds(15));
         }
 
         private void CheckCondition(object? state)
         {
+            //Unreviewed Notification
             App.Current.Dispatcher.Invoke((Action)delegate
             {
-                //Unreviewed Notification
                 if (_guestRatingService.checkIfNotRated())
                 {
                     MessageBox.Show("You Have some Unreviewed reservations!");
                 }
+            });
 
-                //Super owner
-                int temp = checkIsSuperOwner();
+
+            //Super owner
+            App.Current.Dispatcher.Invoke((Action)delegate
+            {
+                int temp = _ownerMainService.checkIsSuperOwner(LoggedInUser);
                 if (temp == 1)
                 {
                         _accommodationService.makeSuperOwner(LoggedInUser);
@@ -68,6 +74,7 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
                         UpdateUI();
                 }
             });
+
         }
 
         private void UpdateUI()
@@ -78,32 +85,9 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
                 Accommodations.Add(acc);
             }
         }
-        private int checkIsSuperOwner()
-        {
-            List<OwnerRating> ratings = new List<OwnerRating>(_ownerRatingRepository.GetAll());
-            SuperOwnerService superOwnerService = new SuperOwnerService();
-            if (superOwnerService.CheckById(LoggedInUser.Id))
-            {
-                if (!(ratings.Count > 5 && checkRating(ratings)))
-                    return 0;
-            }
-            else if (ratings.Count > 5 && checkRating(ratings))
-                return 1;
+       
 
-            return 2;
-        }
-
-        private bool checkRating(List<OwnerRating> ratings)
-        {
-            double score = 0;
-            foreach (OwnerRating rating in ratings)
-            {
-                score += (rating.RulesRespect + rating.Cleanliness) / 2.0;
-            }
-            score /= ratings.Count;
-            if (score > 4.5) return true;
-            else return false;
-        }
+        #region commands
 
         private ICommand _createAccommodationCommand;
         public ICommand CreateAccommodationCommand
@@ -140,6 +124,8 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
                 return _showRatings ?? (_showRatings = new CommandBase(() => ShowRatings(), true));
             }
         }
+
+        #endregion
 
         private void ShowCreateAccommodationForm()
         {

@@ -16,7 +16,5 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-      
     }
 }

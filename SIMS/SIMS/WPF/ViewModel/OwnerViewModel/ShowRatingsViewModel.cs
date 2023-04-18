@@ -23,6 +23,7 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         {
             _ownerRatingRepository = new OwnerRatingRepository();
             _guestRatingService = new GuestRatingService();
+
             Owner = user;
             Ratings = new ObservableCollection<OwnerRating>();
             UpdateRatings();
@@ -31,20 +32,20 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         private void UpdateRatings()
         {
             //Prikazemo sve ocene iz OwnerRatings koje su za naseg ownera
-            List<OwnerRating> allRatings = new List<OwnerRating>(_ownerRatingRepository.GetByOwnerId(Owner.Id));
+            List<OwnerRating> allOwnerRatings = new List<OwnerRating>(_ownerRatingRepository.GetByOwnerId(Owner.Id));
+            List<GuestRating> allGuestRatings = new List<GuestRating>(_guestRatingService.GetAll());
 
-            foreach (OwnerRating rating in allRatings)
+            foreach (OwnerRating rating in allOwnerRatings)
             {
-                if (checkIfRated(rating))
+                if (checkIfRated(rating, allGuestRatings))
                 {
                     Ratings.Add(rating);
                 }
             }
         }
 
-        private bool checkIfRated(OwnerRating rating)
+        private bool checkIfRated(OwnerRating rating, List<GuestRating> allRatings)
         {
-            List<GuestRating> allRatings = new List<GuestRating>(_guestRatingService.GetAll());
             foreach (GuestRating guestRating in allRatings)
             {
                 if (guestRating.Reservation.Id == rating.Reservation.Id)
@@ -53,7 +54,6 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
                 }
             }
             return false;
-
         }
         private void ShowRatingInfo(object sender, RoutedEventArgs e)
         {
