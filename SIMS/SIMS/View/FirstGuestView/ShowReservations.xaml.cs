@@ -1,4 +1,5 @@
 ﻿using SIMS.Domain.Model;
+using SIMS.Model;
 using SIMS.Repository;
 using System;
 using System.Collections.ObjectModel;
@@ -19,6 +20,7 @@ namespace SIMS.View.FirstGuestView
         public User LoggedInUser { get; set; }
 
         private ReservationRepository _reservationRepository;
+        private CancelingRequestsRepository _cancelingRequestsRepository;
 
         public static ObservableCollection<Reservation> Reservations { get; set; }
         public Reservation SelectedReservation
@@ -36,18 +38,16 @@ namespace SIMS.View.FirstGuestView
             }
         }
 
-
-
         public ShowReservations(User user)
         {
             InitializeComponent();
             DataContext = this;
+            _cancelingRequestsRepository = new CancelingRequestsRepository();
             _reservationRepository = new ReservationRepository();
             Reservations = new ObservableCollection<Reservation>(_reservationRepository.GetByUserId(user.Id));
             LoggedInUser = user;
         }
 
-        //Proverava da li je od date1 do date2 proslo vise od 5 dana
         private bool CompareDates(DateTime date1, DateTime date2)
         {
             if (date2 > date1) return false;
@@ -57,18 +57,30 @@ namespace SIMS.View.FirstGuestView
             else return true;
         }
 
-        /*private void ShowRatingForm(object sender, RoutedEventArgs e)
-        {
-            OwnerRatingView ownerRatingView = new OwnerRatingView(LoggedInUser);
-            ownerRatingView.Show();
-        }*/
-
-        
-
         private void RateButton_Click_2(object sender, RoutedEventArgs e)
         {
             OwnerRatingView ownerRatingView = new OwnerRatingView(SelectedReservation, LoggedInUser);
             ownerRatingView.Show();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            RequestsView requestsView = new RequestsView(LoggedInUser);
+            requestsView.Show();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            CreateReschedulingRequest createReschedulingRequest = new CreateReschedulingRequest(SelectedReservation, LoggedInUser);
+            createReschedulingRequest.Show();
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            CancelingRequests cancelingRequest = new CancelingRequests(SelectedReservation);
+            _cancelingRequestsRepository.Save(cancelingRequest);
+            MessageBox.Show("Request Sent");
+            Close();
         }
     }
 }

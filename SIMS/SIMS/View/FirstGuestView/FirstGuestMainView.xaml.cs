@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SIMS.Model;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -13,8 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Xml.Linq;
+using SIMS.Model;
 using SIMS.Repository;
-using SIMS.Domain.Model;
 using SIMS.Domain.Model;
 
 namespace SIMS.View.FirstGuestView
