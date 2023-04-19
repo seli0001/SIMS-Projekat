@@ -17,7 +17,6 @@ namespace SIMS.Service.Services
             _voucherRepository = Injector.Injector.CreateInstance<IVoucherRepository>();
         }
 
-
         public List<Voucher> GetVouchers(int id)
         {
             List<Voucher> vouchers = _voucherRepository.GetAll();

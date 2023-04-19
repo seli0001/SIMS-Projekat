@@ -23,10 +23,10 @@ namespace SIMS.WPF.View
     /// <summary>
     /// Interaction logic for UsingVouchers.xaml
     /// </summary>
-    public partial class UsingVouchers : Window
+    public partial class UsingVouchersView : Window
     {
        
-        public UsingVouchers(int userId, Tour tour)
+        public UsingVouchersView(int userId, Tour tour)
         {
             InitializeComponent();
             UsingVoucherViewModel usingVoucherViewModel = new UsingVoucherViewModel(userId, tour);

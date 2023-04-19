@@ -1,5 +1,4 @@
 ﻿using SIMS.Domain.Model;
-using SIMS.Repository;
 using SIMS.Service.Services;
 using SIMS.WPF.ViewModel;
 using SIMS.WPF.ViewModel.Guest2ViewModel;
@@ -21,30 +20,24 @@ using System.Windows.Shapes;
 namespace SIMS.WPF.View
 {
     /// <summary>
-    /// Interaction logic for AllVouchers.xaml
+    /// Interaction logic for FinishedTours.xaml
     /// </summary>
-    public partial class AllVouchers : Window
+    public partial class FinishedToursView : Window
     {
         
-        public AllVouchers(int userId)
+        public FinishedToursView(int userId)
         {
             InitializeComponent();
-            AllVouchersViewModel allVouchersViewModel = new AllVouchersViewModel(userId);
-            DataContext = allVouchersViewModel;
-
-           if (DataContext is IClose vm)
+            FinishedToursViewModel finishedToursViewModel = new FinishedToursViewModel(userId);
+            DataContext = finishedToursViewModel;
+            if (DataContext is IClose vm)
             {
                 vm.Close += () =>
                 {
                     this.Close();
                 };
             }
-        
-
-         //   DataContext = this;
-          
+            
         }
-
-     
     }
 }

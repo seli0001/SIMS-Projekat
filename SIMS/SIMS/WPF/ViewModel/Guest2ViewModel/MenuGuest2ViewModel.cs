@@ -110,7 +110,7 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
 
         private void AllVouchersClick()
         {
-            AllVouchers vauchers = new AllVouchers(userId);
+            AllVouchersView vauchers = new AllVouchersView(userId);
             vauchers.Show();
             Close();
         }
@@ -131,7 +131,7 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
 
         private void FinishedToursClick()
         {
-            FinishedTours selectFinishedTour = new FinishedTours(userId);
+            FinishedToursView selectFinishedTour = new FinishedToursView(userId);
             selectFinishedTour.Show();
             Close();
         }

@@ -94,7 +94,6 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
 
             }
         }
-
         private void BackToMainClick()
         {
             _voucherService.DontUseIt(voucherId);
@@ -106,8 +105,9 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
 
         private void UsingVoucher()
         {
-            UsingVouchers usingVaucher = new UsingVouchers(userId, tour);
+            UsingVouchersView usingVaucher = new UsingVouchersView(userId, tour);
             usingVaucher.ShowDialog();
+            Close();
         }
 
 

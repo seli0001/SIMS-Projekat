@@ -1,9 +1,11 @@
 ﻿using SIMS.Domain.Model;
+using SIMS.Repository;
 using SIMS.Service.Services;
 using SIMS.WPF.ViewModel;
 using SIMS.WPF.ViewModel.Guest2ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,27 +21,30 @@ using System.Windows.Shapes;
 namespace SIMS.WPF.View
 {
     /// <summary>
-    /// Interaction logic for MenuGuest2.xaml
+    /// Interaction logic for AllVouchers.xaml
     /// </summary>
-    public partial class MenuGuest2 : Window
+    public partial class AllVouchersView : Window
     {
-       
-        public MenuGuest2(int userId)
+        
+        public AllVouchersView(int userId)
         {
             InitializeComponent();
-            MenuGuest2ViewModel menuGuest2 = new MenuGuest2ViewModel(userId);
-            DataContext = menuGuest2;
-            if (DataContext is IClose vm)
+            AllVouchersViewModel allVouchersViewModel = new AllVouchersViewModel(userId);
+            DataContext = allVouchersViewModel;
+
+           if (DataContext is IClose vm)
             {
                 vm.Close += () =>
                 {
                     this.Close();
                 };
             }
+        
 
-           
+         //   DataContext = this;
+          
         }
 
-       
+     
     }
 }
