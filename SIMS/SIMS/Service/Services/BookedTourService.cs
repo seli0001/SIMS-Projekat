@@ -33,12 +33,18 @@ namespace SIMS.Service.Services
 
         public List<BookedTour> GetUserFinished(int userId)
         {
-            return _bookedToursRepository.GetAll().Where(t => t.UserId == userId && t.Tour.Status.ToString().Equals("FINISHED") && t.Review == false && t.Checkpoint != null && t.Notify.ToString().Equals("Accepted")).ToList();
+            return _bookedToursRepository.GetAll().Where(t => t.UserId == userId && 
+            t.Tour.Status.ToString().Equals("FINISHED") && 
+            t.Review == false && t.Checkpoint != null && 
+            t.Notify.ToString().Equals("Accepted")).ToList();
         }
 
         public List<BookedTour> GetUserActive(int userId)
         {
-            return _bookedToursRepository.GetAll().Where(t => t.UserId == userId && t.Tour.Status.ToString().Equals("STARTED") && t.Checkpoint != null && t.Notify.ToString().Equals("Accepted")).ToList();
+            return _bookedToursRepository.GetAll().Where(t => t.UserId == userId && 
+            t.Tour.Status.ToString().Equals("STARTED") && 
+            t.Checkpoint != null && 
+            t.Notify.ToString().Equals("Accepted")).ToList();
         }
 
 

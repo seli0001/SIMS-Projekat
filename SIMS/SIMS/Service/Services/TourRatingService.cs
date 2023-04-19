@@ -32,9 +32,9 @@ namespace SIMS.Service.Services
             _tourRatingRepository.Update(rating);
         }
 
-        public void Save(BookedTour bookedTour, int idUser, int znanjeVodica, int jezikVodica, int zanimljivostTure, string com, List<string> images)
+        public void Save(BookedTour bookedTour, int idUser, int guideKnown, int guideLanguage, int tourReview, string comment, List<string> images)
         {
-            _tourRatingRepository.Save(bookedTour, idUser, znanjeVodica, jezikVodica, zanimljivostTure, com, images);
+            _tourRatingRepository.Save(bookedTour, idUser, guideKnown, guideLanguage, tourReview, comment, images);
         }
 
         public void ReportRating(int ratingId)

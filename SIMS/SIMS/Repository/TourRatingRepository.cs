@@ -34,8 +34,6 @@ namespace SIMS.Repository
 
         public int GenerateId()
         {
-
-
             List<TourRating> reviews = GetAll();
 
             if (reviews.Count == 0)
@@ -60,15 +58,15 @@ namespace SIMS.Repository
             _serializer.ToCSV(_filePath, reviews);
         }
 
-        public void Save(BookedTour bookedTour, int idUser, int znanjeVodica, int jezikVodica, int zanimljivostTure, string com, List<string> images)
+        public void Save(BookedTour bookedTour, int idUser, int guideKnown, int guideLanguage, int tourReview, string comment, List<string> images)
         {
             List<TourRating> reviews = GetAll();
             TourRating guestTourReview = new TourRating();
             guestTourReview.Id = GenerateId();
-            guestTourReview.GuideLanguage = jezikVodica;
-            guestTourReview.GuideKnown = znanjeVodica;
-            guestTourReview.TourReview = zanimljivostTure;
-            guestTourReview.Comment = com;
+            guestTourReview.GuideLanguage = guideLanguage;
+            guestTourReview.GuideKnown = guideKnown;
+            guestTourReview.TourReview = tourReview;
+            guestTourReview.Comment = comment;
             guestTourReview.bookedTour = bookedTour;
             guestTourReview.bookedTour.Id = bookedTour.Id;
             guestTourReview.bookedTour.Tour.Guide.Id = bookedTour.Tour.Guide.Id;
@@ -76,9 +74,6 @@ namespace SIMS.Repository
             reviews.Add(guestTourReview);
             _serializer.ToCSV(_filePath, reviews);
         }
-
-
-
 
     }
 }

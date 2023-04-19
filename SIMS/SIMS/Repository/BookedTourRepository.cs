@@ -14,7 +14,6 @@ namespace SIMS.Repository
 
         private readonly TourRepository _tourRepository;
         private readonly UserRepository _userRepository;
-
         private readonly Serializer<BookedTour> _serializer;
         public BookedTourRepository()
         {
@@ -23,7 +22,6 @@ namespace SIMS.Repository
             _tourRepository = new TourRepository();
             _userRepository = new UserRepository();
         }
-
 
         public List<BookedTour> GetAll()
         {
@@ -49,11 +47,8 @@ namespace SIMS.Repository
             return bookedTours.Find(bookedTour => bookedTour.Id == id);
         }
 
-
         private int GenerateId()
         {
-
-
             List<BookedTour> bookedTours = GetAll();
 
             if (bookedTours.Count == 0)
