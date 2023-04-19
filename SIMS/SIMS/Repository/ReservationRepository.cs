@@ -70,6 +70,18 @@ namespace SIMS.Repository
             return reservation;
         }
 
+        public Reservation Update(Reservation reservation)
+        {
+            _reservations = GetAll();
+            Reservation current = _reservations.Find(r => r.Id == reservation.Id);
+            if (current == null) return null;
+            int index = _reservations.IndexOf(current);
+            _reservations.Remove(current);
+            _reservations.Insert(index, reservation);
+            _serializer.ToCSV(_filePath, _reservations);
+            return reservation;
+        }
+
         public bool AvailableAccommodation(Reservation reservation)
         {
             List<Reservation> bookedReservations = GetByAccommodationsId(reservation.Accommodation.Id);

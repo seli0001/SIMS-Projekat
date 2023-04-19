@@ -78,9 +78,14 @@ namespace SIMS.Service.Services
 
         }
 
-        public void AcceptRequest(ReschedulingRequests request, User owner)
+        public ReschedulingRequests AcceptRequest(ReschedulingRequests request)
         {
-
+            request.Reservation.FromDate = request.FromDate;
+            request.Reservation.ToDate = request.ToDate;
+            request.Status = Status.APPROVED;
+            _reservationRepository.Update(request.Reservation);
+            request = _reschedulingRequestsRepository.Update(request);
+            return request;
         }
     }
 }

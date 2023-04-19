@@ -57,7 +57,7 @@ namespace SIMS.Repository
             List<ReschedulingRequests> allRequests = new List<ReschedulingRequests>();
             foreach(ReschedulingRequests req in _requests)
             {
-                if (req.Reservation.Accommodation.User.Id == id) allRequests.Add(req);
+                if (req.Reservation.Accommodation.User.Id == id && req.Status == Status.WAITING) allRequests.Add(req);
             }
             return allRequests;
         }

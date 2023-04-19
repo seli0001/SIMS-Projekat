@@ -59,9 +59,10 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         {
             if(SelectedRequests != null)
             {
-                _requestService.AcceptRequest(SelectedRequests, Owner);
+                _requestService.AcceptRequest(SelectedRequests);
+                ReservationStatus.RemoveAt(Requests.IndexOf(SelectedRequests));
+                Requests.Remove(SelectedRequests);
             }
-            Close();
         }
 
         private void RejectRequest()

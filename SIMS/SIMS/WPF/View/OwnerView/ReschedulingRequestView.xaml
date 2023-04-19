@@ -27,7 +27,7 @@
 
         <DataGrid
                   ItemsSource="{Binding Path=Requests, UpdateSourceTrigger=PropertyChanged}"
-                  SelectedItem="{Binding Path=SelectedRequest, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedItem="{Binding Path=SelectedRequests, UpdateSourceTrigger=PropertyChanged}"
                   AutoGenerateColumns="False" IsReadOnly="True" Margin="18,12,0,12" Grid.Row="1"
                  Grid.Column="0">
             <DataGrid.Columns>
