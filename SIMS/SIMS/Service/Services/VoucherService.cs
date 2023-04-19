@@ -25,17 +25,22 @@ namespace SIMS.Service.Services
 
             foreach (Voucher voucher in vouchers)
             {
-                if (voucher.IdUser == id && voucher.ValiUntl > DateTime.Now)
+                if (voucher.IdUser == id && voucher.ValidUntil > DateTime.Now)
                 {
                     filteredVouchers.Add(voucher);
                 }
-                else if (voucher.ValiUntl < DateTime.Now)
+                else if (voucher.ValidUntil < DateTime.Now)
                 {
                     _voucherRepository.Delete(voucher);
                 }
 
             }
             return filteredVouchers;
+        }
+        
+        public void AddVoucher(Voucher voucher)
+        {
+            _voucherRepository.Save(voucher);
         }
 
         public List<Voucher> GetAvailable(int id)

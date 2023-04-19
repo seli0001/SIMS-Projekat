@@ -11,7 +11,7 @@ namespace SIMS.Domain.Model
     public class Voucher : ISerializable
     {
         public int Id { get; set; }
-        public DateTime ValiUntl { get; set; }
+        public DateTime ValidUntil { get; set; }
 
         public string Name { get; set; }
 
@@ -27,7 +27,7 @@ namespace SIMS.Domain.Model
         }
         public Voucher(DateTime ValidUntil, string Name, int IdUser)
         {
-            this.ValiUntl = ValidUntil;
+            this.ValidUntil = ValidUntil;
             this.Name = Name;
             this.IdUser = IdUser;
             Status = false;
@@ -40,7 +40,7 @@ namespace SIMS.Domain.Model
             Id.ToString(),
             IdUser.ToString(),
             Name,
-            ValiUntl.ToString(),
+            ValidUntil.ToString(),
             Status.ToString()
         };
             return csvValues;
@@ -51,7 +51,7 @@ namespace SIMS.Domain.Model
             Id = int.Parse(csvValues[0]);
             IdUser = int.Parse(csvValues[1]);
             Name = csvValues[2];
-            ValiUntl = DateTime.Parse(csvValues[3]);
+            ValidUntil = DateTime.Parse(csvValues[3]);
             Status = bool.Parse(csvValues[4]);
 
         }
