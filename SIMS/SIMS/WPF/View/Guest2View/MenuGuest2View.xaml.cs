@@ -4,7 +4,6 @@ using SIMS.WPF.ViewModel;
 using SIMS.WPF.ViewModel.Guest2ViewModel;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,16 +19,16 @@ using System.Windows.Shapes;
 namespace SIMS.WPF.View
 {
     /// <summary>
-    /// Interaction logic for FinishedTours.xaml
+    /// Interaction logic for MenuGuest2.xaml
     /// </summary>
-    public partial class FinishedTours : Window
+    public partial class MenuGuest2View : Window
     {
-        
-        public FinishedTours(int userId)
+       
+        public MenuGuest2View(int userId)
         {
             InitializeComponent();
-            FinishedToursViewModel finishedToursViewModel = new FinishedToursViewModel(userId);
-            DataContext = finishedToursViewModel;
+            MenuGuest2ViewModel menuGuest2 = new MenuGuest2ViewModel(userId);
+            DataContext = menuGuest2;
             if (DataContext is IClose vm)
             {
                 vm.Close += () =>
@@ -37,7 +36,10 @@ namespace SIMS.WPF.View
                     this.Close();
                 };
             }
-            
+
+           
         }
+
+       
     }
 }

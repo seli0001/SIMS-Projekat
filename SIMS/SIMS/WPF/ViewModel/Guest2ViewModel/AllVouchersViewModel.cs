@@ -58,7 +58,7 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
 
         private void MenuClick()
         {
-            MenuGuest2 menuGuest2 = new MenuGuest2(userId);
+            MenuGuest2View menuGuest2 = new MenuGuest2View(userId);
             menuGuest2.Show();
             Close();
            

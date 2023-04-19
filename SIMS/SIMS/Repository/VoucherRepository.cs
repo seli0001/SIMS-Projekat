@@ -24,7 +24,7 @@ namespace SIMS.Repository
         public void Delete(Voucher voucher)
         {
 
-            Voucher founded = vouchers.Find(t => t.Id == voucher.Id);
+            Voucher founded = vouchers.Find(v => v.Id == voucher.Id);
             vouchers.Remove(founded);
             _serializer.ToCSV(_filePath, vouchers);
 
