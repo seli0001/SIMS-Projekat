@@ -21,7 +21,7 @@
             <Button Command="{Binding AcceptRequestCommand}"  Margin="30"  Width="100"
                       Height="30" Content="Odobri zahtev"/>
 
-            <Button Command="{Binding RejectRequestCommand}"  Width="100" Height="30"
+            <Button Command="{Binding ShowRejectWindowCommand}"  Width="100" Height="30"
                       Content="Ponisti zahtev"/>
         </WrapPanel>
 

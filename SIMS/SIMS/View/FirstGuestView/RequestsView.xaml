@@ -19,7 +19,7 @@
                   AutoGenerateColumns="False" IsReadOnly="True"
                    Width="600" Height="340" Margin="59,32,141,212" Grid.RowSpan="2">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="100"></DataGridTextColumn>
+                <DataGridTextColumn Header="Smestaj" Binding="{Binding Reservation.Accommodation.Name}" Width="*"></DataGridTextColumn>
                 <DataGridTextColumn Header="From Date" Binding="{Binding FromDate}" Width="*"></DataGridTextColumn>
                 <DataGridTextColumn Header="To Date" Binding="{Binding ToDate}" Width="*"></DataGridTextColumn>
                 <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*"></DataGridTextColumn>

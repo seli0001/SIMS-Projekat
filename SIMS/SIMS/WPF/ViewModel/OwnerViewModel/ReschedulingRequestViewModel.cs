@@ -1,9 +1,11 @@
 ﻿using SIMS.Domain.Model;
 using SIMS.Model;
 using SIMS.Service.Services;
+using SIMS.WPF.View.OwnerView;
 using SIMS.WPF.ViewModel.ViewModel;
 using System;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 
 namespace SIMS.WPF.ViewModel.OwnerViewModel
@@ -33,6 +35,17 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             ReservationStatus = new ObservableCollection<Available>(_requestService.checkAvailability(user.Id));
         }
 
+        private string _rejectMessage = "";
+        public string RejectMessage
+        {
+            get => _rejectMessage;
+            set
+            {
+                _rejectMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
         #region commands
         private ICommand _acceptRequestCommand;
         public ICommand AcceptRequestCommand
@@ -43,12 +56,21 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             }
         }
 
-        private ICommand _rejectRequestCommand;
-        public ICommand RejectRequestCommand
+        private ICommand _showRejectWindowComman;
+        public ICommand ShowRejectWindowCommand
         {
             get
             {
-                return _rejectRequestCommand ?? (_rejectRequestCommand = new CommandBase(() => RejectRequest(), true));
+                return _showRejectWindowComman ?? (_showRejectWindowComman = new CommandBase(() => ShowRejectWindow(), true));
+            }
+        }
+
+        private ICommand _rejectCommand;
+        public ICommand RejectCommand
+        {
+            get
+            {
+                return _rejectCommand ?? (_rejectCommand = new CommandBase(() => RejectRequest(), true));
             }
         }
 
@@ -62,19 +84,31 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
                 _requestService.AcceptRequest(SelectedRequests);
                 ReservationStatus.RemoveAt(Requests.IndexOf(SelectedRequests));
                 Requests.Remove(SelectedRequests);
+
+                MessageBox.Show("Request succesffully approved!");
+            }
+        }
+
+        private void ShowRejectWindow()
+        {
+            if (SelectedRequests != null)
+            {
+                RejectReason rejectReason = new RejectReason(this);
+                rejectReason.Show();
             }
         }
 
         private void RejectRequest()
         {
-            if (SelectedRequests != null)
-            {
-                //Prikazi prozor da owner upise poruku
-            }
-            Close();
+           if (SelectedRequests != null)
+           {
+                Close();
+                _requestService.RejectRequest(SelectedRequests);
+                ReservationStatus.RemoveAt(Requests.IndexOf(SelectedRequests));
+                Requests.Remove(SelectedRequests);
+                MessageBox.Show($"Request rejected! \n Message sent: {RejectMessage}");
+           }
         }
-
-
 
     }
 }

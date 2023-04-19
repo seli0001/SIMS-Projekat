@@ -87,5 +87,11 @@ namespace SIMS.Service.Services
             request = _reschedulingRequestsRepository.Update(request);
             return request;
         }
+        public ReschedulingRequests RejectRequest(ReschedulingRequests request)
+        {
+            request.Status = Status.REJECTED;
+            request = _reschedulingRequestsRepository.Update(request);
+            return request;
+        }
     }
 }

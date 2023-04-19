@@ -16,13 +16,6 @@ namespace SIMS.WPF.View.OwnerView
             ReschedulingRequestViewModel reschedulingRequestVM = new ReschedulingRequestViewModel(user);
             DataContext = reschedulingRequestVM;
 
-            if(DataContext is IClose vm)
-            {
-                vm.Close += () =>
-                {
-                    this.Close();
-                };
-            }
         }
     }
 }
