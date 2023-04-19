@@ -58,5 +58,19 @@ namespace SIMS.Repository
             }
             _serializer.ToCSV(_filePath, vouchers);
         }
+        
+        public void Save(Voucher voucher)
+        {
+            if (vouchers.Count == 0)
+            {
+                voucher.Id = 1;
+            }
+            else
+            {
+                voucher.Id = vouchers.Max(t => t.Id) + 1;
+            }
+            vouchers.Add(voucher);
+            _serializer.ToCSV(_filePath, vouchers);
+        }
     }
 }
