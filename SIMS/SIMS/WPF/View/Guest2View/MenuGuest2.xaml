@@ -1,0 +1,52 @@
+﻿<Window x:Class="SIMS.WPF.View.MenuGuest2"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SIMS.WPF.View"
+        mc:Ignorable="d"
+        Title="MenuGuest2" Height="750" Width="430">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+
+            <ToolBar>
+                <Button Content="                                                                                           "></Button>
+                <Button Command="{Binding MainGuest2ViewClickCommand}" >Glavni prozor</Button>
+            </ToolBar>
+
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Button Grid.Column="0" Grid.Row="2" Content="Prati" Margin="20" Command="{Binding ToursInProgressClickCommand}"></Button>
+            <Button Grid.Column="1" Grid.Row="2" Content="Oceni" Margin="20" Command="{Binding FinishedToursClickCommand}"></Button>
+            <Button Grid.Column="1" Grid.Row="3" Content="Vauceri" Margin="20" Command="{Binding AllVouchersClickCommand}" ></Button>
+
+        </Grid>
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="1" Command="{Binding SignOutClickCommand}" >Odjavi se</Button>
+
+        </Grid>
+    </Grid>
+
+</Window>

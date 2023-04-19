@@ -1,6 +1,6 @@
 0|Tour 1|Best Tour|English|10|2|0|0|8|0|NOT_STARTED
 1|fasf|asfasfasf|fsafasf|12|12|0|0|3|0|STARTED
-2|saf|asdfa|asd|12|2|2|3|10|0|NOT_STARTED
+2|saf|asdfa|asd|12|2|2|3|11|0|NOT_STARTED
 5|afs|fasfas|fasf|2|2|5|0|1|0|NOT_STARTED
 6|asf|asd|asd|1|2|6|0|1|0|FINISHED
 7|sfa|fasf|asfa|2|2|7|0|1|0|FINISHED
@@ -8,5 +8,5 @@
 4|Nikola|fasfas|asfasf|34|2|4|0|0|0|FINISHED
 3|asf|casdas|fas|12|1|3|0|0|0|FINISHED
 9|asd|asd|asd|1|1|9|36|0|0|FINISHED
-11|asfa|afs|afs|1|1|11|38|0|0|NOT_STARTED
+11|asfa|afs|afs|1|1|11|38|1|0|NOT_STARTED
 10|asfa|afs|afs|1|1|10|37|1|0|FINISHED
