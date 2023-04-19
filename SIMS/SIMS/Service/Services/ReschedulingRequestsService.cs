@@ -74,7 +74,8 @@ namespace SIMS.Service.Services
             DateOnly newStartDate = request.FromDate;
             DateOnly newEndDate = request.ToDate;
 
-            return _reservationRepository.checkAvailabilityForAcc(request.Reservation, newStartDate, newEndDate);
+            ReservationService _reservationService = new ReservationService();
+            return _reservationService.checkAvailabilityForAcc(request.Reservation, newStartDate, newEndDate);
 
         }
 

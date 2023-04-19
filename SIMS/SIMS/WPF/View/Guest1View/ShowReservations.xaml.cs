@@ -1,6 +1,7 @@
 ﻿using SIMS.Domain.Model;
 using SIMS.Model;
 using SIMS.Repository;
+using SIMS.Service.Services;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -19,7 +20,7 @@ namespace SIMS.View.FirstGuestView
 
         public User LoggedInUser { get; set; }
 
-        private ReservationRepository _reservationRepository;
+        private ReservationService _reservationService;
         private CancelingRequestsRepository _cancelingRequestsRepository;
 
         public static ObservableCollection<Reservation> Reservations { get; set; }
@@ -43,8 +44,8 @@ namespace SIMS.View.FirstGuestView
             InitializeComponent();
             DataContext = this;
             _cancelingRequestsRepository = new CancelingRequestsRepository();
-            _reservationRepository = new ReservationRepository();
-            Reservations = new ObservableCollection<Reservation>(_reservationRepository.GetByUserId(user.Id));
+            _reservationService = new ReservationService();
+            Reservations = new ObservableCollection<Reservation>(_reservationService.GetByUserId(user.Id));
             LoggedInUser = user;
         }
 

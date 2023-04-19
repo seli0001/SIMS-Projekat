@@ -1,5 +1,7 @@
 ﻿using SIMS.Domain.Model;
 using SIMS.Repository;
+using SIMS.Service.Services;
+using SIMS.Service.UseCases;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -18,8 +20,8 @@ namespace SIMS.View.FirstGuestView
 
         public User LoggedInUser { get; set; }
 
-        private readonly AccommodationRepository _repository;
-        private readonly ReservationRepository _reservationRepository;
+        private readonly AccommodationService _repository;
+        private readonly ReservationService _reservationService;
 
         private readonly int[] validator;
 
@@ -29,8 +31,8 @@ namespace SIMS.View.FirstGuestView
             Title = "Accommodation reservation";
             DataContext = this;
             validator = new int[2];
-            _repository = new AccommodationRepository();
-            _reservationRepository = new ReservationRepository();
+            _repository = new AccommodationService();
+            _reservationService = new ReservationService();
             SelectedAccommodation = selectedAccommodation;
             LoggedInUser = user;
         }
@@ -137,9 +139,9 @@ namespace SIMS.View.FirstGuestView
         private void BtnBook_Click(object sender, RoutedEventArgs e)
         {
             Reservation reservation = new Reservation(DateOnly.FromDateTime(FromDate),DateOnly.FromDateTime(FromDate.AddDays(TimeOfStay)), SelectedAccommodation, TimeOfStay, NumberOfGuests, LoggedInUser);
-            if(_reservationRepository.AvailableAccommodation(reservation))
+            if(_reservationService.AvailableAccommodation(reservation))
             {
-                _reservationRepository.Save(reservation);
+                _reservationService.Save(reservation);
                 MessageBox.Show("Accommodation " + SelectedAccommodation.Name + " successfully booked from " + FromDate.ToShortDateString() + " to " + FromDate.AddDays(TimeOfStay).ToShortDateString());
             }
             

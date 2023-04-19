@@ -48,9 +48,6 @@ namespace SIMS.Repository
             return reschedulingRequests;
 
         }
-
-
-
         public CancelingRequests Save(CancelingRequests request)
         {
             request.Id = NextId();

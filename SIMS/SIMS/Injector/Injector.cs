@@ -12,6 +12,7 @@ namespace SIMS.Injector
     {
         private static Dictionary<Type, object> _implementations = new Dictionary<Type, object>
         {
+
         };
 
         public static void BindComponents()
