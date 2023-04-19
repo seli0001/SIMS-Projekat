@@ -1,6 +1,8 @@
 ﻿using LiveCharts;
 using SIMS.Domain.Model;
 using SIMS.Service.Services;
+using SIMS.WPF.ViewModel;
+using SIMS.WPF.ViewModel.GuideViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,27 +27,21 @@ namespace SIMS.WPF.View.GuideView
     public partial class TourStatisticsView : Window
     {
 
-        public SeriesCollection SeriesCollectionAge { get; set; }
-        public SeriesCollection SeriesCollectionVoucher { get; set; }
-        private readonly BookedTourService _bookedTourService;
         public TourStatisticsView(Tour selectedTour)
         {
             InitializeComponent();
-            _bookedTourService = new BookedTourService();
-            SeriesCollectionAge = _bookedTourService.getDataForChartByAge(selectedTour);
-            SeriesCollectionVoucher = _bookedTourService.getDataForChartByVoucher(selectedTour);
-            DataContext = this;
+            TourStatisticsViewModel tourStatisticsViewModel = new TourStatisticsViewModel(selectedTour);
+            DataContext = tourStatisticsViewModel;
 
-            tourNameLabel.Content += selectedTour.Name;
-            cityLabel.Content += selectedTour.Location.City;
-            countryLabel.Content += selectedTour.Location.Country;
-            dateLabel.Content += selectedTour.StartTime.Time.ToString();
+            if (DataContext is IClose vm)
+            {
+                vm.Close += () =>
+                {
+                    this.Close();
+                };
+            }
         }
 
-        private void closeWindowButton_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
     }
     
 }

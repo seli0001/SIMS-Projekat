@@ -44,6 +44,7 @@ namespace SIMS.Domain.Model
         {
             Tour = new Tour();
             User = new User();
+            Checkpoint = new Checkpoint();
             Review = false;
             UsedVoucher = false;
             Notify = Notify.NoAnswer;

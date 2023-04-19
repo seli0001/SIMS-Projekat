@@ -30,10 +30,10 @@
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Label Name="tourNameLabel" Grid.Row="0" Grid.Column="0" Margin="10" VerticalAlignment="Center" Content="Naziv ture: "></Label>
-                <Label Name="cityLabel" Grid.Row="1" Grid.Column="0" Margin="10" VerticalAlignment="Center" Content="Grad: "></Label>
-                <Label Name="countryLabel" Grid.Row="1" Grid.Column="1" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Center" Content="Drzava: "></Label>
-                <Label Name="dateLabel" Grid.Row="0" Grid.Column="1" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Center" Content="Datum ture: "></Label>
+                <Label Name="tourNameLabel" Grid.Row="0" Grid.Column="0" Margin="10" VerticalAlignment="Center" Content="{Binding TourName}"></Label>
+                <Label Name="cityLabel" Grid.Row="1" Grid.Column="0" Margin="10" VerticalAlignment="Center" Content="{Binding City}"></Label>
+                <Label Name="countryLabel" Grid.Row="1" Grid.Column="1" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Center" Content="{Binding Country}"></Label>
+                <Label Name="dateLabel" Grid.Row="0" Grid.Column="1" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Center" Content="{Binding Date}"></Label>
             </Grid>
         </Border>
         <ch:PieChart Grid.Row="2"  Grid.Column="0" Series="{Binding SeriesCollectionAge}" LegendLocation="Bottom">
@@ -46,6 +46,6 @@
                 <ch:DefaultLegend BulletSize="15" TextBlock.FontSize="8"></ch:DefaultLegend>
             </ch:PieChart.ChartLegend>
         </ch:PieChart>
-        <Button x:Name="closeWindowButton" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Content="Zatvori" VerticalAlignment="Center" HorizontalAlignment="Center" Width="70" Height="30" Click="closeWindowButton_Click"></Button>
+        <Button x:Name="closeWindowButton" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Content="Zatvori" VerticalAlignment="Center" HorizontalAlignment="Center" Width="70" Height="30" Command="{Binding CancelCommand}"></Button>
     </Grid>
 </Window>

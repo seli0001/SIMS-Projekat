@@ -1,6 +1,9 @@
 ﻿using SIMS.Domain.Model;
 using SIMS.Repository;
 using SIMS.Service.Services;
+using SIMS.View.GuideView;
+using SIMS.WPF.ViewModel;
+using SIMS.WPF.ViewModel.GuideViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -29,16 +32,15 @@ namespace SIMS.WPF.View
         public TourReviewView(int tourId)
         {
             InitializeComponent();
-            DataContext = this;
-            _tourRatingService = new TourRatingService();
-            SelectedTourRating = new TourRating();
-            TourRatings = new ObservableCollection<TourRating>(_tourRatingService.GetAllByTourId(tourId));
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            TourRatingDetailsView tourRatingDetailsView = new TourRatingDetailsView(SelectedTourRating);
-            tourRatingDetailsView.ShowDialog();
+            TourReviewViewModel tourReviewViewModel = new TourReviewViewModel(tourId);
+            DataContext = tourReviewViewModel;
+            if (DataContext is IClose vm)
+            {
+                vm.Close += () =>
+                {
+                    this.Close();
+                };
+            }
         }
     }
 }

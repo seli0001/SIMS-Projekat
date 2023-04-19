@@ -1,4 +1,5 @@
 ﻿using SIMS.Domain.Model;
+using SIMS.Repository.GuideRepository;
 using SIMS.Serializer;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace SIMS.Repository
 
         private readonly TourRepository _tourRepository;
         private readonly UserRepository _userRepository;
+        private readonly CheckpointRepository _checkpointRepository;
         private readonly Serializer<BookedTour> _serializer;
         public BookedTourRepository()
         {
@@ -21,6 +23,7 @@ namespace SIMS.Repository
             _serializer = new Serializer<BookedTour>();
             _tourRepository = new TourRepository();
             _userRepository = new UserRepository();
+            _checkpointRepository = new CheckpointRepository();
         }
 
         public List<BookedTour> GetAll()
@@ -31,6 +34,10 @@ namespace SIMS.Repository
             {
                 bookedTour.Tour = _tourRepository.GetById(bookedTour.TourId);
                 bookedTour.User = _userRepository.GetAllUsers().Find(u => u.Id == bookedTour.UserId);
+                if (bookedTour.Checkpoint != null)
+                {
+                    bookedTour.Checkpoint = _checkpointRepository.GetAll().FirstOrDefault(c => c.Id == bookedTour.Checkpoint.Id);
+                }
             }
             return bookedTours;
         }

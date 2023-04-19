@@ -33,17 +33,17 @@
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Label Name="guestNameLabel" Grid.Row="0" Content="Ime gosta: " VerticalAlignment="Center" Grid.ColumnSpan="3"></Label>
-                <Label Name="knowLabel" Grid.Row="1" Content="Znanje: " VerticalAlignment="Center" Grid.ColumnSpan="2"></Label>
-                <Label Name="languageLabel" Grid.Row="1" Grid.Column="2" Content="Jezik: " VerticalAlignment="Center"></Label>
-                <Label Name="tourLabel" Grid.Row="1" Grid.Column="3" Content="Zanimljivost: " VerticalAlignment="Center"></Label>
-                <Label Name="checkpointLabel" Grid.Row="2" Content="Tacka kada se gost prikljucio: " VerticalAlignment="Center" Grid.ColumnSpan="4"></Label>
+                <Label Name="guestNameLabel" Grid.Row="0" Content="{Binding GuestName}" VerticalAlignment="Center" Grid.ColumnSpan="3"></Label>
+                <Label Name="knowLabel" Grid.Row="1"  Content="{Binding Knowledge}" VerticalAlignment="Center" Grid.ColumnSpan="2"></Label>
+                <Label Name="languageLabel" Grid.Row="1" Grid.Column="2"  Content="{Binding Language}" VerticalAlignment="Center"></Label>
+                <Label Name="tourLabel" Grid.Row="1" Grid.Column="3"  Content="{Binding TourRating}" VerticalAlignment="Center"></Label>
+                <Label Name="checkpointLabel" Grid.Row="2"  Content="{Binding Checkpoint}" VerticalAlignment="Center" Grid.ColumnSpan="4"></Label>
                 <Label Grid.Row="3" Content="Opis: " VerticalAlignment="Top"></Label>
-                <TextBlock x:Name="comment" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,5,0,0"></TextBlock>
+                <TextBlock x:Name="comment" Text="{Binding Comment}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,5,0,0"></TextBlock>
 
             </Grid>
         </Border>
-        <Button x:Name="reportButton" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right" Content="Prijavi" Width="100" Height="35" Margin="0,0,5,0" Click="Button_Click"></Button>
-        <Button x:Name="closeButton" Grid.Column="2" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Odustani" Width="100" Height="35" Margin="5,0,0,0" Click="closeButton_Click"></Button>
+        <Button x:Name="reportButton" Grid.Column="1" Grid.Row="2" IsEnabled="{Binding IsEnabled}" VerticalAlignment="Center" HorizontalAlignment="Right" Content="Prijavi" Width="100" Height="35" Margin="0,0,5,0" Command="{Binding ReportCommand}"></Button>
+        <Button x:Name="closeButton" Grid.Column="2" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Odustani" Width="100" Height="35" Margin="5,0,0,0" Command="{Binding CancelCommand}"></Button>
     </Grid>
 </Window>
