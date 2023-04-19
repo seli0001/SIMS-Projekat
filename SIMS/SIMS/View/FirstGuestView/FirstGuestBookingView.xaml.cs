@@ -64,6 +64,7 @@ namespace SIMS.View.FirstGuestView
             get => _timeOfStay;
             set
             {
+                MessageBox.Show(value.ToString());
                 if (value != _timeOfStay)
                 {
                     if (value < SelectedAccommodation.MinBookingDays)
@@ -135,7 +136,7 @@ namespace SIMS.View.FirstGuestView
 
         private void BtnBook_Click(object sender, RoutedEventArgs e)
         {
-            Reservation reservation = new Reservation(FromDate, FromDate.AddDays(TimeOfStay), SelectedAccommodation, TimeOfStay, NumberOfGuests, LoggedInUser);
+            Reservation reservation = new Reservation(DateOnly.FromDateTime(FromDate),DateOnly.FromDateTime(FromDate.AddDays(TimeOfStay)), SelectedAccommodation, TimeOfStay, NumberOfGuests, LoggedInUser);
             if(_reservationRepository.AvailableAccommodation(reservation))
             {
                 _reservationRepository.Save(reservation);

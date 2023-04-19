@@ -9,6 +9,7 @@ using SIMS.Domain.Model;
 using SIMS.Service.UseCases;
 using SIMS.Service;
 using SIMS.WPF.ViewModel.ViewModel;
+using SIMS.WPF.View.OwnerView;
 
 namespace SIMS.WPF.ViewModel.OwnerViewModel
 {
@@ -83,6 +84,15 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             }
         }
         #region commands
+        
+        private ICommand _showRequestsCommand;
+        public ICommand ShowRequestsCommand
+        {
+            get
+            {
+                return _showRequestsCommand ?? (_showRequestsCommand = new CommandBase(() => ShowRequestView(), true));
+            }
+        }
 
         private ICommand _logOutCommand;
         public ICommand LogOutCommand
@@ -130,6 +140,12 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         }
 
         #endregion
+
+        private void ShowRequestView()
+        {
+            ReschedulingRequestView reschedulingRequestView = new ReschedulingRequestView(LoggedInUser);
+            reschedulingRequestView.Show();
+        }
         private void ShowCreateAccommodationForm()
         {
             AccommondationRegistration createAccommondationForm = new AccommondationRegistration(LoggedInUser);

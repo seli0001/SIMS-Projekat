@@ -1,4 +1,5 @@
-﻿using SIMS.Serializer;
+﻿using SIMS.Domain.RepositoryInterface;
+using SIMS.Serializer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,12 +48,15 @@ namespace SIMS.Domain.Model
 
         public void FromCSV(string[] values)
         {
-            Id = Convert.ToInt32(values[0]);
-            Cleanliness = Convert.ToInt32(values[1]);
-            RulesRespect = Convert.ToInt32(values[2]);
-            Comment = values[3];
-            User = new User() { Id = Convert.ToInt32(values[4]) };
-            Reservation = new Reservation() { Id = Convert.ToInt32(values[5]) };
+            if(values.Length != 0)
+            {
+                Id = Convert.ToInt32(values[0]);
+                Cleanliness = Convert.ToInt32(values[1]);
+                RulesRespect = Convert.ToInt32(values[2]);
+                Comment = values[3];
+                User = new User() { Id = Convert.ToInt32(values[4]) };
+                Reservation = new Reservation() { Id = Convert.ToInt32(values[5]) };
+            }
         }
 
     }

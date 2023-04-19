@@ -14,11 +14,13 @@ namespace SIMS.Repository
         private const string _filePath = "../../../../SIMS/Resources/Data/Reservations.csv";
         private readonly Serializer<Reservation> _serializer;
         private readonly AccommodationRepository _accommodationRepository;
+        private List<Reservation> _reservations;
 
         public ReservationRepository()
         {
             _serializer = new Serializer<Reservation>();
             _accommodationRepository = new AccommodationRepository();
+            _reservations = new List<Reservation>();
         }
 
         public int GetNextId(List<Reservation> reservations)
@@ -30,30 +32,32 @@ namespace SIMS.Repository
             return reservations.Max(reservation => reservation.Id) + 1;
         }
 
-        public Reservation GetById(int id)
+        public List<Reservation> GetAll()
         {
-            List<Reservation> reservations = GetAll();
-            foreach(Reservation res in reservations)
+            _reservations = _serializer.FromCSV(_filePath);
+            foreach (Reservation res in _reservations)
             {
                 res.Accommodation = _accommodationRepository.GetById(res.Accommodation.Id);
+                //Maybe res.User...
             }
-            return reservations.FirstOrDefault(reservation => reservation.Id == id);
+            return _reservations;
+        }
+
+        public Reservation GetById(int id)
+        {
+            _reservations = GetAll();
+            return _reservations.FirstOrDefault(reservation => reservation.Id == id);
         }
 
         public List<Reservation> GetByAccommodationsId(int id)
         {
-            List<Reservation> reservations = GetAll();
-            return reservations.Where(reservation => reservation.Accommodation.Id == id).ToList();
+            _reservations = GetAll();
+            return _reservations.Where(reservation => reservation.Accommodation.Id == id).ToList();
         }
         public List<Reservation> GetByUserId(int id)
         {
-            List<Reservation> reservations = GetAll();
-            return reservations.Where(reservation => reservation.User.Id == id).ToList();
-        }
-
-        public List<Reservation> GetAll()
-        {
-            return _serializer.FromCSV(_filePath);
+            _reservations = GetAll();
+            return _reservations.Where(reservation => reservation.User.Id == id).ToList();
         }
 
         public Reservation Save(Reservation reservation)
@@ -66,12 +70,24 @@ namespace SIMS.Repository
             return reservation;
         }
 
+        public Reservation Update(Reservation reservation)
+        {
+            _reservations = GetAll();
+            Reservation current = _reservations.Find(r => r.Id == reservation.Id);
+            if (current == null) return null;
+            int index = _reservations.IndexOf(current);
+            _reservations.Remove(current);
+            _reservations.Insert(index, reservation);
+            _serializer.ToCSV(_filePath, _reservations);
+            return reservation;
+        }
+
         public bool AvailableAccommodation(Reservation reservation)
         {
             List<Reservation> bookedReservations = GetByAccommodationsId(reservation.Accommodation.Id);
 
             bookedReservations.Sort((r1, r2) => r1.FromDate.CompareTo(r2.FromDate));
-            Reservation lastReservation = new Reservation() { FromDate = DateTime.MinValue, ToDate = DateTime.MinValue }; 
+            Reservation lastReservation = new Reservation() { FromDate = DateOnly.MinValue, ToDate = DateOnly.MinValue }; 
 
             foreach (Reservation bookedReservation in bookedReservations)
             {
@@ -94,15 +110,14 @@ namespace SIMS.Repository
             return true;
         }
 
-
-        public DateTime GetFirstAvailableDate(Reservation reservation)
+        public DateOnly GetFirstAvailableDate(Reservation reservation)
         {
             List<Reservation> bookedReservations = GetByAccommodationsId(reservation.Accommodation.Id);
 
             bookedReservations.Sort((r1, r2) => r1.FromDate.CompareTo(r2.FromDate));
 
-            DateTime availableDateFrom = reservation.FromDate;
-            DateTime availableDateTo= reservation.ToDate;
+            DateOnly availableDateFrom = reservation.FromDate;
+            DateOnly availableDateTo= reservation.ToDate;
 
             foreach (Reservation bookedReservation in bookedReservations)
             {
@@ -115,6 +130,21 @@ namespace SIMS.Repository
                 availableDateFrom = bookedReservation.ToDate;
             }
             return availableDateFrom;
+        }
+
+        public bool checkAvailabilityForAcc(Reservation reservation, DateOnly fromDate, DateOnly toDate)
+        {
+            _reservations = GetByAccommodationsId(reservation.Accommodation.Id);
+            foreach(Reservation res in _reservations)
+            {
+                bool inBetween = (fromDate > res.FromDate && fromDate < res.ToDate) || (toDate > res.FromDate && toDate < res.ToDate);
+                if (res.Id != reservation.Id  &&  (inBetween))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
     }

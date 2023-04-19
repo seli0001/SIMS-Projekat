@@ -89,7 +89,7 @@ namespace SIMS.View.FirstGuestView
                 _reservationRepository.Save(reservation);
                 MessageBox.Show("Accommodation " + SelectedAccommodation.Name + " successfully booked from " + FromDate.ToShortDateString() + " to " + FromDate.AddDays(TimeOfStay).ToShortDateString());
             }*/
-            ReschedulingRequests reschedulingRequest = new ReschedulingRequests(SelectedReservation, FromDate, ToDate);
+            ReschedulingRequests reschedulingRequest = new ReschedulingRequests(SelectedReservation,DateOnly.FromDateTime(FromDate),DateOnly.FromDateTime(ToDate));
             _reschedulingRequestsRepository.Save(reschedulingRequest);
             MessageBox.Show("Request Sent");
             Close();

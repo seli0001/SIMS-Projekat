@@ -6,10 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using SIMS.Repository.GuideRepository;
 using SIMS.Domain.Model;
+using SIMS.Domain.RepositoryInterface;
 
 namespace SIMS.Repository
 {
-    public class GuestRatingRepository
+    public class GuestRatingRepository : IGuestRatingRepository
     {
         private const string _filePath = "../../../../SIMS/Resources/Data/GuestRatings.csv";
 

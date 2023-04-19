@@ -19,7 +19,7 @@
                   SelectedItem="{Binding Path=SelectedReservation, UpdateSourceTrigger=PropertyChanged}"
                   AutoGenerateColumns="False" IsReadOnly="True" Margin="59,32,66,217" Grid.RowSpan="2">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="100"></DataGridTextColumn>
+                <DataGridTextColumn Header="Smestaj" Binding="{Binding Accommodation.Name}" Width="100"></DataGridTextColumn>
                 <DataGridTextColumn Header="Number of Guests" Binding="{Binding NumberOfGuests}" Width="100"></DataGridTextColumn>
                 <DataGridTextColumn Header="Number of Days" Binding="{Binding TimeOfStay}" Width="100"></DataGridTextColumn>
                 <DataGridTextColumn Header="From Date" Binding="{Binding FromDate}" Width="*"></DataGridTextColumn>
