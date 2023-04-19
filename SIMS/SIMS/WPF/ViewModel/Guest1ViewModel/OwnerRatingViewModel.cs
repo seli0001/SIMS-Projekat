@@ -1,34 +1,47 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows;
-using SIMS.Domain.Model;
+﻿using SIMS.Domain.Model;
 using SIMS.Repository;
+using SIMS.WPF.ViewModel.ViewModel;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 
-namespace SIMS.View.FirstGuestView
+namespace SIMS.WPF.ViewModel.Guest1ViewModel
 {
-    /// <summary>
-    /// Interaction logic for OwnerRatingView.xaml
-    /// </summary>
-    public partial class OwnerRatingView : Window
+    public class OwnerRatingViewModel : ViewModelBase, IClose
     {
         private readonly int[] validator;
         private readonly OwnerRatingRepository _repository;
         public Reservation SelectedReservation { get; set; }
         public User LoggedInUser { get; set; }
 
-        public OwnerRatingView(Reservation reservation, User user)
+
+        public OwnerRatingViewModel(Reservation reservation, User user)
         {
-            InitializeComponent();
-            DataContext = this;
             LoggedInUser = user;
             validator = new int[3];
             SelectedReservation = reservation;
             _repository = new OwnerRatingRepository();
+            IsEnabled = false;
         }
 
-
         #region data
-        
+
+        private bool _isEnabled;
+        public bool IsEnabled
+        {
+            get => _isEnabled;
+            set
+            {
+                _isEnabled = value;
+                OnPropertyChanged();
+            }
+        }
+
         private int _cleanliness = 1;
         public int Cleanliness
         {
@@ -40,16 +53,16 @@ namespace SIMS.View.FirstGuestView
                 {
                     if (value < 1 || value > 5)
                     {
-                        CleanlinessValidator.Content = "Ocena mora biti (1-5)";
-                        CleanlinessValidator.Visibility = Visibility.Visible;
+                        //CleanlinessValidator.Content = "Ocena mora biti (1-5)";
+                        //CleanlinessValidator.Visibility = Visibility.Visible;
                         validator[0] = 1;
                     }
                     else
                     {
-                        CleanlinessValidator.Visibility = Visibility.Hidden;
+                        //CleanlinessValidator.Visibility = Visibility.Hidden;
                         validator[0] = 1;
                     }
-                    BtnSubmit.IsEnabled = true;
+                    IsEnabled = true;
 
                     ValidatorTest();
                     _cleanliness = value;
@@ -70,16 +83,16 @@ namespace SIMS.View.FirstGuestView
                 {
                     if (value < 1 || value > 5)
                     {
-                        RulesValidator.Content = "Ocena mora biti (1-5)";
-                        RulesValidator.Visibility = Visibility.Visible;
+                        //RulesValidator.Content = "Ocena mora biti (1-5)";
+                        //RulesValidator.Visibility = Visibility.Visible;
                         validator[1] = 1;
                     }
                     else
                     {
-                        RulesValidator.Visibility = Visibility.Hidden;
+                        //RulesValidator.Visibility = Visibility.Hidden;
                         validator[1] = 1;
                     }
-                    BtnSubmit.IsEnabled = true;
+                    IsEnabled = true;
 
                     ValidatorTest();
                     _rulesRespect = value;
@@ -106,7 +119,7 @@ namespace SIMS.View.FirstGuestView
                     {
                         validator[2] = 1;
                     }
-                    BtnSubmit.IsEnabled = true;
+                    IsEnabled = true;
 
                     ValidatorTest();
                     _comment = value;
@@ -116,8 +129,10 @@ namespace SIMS.View.FirstGuestView
             }
         }
 
+
         #endregion
 
+        public Action Close { get; set; }
 
         private void ValidatorTest()
         {
@@ -125,28 +140,41 @@ namespace SIMS.View.FirstGuestView
             {
                 if (kon == 0)
                 {
-                    //BtnSubmit.IsEnabled = false;
+                    //IsEnabled = false;
                 }
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        #region commands
+
+        private ICommand _reviewCommand;
+        public ICommand ReviewCommand
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            get
+            {
+                return _reviewCommand ?? (_reviewCommand = new CommandBase(() => SaveRating(), true));
+            }
         }
 
+        private ICommand _closeCommand;
+        public ICommand CloseCommand
+        {
+            get
+            {
+                return _closeCommand ?? (_closeCommand = new CommandBase(() => Cancel(), true));
+            }
+        }
 
-        private void SaveRating(object sender, RoutedEventArgs e)
+        #endregion
+
+        private void SaveRating()
         {
             OwnerRating newRating = new OwnerRating(Cleanliness, RulesRespect, Comment, LoggedInUser, SelectedReservation);
             OwnerRating savedRating = _repository.Save(newRating);
             Close();
         }
 
-        
-
-        private void BtnCancel_Click(object sender, RoutedEventArgs e)
+        private void Cancel()
         {
             Close();
         }

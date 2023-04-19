@@ -1,44 +1,47 @@
 ﻿using SIMS.Domain.Model;
 using SIMS.Model;
 using SIMS.Repository;
+using SIMS.Service.Services;
+using SIMS.WPF.ViewModel.ViewModel;
 using System;
-using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Input;
 
-
-namespace SIMS.View.FirstGuestView
+namespace SIMS.WPF.ViewModel.Guest1ViewModel
 {
-    /// <summary>
-    /// Interaction logic for CreateReschedulingRequest.xaml
-    /// </summary>
-    public partial class CreateReschedulingRequest : Window
+    public class CreateReschedulingRequestViewModel : ViewModelBase, IClose
     {
-        
-
         public Reservation SelectedReservation { get; set; }
-
         public User LoggedInUser { get; set; }
+        public Action Close { get; set; }
 
-        private readonly ReservationRepository _reservationRepository;
-        private readonly ReschedulingRequestsRepository _reschedulingRequestsRepository;
+        private readonly ReschedulingRequestsService _reschedulingRequestsService;
 
         private readonly int[] validator;
 
-        public CreateReschedulingRequest(Reservation selectedReservation, User user)
+        public CreateReschedulingRequestViewModel(Reservation selectedReservation, User user)
         {
-            InitializeComponent();
-            DataContext = this;
             validator = new int[2];
-            _reservationRepository = new ReservationRepository();
-            _reschedulingRequestsRepository = new ReschedulingRequestsRepository();
+            _reschedulingRequestsService = new ReschedulingRequestsService();
             SelectedReservation = selectedReservation;
             LoggedInUser = user;
+            IsEnabled = true;
         }
 
+        #region data
+        private bool _isEnabled;
+        public bool IsEnabled
+        {
+            get => _isEnabled;
+            set
+            {
+                _isEnabled = value;
+                OnPropertyChanged();
+            }
+        }
 
         private DateTime _fromDate = DateTime.Now;
-
         public DateTime FromDate
         {
             get => _fromDate;
@@ -59,9 +62,19 @@ namespace SIMS.View.FirstGuestView
             }
         }
 
-        
+        #endregion
 
-        
+
+        #region commands
+        private ICommand _requestRescheduleCommand;
+        public ICommand RequestRescheduleCommand
+        {
+            get
+            {
+                return _requestRescheduleCommand ?? (_requestRescheduleCommand = new CommandBase(() => RequestReschedule(), true));
+            }
+        }
+        #endregion
 
         private void ValidatorTest()
         {
@@ -69,19 +82,12 @@ namespace SIMS.View.FirstGuestView
             {
                 if (validation == 0)
                 {
-                    BtnRequest.IsEnabled = false;
+                    IsEnabled = false;
                 }
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        private void BtnRequest_Click(object sender, RoutedEventArgs e)
+        private void RequestReschedule()
         {
             /*Reservation reservation = new Reservation(FromDate, FromDate.AddDays(TimeOfStay), SelectedAccommodation, TimeOfStay, NumberOfGuests, LoggedInUser);
             if (_reservationRepository.AvailableAccommodation(reservation))
@@ -89,8 +95,8 @@ namespace SIMS.View.FirstGuestView
                 _reservationRepository.Save(reservation);
                 MessageBox.Show("Accommodation " + SelectedAccommodation.Name + " successfully booked from " + FromDate.ToShortDateString() + " to " + FromDate.AddDays(TimeOfStay).ToShortDateString());
             }*/
-            ReschedulingRequests reschedulingRequest = new ReschedulingRequests(SelectedReservation,DateOnly.FromDateTime(FromDate),DateOnly.FromDateTime(ToDate));
-            _reschedulingRequestsRepository.Save(reschedulingRequest);
+            ReschedulingRequests reschedulingRequest = new ReschedulingRequests(SelectedReservation, DateOnly.FromDateTime(FromDate), DateOnly.FromDateTime(ToDate));
+            _reschedulingRequestsService.Save(reschedulingRequest);
             MessageBox.Show("Request Sent");
             Close();
         }

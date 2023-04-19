@@ -17,6 +17,7 @@ using System.Xml.Linq;
 using SIMS.Model;
 using SIMS.Repository;
 using SIMS.Domain.Model;
+using SIMS.Service.UseCases;
 
 namespace SIMS.View.FirstGuestView
 {
@@ -41,15 +42,15 @@ namespace SIMS.View.FirstGuestView
         public ObservableCollection<Accommodation> Accommodations { get; set; }
         public User LoggedInUser { get; set; }
 
-        private readonly AccommodationRepository _repository;
+        private readonly AccommodationService _service;
 
         public FirstGuestMainView(User user)
         {
             InitializeComponent();
             DataContext = this;
             cbSearch.ItemsSource = Enum.GetValues(typeof(Type));
-            _repository = new AccommodationRepository();
-            Accommodations = new ObservableCollection<Accommodation>(_repository.GetForView());
+            _service = new AccommodationService();
+            Accommodations = new ObservableCollection<Accommodation>(_service.GetAll());
             LoggedInUser = user;
         }
 

@@ -13,6 +13,7 @@ namespace SIMS.Repository
     {
         private const string _filePath = "../../../../SIMS/Resources/Data/Reservations.csv";
         private readonly Serializer<Reservation> _serializer;
+
         private readonly AccommodationRepository _accommodationRepository;
         private List<Reservation> _reservations;
 
@@ -80,71 +81,6 @@ namespace SIMS.Repository
             _reservations.Insert(index, reservation);
             _serializer.ToCSV(_filePath, _reservations);
             return reservation;
-        }
-
-        public bool AvailableAccommodation(Reservation reservation)
-        {
-            List<Reservation> bookedReservations = GetByAccommodationsId(reservation.Accommodation.Id);
-
-            bookedReservations.Sort((r1, r2) => r1.FromDate.CompareTo(r2.FromDate));
-            Reservation lastReservation = new Reservation() { FromDate = DateOnly.MinValue, ToDate = DateOnly.MinValue }; 
-
-            foreach (Reservation bookedReservation in bookedReservations)
-            {
-                if (reservation.FromDate >= bookedReservation.FromDate && reservation.FromDate < bookedReservation.ToDate)
-                {
-                    
-                    MessageBox.Show("Unfortunately, we cannot book this for you because it is already booked in the given time. The first available day is " + GetFirstAvailableDate(reservation).ToString());
-                    return false;
-                }
-                foreach (Reservation reservation1 in bookedReservations)
-                {
-                    if (reservation.FromDate.AddDays(reservation.TimeOfStay) > reservation1.FromDate && reservation.FromDate.AddDays(reservation.TimeOfStay) < reservation1.ToDate)
-                    {
-                        MessageBox.Show("Unfortunately, we cannot book this for you because it is already booked in the given time. The first available day is " + GetFirstAvailableDate(reservation).ToString());
-                        return false;
-                    }
-                }
-            }
-
-            return true;
-        }
-
-        public DateOnly GetFirstAvailableDate(Reservation reservation)
-        {
-            List<Reservation> bookedReservations = GetByAccommodationsId(reservation.Accommodation.Id);
-
-            bookedReservations.Sort((r1, r2) => r1.FromDate.CompareTo(r2.FromDate));
-
-            DateOnly availableDateFrom = reservation.FromDate;
-            DateOnly availableDateTo= reservation.ToDate;
-
-            foreach (Reservation bookedReservation in bookedReservations)
-            {
-                
-                if (availableDateFrom < bookedReservation.FromDate && availableDateFrom.AddDays(reservation.TimeOfStay) < bookedReservation.FromDate)
-                {
-                    return availableDateFrom;
-                }
-
-                availableDateFrom = bookedReservation.ToDate;
-            }
-            return availableDateFrom;
-        }
-
-        public bool checkAvailabilityForAcc(Reservation reservation, DateOnly fromDate, DateOnly toDate)
-        {
-            _reservations = GetByAccommodationsId(reservation.Accommodation.Id);
-            foreach(Reservation res in _reservations)
-            {
-                bool inBetween = (fromDate > res.FromDate && fromDate < res.ToDate) || (toDate > res.FromDate && toDate < res.ToDate);
-                if (res.Id != reservation.Id  &&  (inBetween))
-                {
-                    return false;
-                }
-            }
-
-            return true;
         }
 
     }

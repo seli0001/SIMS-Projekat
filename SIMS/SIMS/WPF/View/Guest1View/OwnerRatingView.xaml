@@ -51,7 +51,9 @@
         </Grid>
 
         <Button x:Name="BtnSubmit" Content="Oceni" IsCancel="True" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="112,15,0,0"
-                Click="SaveRating" IsEnabled="True"/>
-        <Button  x:Name="BtnCancel" Content="Odustani" IsDefault="True" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="33,0,0,413" Click="BtnCancel_Click"/>
+                Command="{Binding ReviewCommand}" IsEnabled="{Binding IsEnabled}"/>
+        <Button  x:Name="BtnCancel" Content="Odustani" IsDefault="True" HorizontalAlignment="Left" 
+                 VerticalAlignment="Bottom" Margin="33,0,0,413" 
+                 Command="{Binding CloseCommand}"/>
     </Grid>
 </Window>

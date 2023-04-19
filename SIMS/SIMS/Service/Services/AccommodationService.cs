@@ -1,12 +1,6 @@
 ﻿using SIMS.Domain.Model;
 using SIMS.Repository;
-using SIMS.Repository.GuideRepository;
-using SIMS.Serializer;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Type = SIMS.Domain.Model.Type;
 
 namespace SIMS.Service.UseCases

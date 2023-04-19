@@ -37,7 +37,10 @@
 
             
 
-            <Button x:Name="BtnRequest" Grid.Row="4" Grid.Column="1" Content="Request rescheduling" Height="30" VerticalAlignment="Top" Click="BtnRequest_Click" />
+            <Button x:Name="BtnRequest" Grid.Row="4" Grid.Column="1" 
+                    Content="Request rescheduling" IsEnabled="{Binding IsEnabled}"
+                    Height="30" VerticalAlignment="Top"
+                    Command="{Binding RequestRescheduleCommand}"/>
 
 
         </Grid>
