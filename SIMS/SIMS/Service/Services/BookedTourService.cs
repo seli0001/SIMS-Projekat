@@ -30,9 +30,9 @@ namespace SIMS.Service.Services
             return _bookedToursRepository.GetAll().Where(u => userId == u.UserId).ToList();
         }
 
-        public void Save(Tour tour,int userId)
+        public void Save(Tour tour,int userId,int peopleNumber)
         {
-            _bookedToursRepository.Save(tour, userId);
+            _bookedToursRepository.Save(tour, userId,peopleNumber);
         }
         public void Update(BookedTour bookedTour)
         {

@@ -68,7 +68,7 @@ namespace SIMS.Repository
             }
         }
 
-        public void Save(Tour tour, int iduser)
+        public void Save(Tour tour, int iduser,int peopleNumber)
         {
             List<BookedTour> bookedTours = GetAll();
 
@@ -77,7 +77,7 @@ namespace SIMS.Repository
             bookedTour.TourId = tour.Id;
             bookedTour.UserId = iduser;
             bookedTour.Id = GenerateId();
-
+            bookedTour.NumberOfPeople = peopleNumber;
             bookedTours.Add(bookedTour);
             _serializer.ToCSV(_filePath, bookedTours);
         }
