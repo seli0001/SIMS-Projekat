@@ -1,0 +1,38 @@
+﻿<Window x:Class="SIMS.WPF.View.TourReviewView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SIMS.WPF.View"
+        mc:Ignorable="d"
+        Title="TourReviewWindows" Height="350" Width="370">
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="5*"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="10*"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Detalji recenzije" Click="Button_Click"></Button>
+            <DataGrid Grid.Row="1" Grid.Column="1" IsReadOnly="True" SelectionMode="Single" AutoGenerateColumns="False"
+                      ItemsSource="{Binding TourRatings,UpdateSourceTrigger=Default}" SelectedItem="{Binding SelectedTourRating}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Ime Gosta" Binding="{Binding bookedTour.User.Username}" Width="2*"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Znanje" Binding="{Binding GuideKnown}" Width="0.65*"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Jezik" Binding="{Binding GuideLanguage}" Width="0.5*"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Zanimljivost" Binding="{Binding TourReview}" Width="*"></DataGridTextColumn>
+
+                </DataGrid.Columns>
+                
+            </DataGrid>
+            <Button Content="Zatvori" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center"></Button>
+        </Grid>
+        
+    </Grid>
+</Window>
