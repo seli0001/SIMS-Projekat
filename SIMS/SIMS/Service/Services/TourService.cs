@@ -36,6 +36,11 @@ namespace SIMS.Service.Services
             _tourRepository.Update(tour);
         }
 
+        public Tour GetById(int id)
+        {
+            return GetAll().FirstOrDefault(t => t.Id == id);
+        }
+
         public List<Tour> GetAllByGuideId(int id)
         {
             return GetAll().Where(tour => tour.Guide.Id == id).ToList();

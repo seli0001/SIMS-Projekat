@@ -16,6 +16,7 @@ using SIMS.Domain.Model;
 using SIMS.Repository;
 using SIMS.Service.Services;
 using SIMS.WPF.View;
+using SIMS.WPF.View.GuideView;
 
 namespace SIMS.View.GuideView
 {
@@ -140,6 +141,18 @@ namespace SIMS.View.GuideView
                 AllTours.Remove(SelectedTour);
                 MessageBox.Show("Uspesno ste otkazali turu");
             }
+        }
+
+        private void tourStatisticButton_Click(object sender, RoutedEventArgs e)
+        {
+            TourStatisticsView tourStatisticsView = new TourStatisticsView(SelectedTour);
+            tourStatisticsView.ShowDialog();
+        }
+
+        private void mostVisitedButton_Click(object sender, RoutedEventArgs e)
+        {
+            TourStatisticsView tourStatisticsView = new TourStatisticsView(_tourService.GetById(_bookedTourService.GetMostVisited()));
+            tourStatisticsView.ShowDialog();
         }
     }
 }
