@@ -1,4 +1,5 @@
 ﻿using SIMS.Domain.Model;
+using SIMS.Domain.RepositoryInterface;
 using SIMS.Repository;
 using SIMS.Serializer;
 using System;
@@ -12,12 +13,12 @@ namespace SIMS.Service.UseCases
     public class GuestRatingService
     {
         private List<GuestRating> _ratings;
-        private readonly GuestRatingRepository _guestRatingRepository;
+        private readonly IGuestRatingRepository _guestRatingRepository;
 
         public GuestRatingService()
         {
             _ratings = new List<GuestRating>();
-            _guestRatingRepository = new GuestRatingRepository();
+            _guestRatingRepository = Injector.Injector.CreateInstance<IGuestRatingRepository>();
         }
 
         public List<GuestRating> GetAll()

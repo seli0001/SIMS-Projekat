@@ -12,7 +12,6 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
-        
         <DataGrid
                   ItemsSource="{Binding Path=ReschedulingRequests, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding Path=SelectedRequest, UpdateSourceTrigger=PropertyChanged}"

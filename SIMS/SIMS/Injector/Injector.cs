@@ -18,6 +18,8 @@ namespace SIMS.Injector
         {
             VoucherRepository voucherRepository = new VoucherRepository();
             TourRatingRepository tourRatingRepository = new TourRatingRepository();
+            GuestRatingRepository guestRatingRepository = new GuestRatingRepository();
+            _implementations.Add(typeof(IGuestRatingRepository), guestRatingRepository);
             _implementations.Add(typeof(IVoucherRepository), voucherRepository);
             _implementations.Add(typeof(ITourRatingRepository), tourRatingRepository);
         }
