@@ -145,13 +145,16 @@ namespace SIMS.View.GuideView
 
         private void tourStatisticButton_Click(object sender, RoutedEventArgs e)
         {
-            TourStatisticsView tourStatisticsView = new TourStatisticsView(SelectedTour);
-            tourStatisticsView.ShowDialog();
+            if (dataGridAllTours.SelectedIndex != -1 && SelectedTour.Status == TourStatus.FINISHED)
+            {
+                TourStatisticsView tourStatisticsView = new TourStatisticsView(SelectedTour);
+                tourStatisticsView.ShowDialog();
+            }
         }
 
         private void mostVisitedButton_Click(object sender, RoutedEventArgs e)
         {
-            TourStatisticsView tourStatisticsView = new TourStatisticsView(_tourService.GetById(_bookedTourService.GetMostVisited()));
+            TourStatisticsView tourStatisticsView = new TourStatisticsView(_tourService.GetMostVisited());
             tourStatisticsView.ShowDialog();
         }
     }

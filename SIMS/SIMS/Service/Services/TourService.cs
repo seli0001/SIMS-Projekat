@@ -69,5 +69,10 @@ namespace SIMS.Service.Services
             Delete(tour);
         }
 
+        public Tour GetMostVisited()
+        {
+            return GetAll().Where(t => t.Status == TourStatus.FINISHED).MaxBy(t => t.NumberOfPeople);
+        }
+
     }
 }
