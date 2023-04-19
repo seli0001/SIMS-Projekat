@@ -59,8 +59,9 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
         private void BookedClick()
         {
             tour.NumberOfPeople = tour.NumberOfPeople + tbBox;
+
             _tourService.UpdateNumberOfPeople(tour, tour.Id);
-            _bookedTourService.Save(tour, userId);
+            _bookedTourService.Save(tour, userId,tbBox);
             MessageBox.Show("Uspesno ste rezervisali");
             Close();
         }
