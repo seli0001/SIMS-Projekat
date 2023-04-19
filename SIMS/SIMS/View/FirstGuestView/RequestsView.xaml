@@ -22,6 +22,7 @@
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="100"></DataGridTextColumn>
                 <DataGridTextColumn Header="From Date" Binding="{Binding FromDate}" Width="*"></DataGridTextColumn>
                 <DataGridTextColumn Header="To Date" Binding="{Binding ToDate}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
 

@@ -41,6 +41,18 @@ namespace SIMS.Repository
 
         public List<ReschedulingRequests> GetByUserId(int id)
         {
+            List<ReschedulingRequests> reschedulingRequests = GetAll();
+            List<Reservation> reservations = _reservationRepository.GetByUserId(id);
+            foreach (Reservation reservation in reservations)
+            {
+                reschedulingRequests.Where(reschedulingRequest => reschedulingRequest.Reservation == reservation);
+            }
+            return reschedulingRequests;
+
+        }
+
+        public List<ReschedulingRequests> GetByOwnerId(int id)
+        {
             _requests = GetAll();
             List<ReschedulingRequests> allRequests = new List<ReschedulingRequests>();
             foreach(ReschedulingRequests req in _requests)

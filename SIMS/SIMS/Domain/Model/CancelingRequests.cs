@@ -36,8 +36,11 @@ namespace SIMS.Model
 
         public void FromCSV(string[] values)
         {
-            Id = Convert.ToInt32(values[0]);
-            Reservation = new Reservation() { Id = Convert.ToInt32(values[1]) };
+            if (values.Length != 0)
+            {
+                Id = Convert.ToInt32(values[0]);
+                Reservation = new Reservation() { Id = Convert.ToInt32(values[1]) };
+            }
         }
     }
 }

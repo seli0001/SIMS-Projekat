@@ -3,15 +3,17 @@ using SIMS.Model;
 using SIMS.Service.Services;
 using SIMS.WPF.ViewModel.ViewModel;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace SIMS.WPF.ViewModel.OwnerViewModel
 {
+    public enum Available
+    {
+        AVAILABLE,
+        OCCUPIED
+    }
+
     public class ReschedulingRequestViewModel : ViewModelBase, IClose
     {
         private User Owner;
@@ -19,12 +21,16 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         private readonly ReschedulingRequestsService _requestService;
 
         public static ObservableCollection<ReschedulingRequests> Requests { get; set; }
+
+        public static ObservableCollection<Available> ReservationStatus { get; set; }
+
         public ReschedulingRequests SelectedRequests { get; set; }
         public ReschedulingRequestViewModel(User user)
         {
             Owner = user;
             _requestService = new ReschedulingRequestsService();
-            Requests = new ObservableCollection<ReschedulingRequests>(_requestService.GetByUserId(user.Id));
+            Requests = new ObservableCollection<ReschedulingRequests>(_requestService.GetByOwnerId(user.Id));
+            ReservationStatus = new ObservableCollection<Available>(_requestService.checkAvailability(user.Id));
         }
 
         #region commands
