@@ -64,9 +64,9 @@ namespace SIMS.Service.Services
             int num_over_fifty = 0;
             foreach (BookedTour t in data)
             {
-                if (t.User.Age < 18) num_under_eighteen++;
-                else if (t.User.Age <= 50) num_eighteen_to_fifty++;
-                else num_over_fifty++;
+                if (t.User.Age < 18) num_under_eighteen += t.NumberOfPeople;
+                else if (t.User.Age <= 50) num_eighteen_to_fifty += t.NumberOfPeople;
+                else num_over_fifty += t.NumberOfPeople;
             }
             series.Add(new PieSeries { Title = "Ispod 18", Values = new ChartValues<ObservableValue> { new ObservableValue(num_under_eighteen) } });
             series.Add(new PieSeries { Title = "Izmedju 18 i 50", Values = new ChartValues<ObservableValue> { new ObservableValue(num_eighteen_to_fifty) } });
@@ -82,18 +82,12 @@ namespace SIMS.Service.Services
             int num_not_vouchers = 0;
             foreach (BookedTour t in data)
             {
-                if (t.UsedVoucher) num_vouchers++;
-                else num_not_vouchers++;
+                if (t.UsedVoucher) num_vouchers += t.NumberOfPeople;
+                else num_not_vouchers += t.NumberOfPeople;
             }
             series.Add(new PieSeries { Title = "Sa Vaucerom", Values = new ChartValues<ObservableValue> { new ObservableValue(num_vouchers) } });
             series.Add(new PieSeries { Title = "Bez Vaucera", Values = new ChartValues<ObservableValue> { new ObservableValue(num_not_vouchers) } });
             return series;
-        }
-
-        public int GetMostVisited()
-        {
-            List<BookedTour> tours = _bookedToursRepository.GetAll().Where(t => t.Tour.Status == TourStatus.FINISHED).ToList();
-            return tours.GroupBy(t => t.Tour.Id).First().Key;
         }
     }
 }

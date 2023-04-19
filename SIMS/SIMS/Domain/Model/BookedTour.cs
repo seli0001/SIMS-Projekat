@@ -27,6 +27,7 @@ namespace SIMS.Domain.Model
         public User User { get; set; }
         public int UserId { get; set; }
         public bool Review { get; set; }
+        public int NumberOfPeople { get; set; }
 
         public bool UsedVoucher { get; set; }
         private Checkpoint _checkpoint;
@@ -64,7 +65,8 @@ namespace SIMS.Domain.Model
             Checkpoint != null ? Checkpoint.Id.ToString() : "",
             Review.ToString(),
             Notify.ToString(),
-            UsedVoucher.ToString()
+            UsedVoucher.ToString(),
+            NumberOfPeople.ToString()
         };
             return csvValues;
         }
@@ -78,6 +80,7 @@ namespace SIMS.Domain.Model
             Review = bool.Parse(csvValues[4]);
             Notify = (Notify)Enum.Parse(typeof(Notify), csvValues[5]);
             UsedVoucher = bool.Parse(csvValues[6]);
+            NumberOfPeople = int.Parse(csvValues[7]);
         }
     }
 }
