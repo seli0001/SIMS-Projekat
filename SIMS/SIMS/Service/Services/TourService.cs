@@ -36,6 +36,11 @@ namespace SIMS.Service.Services
             _tourRepository.Update(tour);
         }
 
+        public Tour GetById(int id)
+        {
+            return GetAll().FirstOrDefault(t => t.Id == id);
+        }
+
         public List<Tour> GetAllByGuideId(int id)
         {
             return GetAll().Where(tour => tour.Guide.Id == id).ToList();
@@ -62,6 +67,11 @@ namespace SIMS.Service.Services
         {
             _bookedTourService.GetAllByTour(tour.Id).ForEach(b => _voucherService.AddVoucher(new Voucher(DateTime.Now.AddYears(1), tour.Name, b.User.Id)));
             Delete(tour);
+        }
+
+        public Tour GetMostVisited()
+        {
+            return GetAll().Where(t => t.Status == TourStatus.FINISHED).MaxBy(t => t.NumberOfPeople);
         }
 
     }

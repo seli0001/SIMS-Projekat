@@ -36,4 +36,9 @@
     <Resource Include="WPF\View\OwnerView\trash-bin.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0" />
+    <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
+  </ItemGroup>
+
 </Project>
