@@ -136,5 +136,12 @@ namespace SIMS.Repository
             tours.Add(tour);
             _serializer.ToCSV(_filePath, tours);
         }
+
+        public void Delete(Tour tour)
+        {
+            List<Tour> tours = GetAll();
+            tours.RemoveAll(t => t.Id == tour.Id);
+            _serializer.ToCSV(_filePath, tours);
+        }
     }
 }

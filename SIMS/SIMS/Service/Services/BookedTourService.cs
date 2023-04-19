@@ -16,6 +16,11 @@ namespace SIMS.Service.Services
         {
             _bookedToursRepository=new BookedTourRepository();
         }
+        
+        public List<BookedTour> GetAllByTour(int tourId)
+        {
+            return _bookedToursRepository.GetAll().Where(t => t.Tour.Id == tourId).ToList();
+        }
 
         public List<BookedTour> GetByUser(int userId)
         {
@@ -46,7 +51,6 @@ namespace SIMS.Service.Services
             t.Checkpoint != null && 
             t.Notify.ToString().Equals("Accepted")).ToList();
         }
-
 
     }
 }

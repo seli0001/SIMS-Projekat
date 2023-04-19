@@ -48,8 +48,9 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition></RowDefinition>
-                    <RowDefinition Height="10*"></RowDefinition>
-                </Grid.RowDefinitions>
+                        <RowDefinition Height="10*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Button Name="cancelTourButton" Grid.Row="0" Content="Otkazi turu" HorizontalAlignment="Right" VerticalAlignment="Center" Click="cancelTourButton_Click"></Button>
                 <Button x:Name="tourRatingButton" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Prikazi recenzije" Click="tourRatingButton_Click"></Button>
                 <DataGrid Grid.Row="1" x:Name="dataGridAllTours" ItemsSource="{Binding AllTours, UpdateSourceTrigger=PropertyChanged}"  
                           SelectedItem="{Binding SelectedTour, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single" 
@@ -57,6 +58,7 @@
                     <DataGrid.Columns>
                             <DataGridTextColumn Width="*" Header="Naziv ture" Binding="{Binding Name}"></DataGridTextColumn>
                             <DataGridTextColumn Width="*" Header="Status" Binding="{Binding Status}"></DataGridTextColumn>
+                            <DataGridTextColumn Width="*" Header="Datum i vreme" Binding="{Binding StartTime.Time}"></DataGridTextColumn>
                     </DataGrid.Columns>
                 </DataGrid>
                 </Grid>
