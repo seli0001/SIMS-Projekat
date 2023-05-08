@@ -1,20 +1,20 @@
-<mxfile host="app.diagrams.net" modified="2023-05-08T14:51:18.692Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.3 Safari/605.1.15" etag="LEzEzxqvTl1WefVWIm9f" version="21.2.9" type="github">
+<mxfile host="app.diagrams.net" modified="2023-05-08T14:57:36.953Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.3 Safari/605.1.15" etag="N6_ggt2cDq1ove_eR6bE" version="21.2.9" type="github">
   <diagram name="Page-1" id="TIX4rZ6OCS-BWYNOtr5j">
     <mxGraphModel dx="2044" dy="1821" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="pvlkAMJLC5eWXL5Rpsdk-1" value="Accommodation" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="-280" y="230" width="160" height="250" as="geometry" />
+          <mxGeometry x="-280" y="230" width="440" height="180" as="geometry" />
         </mxCell>
         <mxCell id="pvlkAMJLC5eWXL5Rpsdk-2" value="+ Id: int&lt;br&gt;+ Name: String&lt;br&gt;+ MaxGuestNumber: int&amp;nbsp;&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+ MinBookingDays: int&lt;br&gt;+ CancelDaysNumber: int&lt;br&gt;+ Super: bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="pvlkAMJLC5eWXL5Rpsdk-1" vertex="1">
-          <mxGeometry y="26" width="160" height="164" as="geometry" />
+          <mxGeometry y="26" width="440" height="94" as="geometry" />
         </mxCell>
         <mxCell id="pvlkAMJLC5eWXL5Rpsdk-3" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="pvlkAMJLC5eWXL5Rpsdk-1" vertex="1">
-          <mxGeometry y="190" width="160" height="8" as="geometry" />
+          <mxGeometry y="120" width="440" height="8" as="geometry" />
         </mxCell>
-        <mxCell id="pvlkAMJLC5eWXL5Rpsdk-4" value="+ ToCSV(): string[]&lt;br&gt;+ FromCSV(string[]): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="pvlkAMJLC5eWXL5Rpsdk-1" vertex="1">
-          <mxGeometry y="198" width="160" height="52" as="geometry" />
+        <mxCell id="pvlkAMJLC5eWXL5Rpsdk-4" value="+&amp;nbsp;Accommodation()&lt;br&gt;+ ToCSV(): string[]&lt;br&gt;+ FromCSV(string[]): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="pvlkAMJLC5eWXL5Rpsdk-1" vertex="1">
+          <mxGeometry y="128" width="440" height="52" as="geometry" />
         </mxCell>
         <mxCell id="pvlkAMJLC5eWXL5Rpsdk-5" value="BookedTour" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="200" y="-60" width="160" height="164" as="geometry" />
@@ -29,16 +29,16 @@
           <mxGeometry y="138" width="160" height="26" as="geometry" />
         </mxCell>
         <mxCell id="pvlkAMJLC5eWXL5Rpsdk-9" value="ReschedulingRequest" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="207.5" y="-320" width="612.5" height="230" as="geometry" />
+          <mxGeometry x="207.5" y="-320" width="550" height="180" as="geometry" />
         </mxCell>
         <mxCell id="pvlkAMJLC5eWXL5Rpsdk-10" value="+ id: int&lt;br&gt;+ fromDate: DateOnly&lt;br&gt;+ toDate: DateOnly" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="pvlkAMJLC5eWXL5Rpsdk-9" vertex="1">
-          <mxGeometry y="26" width="612.5" height="114" as="geometry" />
+          <mxGeometry y="26" width="550" height="64" as="geometry" />
         </mxCell>
         <mxCell id="pvlkAMJLC5eWXL5Rpsdk-11" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="pvlkAMJLC5eWXL5Rpsdk-9" vertex="1">
-          <mxGeometry y="140" width="612.5" height="8" as="geometry" />
+          <mxGeometry y="90" width="550" height="8" as="geometry" />
         </mxCell>
         <mxCell id="pvlkAMJLC5eWXL5Rpsdk-12" value="+&amp;nbsp;ReschedulingRequest()&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+ ReschedulingRequest(Reservation:Reservation,toDate:DateOnly,fromDate:DateOnlyname:string)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+ ToCSV(): string[]&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+ FromCSV(csvValues: string[]): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="pvlkAMJLC5eWXL5Rpsdk-9" vertex="1">
-          <mxGeometry y="148" width="612.5" height="82" as="geometry" />
+          <mxGeometry y="98" width="550" height="82" as="geometry" />
         </mxCell>
         <mxCell id="pvlkAMJLC5eWXL5Rpsdk-13" value="Voucher" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="580" y="-10" width="260" height="210" as="geometry" />
@@ -161,16 +161,16 @@
           <mxGeometry y="60" width="160" height="26" as="geometry" />
         </mxCell>
         <mxCell id="pvlkAMJLC5eWXL5Rpsdk-53" value="Tour" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="-70" y="230" width="160" height="86" as="geometry" />
+          <mxGeometry x="240" y="160" width="260" height="212" as="geometry" />
         </mxCell>
-        <mxCell id="pvlkAMJLC5eWXL5Rpsdk-54" value="+&amp;nbsp;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="pvlkAMJLC5eWXL5Rpsdk-53" vertex="1">
-          <mxGeometry y="26" width="160" height="26" as="geometry" />
+        <mxCell id="pvlkAMJLC5eWXL5Rpsdk-54" value="+ Id: int&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+ Name: string&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+ Description: string&amp;nbsp;&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+ Language: string&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+&amp;nbsp;MaxNumberOfPeople: int&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+&amp;nbsp;NumberOfPeople: int&lt;br&gt;+ Duration: int&lt;br&gt;+ TourStatus: TourStatus" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="pvlkAMJLC5eWXL5Rpsdk-53" vertex="1">
+          <mxGeometry y="26" width="260" height="124" as="geometry" />
         </mxCell>
         <mxCell id="pvlkAMJLC5eWXL5Rpsdk-55" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="pvlkAMJLC5eWXL5Rpsdk-53" vertex="1">
-          <mxGeometry y="52" width="160" height="8" as="geometry" />
+          <mxGeometry y="150" width="260" height="8" as="geometry" />
         </mxCell>
-        <mxCell id="pvlkAMJLC5eWXL5Rpsdk-56" value="+ method(type): type" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="pvlkAMJLC5eWXL5Rpsdk-53" vertex="1">
-          <mxGeometry y="60" width="160" height="26" as="geometry" />
+        <mxCell id="pvlkAMJLC5eWXL5Rpsdk-56" value="+&amp;nbsp;Tour()&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+ ToCSV(): string[]&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+ FromCSV(string[]): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="pvlkAMJLC5eWXL5Rpsdk-53" vertex="1">
+          <mxGeometry y="158" width="260" height="54" as="geometry" />
         </mxCell>
         <mxCell id="pvlkAMJLC5eWXL5Rpsdk-57" value="Checkpoint" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="-90" y="-140" width="160" height="114" as="geometry" />
