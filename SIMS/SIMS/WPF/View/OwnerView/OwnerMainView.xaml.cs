@@ -1,21 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Xml.Linq;
-using SIMS.Repository;
-using System.Threading;
-using System.Windows.Threading;
+﻿using System.Windows;
 using SIMS.WPF.ViewModel.OwnerViewModel;
 using SIMS.Domain.Model;
 using SIMS.WPF.ViewModel;
@@ -30,7 +13,7 @@ namespace SIMS.View.OwnerView
         public OwnerMainView(User user)
         {
             InitializeComponent();
-            OwnerMainViewModel ownerMainViewModel = new OwnerMainViewModel(user);
+            HomeViewModel ownerMainViewModel = new HomeViewModel(user);
             DataContext = ownerMainViewModel;
             if (DataContext is IClose vm)
             {

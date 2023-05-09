@@ -383,7 +383,7 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
                 MinReservationDays, CancelDaysNumber,
                 LoggedInUser, _accommodationImages);
             if (_superOwnerService.CheckById(LoggedInUser.Id)) savedAccommodation = _accommodationService.makeSuper(savedAccommodation);
-            OwnerMainViewModel.Accommodations.Add(savedAccommodation);
+            HomeViewModel.Accommodations.Add(savedAccommodation);
 
             _imageService.SaveAll(_accommodationImages);
         }

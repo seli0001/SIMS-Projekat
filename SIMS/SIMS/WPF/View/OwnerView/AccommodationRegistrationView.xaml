@@ -94,7 +94,7 @@
                 <Label HorizontalAlignment="Center" Content="Slike" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" />
                 <Button Command="{Binding AddImageCommand}" Content="Dodaj sliku" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Width="80" />
                 <Button Command="{Binding RemoveImageCommand}" Content="Obrisi sliku" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center"  Width="80" />
-                <ListView x:Name="imageListView" SelectedIndex="{Binding SelectedIndex}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
+                <ListView x:Name="imageListView" ItemsSource="{Binding Images}" SelectedIndex="{Binding SelectedIndex}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel Orientation="Horizontal" />
@@ -102,7 +102,7 @@
                     </ListView.ItemsPanel>
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <Image Source="{Binding Images}" Width="100" Height="100" />
+                            <Image Source="{Binding }" Width="100" Height="100" />
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>

@@ -13,7 +13,7 @@ using SIMS.WPF.View.OwnerView;
 
 namespace SIMS.WPF.ViewModel.OwnerViewModel
 {
-    public class OwnerMainViewModel : ViewModelBase, IClose
+    class HomeViewModel : ViewModelBase, IClose
     {
         public static ObservableCollection<Accommodation> Accommodations { get; set; }
         public Accommodation SelectedAccommodation { get; set; }
@@ -30,7 +30,7 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
 
         public User LoggedInUser { get; set; }
 
-        public OwnerMainViewModel(User user)
+        public HomeViewModel(User user)
         {
             LoggedInUser = user;
 
@@ -130,14 +130,14 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             }
         }
 
-        private ICommand _showRatings;
-        public ICommand ShowRatingsCommand
-        {
-            get
-            {
-                return _showRatings ?? (_showRatings = new CommandBase(() => ShowRatings(), true));
-            }
-        }
+        //private ICommand _showRatings;
+        //public ICommand ShowRatingsCommand
+        //{
+        //    get
+        //    {
+        //        return _showRatings ?? (_showRatings = new CommandBase(() => ShowRatings(), true));
+        //    }
+        //}
 
         #endregion
 
@@ -171,10 +171,6 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
                 }
             }
         }
-        private void ShowRatings()
-        {
-            ShowRatingsView showRatings = new ShowRatingsView(LoggedInUser);
-            showRatings.Show();
-        }
+
     }
 }

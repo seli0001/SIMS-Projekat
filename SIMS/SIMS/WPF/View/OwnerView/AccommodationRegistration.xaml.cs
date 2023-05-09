@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace SIMS.WPF.View.OwnerView
 {
     /// <summary>
-    /// Interaction logic for ShowRatingsView.xaml
+    /// Interaction logic for AccommodationRegistration.xaml
     /// </summary>
-    public partial class ShowRatingsView : UserControl
+    public partial class AccommodationRegistration : UserControl
     {
-        public ShowRatingsView()
+        public AccommodationRegistration()
         {
             InitializeComponent();
         }

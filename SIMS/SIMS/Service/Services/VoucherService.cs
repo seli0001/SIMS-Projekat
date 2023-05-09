@@ -32,7 +32,6 @@ namespace SIMS.Service.Services
                 {
                     _voucherRepository.Delete(voucher);
                 }
-
             }
             return filteredVouchers;
         }
