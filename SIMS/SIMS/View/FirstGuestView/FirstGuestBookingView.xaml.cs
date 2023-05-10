@@ -146,9 +146,9 @@ namespace SIMS.View.FirstGuestView
 
         private void ValidateMaxGuestNum()
         {
-            if (NumberOfGuests > 10)
+            if (NumberOfGuests > SelectedAccommodation.MaxGuestsNumber)
             {
-                MaxGuestNumValidator.Content = "Max guests is 10.";
+                MaxGuestNumValidator.Content = "Max guests is " + SelectedAccommodation.MaxGuestsNumber;
                 MaxGuestNumValidator.Visibility = Visibility.Visible;
             }
             else

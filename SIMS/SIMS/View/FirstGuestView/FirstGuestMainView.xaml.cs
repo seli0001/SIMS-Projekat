@@ -73,7 +73,6 @@ namespace SIMS.View.FirstGuestView
         {
             if (gridGuest.SelectedIndex != -1)
             {
-                MessageBoxResult result = MessageBox.Show("Are you sure?", "Booking accomodation", MessageBoxButton.YesNo);
                 FirstGuestBookingView firstGuestBookingView = new FirstGuestBookingView(SelectedAccommodation, LoggedInUser);
                 firstGuestBookingView.Show();
             }
