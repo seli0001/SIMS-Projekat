@@ -1,5 +1,4 @@
 ﻿using SIMS.Model;
-using SIMS.Model.AccommodationModel;
 using SIMS.Repository;
 using SIMS.View.OwnerView;
 using System;
@@ -16,6 +15,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using SIMS.Domain.Model;
 
 namespace SIMS.View.FirstGuestView
 {
@@ -41,6 +41,11 @@ namespace SIMS.View.FirstGuestView
 
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
         /*private bool CompareDates(DateTime date1, DateTime date2)
         {
             if (date2 > date1) return false;
@@ -50,6 +55,6 @@ namespace SIMS.View.FirstGuestView
             else return true;
         }*/
 
-        
+
     }
 }

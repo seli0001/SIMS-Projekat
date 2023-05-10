@@ -3,6 +3,7 @@ using SIMS.Repository;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows;
+using SIMS.Model;
 
 namespace SIMS.View.FirstGuestView
 {

@@ -13,52 +13,35 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Grid.Column="0" Width="400" Height="500" Margin="0,0,0,100">
-            <Grid.RowDefinitions>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition Height="30"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Label Grid.Row="0" Grid.Column="0" Height="30">From Date</Label>
-            <Label Grid.Row="1" Grid.Column="0" Height="30">To Date</Label>
-            <Label Grid.Row="2" Grid.Column="0" Height="30">Time of Stay</Label>
-            <Label Grid.Row="3" Grid.Column="0" Height="30">Number of Guests</Label>
 
 
-            <StackPanel Grid.Row="0" Grid.Column="1">
-                <DatePicker x:Name="FromDatePicker" SelectedDate="{Binding FromDate}" />
-            </StackPanel>
 
-            <StackPanel Grid.Row="1" Grid.Column="1">
-                <DatePicker x:Name="ToDatePicker" SelectedDate="{Binding ToDate}" />
-            </StackPanel>
-
-            <StackPanel Grid.Row="2" Grid.Column="1">
-                <TextBox Text="{Binding Path=TimeOfStay, UpdateSourceTrigger=LostFocus}" 
-                     Height="20"></TextBox>
-                <Label x:Name="TimeOfStayValidator" FontSize="11" Foreground="Red" Visibility="Hidden">Minimum number of days</Label>
-            </StackPanel>
-
-            <StackPanel Grid.Row="3" Grid.Column="1">
-                <TextBox Text="{Binding Path=NumberOfGuests, UpdateSourceTrigger=LostFocus}" 
-                     Height="20"></TextBox>
-                <Label x:Name="MaxGuestNumValidator" FontSize="11" Foreground="Red" Visibility="Hidden">Maximum number of guests</Label>
-            </StackPanel>
-
-            <Button x:Name="BtnBook" Grid.Row="4" Grid.Column="1" Content="Book" Height="30" VerticalAlignment="Top" Click="BtnBook_Click" />
-
-
-        </Grid>
-        <Label Content="Accommodation Reservation" FontStretch="Condensed" FontSize="30" FontFamily="Arial"  HorizontalAlignment="Center"  HorizontalContentAlignment="Center" VerticalContentAlignment ="Center" Margin="0,10,0,0" VerticalAlignment="Top" Height="40" Width="410"/>
+        <Label Content="Accommodation Reservation" FontStretch="Condensed" FontSize="30" FontFamily="Arial"  HorizontalAlignment="Center"  HorizontalContentAlignment="Center" VerticalContentAlignment ="Center" Margin="0,110,0,0" VerticalAlignment="Top" Height="40" Width="410"/>
+        <Rectangle HorizontalAlignment="Left" Height="100" Margin="10,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="410"/>
+        <Label Content="Check-in date" HorizontalAlignment="Left" Margin="50,200,0,0" VerticalAlignment="Top"/>
+        <Label Content="Check-out date" HorizontalAlignment="Left" Margin="50,300,0,0" VerticalAlignment="Top"/>
+        <Label Content="Number of Guests" HorizontalAlignment="Left" Margin="50,400,0,0" VerticalAlignment="Top"/>
+        <Label Content="Time of Stay" HorizontalAlignment="Left" Margin="50,450,0,0" VerticalAlignment="Top"/>
+        <DatePicker x:Name="FromDatePicker" SelectedDate="{Binding FromDate}" HorizontalAlignment="Left" Margin="150,250,0,0" VerticalAlignment="Top" Width="250"/>
+        <DatePicker x:Name="ToDatePicker" SelectedDate="{Binding ToDate}" HorizontalAlignment="Left" Margin="150,350,0,0" VerticalAlignment="Top" Width="250"/>
+        <TextBox HorizontalAlignment="Left" Margin="200,450,0,0" TextWrapping="Wrap" Text="{Binding Path=TimeOfStay, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Top" Width="200" Height="26"/>
+        <TextBox HorizontalAlignment="Left" Margin="200,400,0,0" TextWrapping="Wrap" Text="{Binding Path=NumberOfGuests, UpdateSourceTrigger=LostFocus}"  VerticalAlignment="Top" Width="200" Height="26"/>
+        <Button x:Name="BtnBook" Content="Book" HorizontalAlignment="Left" Margin="215,516,0,0" VerticalAlignment="Top" Width="130" Height="50" Click="BtnBook_Click"/>
+        <Label Content="Images" HorizontalAlignment="Left" Margin="50,553,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.499,-0.73"/>
+        <Rectangle HorizontalAlignment="Left" Height="100" Margin="10,579,0,0" Stroke="Black" VerticalAlignment="Top" Width="100"/>
+        <Rectangle HorizontalAlignment="Left" Height="100" Margin="115,579,0,0" Stroke="Black" VerticalAlignment="Top" Width="130"/>
+        <Rectangle HorizontalAlignment="Left" Height="100" Margin="250,579,0,0" Stroke="Black" VerticalAlignment="Top" Width="170"/>
+        <Rectangle HorizontalAlignment="Center" Height="45" Margin="0,695,0,0" Stroke="Black" VerticalAlignment="Top" Width="430"/>
+        <Label x:Name="TimeOfStayValidator" FontSize="11" Foreground="Red" Visibility="Hidden" HorizontalAlignment="Left" Margin="204,481,0,0" VerticalAlignment="Top" Width="200"/>
+        <Label x:Name="MaxGuestNumValidator" FontSize="11" Foreground="Red"  Visibility="Hidden"  HorizontalAlignment="Left" Margin="200,431,0,0" VerticalAlignment="Top" Width="200"/>
+        <Label Content="Accommodation Name" FontSize="24" HorizontalAlignment="Left" Margin="10,155,0,0" VerticalAlignment="Top"/>
 
 
     </Grid>
 
 
 </Window>
+
+
+
+

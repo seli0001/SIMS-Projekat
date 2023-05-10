@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SIMS.Serializer;
+using SIMS.Domain.Model;
 
 
 namespace SIMS.Model

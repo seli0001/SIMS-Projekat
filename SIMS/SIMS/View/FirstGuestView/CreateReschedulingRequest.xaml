@@ -12,37 +12,29 @@
             <RowDefinition Height="750"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-
-        <Grid Grid.Row="0" Grid.Column="0" Width="400" Height="300" Margin="0,0,0,100">
-            <Grid.RowDefinitions>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition Height="30"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Label Grid.Row="0" Grid.Column="0" Height="30">From Date</Label>
-            <Label Grid.Row="1" Grid.Column="0" Height="30">To Date</Label>
+        <Label Content="Check-in date" HorizontalAlignment="Left" Margin="42,390,0,0" VerticalAlignment="Top"/>
+        <Label Content="Check-out date" HorizontalAlignment="Left" Margin="42,496,0,0" VerticalAlignment="Top"/>
+        <DatePicker x:Name="FromDatePicker" SelectedDate="{Binding FromDate}" HorizontalAlignment="Left" Margin="118,451,0,0" VerticalAlignment="Top" Width="250"/>
+        <DatePicker x:Name="ToDatePicker" SelectedDate="{Binding ToDate}" HorizontalAlignment="Left" Margin="118,552,0,0" VerticalAlignment="Top" Width="250"/>
 
 
-            <StackPanel Grid.Row="0" Grid.Column="1">
-                <DatePicker x:Name="FromDatePicker" SelectedDate="{Binding FromDate}" />
-            </StackPanel>
 
-            <StackPanel Grid.Row="1" Grid.Column="1">
-                <DatePicker x:Name="ToDatePicker" SelectedDate="{Binding ToDate}" />
-            </StackPanel>
-
-            
-
-            <Button x:Name="BtnRequest" Grid.Row="4" Grid.Column="1" Content="Request rescheduling" Height="30" VerticalAlignment="Top" Click="BtnRequest_Click" />
+        <Button x:Name="BtnRequest" Content="Request rescheduling" Height="39" VerticalAlignment="Top" Click="BtnRequest_Click" Margin="88,619,112,0" />
 
 
-        </Grid>
-        <Label Content="Rescheduling Request" FontStretch="Condensed" FontSize="30" FontFamily="Arial"  HorizontalAlignment="Center"  HorizontalContentAlignment="Center" VerticalContentAlignment ="Center" Margin="0,10,0,0" VerticalAlignment="Top" Height="60" Width="410"/>
 
+        <Label Content="Rescheduling Request" FontStretch="Condensed" FontSize="30" FontFamily="Arial"  HorizontalAlignment="Center"  HorizontalContentAlignment="Center" VerticalContentAlignment ="Center" Margin="0,110,0,0" VerticalAlignment="Top" Height="54" Width="410"/>
+        <Rectangle HorizontalAlignment="Left" Height="100" Margin="10,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="410"/>
+        <Label Content="Explanation" HorizontalAlignment="Left" Margin="42,296,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="149,296,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="219" Height="79"/>
+        <Label Content="Level of urgency" HorizontalAlignment="Left" Margin="42,199,0,0" VerticalAlignment="Top"/>
+        <Slider HorizontalAlignment="Left" Margin="84,254,0,0" VerticalAlignment="Top" Width="284"/>
+
+
+        <Rectangle HorizontalAlignment="Center" Height="45" Margin="0,689,0,0" Stroke="Black" VerticalAlignment="Top" Width="430"/>
+        <Label Content="1" HorizontalAlignment="Left" Margin="61,225,0,0" VerticalAlignment="Top"/>
+        <Label Content="5" HorizontalAlignment="Left" Margin="368,225,0,0" VerticalAlignment="Top"/>
+        <Label Content="(?)" HorizontalAlignment="Left" Margin="149,199,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

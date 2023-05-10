@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using SIMS.Domain.Model;
+
 namespace SIMS.Model
 {
     public class ReschedulingRequests:ISerializable

@@ -36,30 +36,44 @@ namespace SIMS.View.FirstGuestView
         }
 
 
-        private DateTime _fromDate = DateTime.Now;
-
+        private DateTime fromDate = DateTime.Now;
         public DateTime FromDate
         {
-            get => _fromDate;
+            get { return fromDate; }
             set
             {
-                _fromDate = value;
+                if (value >= DateTime.Today)
+                {
+                    fromDate = value;
+                    OnPropertyChanged(nameof(FromDate));
+                }
+                else
+                {
+                    MessageBox.Show("Please enter a valid check-in date.");
+                }
             }
         }
 
-        private DateTime _toDate = DateTime.Now;
-
+        private DateTime toDate = DateTime.Now.AddDays(1);
         public DateTime ToDate
         {
-            get => _toDate;
+            get { return toDate; }
             set
             {
-                _toDate = value;
+                if (value > fromDate)
+                {
+                    toDate = value;
+                    OnPropertyChanged(nameof(ToDate));
+                }
+                else
+                {
+                    MessageBox.Show("Please enter a valid check-out date.");
+                }
             }
         }
 
         private int _timeOfStay = 1;
-        public int TimeOfStay
+        /*public int TimeOfStay
         {
             get => _timeOfStay;
             set
@@ -84,10 +98,73 @@ namespace SIMS.View.FirstGuestView
                 }
 
             }
+        }*/
+
+        public int TimeOfStay
+        {
+            get { return _timeOfStay; }
+            set
+            {
+                _timeOfStay = value;
+                ValidateTimeOfStay();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("TimeOfStay"));
+            }
         }
 
+        private void ValidateTimeOfStay()
+        {
+            if (FromDate != null && ToDate != null && TimeOfStay <= 0)
+            {
+                TimeSpan diff = ToDate - FromDate;
+                TimeOfStay = diff.Days;
+            }
+
+            if (TimeOfStay <= SelectedAccommodation.MinBookingDays)
+            {
+                TimeOfStayValidator.Content = "Time of stay must be at least " + SelectedAccommodation.MinBookingDays + " days.";
+                TimeOfStayValidator.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                TimeOfStayValidator.Visibility = Visibility.Hidden;
+            }
+        }
+
+
         private int _numberOfGuests = 1;
+
         public int NumberOfGuests
+        {
+            get { return _numberOfGuests; }
+            set
+            {
+                _numberOfGuests = value;
+                ValidateMaxGuestNum();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("NumberOfGuests"));
+            }
+        }
+
+        private void ValidateMaxGuestNum()
+        {
+            if (NumberOfGuests > 10)
+            {
+                MaxGuestNumValidator.Content = "Max guests is 10.";
+                MaxGuestNumValidator.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                MaxGuestNumValidator.Visibility = Visibility.Hidden;
+            }
+        }
+
+
+
+
+
+
+
+
+        /*public int NumberOfGuests
         {
             get => _numberOfGuests;
             set
@@ -107,15 +184,15 @@ namespace SIMS.View.FirstGuestView
                     }
                     BtnBook.IsEnabled = true;
 
-                    ValidatorTest();
+                    //ValidatorTest();
                     _numberOfGuests = value;
                     OnPropertyChanged();
                 }
 
             }
-        }
+        }*/
 
-        private void ValidatorTest()
+        /*private void ValidatorTest()
         {
             foreach (int validation in validator)
             {
@@ -124,7 +201,7 @@ namespace SIMS.View.FirstGuestView
                     BtnBook.IsEnabled = false;
                 }
             }
-        }
+        }*/
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -135,11 +212,18 @@ namespace SIMS.View.FirstGuestView
 
         private void BtnBook_Click(object sender, RoutedEventArgs e)
         {
-            Reservation reservation = new Reservation(FromDate, FromDate.AddDays(TimeOfStay), SelectedAccommodation, TimeOfStay, NumberOfGuests, LoggedInUser);
-            if(_reservationRepository.AvailableAccommodation(reservation))
+            if (TimeOfStayValidator.Visibility == Visibility.Hidden && MaxGuestNumValidator.Visibility == Visibility.Hidden)
             {
-                _reservationRepository.Save(reservation);
-                MessageBox.Show("Accommodation " + SelectedAccommodation.Name + " successfully booked from " + FromDate.ToShortDateString() + " to " + FromDate.AddDays(TimeOfStay).ToShortDateString());
+                Reservation reservation = new Reservation(FromDate, FromDate.AddDays(TimeOfStay), SelectedAccommodation, TimeOfStay, NumberOfGuests, LoggedInUser);
+                if (_reservationRepository.AvailableAccommodation(reservation))
+                {
+                    _reservationRepository.Save(reservation);
+                    MessageBox.Show("Accommodation " + SelectedAccommodation.Name + " successfully booked from " + FromDate.ToShortDateString() + " to " + FromDate.AddDays(TimeOfStay).ToShortDateString());
+                }
+            }
+            else
+            {
+                MessageBox.Show("Check inputs");
             }
             
 

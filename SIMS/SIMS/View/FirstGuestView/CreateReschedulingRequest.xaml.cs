@@ -1,5 +1,4 @@
-﻿using SIMS.Model.AccommodationModel;
-using SIMS.Model;
+﻿using SIMS.Model;
 using SIMS.Repository;
 using System;
 using System.Collections.Generic;
@@ -16,6 +15,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using SIMS.Domain.Model;
 
 namespace SIMS.View.FirstGuestView
 {
@@ -47,31 +47,45 @@ namespace SIMS.View.FirstGuestView
         }
 
 
-        private DateTime _fromDate = DateTime.Now;
-
+        private DateTime fromDate = DateTime.Now;
         public DateTime FromDate
         {
-            get => _fromDate;
+            get { return fromDate; }
             set
             {
-                _fromDate = value;
+                if (value >= DateTime.Today)
+                {
+                    fromDate = value;
+                    OnPropertyChanged(nameof(FromDate));
+                }
+                else
+                {
+                    MessageBox.Show("Please enter a valid check-in date.");
+                }
             }
         }
 
-        private DateTime _toDate = DateTime.Now;
-
+        private DateTime toDate = DateTime.Now.AddDays(1);
         public DateTime ToDate
         {
-            get => _toDate;
+            get { return toDate; }
             set
             {
-                _toDate = value;
+                if (value > fromDate)
+                {
+                    toDate = value;
+                    OnPropertyChanged(nameof(ToDate));
+                }
+                else
+                {
+                    MessageBox.Show("Please enter a valid check-out date.");
+                }
             }
         }
 
-        
 
-        
+
+
 
         private void ValidatorTest()
         {
