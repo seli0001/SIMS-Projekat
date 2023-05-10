@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SIMS.WPF.View"
         mc:Ignorable="d"
-        Title="TourRatingDetailsView" Height="420" Width="450">
+        Title="TourRatingDetailsView" Height="420" Width="450"
+        PreviewKeyDown="Window_PreviewKeyDown">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
@@ -43,7 +44,7 @@
 
             </Grid>
         </Border>
-        <Button x:Name="reportButton" Grid.Column="1" Grid.Row="2" IsEnabled="{Binding IsEnabled}" VerticalAlignment="Center" HorizontalAlignment="Right" Content="Prijavi" Width="100" Height="35" Margin="0,0,5,0" Command="{Binding ReportCommand}"></Button>
-        <Button x:Name="closeButton" Grid.Column="2" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Odustani" Width="100" Height="35" Margin="5,0,0,0" Command="{Binding CancelCommand}"></Button>
+        <Button x:Name="reportButton" Grid.Column="1" Grid.Row="2" IsEnabled="{Binding IsEnabled}" VerticalAlignment="Center" HorizontalAlignment="Right" Content="Prijavi (F1)" Width="100" Height="35" Margin="0,0,5,0" Command="{Binding ReportCommand}"></Button>
+        <Button x:Name="closeButton" Grid.Column="2" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Odustani (F2)" Width="100" Height="35" Margin="5,0,0,0" Command="{Binding CancelCommand}"></Button>
     </Grid>
 </Window>

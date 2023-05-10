@@ -13,6 +13,7 @@ using static System.Net.Mime.MediaTypeNames;
 using System.Windows.Media;
 using System.Windows.Input;
 using SIMS.WPF.ViewModel.ViewModel;
+using SIMS.WPF.View;
 
 namespace SIMS.WPF.ViewModel.GuideViewModel
 {
@@ -60,7 +61,7 @@ namespace SIMS.WPF.ViewModel.GuideViewModel
 
         public Action Close { get; set; }
 
-        private void Report()
+        public void Report()
         {
             if (MessageBox.Show("Da li ste sigurni da zelite da prijavite recenziju?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {

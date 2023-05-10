@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SIMS.WPF.View"
         mc:Ignorable="d"
-        Title="TourReviewWindows" Height="350" Width="370">
+        Title="TourReviewWindows" Height="350" Width="370"
+        PreviewKeyDown="Window_PreviewKeyDown">
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
@@ -19,8 +20,8 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Detalji recenzije"  Command="{Binding DetailsCommand}"></Button>
-            <DataGrid Grid.Row="1" Grid.Column="1" IsReadOnly="True" SelectionMode="Single" AutoGenerateColumns="False"
+            <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Detalji recenzije (F1)"  Command="{Binding DetailsCommand}"></Button>
+            <DataGrid x:Name="reviewDataGrid" Grid.Row="1" Grid.Column="1" IsReadOnly="True" SelectionMode="Single" AutoGenerateColumns="False"
                       ItemsSource="{Binding TourRatings,UpdateSourceTrigger=Default}" SelectedItem="{Binding SelectedTourRating}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Ime Gosta" Binding="{Binding bookedTour.User.Username}" Width="2*"></DataGridTextColumn>
@@ -31,7 +32,7 @@
                 </DataGrid.Columns>
                 
             </DataGrid>
-            <Button Content="Zatvori" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding CancelCommand}"></Button>
+            <Button Content="Zatvori (F2)" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding CancelCommand}"></Button>
         </Grid>
         
     </Grid>

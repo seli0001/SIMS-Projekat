@@ -63,8 +63,26 @@ namespace SIMS.View.GuideView
             DataContext = this;
         }
 
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                Close();
+            }
+            else if(e.Key == Key.F1)
+            {
+                FinishTourButton_Click(sender, e);
+            }
+            else if(e.Key == Key.F2)
+            {
+                CheckCheckpoint_Click(sender, e);
+            }
+            else if(e.Key == Key.F3)
+            {
+                UsersButton_Click(sender, e);
+            }
+        }
 
-        
         private void CheckCheckpoint_Click(object sender, RoutedEventArgs e)
         {
             Checkpoint NextCheckpoint = Checkpoints.Where(c => c.IsChecked == false).MinBy(c => c.Index);
@@ -79,7 +97,7 @@ namespace SIMS.View.GuideView
                 Tour.Status = TourStatus.FINISHED;
                 CheckpointButton.IsEnabled = false;
                 _tourRepository.Update(Tour);
-                MessageBox.Show("Tour is finished");
+                MessageBox.Show("Tura zavrsena");
             }
         }
 
@@ -94,6 +112,10 @@ namespace SIMS.View.GuideView
                 }
                 
             }
+            else
+            {
+                MessageBox.Show("Morate odabrati gosta");
+            }
         }
 
         private void FinishTourButton_Click(object sender, RoutedEventArgs e)
@@ -103,7 +125,11 @@ namespace SIMS.View.GuideView
                 Tour.Status = TourStatus.FINISHED;
                 CheckpointButton.IsEnabled = false;
                 _tourRepository.Update(Tour);
-                MessageBox.Show("Tour is finished");
+                MessageBox.Show("Tura zavrsena");
+            }
+            else
+            {
+                MessageBox.Show("Tura je vec zavrsena");
             }
         }
     }

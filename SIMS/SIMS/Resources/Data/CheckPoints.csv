@@ -18,7 +18,6 @@
 17|Prvi Check Point|1|True|1
 18|Drugi Check Point|1|True|2
 19|Treci Check Point|1|False|3
-20|asd|9|True|1
 21|sad|9|True|2
 24|bhdfs|11|False|1
 25|gdsh|11|False|2
@@ -37,3 +36,12 @@
 36|asfga|16|False|1
 37|asfasf|16|False|2
 38|asgas|16|False|3
+20|asd|9|True|1
+39|asd|17|False|1
+40|asd|17|False|2
+41|asf|18|True|1
+42|safa|18|True|2
+43|asf|19|False|1
+44|asf|19|False|2
+45|asf|20|False|1
+46|asf|20|False|2
