@@ -8,15 +8,17 @@
         Title="MenuGuest2" Height="750" Width="430">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
 
             <ToolBar>
-                <Button Content="                                                                                           "></Button>
-                <Button Command="{Binding MainGuest2ViewClickCommand}" >Glavni prozor</Button>
+                <Button Content="                                                                                                        "></Button>
+                <Button Command="{Binding MainGuest2ViewClickCommand}" >
+                    Main
+                </Button>
             </ToolBar>
 
         </Grid>
@@ -34,9 +36,17 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <Button Grid.Column="0" Grid.Row="2" Content="Prati" Margin="20" Command="{Binding ToursInProgressClickCommand}"></Button>
-            <Button Grid.Column="1" Grid.Row="2" Content="Oceni" Margin="20" Command="{Binding FinishedToursClickCommand}"></Button>
-            <Button Grid.Column="1" Grid.Row="3" Content="Vauceri" Margin="20" Command="{Binding AllVouchersClickCommand}" ></Button>
+            <Button Grid.Column="0" Grid.Row="0" Content="Kreiraj zahtev za turu" Margin="35" Command="{Binding TourRequestClickCommand}" ></Button>
+            <Button Grid.Column="0" Grid.Row="1" Content="Kreiraj zahtez za slozenu" Margin="35"></Button>
+            <Button Grid.Column="0" Grid.Row="3" Content="Izvestaj" Margin="35"></Button>
+            <Button Grid.Column="0" Grid.Row="4" Content="Jezik" Margin="35"></Button>
+            <Button Grid.Column="1" Grid.Row="0" Content="Statistika i zahtevi" Margin="35" Command="{Binding ToursRequestAndStatisticClickCommand}"></Button>
+            <Button Grid.Column="1" Grid.Row="1" Content="Zahtevi za zlosene ture" Margin="35"></Button>
+            <Button Grid.Column="1" Grid.Row="4" Content="Teme" Margin="35"></Button>
+
+            <Button Grid.Column="0" Grid.Row="2" Content="Prati" Margin="35" Command="{Binding ToursInProgressClickCommand}"></Button>
+            <Button Grid.Column="1" Grid.Row="2" Content="Oceni" Margin="35" Command="{Binding FinishedToursClickCommand}"></Button>
+            <Button Grid.Column="1" Grid.Row="3" Content="Vauceri" Margin="35" Command="{Binding AllVouchersClickCommand}" ></Button>
 
         </Grid>
         <Grid Grid.Row="3">

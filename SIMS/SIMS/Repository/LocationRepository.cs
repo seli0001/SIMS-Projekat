@@ -45,5 +45,18 @@ namespace SIMS.Repository
             _serializer.ToCSV(_filePath, locations);
             return location;
         }
+        
+        public int IsExists(Location location)
+        {
+            List<Location> locations = GetAll();
+            foreach(Location foreachLocation in locations)
+            {
+                if(foreachLocation.Country.Equals(location.Country) && foreachLocation.City.Equals(location.City))
+                {
+                    return foreachLocation.Id;
+                }
+            }
+            return -1;
+        }
     }
 }
