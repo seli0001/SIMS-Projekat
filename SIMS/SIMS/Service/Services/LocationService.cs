@@ -26,6 +26,12 @@ namespace SIMS.Service.UseCases
         {
             return _locationRepository.GetById(id);
         }
+       
+
+        public int IsExists(Location location)
+        {
+            return _locationRepository.IsExists(location);
+        }
         public Location Save(string country, string city)
         {
             return _locationRepository.Save(new Location(country, city));
