@@ -9,8 +9,31 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
     {
         public User LoggedInUser { get; set; }
         public HomeViewModel HomeVM { get; set; }
-        public ShowRatingsViewModel RatingsVM { get; set; }
-        public ShowAccommodationViewModel UnratedReservationsVM { get; set; }
+        public RatingsViewModel RatingsVM { get; set; }
+        public ReschedulingRequestViewModel ReschedulingRequestViewModel { get; set; }
+
+        public NewAccommodationViewModel newAccommodationVM { get; set; }
+        public UnratedReservationsViewModel UnratedReservationsVM { get; set; }
+
+        private double _ownerRating;
+        public string OwnerRating
+        {
+            get
+            {
+                 return Math.Round(_ownerRating, 2).ToString();
+
+            }
+            set
+            {
+                if (Double.Parse(value) != _ownerRating)
+                {
+                    _ownerRating = Double.Parse(value);
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+
 
         private object _currentView;
         public object CurrentView
@@ -61,6 +84,29 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             }
         }
 
+        private ICommand _newAccommodationCommand;
+        public ICommand NewAccommodationCommand
+        {
+            get
+            {
+                return _newAccommodationCommand ?? (_newAccommodationCommand = new CommandBase(() => { CurrentView = newAccommodationVM; }, true));
+            }
+        }
+
+        private ICommand _reschReqCommand;
+        public ICommand ReschedulingCommand
+        {
+            get
+            {
+                return _reschReqCommand ?? (_reschReqCommand = new CommandBase(() => { CurrentView = ReschedulingRequestViewModel; }, true));
+            }
+        }
+
+        public void setOwnerRating(double value)
+        {
+            OwnerRating = value.ToString();
+        }
+
         public MainViewModel()
         {
            
@@ -69,9 +115,12 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
 
         public MainViewModel(User user)
         {
-            HomeVM = new HomeViewModel(user);
-            UnratedReservationsVM = new ShowAccommodationViewModel(user);
-            RatingsVM = new ShowRatingsViewModel(user);
+            HomeVM = new HomeViewModel(user, this);
+            newAccommodationVM = new NewAccommodationViewModel(user, this);
+            UnratedReservationsVM = new UnratedReservationsViewModel(user);
+            RatingsVM = new RatingsViewModel(user);
+            ReschedulingRequestViewModel = new ReschedulingRequestViewModel(user);
+
             LoggedInUser = user;
             CurrentView = HomeVM;
         }

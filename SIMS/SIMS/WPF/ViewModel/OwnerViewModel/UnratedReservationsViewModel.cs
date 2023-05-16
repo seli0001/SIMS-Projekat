@@ -11,7 +11,7 @@ using SIMS.WPF.ViewModel.ViewModel;
 
 namespace SIMS.WPF.ViewModel.OwnerViewModel
 {
-    public class ShowAccommodationViewModel : ViewModelBase
+    public class UnratedReservationsViewModel : ViewModelBase
     {
         private Reservation _selectedReservation;
 
@@ -49,7 +49,8 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
 
         private ReservationRepository _reservationRepository;
 
-        public ShowAccommodationViewModel(User user)
+        public UnratedReservationsViewModel() { }
+        public UnratedReservationsViewModel(User user)
         {
             _reservationRepository = new ReservationRepository();
             _guestRatingService = new GuestRatingService();

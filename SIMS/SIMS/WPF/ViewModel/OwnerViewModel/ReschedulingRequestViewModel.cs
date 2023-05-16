@@ -27,6 +27,8 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         public static ObservableCollection<Available> ReservationStatus { get; set; }
 
         public ReschedulingRequests SelectedRequests { get; set; }
+
+        public ReschedulingRequestViewModel() { }
         public ReschedulingRequestViewModel(User user)
         {
             Owner = user;

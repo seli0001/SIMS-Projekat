@@ -8,22 +8,20 @@
              d:DesignHeight="550" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="140"/>
             <RowDefinition Height="5*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Margin="10">
-            
-        <TextBlock Foreground="White"
-                   Text="Prikaz neocenjenih gostiju"
-                   FontSize="38"
-                   Margin="0 0 0 10"/>
-        <TextBlock Foreground="White"
-                   Text="U tabeli se nalaze izlistane rezervacije za koje niste ocenili gosta"
-                   FontSize="14"/>
+        <StackPanel Margin="50 0 0 0">
+
             <TextBlock Foreground="White"
-                   Text="Rok za ocenu gosta je 5 dana nakon zavrsetka rezervacije"
-                   FontSize="14"/>
+                   Text="Prikaz neocenjenih gostiju"
+                    Style="{StaticResource TitleTheme}"/>
+            <TextBlock Text="U tabeli se nalaze izlistane rezervacije za koje niste ocenili gosta"
+                   Style="{StaticResource TextTheme}"/>
+            <TextBlock Text="Rok za ocenu gosta je 5 dana nakon zavrsetka rezervacije"
+                   Style="{StaticResource TextTheme}"
+                   />
         </StackPanel>
 
         <StackPanel Grid.Row="1">
@@ -45,8 +43,8 @@
             <Button Content="Oceni gosta"
                     Width="100"
                     Height="25"
-                    HorizontalAlignment="Left"
-                    Margin="50 20 0 0"
+                    HorizontalAlignment="Right"
+                    Margin="0 20 100 0"
                     Command="{Binding RateGuestCommand}"
                     IsEnabled="{Binding IsEnabled}"/>
         </StackPanel>

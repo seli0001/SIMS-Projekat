@@ -22,15 +22,34 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         private readonly AccommodationService _accommodationService;
         private readonly OwnerMainService _ownerMainService;
 
-        private readonly OwnerRatingRepository _ownerRatingRepository;
 
+        private double _ownerRating;
+        public string OwnerRating
+        {
+            get
+            {
+
+                MessageBox.Show(_ownerRating.ToString());
+                return _ownerRating.ToString();
+            
+            } 
+            set
+            {
+                if(Double.Parse(value) != _ownerRating)
+                {
+                    _ownerRating = Double.Parse(value);
+                    OnPropertyChanged();
+                }
+            }
+        }
         public Action Close { get; set; }
         
         private Timer timer;
 
         public User LoggedInUser { get; set; }
+        MainViewModel mainViewModel;
 
-        public HomeViewModel(User user)
+        public HomeViewModel(User user, MainViewModel mvm)
         {
             LoggedInUser = user;
 
@@ -38,9 +57,10 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             _accommodationService = new AccommodationService();
             _ownerMainService = new OwnerMainService();
 
-            _ownerRatingRepository = new OwnerRatingRepository();
             Accommodations = new ObservableCollection<Accommodation>(_accommodationService.GetByUser(user));
             timer = new Timer(CheckCondition, null, TimeSpan.Zero, TimeSpan.FromSeconds(15));
+            mainViewModel = mvm;
+            mainViewModel.setOwnerRating(_ownerMainService.getRating());
         }
 
         private void CheckCondition(object? state)
@@ -59,16 +79,18 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             App.Current.Dispatcher.Invoke((Action)delegate
             {
                 int temp = _ownerMainService.checkIsSuperOwner(LoggedInUser);
+
+                mainViewModel.setOwnerRating(_ownerMainService.getRating());
                 if (temp == 1)
                 {
                         _accommodationService.makeSuperOwner(LoggedInUser);
-                        MessageBox.Show("Congratulations You Have Became a SUPEROWNER!!!!");
+                    MessageBox.Show("Congratulations You Have Became a SUPEROWNER!!!!");
                         UpdateUI();
                 }
                 else if (temp == 0)
                 {
                         _accommodationService.deleteSuperOwner(LoggedInUser);
-                        MessageBox.Show("You have lost superowner title");
+                    MessageBox.Show("You have lost superowner title");
                         UpdateUI();
                 }
             });
@@ -148,8 +170,7 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         }
         private void ShowCreateAccommodationForm()
         {
-            AccommondationRegistration createAccommondationForm = new AccommondationRegistration(LoggedInUser);
-            createAccommondationForm.Show();
+            mainViewModel.NewAccommodationCommand.Execute(null);
         }
 
         private void ShowUpdateAccommodationForm()

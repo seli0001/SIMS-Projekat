@@ -38,8 +38,28 @@
                    FontSize="22" 
                    Margin="20, 0, 0, 0"/>
 
+            <Border Grid.Row="1" Background="Transparent"
+                    Height="80"
+                    VerticalAlignment="Top"
+                       Margin="20 20 20 0"
+                    BorderBrush="White" 
+                    BorderThickness="2">
+                <StackPanel Orientation="Horizontal" 
+                        Height="40"
+                        Margin="5">
+                    <TextBlock Text="{Binding OwnerRating}" Foreground="White" 
+                           FontSize="32"/>
+                <TextBlock Text="ocena vlasnika" 
+                           Foreground="White" 
+                           FontSize="16"
+                           VerticalAlignment="Center"
+                           Margin="15 0 0 0"/>
+                </StackPanel>
+            </Border>
+
             <StackPanel Grid.Row="1"
                         VerticalAlignment="Center">
+                
                 <RadioButton Content="Smestaji" 
                              Height="50" 
                              Foreground="White" 
@@ -71,12 +91,13 @@
                              Style="{StaticResource MenuButtonTheme}"
                              Command="{Binding GuestRatingsViewCommand}"/>
 
-                <RadioButton Content="Pogledaj forum" 
+                <RadioButton Content="Zahtevi gostiju" 
                              Height="50" 
                              Foreground="White" 
                              FontSize="14"
                               BorderThickness="0"
-                             Style="{StaticResource MenuButtonTheme}"/>
+                             Style="{StaticResource MenuButtonTheme}"
+                             Command="{Binding ReschedulingCommand}"/>
             </StackPanel>
 
             <Button Grid.Column="0"

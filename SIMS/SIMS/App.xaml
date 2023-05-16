@@ -10,6 +10,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Theme/MenuButtonTheme.xaml" />
                 <ResourceDictionary Source="Theme/ButtonTheme.xaml" />
+                <ResourceDictionary Source="Theme/TitleTheme.xaml" />
+                <ResourceDictionary Source="Theme/TextTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate DataType="{x:Type viewModel:MainViewModel}">
@@ -20,12 +22,20 @@
                 <view:HomeView />
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type viewModel:ShowAccommodationViewModel}">
+            <DataTemplate DataType="{x:Type viewModel:UnratedReservationsViewModel}">
                 <view:UnratedReservationView />
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type viewModel:ShowRatingsViewModel}">
+            <DataTemplate DataType="{x:Type viewModel:RatingsViewModel}">
                 <view:ShowRatingsView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:NewAccommodationViewModel}">
+                <view:NewAccommodationView />
+            </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type viewModel:ReschedulingRequestViewModel}">
+                <view:ReschedulingRequest />
             </DataTemplate>
 
 

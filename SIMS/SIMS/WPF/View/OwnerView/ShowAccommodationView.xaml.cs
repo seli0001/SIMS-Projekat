@@ -28,7 +28,7 @@ namespace SIMS.View.OwnerView
         public ShowAccommodationView(Accommodation selectedAccommodation, User user)
         {
             InitializeComponent();
-            ShowAccommodationViewModel showAccommodationViewModel = new ShowAccommodationViewModel(user);
+            UnratedReservationsViewModel showAccommodationViewModel = new UnratedReservationsViewModel(user);
             DataContext = showAccommodationViewModel;
         }
        

@@ -1,0 +1,70 @@
+﻿<UserControl x:Class="SIMS.WPF.View.OwnerView.ReschedulingRequest"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SIMS.WPF.View.OwnerView"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <StackPanel Margin="50 0 0 0">
+            <TextBlock Text="Prikaz ocena"
+                       Style="{StaticResource TitleTheme}"/>
+            <TextBlock Text="U tabeli se nalaze izlistane ocene koje su vam gosti ostavili" 
+                        Style="{StaticResource TextTheme}"/>
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <WrapPanel Grid.Row="0">
+                <Button Command="{Binding AcceptRequestCommand}"  Margin="30"  Width="100"
+                          Height="30" Content="Odobri zahtev"/>
+
+                <Button Command="{Binding ShowRejectWindowCommand}"  Width="100" Height="30"
+                          Content="Ponisti zahtev"/>
+            </WrapPanel>
+
+            <DataGrid
+                      ItemsSource="{Binding Path=Requests, UpdateSourceTrigger=PropertyChanged}"
+                      SelectedItem="{Binding Path=SelectedRequests, UpdateSourceTrigger=PropertyChanged}"
+                      AutoGenerateColumns="False" IsReadOnly="True" Margin="18,12,0,12" Grid.Row="1"
+                     Grid.Column="0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Smestaj" Binding="{Binding Reservation.Accommodation.Name}" Width="*"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Pocetak" Binding="{Binding Reservation.FromDate}" Width="*"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Kraj" Binding="{Binding Reservation.ToDate}" Width="*"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Novi pocetak" Binding="{Binding FromDate}" Width="*"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Novi kraj" Binding="{Binding ToDate}" Width="*"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            <DataGrid
+                      ItemsSource="{Binding Path=ReservationStatus, 
+                      UpdateSourceTrigger=PropertyChanged}"
+                      AutoGenerateColumns="False" 
+                      IsReadOnly="True" 
+                      HorizontalAlignment="Left" 
+                      Margin="0,12,5,12" Width="100" 
+                      Grid.Row="1" Grid.Column="1">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Dostupnost" Binding="{Binding }" Width="*"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </Grid>
+    </Grid>
+</UserControl>

@@ -8,15 +8,13 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="140"/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Vertical" Margin="30 0 0 0">
-        <TextBlock Text="*Pritisnite na zeljeni smestaj u tabeli, a zatim na jedno od tri ponudjena dugmeta"
-                   Foreground="White"
-                   FontSize="16"
-                   Margin="30 30 0 0"/>
+        <TextBlock Text="Pritisnite na zeljeni smestaj u tabeli, a zatim na jedno od tri ponudjena dugmeta"
+                   Style="{StaticResource TextTheme}"/>
             <StackPanel Orientation="Horizontal" Height="30" Margin="30">
                 <Button Style="{StaticResource ButtonTheme}"
                         Margin="0 0 30 0"

@@ -6,15 +6,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace SIMS.Service
 {
     public class OwnerMainService
     {
         private readonly OwnerRatingRepository _ownerRatingRepository;
+
+
         public OwnerMainService()
         {
             _ownerRatingRepository = new OwnerRatingRepository();
+        }
+
+        public double getRating()
+        {
+            List<OwnerRating> ratings = new List<OwnerRating>(_ownerRatingRepository.GetAll());
+            double score = 0;
+            foreach (OwnerRating rating in ratings)
+            {
+                score += (rating.RulesRespect + rating.Cleanliness) / 2.0;
+            }
+            score /= ratings.Count;
+            return score;
         }
         public int checkIsSuperOwner(User LoggedInUser)
         {

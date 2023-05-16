@@ -18,9 +18,9 @@ namespace SIMS.WPF.View.OwnerView
     /// <summary>
     /// Interaction logic for AccommodationRegistration.xaml
     /// </summary>
-    public partial class AccommodationRegistration : UserControl
+    public partial class NewAccommodationView : UserControl
     {
-        public AccommodationRegistration()
+        public NewAccommodationView()
         {
             InitializeComponent();
         }
