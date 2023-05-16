@@ -10,10 +10,11 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         public User LoggedInUser { get; set; }
         public HomeViewModel HomeVM { get; set; }
         public RatingsViewModel RatingsVM { get; set; }
-        public ReschedulingRequestViewModel ReschedulingRequestViewModel { get; set; }
-
+        public ReschedulingRequestViewModel ReschedulingRequestVM { get; set; }
+        public SchedulingRenovationViewModel SchedulingRenovationVM { get; set; }   
         public NewAccommodationViewModel newAccommodationVM { get; set; }
         public UnratedReservationsViewModel UnratedReservationsVM { get; set; }
+        public Accommodation SelectedAccommodation { get; set; }
 
         private double _ownerRating;
         public string OwnerRating
@@ -98,7 +99,19 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         {
             get
             {
-                return _reschReqCommand ?? (_reschReqCommand = new CommandBase(() => { CurrentView = ReschedulingRequestViewModel; }, true));
+                return _reschReqCommand ?? (_reschReqCommand = new CommandBase(() => { CurrentView = ReschedulingRequestVM; }, true));
+            }
+        }
+
+        private ICommand _schedulingRenovationCommand;
+        public ICommand SchedulingRenovationCommand
+        {
+            get
+            {
+                return _schedulingRenovationCommand ?? 
+                    (_schedulingRenovationCommand = new CommandBase(
+                        () => { SchedulingRenovationVM = new SchedulingRenovationViewModel(LoggedInUser, this, SelectedAccommodation);
+                    CurrentView = SchedulingRenovationVM; }, true));
             }
         }
 
@@ -119,7 +132,7 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             newAccommodationVM = new NewAccommodationViewModel(user, this);
             UnratedReservationsVM = new UnratedReservationsViewModel(user);
             RatingsVM = new RatingsViewModel(user);
-            ReschedulingRequestViewModel = new ReschedulingRequestViewModel(user);
+            ReschedulingRequestVM = new ReschedulingRequestViewModel(user);
 
             LoggedInUser = user;
             CurrentView = HomeVM;

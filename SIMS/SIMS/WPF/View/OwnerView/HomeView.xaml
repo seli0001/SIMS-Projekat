@@ -20,7 +20,6 @@
                         Margin="0 0 30 0"
                         Width="150"
                         Content="Registruj novi smestaj"
-                        Foreground="Black"
                         Command="{Binding CreateAccommodationCommand}" />
                 <Button Style="{StaticResource ButtonTheme}"
                         Margin="0 0 30 0"
@@ -29,7 +28,8 @@
                 <Button Style="{StaticResource ButtonTheme}"
                         Margin="0 0 30 0"
                         Width="150"
-                        Content="Zakazi renoviranje"/>
+                        Content="Zakazi renoviranje"
+                        Command="{Binding SchedulingRenovationCommand}"/>
             </StackPanel>
         </StackPanel>
 
