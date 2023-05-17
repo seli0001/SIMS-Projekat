@@ -14,6 +14,7 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         public SchedulingRenovationViewModel SchedulingRenovationVM { get; set; }   
         public NewAccommodationViewModel newAccommodationVM { get; set; }
         public UnratedReservationsViewModel UnratedReservationsVM { get; set; }
+        public RenovationsViewModel RenovationsVM { get;  set; }
         public Accommodation SelectedAccommodation { get; set; }
 
         private double _ownerRating;
@@ -34,8 +35,6 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             }
         }
 
-
-
         private object _currentView;
         public object CurrentView
         {
@@ -49,12 +48,18 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
 
         public Action Close { get; set; }
 
+        #region commands
+
         private ICommand _unratedReservationsCommand;
         public ICommand UnratedReservationsCommand
         {
             get
             {
-                return _unratedReservationsCommand ?? (_unratedReservationsCommand = new CommandBase(() => { CurrentView = UnratedReservationsVM; }, true));
+                return _unratedReservationsCommand ?? (_unratedReservationsCommand = new CommandBase(
+                    () => {
+                        UnratedReservationsVM = new UnratedReservationsViewModel(LoggedInUser);
+                        CurrentView = UnratedReservationsVM; 
+                    }, true));
             }
         }
 
@@ -63,7 +68,11 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         {
             get
             {
-                return _homeViewCommand ?? (_homeViewCommand = new CommandBase(() => { CurrentView = HomeVM; }, true));
+                return _homeViewCommand ?? (_homeViewCommand = new CommandBase(
+                    () => {
+                        HomeVM = new HomeViewModel(LoggedInUser, this);
+                        CurrentView = HomeVM; 
+                    }, true));
             }
         }
 
@@ -72,7 +81,11 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         {
             get
             {
-                return _guestRatingsViewCommand ?? (_guestRatingsViewCommand = new CommandBase(() => { CurrentView = RatingsVM; }, true));
+                return _guestRatingsViewCommand ?? (_guestRatingsViewCommand = new CommandBase(
+                    () => {
+                        RatingsVM = new RatingsViewModel(LoggedInUser);
+                        CurrentView = RatingsVM; 
+                    }, true));
             }
         }
 
@@ -90,7 +103,11 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         {
             get
             {
-                return _newAccommodationCommand ?? (_newAccommodationCommand = new CommandBase(() => { CurrentView = newAccommodationVM; }, true));
+                return _newAccommodationCommand ?? (_newAccommodationCommand = new CommandBase(
+                    () => {
+                        newAccommodationVM = new NewAccommodationViewModel(LoggedInUser, this);
+                        CurrentView = newAccommodationVM; 
+                    }, true));
             }
         }
 
@@ -99,7 +116,12 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         {
             get
             {
-                return _reschReqCommand ?? (_reschReqCommand = new CommandBase(() => { CurrentView = ReschedulingRequestVM; }, true));
+                return _reschReqCommand ?? (_reschReqCommand = new CommandBase(
+                    () => 
+                    {
+                        ReschedulingRequestVM = new ReschedulingRequestViewModel(LoggedInUser);
+                        CurrentView = ReschedulingRequestVM; 
+                    }, true));
             }
         }
 
@@ -114,6 +136,22 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
                     CurrentView = SchedulingRenovationVM; }, true));
             }
         }
+
+        private ICommand _renovationsCommand;
+        public ICommand RenovationsCommand
+        {
+            get
+            {
+                return _renovationsCommand ??
+                    (_renovationsCommand = new CommandBase(
+                        () => {
+                            RenovationsVM = new RenovationsViewModel(LoggedInUser, this);
+                            CurrentView = RenovationsVM;
+                        }, true));
+            }
+        }
+
+        #endregion
 
         public void setOwnerRating(double value)
         {
@@ -133,6 +171,7 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             UnratedReservationsVM = new UnratedReservationsViewModel(user);
             RatingsVM = new RatingsViewModel(user);
             ReschedulingRequestVM = new ReschedulingRequestViewModel(user);
+            RenovationsVM = new RenovationsViewModel(user, this);
 
             LoggedInUser = user;
             CurrentView = HomeVM;
