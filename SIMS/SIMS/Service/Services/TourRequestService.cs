@@ -1,4 +1,7 @@
-﻿using SIMS.Domain.Model;
+﻿using LiveCharts.Defaults;
+using LiveCharts.Wpf;
+using LiveCharts;
+using SIMS.Domain.Model;
 using SIMS.Domain.RepositoryInterface;
 using SIMS.Injector;
 using SIMS.Repository;
@@ -34,6 +37,29 @@ namespace SIMS.Service.Services
         {
             _tourRequestRepository.Update(tourRequest);
         }
+
+        public SeriesCollection GetDataForChartByRequest(int userId)
+        {
+            List<TourRequest> data = GetByUser(userId);
+            SeriesCollection series = new SeriesCollection();
+            int num_accepted = 0;
+            int num_rejected = 0;
+
+            foreach (TourRequest t in data)
+            {
+                if (t.Status == RequestStatus.Accepted) num_accepted = num_accepted + 1;
+                else if (t.Status == RequestStatus.Rejected) num_rejected = num_rejected + 1;
+            }
+
+
+
+            series.Add(new PieSeries { Title = "Prihvacene", Values = new ChartValues<ObservableValue> { new ObservableValue(num_accepted) } });
+            series.Add(new PieSeries { Title = "Odbijene", Values = new ChartValues<ObservableValue> { new ObservableValue(num_rejected) } });
+
+            return series;
+        }
+
+
 
     }
 }

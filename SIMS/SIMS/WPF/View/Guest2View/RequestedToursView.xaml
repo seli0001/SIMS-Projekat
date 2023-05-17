@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         xmlns:ch="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         xmlns:local="clr-namespace:SIMS.WPF.View.Guest2View"
         mc:Ignorable="d"
         Title="RequestToursView" Height="750" Width="430">
@@ -11,8 +12,8 @@
             <RowDefinition Height="40"></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
+            <RowDefinition  Height="160"></RowDefinition>
             
         </Grid.RowDefinitions>
 
@@ -21,6 +22,12 @@
 
             </DataGrid>
         </Grid>
+
+        <ch:PieChart Grid.Row="4"  Series="{Binding SeriesCollectionTourRequest}" LegendLocation="Bottom">
+            <ch:PieChart.ChartLegend>
+                <ch:DefaultLegend BulletSize="15" TextBlock.FontSize="8"></ch:DefaultLegend>
+            </ch:PieChart.ChartLegend>
+        </ch:PieChart>
         
     </Grid>
 </Window>
