@@ -1,6 +1,7 @@
 ﻿using SIMS.Domain.Model;
 using SIMS.Service.Services;
 using SIMS.WPF.View;
+using SIMS.WPF.View.Guest2View;
 using SIMS.WPF.ViewModel.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -76,8 +77,30 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
             }
         }
 
+        
+
+        private ICommand _tourRequestClickCommand;
+        public ICommand TourRequestClickCommand
+        {
+            get
+            {
+                return _tourRequestClickCommand ?? (_tourRequestClickCommand = new CommandBase(() => TourRequestClick(), true));
+            }
+        }
+        
+
+        private ICommand _toursRequestAndStatisticClickCommand;
+        public ICommand ToursRequestAndStatisticClickCommand
+        {
+            get
+            {
+                return _toursRequestAndStatisticClickCommand ?? (_toursRequestAndStatisticClickCommand = new CommandBase(() => ToursRequestAndStatisticClick(), true));
+            }
+        }
+
 
         #endregion
+
         public void CheckNotify()
         {
             bookedTours = _bookedTourService.GetByUser(userId);
@@ -100,13 +123,27 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
                 }
             }
         }
-
+        
+        private void ToursRequestAndStatisticClick()
+        {
+            RequestedToursView requestedToursView = new RequestedToursView(userId);
+            requestedToursView.Show();
+            Close();
+        }
         private void MainGuest2ViewClick()
         {
             MainGuest2View mainGuest2View = new MainGuest2View(userId);
             mainGuest2View.Show();
             Close();
         }
+
+        private void TourRequestClick()
+        {
+            TourRequestView tourRequestView = new TourRequestView(userId);
+            tourRequestView.Show();
+            Close();
+        }
+
 
         private void AllVouchersClick()
         {
