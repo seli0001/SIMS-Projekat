@@ -1,4 +1,5 @@
-﻿using SIMS.Domain.Model;
+﻿using LiveCharts;
+using SIMS.Domain.Model;
 using SIMS.Service.Services;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,15 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
     {
         private readonly TourRequestService _tourRequestService;
         public ObservableCollection<TourRequest> requests { get; set; }
+
+        public SeriesCollection SeriesCollectionTourRequest { get; set; }
+
         public RequestedToursViewModel(int userId) {
 
             _tourRequestService = new TourRequestService();
             requests =new ObservableCollection<TourRequest>( _tourRequestService.GetByUser(userId));
+            SeriesCollectionTourRequest = _tourRequestService.GetDataForChartByRequest(userId);
+
         }
     }
 }
