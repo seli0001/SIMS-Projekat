@@ -1,6 +1,8 @@
-﻿using System;
+﻿using SIMS.Domain.Model;
+using SIMS.WPF.ViewModel.OwnerViewModel;
+using SIMS.WPF.ViewModel;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,25 +14,22 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Xml.Linq;
-using SIMS.Repository;
-using System.Threading;
-using System.Windows.Threading;
-using SIMS.WPF.ViewModel.OwnerViewModel;
-using SIMS.Domain.Model;
-using SIMS.WPF.ViewModel;
 
-namespace SIMS.View.OwnerView
+namespace SIMS.WPF.View.OwnerView
 {
     /// <summary>
-    /// Interaction logic for OwnerMainView.xaml
+    /// Interaction logic for OwnerMain.xaml
     /// </summary>
-    public partial class OwnerMainView : Window
+    public partial class OwnerMain : Window
     {
-        public OwnerMainView(User user)
+        public OwnerMain()
+        {
+
+        }
+        public OwnerMain(User user)
         {
             InitializeComponent();
-            OwnerMainViewModel ownerMainViewModel = new OwnerMainViewModel(user);
+            MainViewModel ownerMainViewModel = new MainViewModel(user);
             DataContext = ownerMainViewModel;
             if (DataContext is IClose vm)
             {
@@ -40,6 +39,5 @@ namespace SIMS.View.OwnerView
                 };
             }
         }
-
     }
 }

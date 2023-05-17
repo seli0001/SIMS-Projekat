@@ -15,12 +15,14 @@ namespace SIMS.Repository
         private readonly Serializer<Reservation> _serializer;
 
         private readonly AccommodationRepository _accommodationRepository;
+        private readonly UserRepository _userRepository;
         private List<Reservation> _reservations;
 
         public ReservationRepository()
         {
             _serializer = new Serializer<Reservation>();
             _accommodationRepository = new AccommodationRepository();
+            _userRepository = new UserRepository(); 
             _reservations = new List<Reservation>();
         }
 
@@ -39,6 +41,7 @@ namespace SIMS.Repository
             foreach (Reservation res in _reservations)
             {
                 res.Accommodation = _accommodationRepository.GetById(res.Accommodation.Id);
+                res.User = _userRepository.GetById(res.User.Id);
                 //Maybe res.User...
             }
             return _reservations;
@@ -61,6 +64,14 @@ namespace SIMS.Repository
             return _reservations.Where(reservation => reservation.User.Id == id).ToList();
         }
 
+        public List<Reservation> GetByOwnerId(int id)
+        {
+            _reservations = GetAll();
+            return _reservations.Where(reservation => reservation.Accommodation.User.Id == id).ToList();
+        }
+
+
+
         public Reservation Save(Reservation reservation)
         {
             List<Reservation> reservations = GetAll();
@@ -82,6 +93,5 @@ namespace SIMS.Repository
             _serializer.ToCSV(_filePath, _reservations);
             return reservation;
         }
-
     }
 }

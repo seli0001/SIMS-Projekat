@@ -2,8 +2,51 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:SIMS"
+             xmlns:viewModel="clr-namespace:SIMS.WPF.ViewModel.OwnerViewModel"
+             xmlns:view="clr-namespace:SIMS.WPF.View.OwnerView"
              StartupUri="WPF/View/MainWindowView.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Theme/MenuButtonTheme.xaml" />
+                <ResourceDictionary Source="Theme/ButtonTheme.xaml" />
+                <ResourceDictionary Source="Theme/TitleTheme.xaml" />
+                <ResourceDictionary Source="Theme/TextTheme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate DataType="{x:Type viewModel:MainViewModel}">
+                <view:OwnerMain />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:HomeViewModel}">
+                <view:HomeView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:UnratedReservationsViewModel}">
+                <view:UnratedReservationView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:RatingsViewModel}">
+                <view:ShowRatingsView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:NewAccommodationViewModel}">
+                <view:NewAccommodationView />
+            </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type viewModel:ReschedulingRequestViewModel}">
+                <view:ReschedulingRequestView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:SchedulingRenovationViewModel}">
+                <view:SchedulingRenovationView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:RenovationsViewModel}">
+                <view:RenovationsView />
+            </DataTemplate>
+
+
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

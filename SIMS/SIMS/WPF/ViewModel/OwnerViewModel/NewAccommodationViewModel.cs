@@ -15,7 +15,7 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
 {
 
     
-    public class AccommodationRegistrationViewModel : ViewModelBase, IClose
+    class NewAccommodationViewModel : ViewModelBase
     {
         public User LoggedInUser { get; set; }
         public Accommodation SelectedAccommodation { get; set; }
@@ -29,9 +29,11 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         private readonly SuperOwnerService _superOwnerService;
 
 
-        private readonly int[] validator;
 
-        public AccommodationRegistrationViewModel(User user)
+        private readonly int[] validator;
+        MainViewModel mainViewModel;
+
+        public NewAccommodationViewModel(User user, MainViewModel mainViewModel)
         {
             LoggedInUser = user;
             validator = new int[6];
@@ -45,6 +47,7 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             _accommodationImages = new List<Image>();
 
             IsEnabled = false;
+            this.mainViewModel = mainViewModel;
         }
 
         #region data
@@ -371,6 +374,12 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             }
 
             Close();
+
+        }
+
+        private void Close()
+        {
+            mainViewModel.HomeViewCommand.Execute(null);
         }
 
         private void StoreAccommodation()
@@ -383,15 +392,10 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
                 MinReservationDays, CancelDaysNumber,
                 LoggedInUser, _accommodationImages);
             if (_superOwnerService.CheckById(LoggedInUser.Id)) savedAccommodation = _accommodationService.makeSuper(savedAccommodation);
-            OwnerMainViewModel.Accommodations.Add(savedAccommodation);
+            HomeViewModel.Accommodations.Add(savedAccommodation);
 
             _imageService.SaveAll(_accommodationImages);
         }
-
-        public Action Close { 
-            get; 
-            set;
-            }
 
 
     }

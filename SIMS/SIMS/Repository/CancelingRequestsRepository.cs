@@ -1,14 +1,8 @@
 ﻿using SIMS.Domain.Model;
 using SIMS.Model;
-using SIMS.Model;
 using SIMS.Serializer;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Xml.Linq;
 
 namespace SIMS.Repository
 {

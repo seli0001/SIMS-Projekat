@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace SIMS.WPF.View.OwnerView
 {
     /// <summary>
-    /// Interaction logic for ReschedulingRequest.xaml
+    /// Interaction logic for RenovationsView.xaml
     /// </summary>
-    public partial class ReschedulingRequestView : UserControl
+    public partial class RenovationsView : UserControl
     {
-        public ReschedulingRequestView()
+        public RenovationsView()
         {
             InitializeComponent();
         }

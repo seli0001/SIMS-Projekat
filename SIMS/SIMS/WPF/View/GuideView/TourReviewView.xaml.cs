@@ -26,7 +26,6 @@ namespace SIMS.WPF.View
     /// </summary>
     public partial class TourReviewView : Window
     {
-        private readonly TourRatingService _tourRatingService;
         public TourRating SelectedTourRating { get; set; }
         public ObservableCollection<TourRating> TourRatings { get; set; }
         public TourReviewView(int tourId)
