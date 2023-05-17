@@ -65,6 +65,11 @@ namespace SIMS.Service.UseCases
             _accommodationRepository.deleteSuperOwner(user);
         }
 
+        public void RegulateRenovations()
+        {
+            _accommodationRepository.RegulateRenovations();
+        }
+
         public Accommodation makeSuper(Accommodation accommodation)
         {
             accommodation.Super = true;
