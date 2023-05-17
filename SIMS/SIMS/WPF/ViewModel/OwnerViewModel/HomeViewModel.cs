@@ -1,5 +1,4 @@
-﻿using SIMS.Repository;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Threading;
 using System.Windows;
@@ -8,6 +7,7 @@ using System.Windows.Input;
 using SIMS.Domain.Model;
 using SIMS.Service.UseCases;
 using SIMS.Service;
+using SIMS.WPF.ViewModel.OwnerViewModel;
 using SIMS.WPF.ViewModel.ViewModel;
 using SIMS.WPF.View.OwnerView;
 
@@ -152,6 +152,15 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             }
         }
 
+        private ICommand _schedulingRenovationCommand;
+        public ICommand SchedulingRenovationCommand
+        {
+            get
+            {
+                return _schedulingRenovationCommand ?? (_schedulingRenovationCommand = new CommandBase(() => ShowSchedulingRenovationView(), true));
+            }
+        }
+
         //private ICommand _showRatings;
         //public ICommand ShowRatingsCommand
         //{
@@ -165,13 +174,24 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
 
         private void ShowRequestView()
         {
+            /*
             ReschedulingRequestView reschedulingRequestView = new ReschedulingRequestView(LoggedInUser);
-            reschedulingRequestView.Show();
+            reschedulingRequestView.Show(); */
         }
         private void ShowCreateAccommodationForm()
         {
             mainViewModel.NewAccommodationCommand.Execute(null);
         }
+
+        private void ShowSchedulingRenovationView()
+        {
+            if(SelectedAccommodation != null)
+            {
+                mainViewModel.SelectedAccommodation = SelectedAccommodation;
+                mainViewModel.SchedulingRenovationCommand.Execute(null);
+            }
+        }
+
 
         private void ShowUpdateAccommodationForm()
         {

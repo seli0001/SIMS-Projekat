@@ -35,7 +35,15 @@
             </DataTemplate>
             
             <DataTemplate DataType="{x:Type viewModel:ReschedulingRequestViewModel}">
-                <view:ReschedulingRequest />
+                <view:ReschedulingRequestView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:SchedulingRenovationViewModel}">
+                <view:SchedulingRenovationView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:RenovationsViewModel}">
+                <view:RenovationsView />
             </DataTemplate>
 
 
