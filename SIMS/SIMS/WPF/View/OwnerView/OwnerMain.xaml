@@ -81,6 +81,7 @@
                              FontSize="14"
                               BorderThickness="0"
                              Style="{StaticResource MenuButtonTheme}"
+                             Command="{Binding RenovationsCommand}"
                               />
 
                 <RadioButton Content="Ocene gostiju" 

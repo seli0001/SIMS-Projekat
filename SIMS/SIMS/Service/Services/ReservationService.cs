@@ -81,7 +81,7 @@ namespace SIMS.Service.Services
                 DatesDTO currentResDate = new DatesDTO(currentRenovation.StartDate, currentRenovation.EndDate);
                 if (!checkDate(newReservationDate, currentResDate))
                 {
-                    MessageBox.Show("Unfortunately, we cannot book this for you because it renovationg");
+                    MessageBox.Show("Unfortunately, we cannot book this for you because it is under construction");
                     return true;
                 }
             }

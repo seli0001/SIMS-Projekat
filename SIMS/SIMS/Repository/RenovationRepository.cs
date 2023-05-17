@@ -83,13 +83,23 @@ namespace SIMS.Repository
             return renovation;
         }
 
+        public void Delete(Renovation renovation)
+        {
+            _renovations = GetAll();
+            Renovation founded = _renovations.Find(c => c.Id == renovation.Id);
+            _renovations.Remove(founded);
+            _serializer.ToCSV(_filePath, _renovations);
+        }
+
         public List<DatesDTO> AvailableDates(DateOnly startTime, DateOnly endTime, int daysStaying, Accommodation accommodation)
         {
             List<Reservation> reservations = new List<Reservation>(_reservationRepository.GetByAccommodationsId(accommodation.Id));
+            List<Renovation> renovations = new List<Renovation>(GetByAccommodationsId(accommodation.Id));
+
             List<DatesDTO> dates = new List<DatesDTO>();
             while(startTime.AddDays(daysStaying - 1) <= endTime)
             {
-                if(CheckDates(reservations, startTime, startTime.AddDays(daysStaying - 1)))
+                if(CheckDates(reservations, renovations, startTime, startTime.AddDays(daysStaying - 1)))
                 {
                     DatesDTO date = new DatesDTO(startTime, startTime.AddDays(daysStaying - 1));
                     dates.Add(date);
@@ -99,19 +109,36 @@ namespace SIMS.Repository
             return dates;
         }
 
-        private bool CheckDates(List<Reservation> reservations, DateOnly startDate, DateOnly endDate)
+        private bool CheckDates(List<Reservation> reservations, List<Renovation> renovations, DateOnly startDate, DateOnly endDate)
         {
             if(reservations.Count == 0)
             {
                 return true;
             }
-            foreach(Reservation res in reservations)
+            if (!checkReservations(reservations, startDate, endDate)) return false;
+            if (!checkRenovations(renovations, startDate, endDate)) return false;
+
+            return true;
+        }
+
+        private bool checkReservations(List<Reservation> reservations, DateOnly startDate, DateOnly endDate)
+        {
+            foreach (Reservation res in reservations)
             {
                 if ((startDate >= res.FromDate && startDate <= res.ToDate) || (endDate >= res.FromDate && endDate <= res.ToDate))
                     return false;
             }
-
+            return true;
+        }
+        private bool checkRenovations(List<Renovation> renovations, DateOnly startDate, DateOnly endDate)
+        {
+            foreach (Renovation ren in renovations)
+            {
+                if ((startDate >= ren.StartDate && startDate <= ren.EndDate) || (endDate >= ren.StartDate && endDate <= ren.EndDate))
+                    return false;
+            }
             return true;
         }
     }
+
 }
