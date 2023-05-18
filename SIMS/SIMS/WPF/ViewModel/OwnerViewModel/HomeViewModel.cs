@@ -58,7 +58,7 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             _ownerMainService = new OwnerMainService();
 
             Accommodations = new ObservableCollection<Accommodation>(_accommodationService.GetByUser(user));
-            timer = new Timer(CheckCondition, null, TimeSpan.Zero, TimeSpan.FromSeconds(15));
+            timer = new Timer(CheckCondition, null, TimeSpan.Zero, TimeSpan.FromMinutes(5));
             mainViewModel = mvm;
             mainViewModel.setOwnerRating(_ownerMainService.getRating());
         }
@@ -168,6 +168,17 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             }
         }
 
+        private ICommand _statisticsCommand;
+        public ICommand StatisticsCommand
+        {
+            get
+            {
+                return _statisticsCommand ?? (_statisticsCommand = new CommandBase(() => ShowStatisticsView(), true));
+            }
+        }
+
+        
+
         //private ICommand _showRatings;
         //public ICommand ShowRatingsCommand
         //{
@@ -196,6 +207,15 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             {
                 mainViewModel.SelectedAccommodation = SelectedAccommodation;
                 mainViewModel.SchedulingRenovationCommand.Execute(null);
+            }
+        }
+
+        private void ShowStatisticsView()
+        {
+            if (SelectedAccommodation != null)
+            {
+                mainViewModel.SelectedAccommodation = SelectedAccommodation;
+                mainViewModel.StatisticsComand.Execute(null);
             }
         }
 

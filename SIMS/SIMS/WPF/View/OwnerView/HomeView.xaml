@@ -24,7 +24,8 @@
                 <Button Style="{StaticResource ButtonTheme}"
                         Margin="0 0 30 0"
                         Width="150"
-                        Content="Prikazi statistiku smestaja"/>
+                        Content="Prikazi statistiku smestaja"
+                        Command="{Binding StatisticsCommand}"/>
                 <Button Style="{StaticResource ButtonTheme}"
                         Margin="0 0 30 0"
                         Width="150"

@@ -132,5 +132,31 @@ namespace SIMS.Service.Services
 
             return true;
         }
+        public List<int> GetYearsForAccommodation(Accommodation accommodation)
+        {
+            return _reservationRepository.GetYearsForAccommodation(accommodation);
+        }
+
+        public double GetResNumForYear(int year, Accommodation accommodation)
+        {
+            return _reservationRepository.GetResNumForYear(year, accommodation);
+        }
+
+        public double GetResNumForMonth(int year, int month, Accommodation accommodation)
+        {
+            return _reservationRepository.GetResNumForMonth(year, month, accommodation);
+        }
+
+        
+        public int GetBestYear(Accommodation accommodation)
+        {
+            return _reservationRepository.GetBestYear(accommodation);
+        }
+
+        public int GetBestMonth(Accommodation accommodation, int year)
+        {
+            return _reservationRepository.GetBestMonth(accommodation, year);
+        }
+
     }
 }

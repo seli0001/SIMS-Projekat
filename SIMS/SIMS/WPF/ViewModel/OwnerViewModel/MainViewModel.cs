@@ -15,6 +15,8 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         public NewAccommodationViewModel newAccommodationVM { get; set; }
         public UnratedReservationsViewModel UnratedReservationsVM { get; set; }
         public RenovationsViewModel RenovationsVM { get;  set; }
+
+        public AccommodationStatisticsViewModel AccommodationStatisticsVM { get; set; }
         public Accommodation SelectedAccommodation { get; set; }
 
         private double _ownerRating;
@@ -147,6 +149,20 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
                         () => {
                             RenovationsVM = new RenovationsViewModel(LoggedInUser, this);
                             CurrentView = RenovationsVM;
+                        }, true));
+            }
+        }
+
+        private ICommand _statisticsComand;
+        public ICommand StatisticsComand
+        {
+            get
+            {
+                return _statisticsComand ??
+                    (_statisticsComand = new CommandBase(
+                        () => {
+                            AccommodationStatisticsVM = new AccommodationStatisticsViewModel(LoggedInUser, this, SelectedAccommodation);
+                            CurrentView = AccommodationStatisticsVM;
                         }, true));
             }
         }

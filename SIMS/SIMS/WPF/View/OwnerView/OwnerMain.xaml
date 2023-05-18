@@ -6,7 +6,7 @@
         xmlns:viewModel="clr-namespace:SIMS.WPF.ViewModel.OwnerViewModel"
         xmlns:local="clr-namespace:SIMS.WPF.View.OwnerView"
         mc:Ignorable="d"
-        Height="650" Width="1020"
+        Height="800" Width="1320"
         WindowStyle="None"
         ResizeMode="NoResize"
         Background="Transparent"

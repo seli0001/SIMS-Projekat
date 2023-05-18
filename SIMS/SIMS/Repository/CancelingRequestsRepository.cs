@@ -28,19 +28,24 @@ namespace SIMS.Repository
 
         public List<CancelingRequests> GetAll()
         {
-            return _serializer.FromCSV(_filePath);
+            _requests = _serializer.FromCSV(_filePath);
+            foreach(CancelingRequests req in _requests)
+            {
+                req.Reservation = _reservationRepository.GetById(req.Reservation.Id);
+            }
+            return _requests;
         }
 
         public List<CancelingRequests> GetByUserId(int id)
         {
-            List<CancelingRequests> reschedulingRequests = GetAll();
-            List<Reservation> reservations = _reservationRepository.GetByUserId(id);
-            foreach (Reservation reservation in reservations)
-            {
-                reschedulingRequests.Where(reschedulingRequest => reschedulingRequest.Reservation == reservation);
-            }
-            return reschedulingRequests;
+            _requests = GetAll();
+            return _requests.Where(req => req.Reservation.User.Id == id).ToList();
+        }
 
+        public List<CancelingRequests> GetByAccommodationsId(int id)
+        {
+            _requests = GetAll();
+            return _requests.Where(request => request.Reservation.Accommodation.Id == id).ToList();
         }
         public CancelingRequests Save(CancelingRequests request)
         {
@@ -63,7 +68,7 @@ namespace SIMS.Repository
 
         public void Delete(CancelingRequests request)
         {
-            _requests = _serializer.FromCSV(_filePath);
+            _requests = GetAll();
             CancelingRequests founded = _requests.Find(r => r.Id == request.Id);
             if (founded == null) return;
             _requests.Remove(founded);
@@ -72,7 +77,7 @@ namespace SIMS.Repository
 
         public CancelingRequests Update(CancelingRequests request)
         {
-            _requests = _serializer.FromCSV(_filePath);
+            _requests = GetAll();
             CancelingRequests current = _requests.Find(r => r.Id == request.Id);
             if (current == null) return null;
             int index = _requests.IndexOf(current);
@@ -80,6 +85,32 @@ namespace SIMS.Repository
             _requests.Insert(index, request);
             _serializer.ToCSV(_filePath, _requests);
             return request;
+        }
+
+        public double GetCanceledResNumForYear(int year, Accommodation accommodation)
+        {
+            double count = 0;
+            List<CancelingRequests> requests = GetByAccommodationsId(accommodation.Id);
+            foreach (CancelingRequests req in requests)
+            {
+                if (req.Reservation.FromDate.Year == year)
+                    count++;
+            }
+
+            return count;
+        }
+
+        public double GetCanceledResNumForMonth(int year, int month, Accommodation accommodation)
+        {
+            double count = 0;
+            List<CancelingRequests> requests = GetByAccommodationsId(accommodation.Id);
+            foreach (CancelingRequests req in requests)
+            {
+                if (req.Reservation.FromDate.Year == year && req.Reservation.FromDate.Month == month)
+                    count++;
+            }
+
+            return count;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using SIMS.Domain.Model;
+using SIMS.Model;
 using SIMS.Serializer;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,8 @@ namespace SIMS.Repository
         private readonly Serializer<Accommodation> _serializer;
         private List<Accommodation> _accommodations;
 
+       
+
         private readonly LocationRepository _locationRepository;
         private readonly ImageRepository _imageRepository;
         private readonly SuperOwnerRepository _superOwnerRepository;
@@ -29,6 +32,7 @@ namespace SIMS.Repository
             _locationRepository = new LocationRepository();
             _imageRepository = new ImageRepository();
             _superOwnerRepository = new SuperOwnerRepository();
+
         }
 
         public List<Accommodation> GetAll()
@@ -169,5 +173,12 @@ namespace SIMS.Repository
             }
             Update(accommodation);
         }
+
+        
+
+
+
+
+
     }
 }

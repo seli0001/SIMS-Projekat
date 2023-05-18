@@ -3,9 +3,7 @@ using SIMS.Serializer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+using Xceed.Wpf.Toolkit.PropertyGrid.Editors;
 
 namespace SIMS.Repository
 {
@@ -93,5 +91,109 @@ namespace SIMS.Repository
             _serializer.ToCSV(_filePath, _reservations);
             return reservation;
         }
+
+        public List<int> GetYearsForAccommodation(Accommodation accommodation)
+        {
+            List<int> years = new List<int>();
+            _reservations = GetByAccommodationsId(accommodation.Id);
+            
+            foreach(Reservation res in _reservations)
+            {
+                if(!years.Contains(res.FromDate.Year))
+                    years.Add(res.FromDate.Year);
+            }
+
+            return years;
+        }
+
+
+        private double getStatsForYear(Accommodation acc, int year)
+        {
+            List<Reservation> reservations = GetByAccommodationsId(acc.Id);
+            double reservedDays = 0;
+            foreach(Reservation res in reservations)
+            {
+                if(res.FromDate.Year == year)
+                {
+                    DateTime startDate = res.FromDate.ToDateTime(new TimeOnly());
+                    DateTime endDate = res.ToDate.ToDateTime(new TimeOnly());
+
+                    TimeSpan difference = endDate - startDate;
+                    reservedDays += difference.Days;
+                }
+            }
+            return (reservedDays / 365) * 100;
+        }
+
+        private double getStatsForMonth(Accommodation acc,int year, int month)
+        {
+            List<Reservation> reservations = GetByAccommodationsId(acc.Id);
+            double reservedDays = 0;
+            foreach (Reservation res in reservations)
+            {
+                if (res.FromDate.Year == year && res.FromDate.Month == month)
+                {
+                    DateTime startDate = res.FromDate.ToDateTime(new TimeOnly());
+                    DateTime endDate = res.ToDate.ToDateTime(new TimeOnly());
+
+                    TimeSpan difference = endDate - startDate;
+                    reservedDays += difference.Days;
+                }
+            }
+            return (reservedDays / 30) * 100;
+        }
+        
+
+        public int GetBestYear(Accommodation accommodation)
+        {
+            List<int> years = new List<int>(GetYearsForAccommodation(accommodation));
+            Dictionary<int, double> yearsDays = new Dictionary<int, double>();
+            foreach(int year in years)
+            {
+                yearsDays[year] = getStatsForYear(accommodation, year);
+            }
+
+            return yearsDays.FirstOrDefault(x => x.Value == yearsDays.Values.Max()).Key;
+        }
+
+        public int GetBestMonth(Accommodation accommodation, int year)
+        {
+            List<int> months = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+            Dictionary<int, double> monthsDays = new Dictionary<int, double>();
+            foreach (int month in months)
+            {
+                monthsDays[month] = getStatsForMonth(accommodation, year, month);
+            }
+
+            return monthsDays.FirstOrDefault(x => x.Value == monthsDays.Values.Max()).Key;
+        }
+
+       
+
+        public double GetResNumForYear(int year, Accommodation accommodation)
+        {
+            double count = 0;
+            List<Reservation> reservations = GetByAccommodationsId(accommodation.Id);
+            foreach (Reservation res in reservations)
+            {
+                if (res.FromDate.Year == year)
+                    count++;
+            }
+
+            return count;
+        }
+        public double GetResNumForMonth(int year, int month, Accommodation accommodation)
+        {
+            double count = 0;
+            List<Reservation> reservations = GetByAccommodationsId(accommodation.Id);
+            foreach (Reservation res in reservations)
+            {
+                if (res.FromDate.Year == year && res.FromDate.Month == month)
+                    count++;
+            }
+
+            return count;
+        }
+
     }
 }
