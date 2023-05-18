@@ -12,12 +12,14 @@ namespace SIMS.Repository
     class TourRequestRepository : ITourRequestRepository
     {
         private const string _filePath = "../../../../SIMS/Resources/Data/TourRequest.csv";
+        private readonly LocationRepository _locationRepository;
         private readonly Serializer<TourRequest> _serializer;
         public List<TourRequest> tourRequests;
 
         public TourRequestRepository()
         {
             _serializer = new Serializer<TourRequest>();
+            _locationRepository = new LocationRepository();
             tourRequests = _serializer.FromCSV(_filePath);
         }
 
@@ -69,6 +71,70 @@ namespace SIMS.Repository
             tourRequests.RemoveAll(b => b.Id == tourRequest.Id);
             tourRequests.Add(tourRequest);
             _serializer.ToCSV(_filePath, tourRequests);
+        }
+
+        public Dictionary<string, int> GetLanguageGraphData(int userId)
+        {
+            var languagesCount = new Dictionary<string, int>();
+            List<TourRequest> requests = GetByUser(userId);
+
+            foreach (var request in requests)
+            {
+                var language = request.Language;
+                if (languagesCount.ContainsKey(language))
+                {
+                    languagesCount[language]++;
+                }
+                else
+                {
+                    languagesCount[language] = 1;
+                }
+
+            }
+
+            return languagesCount;
+        }
+
+        public List<int> GetYearsOfRequests(int userId)
+        {
+            List<TourRequest> requests = GetByUser(userId);
+            List<int> years = new List<int>();
+
+            foreach (TourRequest request in requests)
+            {
+                if (request.Status == RequestStatus.Accepted || request.Status == RequestStatus.Rejected)
+                {
+                    years.Add(request.StartDate.Year);
+                }
+
+
+            }
+
+
+            return years.Distinct().ToList();
+        }
+
+
+
+        public Dictionary<string, int> GetLocationGraphData(int userId)
+        {
+            var locationsCount = new Dictionary<string, int>();
+            List<TourRequest> requests = GetByUser(userId);
+
+            foreach (TourRequest request in requests)
+            {
+                string location = _locationRepository.GetById(request.Location.Id).City;
+                if (locationsCount.ContainsKey(location))
+                {
+                    locationsCount[location]++;
+                }
+                else
+                {
+                    locationsCount[location] = 1;
+                }
+
+            }
+            return locationsCount;
         }
 
     }
