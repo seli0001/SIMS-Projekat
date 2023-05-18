@@ -89,5 +89,36 @@ namespace SIMS.Repository
             bookedTours.Add(bookedTour);
             _serializer.ToCSV(_filePath, bookedTours);
         }
+
+        public List<BookedTour> GetAllByTour(int tourId)
+        {
+            return GetAll().Where(t => t.Tour.Id == tourId).ToList();
+            
+        }
+
+        public List<BookedTour> GetByUser(int userId)
+        {
+            return GetAll().Where(u => userId == u.UserId).ToList();
+         
+        }
+
+        public List<BookedTour> GetUserFinished(int userId)
+        {
+            return GetAll().Where(t => t.UserId == userId &&
+            t.Tour.Status.ToString().Equals("FINISHED") &&
+            t.Review == false && t.Checkpoint != null &&
+            t.Notify.ToString().Equals("Accepted")).ToList();
+    
+        }
+
+        public List<BookedTour> GetUserActive(int userId)
+        {
+            return GetAll().Where(t => t.UserId == userId &&
+            t.Tour.Status.ToString().Equals("STARTED") &&
+            t.Checkpoint != null &&
+            t.Notify.ToString().Equals("Accepted")).ToList();
+
+
+        }
     }
 }

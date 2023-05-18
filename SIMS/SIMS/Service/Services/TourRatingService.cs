@@ -23,8 +23,8 @@ namespace SIMS.Service.Services
         }
 
         public List<TourRating> GetAllByTourId(int tourId) 
-        {
-            return GetAll().Where(t => t.bookedTour.TourId == tourId).ToList();
+        {       
+            return _tourRatingRepository.GetAllByTourId(tourId);
         }
 
         public void SaveRating(TourRating rating)

@@ -75,5 +75,11 @@ namespace SIMS.Repository
             _serializer.ToCSV(_filePath, reviews);
         }
 
+        public List<TourRating> GetAllByTourId(int tourId)
+        {
+            return GetAll().Where(t => t.bookedTour.TourId == tourId).ToList();
+          
+        }
+
     }
 }

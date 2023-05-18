@@ -23,7 +23,7 @@ namespace SIMS.Service.Services
 
         public List<Tour> GetNotStarted()
         {
-            return _tourRepository.GetAll().Where(t => t.Status.ToString().Equals("NOT_STARTED")).ToList();
+            return _tourRepository.GetNotStarted();
         }
 
         public List<Tour> GetAll()
@@ -36,14 +36,11 @@ namespace SIMS.Service.Services
             _tourRepository.Update(tour);
         }
 
-        public Tour GetById(int id)
-        {
-            return GetAll().FirstOrDefault(t => t.Id == id);
-        }
 
         public List<Tour> GetAllByGuideId(int id)
         {
             return GetAll().Where(tour => tour.Guide.Id == id).ToList();
+
         }
 
         public List<Tour> GetAlternative(Tour tour)

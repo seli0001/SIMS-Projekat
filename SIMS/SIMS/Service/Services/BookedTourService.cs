@@ -22,12 +22,13 @@ namespace SIMS.Service.Services
         
         public List<BookedTour> GetAllByTour(int tourId)
         {
-            return _bookedToursRepository.GetAll().Where(t => t.Tour.Id == tourId).ToList();
+            
+            return _bookedToursRepository.GetAllByTour(tourId);
         }
 
         public List<BookedTour> GetByUser(int userId)
-        {
-            return _bookedToursRepository.GetAll().Where(u => userId == u.UserId).ToList();
+        { 
+            return _bookedToursRepository.GetByUser(userId);
         }
 
         public void Save(Tour tour,int userId,int peopleNumber)
@@ -41,18 +42,13 @@ namespace SIMS.Service.Services
 
         public List<BookedTour> GetUserFinished(int userId)
         {
-            return _bookedToursRepository.GetAll().Where(t => t.UserId == userId && 
-            t.Tour.Status.ToString().Equals("FINISHED") && 
-            t.Review == false && t.Checkpoint != null && 
-            t.Notify.ToString().Equals("Accepted")).ToList();
+
+            return _bookedToursRepository.GetUserFinished(userId);
         }
 
         public List<BookedTour> GetUserActive(int userId)
         {
-            return _bookedToursRepository.GetAll().Where(t => t.UserId == userId && 
-            t.Tour.Status.ToString().Equals("STARTED") && 
-            t.Checkpoint != null && 
-            t.Notify.ToString().Equals("Accepted")).ToList();
+            return _bookedToursRepository.GetUserActive(userId);
         }
 
         public SeriesCollection getDataForChartByAge(Tour tour)
