@@ -66,6 +66,8 @@ namespace SIMS.Repository
             _renovations = GetAll();
             renovation.Id = GetNextId(_renovations);
 
+            _accommodationRepository.Renovate(renovation.Accommodation, renovation.EndDate);
+
             _renovations.Add(renovation);
             _serializer.ToCSV(_filePath, _renovations);
             return renovation;
@@ -88,6 +90,9 @@ namespace SIMS.Repository
             _renovations = GetAll();
             Renovation founded = _renovations.Find(c => c.Id == renovation.Id);
             _renovations.Remove(founded);
+
+            _accommodationRepository.DeleteRenovation(renovation.Accommodation);
+
             _serializer.ToCSV(_filePath, _renovations);
         }
 

@@ -95,6 +95,13 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
                 }
             });
 
+            //Renovation
+            App.Current.Dispatcher.Invoke((Action)delegate
+            {
+                _accommodationService.RegulateRenovations();
+                UpdateUI();
+            });
+
         }
 
         private void UpdateUI()

@@ -122,5 +122,52 @@ namespace SIMS.Repository
             }
             _serializer.ToCSV(_filePath, _accommodations);
         }
+
+        public void MakeRenovated(Accommodation acc)
+        {
+            Accommodation accommodation = GetById(acc.Id);
+            accommodation.Name = accommodation.Name + " *renovated";
+            Update(accommodation);
+        }
+
+        public void RegulateRenovations()
+        {
+            _accommodations = GetAll();
+            foreach(Accommodation acc in _accommodations)
+            {
+                if(acc.RenovatedOn < DateOnly.FromDateTime(DateTime.Today) && acc.RenovatedOn.AddYears(1) > DateOnly.FromDateTime(DateTime.Today))
+                {
+                    if(!acc.Name.Contains("renovated"))
+                    {
+                        MakeRenovated(acc);
+                    }
+                }
+                else
+                {
+                    if(acc.Name.Contains("renovated"))
+                    {
+                        DeleteRenovation(acc);
+                    }
+                }
+            }
+        }
+
+        public void Renovate(Accommodation acc, DateOnly date)
+        {
+            Accommodation accommodation = GetById(acc.Id);
+            accommodation.RenovatedOn = date;
+            Update(accommodation);
+        }
+
+        public void DeleteRenovation(Accommodation acc)
+        {
+            Accommodation accommodation = GetById(acc.Id);
+            accommodation.RenovatedOn = DateOnly.FromDateTime(new DateTime(1970, 01, 01));
+            if(accommodation.Name.Contains("renovated"))
+            {
+                accommodation.Name = accommodation.Name.Substring(0, accommodation.Name.Length - 11);
+            }
+            Update(accommodation);
+        }
     }
 }
