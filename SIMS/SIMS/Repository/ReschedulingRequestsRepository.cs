@@ -45,6 +45,12 @@ namespace SIMS.Repository
 
         }
 
+        public List<ReschedulingRequests> GetByAccommodationsId(int id)
+        {
+            _requests = GetAll();
+            return _requests.Where(request => request.Reservation.Accommodation.Id == id).ToList();
+        }
+
         public List<ReschedulingRequests> GetByOwnerId(int id)
         {
             _requests = GetAll();
@@ -106,5 +112,31 @@ namespace SIMS.Repository
             }
             return _requests.FindAll(c => c.Reservation.Id == reservation.Id);
         }*/
+
+        public double GetRescheduledResNumForYear(int year, Accommodation accommodation)
+        {
+            double count = 0;
+            List<ReschedulingRequests> requests = GetByAccommodationsId(accommodation.Id);
+            foreach (ReschedulingRequests req in requests)
+            {
+                if (req.Reservation.FromDate.Year == year)
+                    count++;
+            }
+
+            return count;
+        }
+
+        public double GetRescheduledResNumForMonth(int year, int month, Accommodation accommodation)
+        {
+            double count = 0;
+            List<ReschedulingRequests> requests = GetByAccommodationsId(accommodation.Id);
+            foreach (ReschedulingRequests req in requests)
+            {
+                if (req.Reservation.FromDate.Year == year && req.Reservation.FromDate.Month == month)
+                    count++;
+            }
+
+            return count;
+        }
     }
 }

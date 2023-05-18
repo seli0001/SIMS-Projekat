@@ -46,6 +46,11 @@
                 <view:RenovationsView />
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type viewModel:AccommodationStatisticsViewModel}">
+                <view:AccommodationStatisticsView />
+            </DataTemplate>
+
+
 
         </ResourceDictionary>
     </Application.Resources>

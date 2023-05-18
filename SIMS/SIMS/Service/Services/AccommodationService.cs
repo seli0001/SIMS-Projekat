@@ -77,5 +77,6 @@ namespace SIMS.Service.UseCases
             Save(accommodation);
             return accommodation;
         }
+
     }
 }

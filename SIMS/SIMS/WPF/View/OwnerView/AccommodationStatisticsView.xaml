@@ -1,0 +1,109 @@
+﻿<UserControl x:Class="SIMS.WPF.View.OwnerView.AccommodationStatisticsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SIMS.WPF.View.OwnerView"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+             mc:Ignorable="d" 
+             d:DesignHeight="650" d:DesignWidth="950">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Margin="50 0 0 0"
+                    Grid.Row="0">
+            <TextBlock Text="{Binding SelectedAccommodation.Name}"
+                       Style="{StaticResource TitleTheme}"/>
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+
+            <StackPanel Grid.Row="0"
+                        Grid.Column="0">
+                <TextBlock Text="Statistika po godinama"
+                           Foreground="White"
+                           FontSize="28"/>
+                <TextBlock Text="Predjite misem preko godine, za detaljnije informacije"
+                            Foreground="White"
+                           FontSize="16"/>
+           
+            <lvc:CartesianChart
+                 
+                    Series="{Binding YearSeries}"
+                    XAxes="{Binding YearXAxes}"
+                    LegendPosition="Top"
+                    LegendTextPaint="{Binding LedgendBackgroundPaint}"
+                    Width="800"
+                    Height="150"
+                > 
+            </lvc:CartesianChart>
+
+                <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Najbolja godina: "
+                           Foreground="White"
+                           FontSize="18"/>
+                <TextBlock Text="{Binding BestYear}"
+                           Foreground="White"
+                           FontSize="18"
+                           Margin="10 0 0 0"/>
+                </StackPanel>
+            </StackPanel>
+
+
+
+            <StackPanel Grid.Row="1"
+                        Grid.Column="1">
+
+                <StackPanel Orientation="Horizontal">
+
+                    <StackPanel>
+
+                        <TextBlock Text="Statistika po mesecima "
+                           Foreground="White"
+                           FontSize="28"/>
+                        <TextBlock Text="Odaberite godinu za koju zelite detaljnije informacije"
+                            Foreground="White"
+                           FontSize="16"/>
+                    </StackPanel>
+
+
+                    <ComboBox ItemsSource="{Binding AvailableYears}"
+                          Width="100"
+                          Height="20"
+                          HorizontalAlignment="Left"
+                          Margin="50 0 0 0"
+                          SelectedItem="{Binding SelectedYear}">
+                    </ComboBox>
+                </StackPanel>
+
+                <lvc:CartesianChart
+                    Series="{Binding MonthSeries}"
+                    XAxes="{Binding MonthXAxes}"
+                    LegendPosition="Top"
+                    LegendTextPaint="{Binding LedgendBackgroundPaint}"
+                    Width="800"
+                    Height="180">
+                </lvc:CartesianChart>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Najbolji mesec: "
+                           Foreground="White"
+                           FontSize="18"/>
+                    <TextBlock Text="{Binding BestMonth}"
+                           Foreground="White"
+                           FontSize="18"
+                           Margin="10 0 0 0"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+        
+    </Grid>
+</UserControl>
