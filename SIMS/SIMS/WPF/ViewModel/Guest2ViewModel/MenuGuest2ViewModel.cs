@@ -107,23 +107,23 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
 
             foreach (BookedTour t in bookedTours)
             {
-                if (t.Notify == (Notify)2 && t.Checkpoint != null)
+                if (t.Notify != null && t.Notify == Notify.NoAnswer && t.Checkpoint != null && t.Tour != null && t.Tour.Status == TourStatus.STARTED)
                 {
-          /*          if (MessageBox.Show("Da li si prisni na" + t.Tour.Name + "?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+                    if (MessageBox.Show("Da li si prisni na " + t.Tour.Name + "?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
                     {
-                        t.Notify = (Notify)1;
+                        t.Notify = Notify.Reject;
                         _bookedTourService.Update(t);
                     }
                     else
                     {
-                        t.Notify = (Notify)0;
+
+                        t.Notify = Notify.Accepted;
                         _bookedTourService.Update(t);
                     }
-          */
                 }
             }
         }
-        
+
         private void ToursRequestAndStatisticClick()
         {
             RequestedToursView requestedToursView = new RequestedToursView(userId);
