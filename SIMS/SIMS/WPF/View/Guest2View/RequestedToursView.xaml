@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
          xmlns:ch="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        xmlns:syncfusion="clr-namespace:Syncfusion.UI.Xaml.Charts;assembly=Syncfusion.SfChart.WPF"
         xmlns:local="clr-namespace:SIMS.WPF.View.Guest2View"
         mc:Ignorable="d"
         Title="RequestToursView" Height="750" Width="430">
@@ -11,23 +12,82 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="40"></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
-            <RowDefinition Height="50"></RowDefinition>
-            <RowDefinition Height="100"></RowDefinition>
-            <RowDefinition  Height="160"></RowDefinition>
-            
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="120"></RowDefinition>
+            <RowDefinition  Height="130"></RowDefinition>
+            <RowDefinition ></RowDefinition>
+            <RowDefinition ></RowDefinition>
         </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+
+            <ToolBar>
+                <Button  Command="{Binding BackToMenuClickCommand}"   >Meni</Button>
+                <Button Content="                                                                                "></Button>
+                <Button Command="{Binding BackToMainGuest2ViewClickCommand}">Glavni prozor</Button>
+            </ToolBar>
+
+        </Grid>
 
         <Grid Grid.Row="3">
             <DataGrid ItemsSource="{Binding requests, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="True" IsReadOnly="True">
 
             </DataGrid>
         </Grid>
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
 
-        <ch:PieChart Grid.Row="4"  Series="{Binding SeriesCollectionTourRequest}" LegendLocation="Bottom">
-            <ch:PieChart.ChartLegend>
-                <ch:DefaultLegend BulletSize="15" TextBlock.FontSize="8"></ch:DefaultLegend>
-            </ch:PieChart.ChartLegend>
-        </ch:PieChart>
-        
+            <ch:PieChart Grid.Column="0" Series="{Binding SeriesCollectionTourRequest}" LegendLocation="Bottom">
+                <ch:PieChart.ChartLegend>
+                    <ch:DefaultLegend BulletSize="15" TextBlock.FontSize="8"></ch:DefaultLegend>
+                </ch:PieChart.ChartLegend>
+            </ch:PieChart>
+
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <ComboBox x:Name="cbYears" Grid.Row="0" Margin="5" Width="100" SelectedItem="{Binding Path=SelectedYear}" ItemsSource="{Binding Years}"/>
+                <Button Grid.Row="1" Margin="5" Width="100" Command="{Binding DataByYearCommand}">Pretrazi</Button>
+                <Button Grid.Row="2" Margin="5" Width="100" Command="{Binding AllRequestCommand}">Za sve godine</Button>
+                <StackPanel Grid.Row="3" Orientation="Horizontal">
+                    <Label Content="Prosek ljudi:" />
+                    <TextBlock  Width="50" Text="{Binding Path=PeoplePercentage, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+            </Grid>
+
+        </Grid>
+
+        <Grid Grid.Row="5">
+            <!--<Rectangle Stroke="Black" StrokeThickness="2" Width="245" Height="160" Margin="150,10,0,0"/>-->
+            <syncfusion:SfChart  Name="RequestsByLanguageChart" Height="180" HorizontalAlignment="Center"   Width="340" >
+                <syncfusion:SfChart.PrimaryAxis>
+                    <syncfusion:CategoryAxis Header="Jezik" />
+                </syncfusion:SfChart.PrimaryAxis>
+                <syncfusion:SfChart.SecondaryAxis>
+                    <syncfusion:NumericalAxis Header="Broj zahteva" />
+                </syncfusion:SfChart.SecondaryAxis>
+                <syncfusion:ColumnSeries ItemsSource="{Binding LanguageGraph}" XBindingPath="Key" YBindingPath="Value" />
+            </syncfusion:SfChart>
+        </Grid>
+
+        <Grid Grid.Row="6">
+            <!--<Rectangle Stroke="Black" StrokeThickness="2" Width="245" Height="160" Margin="10,10,0,0"/>-->
+            <syncfusion:SfChart Name="RequestsByLocationChart" Height="180" HorizontalAlignment="Center" Margin="5,0,0,0"  Width="340" >
+                <syncfusion:SfChart.PrimaryAxis>
+                    <syncfusion:CategoryAxis Header="Lokacija" />
+                </syncfusion:SfChart.PrimaryAxis>
+                <syncfusion:SfChart.SecondaryAxis>
+                    <syncfusion:NumericalAxis Header="Broj zahteva" />
+                </syncfusion:SfChart.SecondaryAxis>
+                <syncfusion:ColumnSeries ItemsSource="{Binding LocationGraph}" XBindingPath="Key" YBindingPath="Value" />
+            </syncfusion:SfChart>
+        </Grid>
     </Grid>
 </Window>
