@@ -15,5 +15,8 @@ namespace SIMS.Domain.RepositoryInterface
         public void Save(Location location, string description, string language, int maxNumberOfPeople, DateTime startDate, DateTime endDate, RequestStatus status,int userId);
         public List<TourRequest> GetByUser(int userId);
         public void Update(TourRequest tourRequest);
+        public Dictionary<string, int> GetLanguageGraphData(int userId);
+        public Dictionary<string, int> GetLocationGraphData(int userId);
+        public List<int> GetYearsOfRequests(int userId);
     }
 }

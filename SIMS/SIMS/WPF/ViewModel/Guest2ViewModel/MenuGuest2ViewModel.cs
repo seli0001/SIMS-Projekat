@@ -109,7 +109,7 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
             {
                 if (t.Notify == (Notify)2 && t.Checkpoint != null)
                 {
-                    if (MessageBox.Show("Da li si prisni na" + t.Tour.Name + "?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+          /*          if (MessageBox.Show("Da li si prisni na" + t.Tour.Name + "?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
                     {
                         t.Notify = (Notify)1;
                         _bookedTourService.Update(t);
@@ -119,7 +119,7 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
                         t.Notify = (Notify)0;
                         _bookedTourService.Update(t);
                     }
-
+          */
                 }
             }
         }
