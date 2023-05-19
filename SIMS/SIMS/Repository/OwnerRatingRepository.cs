@@ -40,6 +40,17 @@ namespace SIMS.Repository
             return _ratings;
         }
 
+        public List<OwnerRating> GetByUserId(int id)
+        {
+            List<OwnerRating> ownerRatings = GetAll();
+            List<Reservation> reservations = _reservationRepository.GetByUserId(id);
+            foreach (Reservation reservation in reservations)
+            {
+                ownerRatings.Where(ownerRating => ownerRating.Reservation == reservation);
+            }
+            return ownerRatings;
+        }
+
         public OwnerRating Save(OwnerRating rating)
         {
             rating.Id = NextId();

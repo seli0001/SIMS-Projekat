@@ -92,5 +92,11 @@ namespace SIMS.Repository
             _serializer.ToCSV(_filePath, _ratings);
             return rating;
         }
+
+        public List<GuestRating> GetByGuestId(int id)
+        {
+            _ratings = GetAll();
+            return _ratings.FindAll(r => r.Reservation.Accommodation.User.Id == id);
+        }
     }
 }
