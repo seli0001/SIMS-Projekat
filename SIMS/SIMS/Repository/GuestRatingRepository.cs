@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SIMS.Repository.GuideRepository;
 using SIMS.Domain.Model;
+using SIMS.Model;
 
 namespace SIMS.Repository
 {
@@ -38,6 +39,18 @@ namespace SIMS.Repository
                 rating.Reservation = _reservationRepository.GetById(rating.Reservation.Id);
             }
             return _ratings;
+        }
+
+        public List<GuestRating> GetByUserId(int id)
+        {
+            List<GuestRating> guestRatings = GetAll();
+            List<Reservation> reservations = _reservationRepository.GetByUserId(id);
+            foreach (Reservation reservation in reservations)
+            {
+                guestRatings.Where(guestRating => guestRating.Reservation == reservation);
+            }
+            return guestRatings;
+
         }
 
         public GuestRating Save(GuestRating rating)

@@ -25,6 +25,7 @@ namespace SIMS.View.FirstGuestView
     {
         private readonly int[] validator;
         private readonly OwnerRatingRepository _repository;
+        private readonly RenovationSuggestionRepository _renovationSuggestionRepository;
         public Reservation SelectedReservation { get; set; }
         public User LoggedInUser { get; set; }
 
@@ -36,70 +37,64 @@ namespace SIMS.View.FirstGuestView
             validator = new int[3];
             SelectedReservation = reservation;
             _repository = new OwnerRatingRepository();
+            _renovationSuggestionRepository = new RenovationSuggestionRepository();
         }
 
 
         #region data
-        
+
         private int _cleanliness = 1;
+
         public int Cleanliness
         {
-            get => _cleanliness;
+            get { return _cleanliness; }
             set
             {
+                _cleanliness = value;
+                ValidateCleanliness();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Cleanliness"));
+            }
+        }
 
-                if (value != _cleanliness)
-                {
-                    if (value < 1 || value > 5)
-                    {
-                        CleanlinessValidator.Content = "Ocena mora biti (1-5)";
-                        CleanlinessValidator.Visibility = Visibility.Visible;
-                        validator[0] = 1;
-                    }
-                    else
-                    {
-                        CleanlinessValidator.Visibility = Visibility.Hidden;
-                        validator[0] = 1;
-                    }
-                    BtnSubmit.IsEnabled = true;
-
-                    ValidatorTest();
-                    _cleanliness = value;
-                    OnPropertyChanged();
-                }
-
+        private void ValidateCleanliness()
+        {
+            if (Cleanliness < 1 || Cleanliness > 5)
+            {
+                CleanlinessValidator.Content = "Cleanliness should be between 1 and 5.";
+                CleanlinessValidator.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                CleanlinessValidator.Visibility = Visibility.Hidden;
             }
         }
 
         private int _rulesRespect = 1;
+
         public int RulesRespect
         {
-            get => _rulesRespect;
+            get { return _rulesRespect; }
             set
             {
-
-                if (value != _rulesRespect)
-                {
-                    if (value < 1 || value > 5)
-                    {
-                        RulesValidator.Content = "Ocena mora biti (1-5)";
-                        RulesValidator.Visibility = Visibility.Visible;
-                        validator[1] = 1;
-                    }
-                    else
-                    {
-                        RulesValidator.Visibility = Visibility.Hidden;
-                        validator[1] = 1;
-                    }
-                    BtnSubmit.IsEnabled = true;
-
-                    ValidatorTest();
-                    _rulesRespect = value;
-                    OnPropertyChanged();
-                }
-
+                _rulesRespect = value;
+                ValidateRulesRespect();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("RulesRespect"));
             }
         }
+
+        private void ValidateRulesRespect()
+        {
+            if (RulesRespect < 1 || RulesRespect > 5)
+            {
+                RulesValidator.Content = "Rules respect should be between 1 and 5.";
+                RulesValidator.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                RulesValidator.Visibility = Visibility.Hidden;
+            }
+        }
+
 
         private string _comment;
         public string Comment
@@ -122,6 +117,49 @@ namespace SIMS.View.FirstGuestView
 
                     ValidatorTest();
                     _comment = value;
+                    OnPropertyChanged();
+                }
+
+            }
+        }
+
+        private string _suggestion;
+        public string Suggestion
+        {
+            get => _suggestion;
+            set
+            {
+
+                if (value != _suggestion)
+                {
+                    if (value.Length == 0)
+                    {
+                        validator[2] = 1;
+                    }
+                    else
+                    {
+                        validator[2] = 1;
+                    }
+                    BtnSubmitRenovationSuggestion.IsEnabled = true;
+
+                    ValidatorTest();
+                    _suggestion = value;
+                    OnPropertyChanged();
+                }
+
+            }
+        }
+
+        private int _urgencyLevel = 1;
+        public int UrgencyLevel
+        {
+            get => _urgencyLevel;
+            set
+            {
+
+                if (value != _urgencyLevel)
+                {
+                    _urgencyLevel = value;
                     OnPropertyChanged();
                 }
 
@@ -151,9 +189,23 @@ namespace SIMS.View.FirstGuestView
 
         private void SaveRating(object sender, RoutedEventArgs e)
         {
-            OwnerRating newRating = new OwnerRating(Cleanliness, RulesRespect, Comment, LoggedInUser, SelectedReservation);
-            OwnerRating savedRating = _repository.Save(newRating);
-            Close();
+            
+            if (CleanlinessValidator.Visibility == Visibility.Hidden && RulesValidator.Visibility == Visibility.Hidden)
+            {
+                OwnerRating newRating = new OwnerRating(Cleanliness, RulesRespect, Comment, LoggedInUser, SelectedReservation);
+                OwnerRating savedRating = _repository.Save(newRating);
+                MessageBox.Show("Rating sent");
+                txtBoxCleanliness.Text = "";
+                txtBoxComment.Text = "";
+                txtBoxImages.Text = "";
+                txtBoxRespect.Text = "";
+                BtnSubmit.IsEnabled = false;
+            }
+            else
+            {
+                MessageBox.Show("Check inputs");
+            }
+
         }
 
         
@@ -161,6 +213,23 @@ namespace SIMS.View.FirstGuestView
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void BtnSubmitRenovationSuggestion_Click(object sender, RoutedEventArgs e)
+        {
+            if (UrgencyValidator.Visibility == Visibility.Hidden)
+            {
+                RenovationSuggestion renovationSuggestion = new RenovationSuggestion(UrgencyLevel, Suggestion, LoggedInUser, SelectedReservation);
+                RenovationSuggestion savedSuggestion = _renovationSuggestionRepository.Save(renovationSuggestion);
+                MessageBox.Show("Renovation suggestion sent");
+                txtBoxUrgency.Text = "";
+                txtSuggestion.Text = "";
+                BtnSubmitRenovationSuggestion.IsEnabled = false;
+            }
+            else
+            {
+                MessageBox.Show("Check inputs");
+            }
         }
     }
 }

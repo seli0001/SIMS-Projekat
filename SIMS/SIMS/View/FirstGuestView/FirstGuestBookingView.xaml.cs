@@ -19,16 +19,13 @@ namespace SIMS.View.FirstGuestView
 
         private readonly AccommodationRepository _repository;
         private readonly ReservationRepository _reservationRepository;
-      //  private User LoggedInUser { get; set; }
 
-        private readonly int[] validator;
 
         public FirstGuestBookingView(Accommodation selectedAccommodation, User user)
         {
             InitializeComponent();
             Title = "Accommodation reservation";
             DataContext = this;
-            validator = new int[2];
             _repository = new AccommodationRepository();
             _reservationRepository = new ReservationRepository();
             SelectedAccommodation = selectedAccommodation;
@@ -73,32 +70,6 @@ namespace SIMS.View.FirstGuestView
         }
 
         private int _timeOfStay = 1;
-        /*public int TimeOfStay
-        {
-            get => _timeOfStay;
-            set
-            {
-                if (value != _timeOfStay)
-                {
-                    if (value < SelectedAccommodation.MinBookingDays)
-                    {
-                        TimeOfStayValidator.Content = "Number of days must be at least " + SelectedAccommodation.MinBookingDays;
-                        TimeOfStayValidator.Visibility = Visibility.Visible;
-                        validator[0] = 0;
-                    }
-                    else
-                    {
-                        TimeOfStayValidator.Visibility = Visibility.Hidden;
-                        validator[0] = 1;
-                    }
-                    BtnBook.IsEnabled = true;
-
-                    _timeOfStay = value;
-                    OnPropertyChanged();
-                }
-
-            }
-        }*/
 
         public int TimeOfStay
         {
@@ -156,52 +127,6 @@ namespace SIMS.View.FirstGuestView
                 MaxGuestNumValidator.Visibility = Visibility.Hidden;
             }
         }
-
-
-
-
-
-
-
-
-        /*public int NumberOfGuests
-        {
-            get => _numberOfGuests;
-            set
-            {
-                if (value != _numberOfGuests)
-                {
-                    if (value > SelectedAccommodation.MaxGuestsNumber)
-                    {
-                        MaxGuestNumValidator.Content = "Number of days must be at most " + SelectedAccommodation.MaxGuestsNumber;
-                        MaxGuestNumValidator.Visibility = Visibility.Visible;
-                        validator[1] = 0;
-                    }
-                    else
-                    {
-                        MaxGuestNumValidator.Visibility = Visibility.Hidden;
-                        validator[1] = 1;
-                    }
-                    BtnBook.IsEnabled = true;
-
-                    //ValidatorTest();
-                    _numberOfGuests = value;
-                    OnPropertyChanged();
-                }
-
-            }
-        }*/
-
-        /*private void ValidatorTest()
-        {
-            foreach (int validation in validator)
-            {
-                if (validation == 0)
-                {
-                    BtnBook.IsEnabled = false;
-                }
-            }
-        }*/
 
         public event PropertyChangedEventHandler PropertyChanged;
 

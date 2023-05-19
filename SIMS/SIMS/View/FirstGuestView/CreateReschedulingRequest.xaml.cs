@@ -107,16 +107,16 @@ namespace SIMS.View.FirstGuestView
 
         private void BtnRequest_Click(object sender, RoutedEventArgs e)
         {
-            /*Reservation reservation = new Reservation(FromDate, FromDate.AddDays(TimeOfStay), SelectedAccommodation, TimeOfStay, NumberOfGuests, LoggedInUser);
-            if (_reservationRepository.AvailableAccommodation(reservation))
-            {
-                _reservationRepository.Save(reservation);
-                MessageBox.Show("Accommodation " + SelectedAccommodation.Name + " successfully booked from " + FromDate.ToShortDateString() + " to " + FromDate.AddDays(TimeOfStay).ToShortDateString());
-            }*/
             ReschedulingRequests reschedulingRequest = new ReschedulingRequests(SelectedReservation, FromDate, ToDate);
-            _reschedulingRequestsRepository.Save(reschedulingRequest);
-            MessageBox.Show("Request Sent");
-            Close();
+            if (_reservationRepository.AvailableReschedulingAccommodation(reschedulingRequest, _reservationRepository.GetAccommodationById(SelectedReservation.Id)))
+            {
+                _reschedulingRequestsRepository.Save(reschedulingRequest);
+                MessageBox.Show("Rescheduling request has been sent");
+            }
+            else
+            {
+                MessageBox.Show("The accommodation is unavailable at the given time.");
+            }
         }
     }
 }

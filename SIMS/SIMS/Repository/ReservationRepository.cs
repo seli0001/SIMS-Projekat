@@ -1,4 +1,5 @@
 ﻿using SIMS.Domain.Model;
+using SIMS.Model;
 using SIMS.Serializer;
 using System;
 using System.Collections.Generic;
@@ -66,6 +67,12 @@ namespace SIMS.Repository
             return reservation;
         }
 
+        public Accommodation GetAccommodationById(int id)
+        {
+            Reservation reservation = GetById(id);
+            return reservation.Accommodation;
+        }
+
         public bool AvailableAccommodation(Reservation reservation)
         {
             List<Reservation> bookedReservations = GetByAccommodationsId(reservation.Accommodation.Id);
@@ -86,6 +93,35 @@ namespace SIMS.Repository
                     if (reservation.FromDate.AddDays(reservation.TimeOfStay) > reservation1.FromDate && reservation.FromDate.AddDays(reservation.TimeOfStay) < reservation1.ToDate)
                     {
                         MessageBox.Show("Unfortunately, we cannot book this for you because it is already booked in the given time. The first available day is " + GetFirstAvailableDate(reservation).ToString());
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        public bool AvailableReschedulingAccommodation(ReschedulingRequests reservation, Accommodation accommodation)
+        {
+            List<Reservation> bookedReservations = GetByAccommodationsId(accommodation.Id);
+            int timeOfStay = ((int)(reservation.ToDate - reservation.FromDate).TotalDays); 
+
+            bookedReservations.Sort((r1, r2) => r1.FromDate.CompareTo(r2.FromDate));
+            Reservation lastReservation = new Reservation() { FromDate = DateTime.MinValue, ToDate = DateTime.MinValue };
+
+            foreach (Reservation bookedReservation in bookedReservations)
+            {
+                if (reservation.FromDate >= bookedReservation.FromDate && reservation.FromDate < bookedReservation.ToDate)
+                {
+
+                    MessageBox.Show("Unfortunately, we cannot book this for you because it is already booked in the given time." );
+                    return false;
+                }
+                foreach (Reservation reservation1 in bookedReservations)
+                {
+                    if (reservation.FromDate.AddDays(timeOfStay) > reservation1.FromDate && reservation.FromDate.AddDays(timeOfStay) < reservation1.ToDate)
+                    {
+                        MessageBox.Show("Unfortunately, we cannot book this for you because it is already booked in the given time.");
                         return false;
                     }
                 }

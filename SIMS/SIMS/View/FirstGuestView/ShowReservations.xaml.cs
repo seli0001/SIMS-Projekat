@@ -4,6 +4,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using SIMS.Model;
+using System.Linq;
 
 namespace SIMS.View.FirstGuestView
 {
@@ -21,8 +22,10 @@ namespace SIMS.View.FirstGuestView
 
         private ReservationRepository _reservationRepository;
         private CancelingRequestsRepository _cancelingRequestsRepository;
+        private AccommodationRepository _accomodationRepository;
 
         public static ObservableCollection<Reservation> Reservations { get; set; }
+        public static ObservableCollection<Accommodation> Accommodations { get; set; }
         public Reservation SelectedReservation
         {
             get => _selectedReservation;
@@ -42,10 +45,22 @@ namespace SIMS.View.FirstGuestView
         {
             InitializeComponent();
             DataContext = this;
+            RateButton.IsEnabled = false;
             _cancelingRequestsRepository = new CancelingRequestsRepository();
             _reservationRepository = new ReservationRepository();
+            _accomodationRepository = new AccommodationRepository();
             Reservations = new ObservableCollection<Reservation>(_reservationRepository.GetByUserId(user.Id));
+            Accommodations = new ObservableCollection<Accommodation>(_accomodationRepository.GetAll());
+            PopulateAccommodationNames();
             LoggedInUser = user;
+        }
+
+        private void PopulateAccommodationNames()
+        {
+            foreach (var reservation in Reservations)
+            {
+                reservation.Accommodation = Accommodations.FirstOrDefault(a => a.Id == reservation.Accommodation.Id);
+            }
         }
 
         private bool CompareDates(DateTime date1, DateTime date2)
@@ -77,10 +92,26 @@ namespace SIMS.View.FirstGuestView
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            CancelingRequests cancelingRequest = new CancelingRequests(SelectedReservation);
-            _cancelingRequestsRepository.Save(cancelingRequest);
-            MessageBox.Show("Request Sent");
-            Close();
+            if (SelectedReservation == null)
+            {
+                MessageBox.Show("You have to choose the reservation to cancel");
+            }
+            else if (SelectedReservation.FromDate < DateTime.Today.AddDays(1)) 
+            {
+                MessageBox.Show("Youare late with your canceling request");
+            }
+            else
+            {
+                CancelingRequests cancelingRequest = new CancelingRequests(SelectedReservation);
+                _cancelingRequestsRepository.Save(cancelingRequest);
+                MessageBox.Show("Request Sent");
+            }
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            ShowRatings showRatings = new ShowRatings(LoggedInUser);
+            showRatings.Show();
         }
     }
 }

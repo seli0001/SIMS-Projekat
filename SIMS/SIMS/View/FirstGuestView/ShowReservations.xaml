@@ -5,31 +5,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SIMS.View.FirstGuestView"
         mc:Ignorable="d"
-        Title="ShowReservations" Height="600" Width="800">
+        Title="ShowReservations" Height="750" Width="430">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="100"></RowDefinition>
-            <RowDefinition></RowDefinition>
-        </Grid.RowDefinitions>
 
-        <Button x:Name="RateButton" Margin="634,0,0,152" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="100" Height="30" Content="Rate the Owner" Click="RateButton_Click_2"/>
+
+        <Button x:Name="RateButton" Margin="329,494,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="90" Height="72" Content="Rate the Owner" Click="RateButton_Click_2"/>
 
         <DataGrid
                   ItemsSource="{Binding Path=Reservations, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding Path=SelectedReservation, UpdateSourceTrigger=PropertyChanged}"
-                  AutoGenerateColumns="False" IsReadOnly="True" Margin="59,32,66,217" Grid.RowSpan="2">
+                  AutoGenerateColumns="False" IsReadOnly="True" Margin="10,189,10,245">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="100"></DataGridTextColumn>
-                <DataGridTextColumn Header="Number of Guests" Binding="{Binding NumberOfGuests}" Width="100"></DataGridTextColumn>
-                <DataGridTextColumn Header="Number of Days" Binding="{Binding TimeOfStay}" Width="100"></DataGridTextColumn>
-                <DataGridTextColumn Header="From Date" Binding="{Binding FromDate}" Width="*"></DataGridTextColumn>
-                <DataGridTextColumn Header="To Date" Binding="{Binding ToDate}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Id" Binding="{Binding Accommodation.Name}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Guests" Binding="{Binding NumberOfGuests}" Width="55"></DataGridTextColumn>
+                <DataGridTextColumn Header="From Date" Width="80" >
+                    <DataGridTextColumn.Binding>
+                        <Binding Path="FromDate" StringFormat="{}{0:d}" />
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="To Date" Width="80">
+                    <DataGridTextColumn.Binding>
+                        <Binding Path="ToDate" StringFormat="{}{0:d}" />
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button HorizontalAlignment="Left" Margin="258,299,0,0" Grid.Row="1" VerticalAlignment="Top" Height="33" Width="138" Content="Request Rescheduling" Click="Button_Click_1"/>
+        <Button HorizontalAlignment="Left" Margin="10,533,0,0" VerticalAlignment="Top" Height="34" Width="152" Content="Request Rescheduling" Click="Button_Click_1"/>
 
-        <Button HorizontalAlignment="Left" Margin="59,299,0,0" Grid.Row="1" VerticalAlignment="Top" Height="33" Width="139" Content="View My Requests" Click="Button_Click"/>
-        <Button Content="Cancel Reservation" HorizontalAlignment="Left" Margin="438,299,0,0" Grid.Row="1" VerticalAlignment="Top" Height="33" Width="150" Click="Button_Click_2"/>
+        <Button HorizontalAlignment="Left" Margin="10,494,0,0" VerticalAlignment="Top" Height="34" Width="152" Content="View My Requests" Click="Button_Click"/>
+        <Button Content="Cancel Reservation" HorizontalAlignment="Left" Margin="167,533,0,0" VerticalAlignment="Top" Height="33" Width="157" Click="Button_Click_2"/>
+        <Button Content="View MyRatings" HorizontalAlignment="Left" Margin="167,494,0,0" VerticalAlignment="Top" Height="34" Width="157" Click="Button_Click_3"/>
+        <Label Content="User Reservations" FontStretch="Condensed" FontSize="30" FontFamily="Arial"  HorizontalAlignment="Center"  HorizontalContentAlignment="Center" VerticalContentAlignment ="Center" Margin="0,110,0,0" VerticalAlignment="Top" Height="54" Width="410"/>
 
     </Grid>
 </Window>
