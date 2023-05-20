@@ -147,12 +147,10 @@ namespace SIMS.Service.Services
             return _reservationRepository.GetResNumForMonth(year, month, accommodation);
         }
 
-        
         public int GetBestYear(Accommodation accommodation)
         {
             return _reservationRepository.GetBestYear(accommodation);
         }
-
         public int GetBestMonth(Accommodation accommodation, int year)
         {
             return _reservationRepository.GetBestMonth(accommodation, year);

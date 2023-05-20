@@ -50,7 +50,6 @@ namespace SIMS.Service.Services
         {
             return _bookedToursRepository.GetUserActive(userId);
         }
-
         public SeriesCollection getDataForChartByAge(Tour tour)
         {
             List<BookedTour> data = GetAllByTour(tour.Id);

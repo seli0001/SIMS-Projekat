@@ -1,0 +1,97 @@
+@startuml
+actor "Vlasnik" as vlasnik
+
+participant "SchedulingRenovationView" as SchedulingRenovationView
+participant "SchedulingRenovationViewModel" as SchedulingRenovationViewModel
+
+participant "RenovationService" as renService
+participant "RenovationRepository" as renRepository
+
+participant "ReservationRepositorium" as resRepository
+participant "AccommodationRepositorium" as acRepository
+
+
+vlasnik -> SchedulingRenovationView: Izbor smeštaja i opseg datuma
+vlasnik -> SchedulingRenovationView: Confirm button
+
+
+SchedulingRenovationView-> SchedulingRenovationViewModel: Smestaj i opseg datuma
+
+
+
+SchedulingRenovationView-> SchedulingRenovationViewModel: SearchDates()
+activate SchedulingRenovationViewModel
+SchedulingRenovationViewModel-> renService: AvailableDates()    
+activate renService
+renService -> renRepository: AvailableDates()
+activate renRepository
+renRepository -> resRepository: GetByAccommodationsId()
+activate resRepository
+resRepository -> renRepository : accommodations
+deactivate resRepository
+renRepository -> renRepository: GetByAccommodationsId()
+loop
+            renRepository -> renRepository : CheckDates()
+renRepository -> renRepository : checkReservations()
+renRepository -> renRepository : checkRenovations()
+
+end
+
+alt Provera slobodnih termina
+
+renRepository -> renService: Dates
+deactivate renRepository
+
+
+renService-> SchedulingRenovationViewModel: Dates
+deactivate renService
+
+SchedulingRenovationViewModel-> SchedulingRenovationView: Dates
+deactivate SchedulingRenovationViewModel
+
+SchedulingRenovationView-> vlasnik: Dates
+
+else Svi termini zauzeti
+renRepository -> renService: No Available  Dates
+
+renService-> SchedulingRenovationViewModel: No Available Dates
+
+SchedulingRenovationViewModel-> SchedulingRenovationView: No Available Dates
+
+SchedulingRenovationView-> vlasnik: No Available Dates
+
+end
+
+vlasnik -> SchedulingRenovationView: Izbor datuma i opis renoviranja
+vlasnik -> SchedulingRenovationView: Confirm button
+
+
+SchedulingRenovationView-> SchedulingRenovationViewModel: Datum i opis renoviranja
+
+
+
+SchedulingRenovationView-> SchedulingRenovationViewModel: Schedule()
+activate SchedulingRenovationViewModel
+SchedulingRenovationViewModel-> renService: Save()   
+activate renService
+renService -> renRepository: Save()
+activate renRepository
+renRepository -> renRepository: GetAll()
+renRepository -> renRepository: GetNextId()
+renRepository -> acRepository: Renovate()
+activate acRepository
+acRepository -> acRepository: GetById
+acRepository -> acRepository: Update
+deactivate acRepository
+renRepository -> renService: Renovations
+deactivate renRepository
+
+renService-> SchedulingRenovationViewModel: Renovations
+deactivate renService
+
+SchedulingRenovationViewModel-> SchedulingRenovationView: Renovations
+deactivate SchedulingRenovationViewModel
+
+SchedulingRenovationView-> vlasnik: Renovations
+
+@enduml
