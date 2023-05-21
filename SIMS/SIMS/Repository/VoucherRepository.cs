@@ -24,7 +24,7 @@ namespace SIMS.Repository
         public void Delete(Voucher voucher)
         {
 
-            Voucher founded = vouchers.Find(t => t.Id == voucher.Id);
+            Voucher founded = vouchers.Find(v => v.Id == voucher.Id);
             vouchers.Remove(founded);
             _serializer.ToCSV(_filePath, vouchers);
 
@@ -57,6 +57,47 @@ namespace SIMS.Repository
                 }
             }
             _serializer.ToCSV(_filePath, vouchers);
+        }
+        
+        public void Save(Voucher voucher)
+        {
+            if (vouchers.Count == 0)
+            {
+                voucher.Id = 1;
+            }
+            else
+            {
+                voucher.Id = vouchers.Max(t => t.Id) + 1;
+            }
+            vouchers.Add(voucher);
+            _serializer.ToCSV(_filePath, vouchers);
+        }
+
+        public List<Voucher> GetAvailable(int id)
+        {
+            List<Voucher> vouchers = GetVouchers(id);
+            return vouchers.Where(v => v.Status == false).ToList();
+            
+        }
+
+        public List<Voucher> GetVouchers(int id)
+        {
+            List<Voucher> vouchers = GetAll();
+            List<Voucher> filteredVouchers = new List<Voucher>();
+
+            foreach (Voucher voucher in vouchers)
+            {
+                if (voucher.IdUser == id && voucher.ValidUntil > DateTime.Now)
+                {
+                    filteredVouchers.Add(voucher);
+                }
+                else if (voucher.ValidUntil < DateTime.Now)
+                {
+                    Delete(voucher);
+                }
+            }
+            return filteredVouchers;
+            
         }
     }
 }

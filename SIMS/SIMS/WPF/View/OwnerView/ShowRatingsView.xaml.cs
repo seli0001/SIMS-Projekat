@@ -1,9 +1,5 @@
-﻿using SIMS.Domain.Model;
-using SIMS.Repository;
-using SIMS.WPF.ViewModel.OwnerViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,21 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SIMS.View.OwnerView
+namespace SIMS.WPF.View.OwnerView
 {
     /// <summary>
-    /// Interaction logic for ShowRatings.xaml
+    /// Interaction logic for ShowRatingsView.xaml
     /// </summary>
-    public partial class ShowRatingsView : Window
+    public partial class ShowRatingsView : UserControl
     {
-        
-        public ShowRatingsView(User user)
+        public ShowRatingsView()
         {
             InitializeComponent();
-            ShowRatingsViewModel showRatingsViewModel = new ShowRatingsViewModel(user);
-            DataContext = showRatingsViewModel;
         }
     }
 }

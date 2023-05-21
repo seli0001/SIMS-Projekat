@@ -10,7 +10,7 @@ using SIMS.Model;
 
 namespace SIMS.Repository
 {
-    public class GuestRatingRepository
+    public class GuestRatingRepository : IGuestRatingRepository
     {
         private const string _filePath = "../../../../SIMS/Resources/Data/GuestRatings.csv";
 

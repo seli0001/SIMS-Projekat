@@ -13,5 +13,9 @@ namespace SIMS.Domain.RepositoryInterface
         void useIt(int voucherId);
         void DontUseIt(int voucherId);
         void Delete(Voucher voucher);
+        void Save(Voucher voucher);
+        public List<Voucher> GetVouchers(int id);
+        public List<Voucher> GetAvailable(int id);
+
     }
 }

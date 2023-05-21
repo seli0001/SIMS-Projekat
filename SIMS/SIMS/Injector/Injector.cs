@@ -12,14 +12,19 @@ namespace SIMS.Injector
     {
         private static Dictionary<Type, object> _implementations = new Dictionary<Type, object>
         {
+
         };
 
         public static void BindComponents()
         {
             VoucherRepository voucherRepository = new VoucherRepository();
             TourRatingRepository tourRatingRepository = new TourRatingRepository();
+            GuestRatingRepository guestRatingRepository = new GuestRatingRepository();
+            TourRequestRepository tourRequestRepository = new TourRequestRepository();
+            _implementations.Add(typeof(IGuestRatingRepository), guestRatingRepository);
             _implementations.Add(typeof(IVoucherRepository), voucherRepository);
             _implementations.Add(typeof(ITourRatingRepository), tourRatingRepository);
+            _implementations.Add(typeof(ITourRequestRepository), tourRequestRepository);
         }
 
         public static T CreateInstance<T>()

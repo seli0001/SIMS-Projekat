@@ -1,12 +1,6 @@
 ﻿using SIMS.Domain.Model;
 using SIMS.Repository;
-using SIMS.Repository.GuideRepository;
-using SIMS.Serializer;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Type = SIMS.Domain.Model.Type;
 
 namespace SIMS.Service.UseCases
@@ -71,6 +65,22 @@ namespace SIMS.Service.UseCases
             _accommodationRepository.deleteSuperOwner(user);
         }
 
+        public void makeSuperGuest(User user)
+        {
+            _accommodationRepository.makeSuperGuest(user);
+        }
+
+        public void deleteSuperGuest(User user)
+        {
+            _accommodationRepository.deleteSuperGuest(user);
+        }
+
+
+        public void RegulateRenovations()
+        {
+            _accommodationRepository.RegulateRenovations();
+        }
+
         public Accommodation makeSuper(Accommodation accommodation)
         {
             accommodation.Super = true;
@@ -78,5 +88,6 @@ namespace SIMS.Service.UseCases
             Save(accommodation);
             return accommodation;
         }
+
     }
 }

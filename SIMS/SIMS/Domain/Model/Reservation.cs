@@ -1,10 +1,5 @@
-﻿using SIMS.Domain.Model;
-using SIMS.Serializer;
+﻿using SIMS.Serializer;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SIMS.Domain.Model
 {
@@ -12,8 +7,8 @@ namespace SIMS.Domain.Model
     {
 
         public int Id { get; set; }
-        public DateTime FromDate { get; set; }
-        public DateTime ToDate { get; set; }
+        public DateOnly FromDate { get; set; }
+        public DateOnly ToDate { get; set; }
         public Accommodation Accommodation { get; set; }
         public int TimeOfStay { get; set; }
         public int NumberOfGuests { get; set; }
@@ -30,7 +25,7 @@ namespace SIMS.Domain.Model
 
         }
 
-        public Reservation(DateTime fromDate, DateTime toDate, Accommodation accommodation, int timeOfStay, int numberOfGuests, User user)
+        public Reservation(DateOnly fromDate, DateOnly toDate, Accommodation accommodation, int timeOfStay, int numberOfGuests, User user)
         {
             FromDate = fromDate;
             ToDate = toDate;
@@ -58,8 +53,8 @@ namespace SIMS.Domain.Model
         public void FromCSV(string[] csvValues)
         {
             Id = int.Parse(csvValues[0]);
-            FromDate = DateTime.Parse(csvValues[1]);
-            ToDate = DateTime.Parse(csvValues[2]);
+            FromDate = DateOnly.Parse(csvValues[1]);
+            ToDate = DateOnly.Parse(csvValues[2]);
             Accommodation = new Accommodation() { Id = Convert.ToInt32(csvValues[3]) };
             TimeOfStay = Convert.ToInt32(csvValues[4]);
             NumberOfGuests = Convert.ToInt32(csvValues[5]);

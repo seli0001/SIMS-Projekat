@@ -17,31 +17,19 @@ namespace SIMS.Service.Services
             _voucherRepository = Injector.Injector.CreateInstance<IVoucherRepository>();
         }
 
-
         public List<Voucher> GetVouchers(int id)
         {
-            List<Voucher> vouchers = _voucherRepository.GetAll();
-            List<Voucher> filteredVouchers = new List<Voucher>();
-
-            foreach (Voucher voucher in vouchers)
-            {
-                if (voucher.IdUser == id && voucher.ValiUntl > DateTime.Now)
-                {
-                    filteredVouchers.Add(voucher);
-                }
-                else if (voucher.ValiUntl < DateTime.Now)
-                {
-                    _voucherRepository.Delete(voucher);
-                }
-
-            }
-            return filteredVouchers;
+            return _voucherRepository.GetVouchers(id);
+        }
+        
+        public void AddVoucher(Voucher voucher)
+        {
+            _voucherRepository.Save(voucher);
         }
 
         public List<Voucher> GetAvailable(int id)
         {
-            List<Voucher> vouchers = GetVouchers(id);
-            return vouchers.Where(v => v.Status == false).ToList();
+           return _voucherRepository.GetAvailable(id);
         }
 
         public List<Voucher> GetAll(int id)

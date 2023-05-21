@@ -139,8 +139,7 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             }
         }
 
-        
-
+        #region commands
 
         private ICommand _saveRatingCommand;
         public ICommand SaveRatingCommand
@@ -159,14 +158,14 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
                 return _cancelCommand ?? (_cancelCommand = new CommandBase(() => Close(), true));
             }
         }
+        #endregion
 
-       
         private void SaveRating()
         {
             _guestRatingService.Save(new GuestRating(Cleanliness, RulesRespect, 
                 Comment, LoggedInUser, SelectedReservation));
 
-            ShowAccommodationViewModel.Reservations.Remove(SelectedReservation);
+            UnratedReservationsViewModel.Reservations.Remove(SelectedReservation);
             Close();
             MessageBox.Show("You have successfully reviewed");
         }

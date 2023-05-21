@@ -1,5 +1,4 @@
 ﻿using SIMS.Domain.Model;
-using SIMS.Domain.Model.Guide;
 using SIMS.Repository.GuideRepository;
 using SIMS.Serializer;
 using System;
@@ -16,7 +15,7 @@ namespace SIMS.Repository
 
         private readonly TourRepository _tourRepository;
         private readonly UserRepository _userRepository;
-
+        private readonly CheckpointRepository _checkpointRepository;
         private readonly Serializer<BookedTour> _serializer;
         public BookedTourRepository()
         {
@@ -24,8 +23,8 @@ namespace SIMS.Repository
             _serializer = new Serializer<BookedTour>();
             _tourRepository = new TourRepository();
             _userRepository = new UserRepository();
+            _checkpointRepository = new CheckpointRepository();
         }
-
 
         public List<BookedTour> GetAll()
         {
@@ -35,6 +34,10 @@ namespace SIMS.Repository
             {
                 bookedTour.Tour = _tourRepository.GetById(bookedTour.TourId);
                 bookedTour.User = _userRepository.GetAllUsers().Find(u => u.Id == bookedTour.UserId);
+                if (bookedTour.Checkpoint != null)
+                {
+                    bookedTour.Checkpoint = _checkpointRepository.GetAll().FirstOrDefault(c => c.Id == bookedTour.Checkpoint.Id);
+                }
             }
             return bookedTours;
         }
@@ -44,12 +47,15 @@ namespace SIMS.Repository
             List<BookedTour> bookedTours = GetAll();
             return bookedTours.Where(bookedTour => bookedTour.Tour.Id == tourId).ToList();
         }
-
+        
+        public BookedTour GetById(int id)
+        {
+            List<BookedTour> bookedTours = GetAll();
+            return bookedTours.Find(bookedTour => bookedTour.Id == id);
+        }
 
         private int GenerateId()
         {
-
-
             List<BookedTour> bookedTours = GetAll();
 
             if (bookedTours.Count == 0)
@@ -62,7 +68,7 @@ namespace SIMS.Repository
             }
         }
 
-        public void Save(Tour tour, int iduser)
+        public void Save(Tour tour, int iduser,int peopleNumber)
         {
             List<BookedTour> bookedTours = GetAll();
 
@@ -71,7 +77,7 @@ namespace SIMS.Repository
             bookedTour.TourId = tour.Id;
             bookedTour.UserId = iduser;
             bookedTour.Id = GenerateId();
-
+            bookedTour.NumberOfPeople = peopleNumber;
             bookedTours.Add(bookedTour);
             _serializer.ToCSV(_filePath, bookedTours);
         }
@@ -82,6 +88,38 @@ namespace SIMS.Repository
             bookedTours.RemoveAll(b => b.Id == bookedTour.Id);
             bookedTours.Add(bookedTour);
             _serializer.ToCSV(_filePath, bookedTours);
+        }
+
+        public List<BookedTour> GetAllByTour(int tourId)
+        {
+            return GetAll().Where(t => t.Tour.Id == tourId).ToList();
+            
+        }
+
+        public List<BookedTour> GetByUser(int userId)
+        {
+            return GetAll().Where(u => userId == u.UserId).ToList();
+         
+        }
+
+        public List<BookedTour> GetUserFinished(int userId)
+        {
+            List<BookedTour> tours = GetAll();
+
+            return tours.Where(t => t.UserId == userId &&
+                t.Tour != null && t.Tour.Status == TourStatus.FINISHED &&
+                t.Review == false && t.Checkpoint != null &&
+                t.Notify.ToString().Equals("Accepted", StringComparison.InvariantCultureIgnoreCase))
+                .ToList();
+        }
+
+        public List<BookedTour> GetUserActive(int userId)
+        {
+            return GetAll().Where(t => t.UserId == userId &&
+                t.Tour != null && t.Tour.Status.ToString().Equals("STARTED", StringComparison.InvariantCultureIgnoreCase) &&
+                t.Checkpoint != null &&
+                t.Notify.ToString().Equals("Accepted", StringComparison.InvariantCultureIgnoreCase))
+                .ToList();
         }
     }
 }

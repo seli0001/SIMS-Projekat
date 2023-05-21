@@ -1,6 +1,6 @@
-﻿using SIMS.Model;
+﻿using SIMS.Domain.Model;
+using SIMS.Model;
 using SIMS.Serializer;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,8 +16,6 @@ namespace SIMS.Repository
         private const string _filePath = "../../../../SIMS/Resources/Data/ReschedulingRequests.csv";
 
         private readonly Serializer<ReschedulingRequests> _serializer;
-
-        private readonly UserRepository _userRepository;
         private readonly ReservationRepository _reservationRepository;
 
         private List<ReschedulingRequests> _requests;
@@ -27,20 +25,24 @@ namespace SIMS.Repository
             _serializer = new Serializer<ReschedulingRequests>();
 
             _requests = _serializer.FromCSV(_filePath);
-            _userRepository = new UserRepository();
             _reservationRepository = new ReservationRepository();
         }
 
         public List<ReschedulingRequests> GetAll()
         {
-            return _serializer.FromCSV(_filePath);
+            _requests = _serializer.FromCSV(_filePath);
+            foreach (ReschedulingRequests req in _requests)
+            {
+                req.Reservation = _reservationRepository.GetById(req.Reservation.Id);
+            }
+            return _requests;
         }
 
         public List<ReschedulingRequests> GetByUserId(int id)
         {
             List<ReschedulingRequests> reschedulingRequests = GetAll();
             List<Reservation> reservations = _reservationRepository.GetByUserId(id);
-            foreach(Reservation reservation in reservations)
+            foreach (Reservation reservation in reservations)
             {
                 reschedulingRequests.Where(reschedulingRequest => reschedulingRequest.Reservation == reservation);
             }
@@ -48,12 +50,26 @@ namespace SIMS.Repository
 
         }
 
-        
+        public List<ReschedulingRequests> GetByAccommodationsId(int id)
+        {
+            _requests = GetAll();
+            return _requests.Where(request => request.Reservation.Accommodation.Id == id).ToList();
+        }
 
+        public List<ReschedulingRequests> GetByOwnerId(int id)
+        {
+            _requests = GetAll();
+            List<ReschedulingRequests> allRequests = new List<ReschedulingRequests>();
+            foreach(ReschedulingRequests req in _requests)
+            {
+                if (req.Reservation.Accommodation.User.Id == id && req.Status == Status.WAITING) allRequests.Add(req);
+            }
+            return allRequests;
+        }
         public ReschedulingRequests Save(ReschedulingRequests request)
         {
             request.Id = NextId();
-            _requests = _serializer.FromCSV(_filePath);
+            _requests = GetAll();
             _requests.Add(request);
             _serializer.ToCSV(_filePath, _requests);
             return request;
@@ -71,7 +87,7 @@ namespace SIMS.Repository
 
         public void Delete(ReschedulingRequests request)
         {
-            _requests = _serializer.FromCSV(_filePath);
+            _requests = GetAll();
             ReschedulingRequests founded = _requests.Find(r => r.Id == request.Id);
             if (founded == null) return;
             _requests.Remove(founded);
@@ -80,7 +96,7 @@ namespace SIMS.Repository
 
         public ReschedulingRequests Update(ReschedulingRequests request)
         {
-            _requests = _serializer.FromCSV(_filePath);
+            _requests = GetAll();
             ReschedulingRequests current = _requests.Find(r => r.Id == request.Id);
             if (current == null) return null;
             int index = _requests.IndexOf(current);
@@ -101,5 +117,31 @@ namespace SIMS.Repository
             }
             return _requests.FindAll(c => c.Reservation.Id == reservation.Id);
         }*/
+
+        public double GetRescheduledResNumForYear(int year, Accommodation accommodation)
+        {
+            double count = 0;
+            List<ReschedulingRequests> requests = GetByAccommodationsId(accommodation.Id);
+            foreach (ReschedulingRequests req in requests)
+            {
+                if (req.Reservation.FromDate.Year == year)
+                    count++;
+            }
+
+            return count;
+        }
+
+        public double GetRescheduledResNumForMonth(int year, int month, Accommodation accommodation)
+        {
+            double count = 0;
+            List<ReschedulingRequests> requests = GetByAccommodationsId(accommodation.Id);
+            foreach (ReschedulingRequests req in requests)
+            {
+                if (req.Reservation.FromDate.Year == year && req.Reservation.FromDate.Month == month)
+                    count++;
+            }
+
+            return count;
+        }
     }
 }

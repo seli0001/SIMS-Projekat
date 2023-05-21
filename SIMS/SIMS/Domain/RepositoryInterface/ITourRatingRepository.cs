@@ -12,5 +12,7 @@ namespace SIMS.Domain.RepositoryInterface
         List<TourRating> GetAll();
         int GenerateId();
         void Save(BookedTour bookedTour, int idUser, int znanjeVodica, int jezikVodica, int zanimljivostTure, string com, List<string> images);
+        void Update(TourRating rating);
+        public List<TourRating> GetAllByTourId(int tourId);
     }
 }

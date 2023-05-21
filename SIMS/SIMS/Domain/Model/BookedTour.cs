@@ -5,7 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using SIMS.Domain.Model.Guide;
+using SIMS.Repository;
 using SIMS.Serializer;
 
 namespace SIMS.Domain.Model
@@ -27,6 +27,9 @@ namespace SIMS.Domain.Model
         public User User { get; set; }
         public int UserId { get; set; }
         public bool Review { get; set; }
+        public int NumberOfPeople { get; set; }
+
+        public bool UsedVoucher { get; set; }
         private Checkpoint _checkpoint;
         public Notify Notify;
 
@@ -41,7 +44,9 @@ namespace SIMS.Domain.Model
         {
             Tour = new Tour();
             User = new User();
+            Checkpoint = new Checkpoint();
             Review = false;
+            UsedVoucher = false;
             Notify = Notify.NoAnswer;
         }
 
@@ -60,7 +65,9 @@ namespace SIMS.Domain.Model
             UserId.ToString(),
             Checkpoint != null ? Checkpoint.Id.ToString() : "",
             Review.ToString(),
-             Notify.ToString()
+            Notify.ToString(),
+            UsedVoucher.ToString(),
+            NumberOfPeople.ToString()
         };
             return csvValues;
         }
@@ -73,6 +80,8 @@ namespace SIMS.Domain.Model
             Checkpoint = csvValues[3] == "" ? null : new Checkpoint() { Id = int.Parse(csvValues[3]) };
             Review = bool.Parse(csvValues[4]);
             Notify = (Notify)Enum.Parse(typeof(Notify), csvValues[5]);
+            UsedVoucher = bool.Parse(csvValues[6]);
+            NumberOfPeople = int.Parse(csvValues[7]);
         }
     }
 }

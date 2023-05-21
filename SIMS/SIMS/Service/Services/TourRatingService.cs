@@ -22,10 +22,30 @@ namespace SIMS.Service.Services
             return _tourRatingRepository.GetAll();
         }
 
-        public void Save(BookedTour bookedTour, int idUser, int znanjeVodica, int jezikVodica, int zanimljivostTure, string com, List<string> images)
-        {
-            _tourRatingRepository.Save(bookedTour, idUser, znanjeVodica, jezikVodica, zanimljivostTure, com, images);
+        public List<TourRating> GetAllByTourId(int tourId) 
+        {       
+            return _tourRatingRepository.GetAllByTourId(tourId);
         }
 
+        public void SaveRating(TourRating rating)
+        {
+            _tourRatingRepository.Update(rating);
+        }
+
+        public void Save(BookedTour bookedTour, int idUser, int guideKnown, int guideLanguage, int tourReview, string comment, List<string> images)
+        {
+            _tourRatingRepository.Save(bookedTour, idUser, guideKnown, guideLanguage, tourReview, comment, images);
+        }
+
+        public void ReportRating(int ratingId)
+        {
+            TourRating reported = GetAll().FirstOrDefault(r => r.Id == ratingId);
+            if(reported == null)
+            {
+                return;
+            }
+            reported.Valid = false;
+            SaveRating(reported);
+        }
     }
 }
