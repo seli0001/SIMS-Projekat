@@ -11,9 +11,8 @@ using SIMS.WPF.ViewModel.ViewModel;
 
 namespace SIMS.WPF.ViewModel.OwnerViewModel
 {
-    public class ShowAccommodationViewModel : ViewModelBase
+    public class UnratedReservationsViewModel : ViewModelBase
     {
-        public Accommodation SelectedAccommodation { get; set; }
         private Reservation _selectedReservation;
 
         private GuestRatingService _guestRatingService;
@@ -50,21 +49,21 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
 
         private ReservationRepository _reservationRepository;
 
-        public ShowAccommodationViewModel(Accommodation selectedAccommodation, User user)
+        public UnratedReservationsViewModel() { }
+        public UnratedReservationsViewModel(User user)
         {
             _reservationRepository = new ReservationRepository();
             _guestRatingService = new GuestRatingService();
             Reservations = new ObservableCollection<Reservation>();
-            SelectedAccommodation = selectedAccommodation;
-            UpdateReservations();
             LoggedInUser = user;
+            UpdateReservations();
         }
 
         public void UpdateReservations()
         {
-            List<Reservation> AllReservationsForAccommodation = new List<Reservation>(_reservationRepository.GetByAccommodationsId(SelectedAccommodation.Id));
+            List<Reservation> AllReservationsForUser = new List<Reservation>(_reservationRepository.GetByOwnerId(LoggedInUser.Id));
             Reservations.Clear();
-            foreach (Reservation res in AllReservationsForAccommodation)
+            foreach (Reservation res in AllReservationsForUser)
             {
                 if (!_guestRatingService.checkRatingForReservation(res))
                 {

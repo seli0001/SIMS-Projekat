@@ -79,6 +79,7 @@
             <Button Content="Dodaj sliku (F1)" Grid.Column="4" Grid.Row="0" VerticalAlignment="Center" Click="AddImageFromFileDialog"  Width="90" TabIndex="7" />
             <Button Content="Obrisi sliku (F2)" Grid.Column="5" Grid.Row="0" VerticalAlignment="Center" Click="RemoveImage"  Width="90" />
             <ListView x:Name="imageListView" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="4" Grid.RowSpan="3">
+
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel Orientation="Horizontal" />

@@ -19,22 +19,7 @@ namespace SIMS.Service.Services
 
         public List<Voucher> GetVouchers(int id)
         {
-            List<Voucher> vouchers = _voucherRepository.GetAll();
-            List<Voucher> filteredVouchers = new List<Voucher>();
-
-            foreach (Voucher voucher in vouchers)
-            {
-                if (voucher.IdUser == id && voucher.ValidUntil > DateTime.Now)
-                {
-                    filteredVouchers.Add(voucher);
-                }
-                else if (voucher.ValidUntil < DateTime.Now)
-                {
-                    _voucherRepository.Delete(voucher);
-                }
-
-            }
-            return filteredVouchers;
+            return _voucherRepository.GetVouchers(id);
         }
         
         public void AddVoucher(Voucher voucher)
@@ -44,8 +29,7 @@ namespace SIMS.Service.Services
 
         public List<Voucher> GetAvailable(int id)
         {
-            List<Voucher> vouchers = GetVouchers(id);
-            return vouchers.Where(v => v.Status == false).ToList();
+           return _voucherRepository.GetAvailable(id);
         }
 
         public List<Voucher> GetAll(int id)

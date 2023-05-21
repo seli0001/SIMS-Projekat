@@ -165,7 +165,7 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             _guestRatingService.Save(new GuestRating(Cleanliness, RulesRespect, 
                 Comment, LoggedInUser, SelectedReservation));
 
-            ShowAccommodationViewModel.Reservations.Remove(SelectedReservation);
+            UnratedReservationsViewModel.Reservations.Remove(SelectedReservation);
             Close();
             MessageBox.Show("You have successfully reviewed");
         }

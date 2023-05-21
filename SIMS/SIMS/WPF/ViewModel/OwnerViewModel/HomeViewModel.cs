@@ -1,5 +1,4 @@
-﻿using SIMS.Repository;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Threading;
 using System.Windows;
@@ -8,12 +7,13 @@ using System.Windows.Input;
 using SIMS.Domain.Model;
 using SIMS.Service.UseCases;
 using SIMS.Service;
+using SIMS.WPF.ViewModel.OwnerViewModel;
 using SIMS.WPF.ViewModel.ViewModel;
 using SIMS.WPF.View.OwnerView;
 
 namespace SIMS.WPF.ViewModel.OwnerViewModel
 {
-    public class OwnerMainViewModel : ViewModelBase, IClose
+    class HomeViewModel : ViewModelBase, IClose
     {
         public static ObservableCollection<Accommodation> Accommodations { get; set; }
         public Accommodation SelectedAccommodation { get; set; }
@@ -22,15 +22,34 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         private readonly AccommodationService _accommodationService;
         private readonly OwnerMainService _ownerMainService;
 
-        private readonly OwnerRatingRepository _ownerRatingRepository;
 
+        private double _ownerRating;
+        public string OwnerRating
+        {
+            get
+            {
+
+                MessageBox.Show(_ownerRating.ToString());
+                return _ownerRating.ToString();
+            
+            } 
+            set
+            {
+                if(Double.Parse(value) != _ownerRating)
+                {
+                    _ownerRating = Double.Parse(value);
+                    OnPropertyChanged();
+                }
+            }
+        }
         public Action Close { get; set; }
         
         private Timer timer;
 
         public User LoggedInUser { get; set; }
+        MainViewModel mainViewModel;
 
-        public OwnerMainViewModel(User user)
+        public HomeViewModel(User user, MainViewModel mvm)
         {
             LoggedInUser = user;
 
@@ -38,9 +57,10 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             _accommodationService = new AccommodationService();
             _ownerMainService = new OwnerMainService();
 
-            _ownerRatingRepository = new OwnerRatingRepository();
             Accommodations = new ObservableCollection<Accommodation>(_accommodationService.GetByUser(user));
-            timer = new Timer(CheckCondition, null, TimeSpan.Zero, TimeSpan.FromSeconds(15));
+            timer = new Timer(CheckCondition, null, TimeSpan.Zero, TimeSpan.FromMinutes(5));
+            mainViewModel = mvm;
+            mainViewModel.setOwnerRating(_ownerMainService.getRating());
         }
 
         private void CheckCondition(object? state)
@@ -59,18 +79,27 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             App.Current.Dispatcher.Invoke((Action)delegate
             {
                 int temp = _ownerMainService.checkIsSuperOwner(LoggedInUser);
+
+                mainViewModel.setOwnerRating(_ownerMainService.getRating());
                 if (temp == 1)
                 {
                         _accommodationService.makeSuperOwner(LoggedInUser);
-                        MessageBox.Show("Congratulations You Have Became a SUPEROWNER!!!!");
+                    MessageBox.Show("Congratulations You Have Became a SUPEROWNER!!!!");
                         UpdateUI();
                 }
                 else if (temp == 0)
                 {
                         _accommodationService.deleteSuperOwner(LoggedInUser);
-                        MessageBox.Show("You have lost superowner title");
+                    MessageBox.Show("You have lost superowner title");
                         UpdateUI();
                 }
+            });
+
+            //Renovation
+            App.Current.Dispatcher.Invoke((Action)delegate
+            {
+                _accommodationService.RegulateRenovations();
+                UpdateUI();
             });
 
         }
@@ -130,27 +159,66 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             }
         }
 
-        private ICommand _showRatings;
-        public ICommand ShowRatingsCommand
+        private ICommand _schedulingRenovationCommand;
+        public ICommand SchedulingRenovationCommand
         {
             get
             {
-                return _showRatings ?? (_showRatings = new CommandBase(() => ShowRatings(), true));
+                return _schedulingRenovationCommand ?? (_schedulingRenovationCommand = new CommandBase(() => ShowSchedulingRenovationView(), true));
             }
         }
+
+        private ICommand _statisticsCommand;
+        public ICommand StatisticsCommand
+        {
+            get
+            {
+                return _statisticsCommand ?? (_statisticsCommand = new CommandBase(() => ShowStatisticsView(), true));
+            }
+        }
+
+        
+
+        //private ICommand _showRatings;
+        //public ICommand ShowRatingsCommand
+        //{
+        //    get
+        //    {
+        //        return _showRatings ?? (_showRatings = new CommandBase(() => ShowRatings(), true));
+        //    }
+        //}
 
         #endregion
 
         private void ShowRequestView()
         {
+            /*
             ReschedulingRequestView reschedulingRequestView = new ReschedulingRequestView(LoggedInUser);
-            reschedulingRequestView.Show();
+            reschedulingRequestView.Show(); */
         }
         private void ShowCreateAccommodationForm()
         {
-            AccommondationRegistration createAccommondationForm = new AccommondationRegistration(LoggedInUser);
-            createAccommondationForm.Show();
+            mainViewModel.NewAccommodationCommand.Execute(null);
         }
+
+        private void ShowSchedulingRenovationView()
+        {
+            if(SelectedAccommodation != null)
+            {
+                mainViewModel.SelectedAccommodation = SelectedAccommodation;
+                mainViewModel.SchedulingRenovationCommand.Execute(null);
+            }
+        }
+
+        private void ShowStatisticsView()
+        {
+            if (SelectedAccommodation != null)
+            {
+                mainViewModel.SelectedAccommodation = SelectedAccommodation;
+                mainViewModel.StatisticsComand.Execute(null);
+            }
+        }
+
 
         private void ShowUpdateAccommodationForm()
         {
@@ -171,10 +239,6 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
                 }
             }
         }
-        private void ShowRatings()
-        {
-            ShowRatingsView showRatings = new ShowRatingsView(LoggedInUser);
-            showRatings.Show();
-        }
+
     }
 }

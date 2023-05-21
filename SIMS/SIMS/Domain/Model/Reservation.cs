@@ -1,10 +1,5 @@
-﻿using SIMS.Domain.Model;
-using SIMS.Serializer;
+﻿using SIMS.Serializer;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SIMS.Domain.Model
 {

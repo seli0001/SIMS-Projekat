@@ -34,6 +34,7 @@ namespace SIMS.WPF.View
         {
             InitializeComponent();
             tourReviewViewModel = new TourReviewViewModel(tourId);
+
             DataContext = tourReviewViewModel;
             if (DataContext is IClose vm)
             {

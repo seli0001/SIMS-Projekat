@@ -57,6 +57,11 @@ namespace SIMS.Repository
             return GetAlternativeTours(tours, alternativeTours, tour);
         }
 
+        public List<Tour> GetNotStarted()
+        {
+            return GetAll().Where(t => t.Status.ToString().Equals("NOT_STARTED")).ToList();
+        }
+
         public List<Tour> GetAlternativeTours(List<Tour> tours, List<Tour> alternativeTours, Tour tour)
         {
             foreach (Tour foreachTour in tours)

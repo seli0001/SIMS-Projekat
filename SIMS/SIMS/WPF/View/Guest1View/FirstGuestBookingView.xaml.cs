@@ -66,7 +66,6 @@ namespace SIMS.View.FirstGuestView
             get => _timeOfStay;
             set
             {
-                MessageBox.Show(value.ToString());
                 if (value != _timeOfStay)
                 {
                     if (value < SelectedAccommodation.MinBookingDays)

@@ -1,6 +1,7 @@
 ﻿using SIMS.Domain.Model;
 using SIMS.Service.Services;
 using SIMS.WPF.View;
+using SIMS.WPF.View.Guest2View;
 using SIMS.WPF.ViewModel.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -76,37 +77,73 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
             }
         }
 
+        
+
+        private ICommand _tourRequestClickCommand;
+        public ICommand TourRequestClickCommand
+        {
+            get
+            {
+                return _tourRequestClickCommand ?? (_tourRequestClickCommand = new CommandBase(() => TourRequestClick(), true));
+            }
+        }
+        
+
+        private ICommand _toursRequestAndStatisticClickCommand;
+        public ICommand ToursRequestAndStatisticClickCommand
+        {
+            get
+            {
+                return _toursRequestAndStatisticClickCommand ?? (_toursRequestAndStatisticClickCommand = new CommandBase(() => ToursRequestAndStatisticClick(), true));
+            }
+        }
+
 
         #endregion
+
         public void CheckNotify()
         {
             bookedTours = _bookedTourService.GetByUser(userId);
 
             foreach (BookedTour t in bookedTours)
             {
-                if (t.Notify == (Notify)2 && t.Checkpoint != null)
+                if (t.Notify != null && t.Notify == Notify.NoAnswer && t.Checkpoint != null && t.Tour != null && t.Tour.Status == TourStatus.STARTED)
                 {
-                    if (MessageBox.Show("Da li si prisni na" + t.Tour.Name + "?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+                    if (MessageBox.Show("Da li si prisni na " + t.Tour.Name + "?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
                     {
-                        t.Notify = (Notify)1;
+                        t.Notify = Notify.Reject;
                         _bookedTourService.Update(t);
                     }
                     else
                     {
-                        t.Notify = (Notify)0;
+
+                        t.Notify = Notify.Accepted;
                         _bookedTourService.Update(t);
                     }
-
                 }
             }
         }
 
+        private void ToursRequestAndStatisticClick()
+        {
+            RequestedToursView requestedToursView = new RequestedToursView(userId);
+            requestedToursView.Show();
+            Close();
+        }
         private void MainGuest2ViewClick()
         {
             MainGuest2View mainGuest2View = new MainGuest2View(userId);
             mainGuest2View.Show();
             Close();
         }
+
+        private void TourRequestClick()
+        {
+            TourRequestView tourRequestView = new TourRequestView(userId);
+            tourRequestView.Show();
+            Close();
+        }
+
 
         private void AllVouchersClick()
         {

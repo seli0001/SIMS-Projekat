@@ -1,14 +1,8 @@
 ﻿using SIMS.Domain.Model;
 using SIMS.Model;
-using SIMS.Model;
 using SIMS.Serializer;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Xml.Linq;
 
 namespace SIMS.Repository
 {
@@ -49,6 +43,12 @@ namespace SIMS.Repository
             }
             return reschedulingRequests;
 
+        }
+
+        public List<ReschedulingRequests> GetByAccommodationsId(int id)
+        {
+            _requests = GetAll();
+            return _requests.Where(request => request.Reservation.Accommodation.Id == id).ToList();
         }
 
         public List<ReschedulingRequests> GetByOwnerId(int id)
@@ -112,5 +112,31 @@ namespace SIMS.Repository
             }
             return _requests.FindAll(c => c.Reservation.Id == reservation.Id);
         }*/
+
+        public double GetRescheduledResNumForYear(int year, Accommodation accommodation)
+        {
+            double count = 0;
+            List<ReschedulingRequests> requests = GetByAccommodationsId(accommodation.Id);
+            foreach (ReschedulingRequests req in requests)
+            {
+                if (req.Reservation.FromDate.Year == year)
+                    count++;
+            }
+
+            return count;
+        }
+
+        public double GetRescheduledResNumForMonth(int year, int month, Accommodation accommodation)
+        {
+            double count = 0;
+            List<ReschedulingRequests> requests = GetByAccommodationsId(accommodation.Id);
+            foreach (ReschedulingRequests req in requests)
+            {
+                if (req.Reservation.FromDate.Year == year && req.Reservation.FromDate.Month == month)
+                    count++;
+            }
+
+            return count;
+        }
     }
 }

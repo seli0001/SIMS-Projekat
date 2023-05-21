@@ -1,6 +1,7 @@
-﻿using System;
+﻿using SIMS.WPF.ViewModel;
+using SIMS.WPF.ViewModel.Guest2ViewModel;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,26 +13,19 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Xml.Linq;
-using SIMS.Repository;
-using System.Threading;
-using System.Windows.Threading;
-using SIMS.WPF.ViewModel.OwnerViewModel;
-using SIMS.Domain.Model;
-using SIMS.WPF.ViewModel;
 
-namespace SIMS.View.OwnerView
+namespace SIMS.WPF.View.Guest2View
 {
     /// <summary>
-    /// Interaction logic for OwnerMainView.xaml
+    /// Interaction logic for TourRequestView.xaml
     /// </summary>
-    public partial class OwnerMainView : Window
+    public partial class TourRequestView : Window
     {
-        public OwnerMainView(User user)
+        public TourRequestView(int userId)
         {
             InitializeComponent();
-            OwnerMainViewModel ownerMainViewModel = new OwnerMainViewModel(user);
-            DataContext = ownerMainViewModel;
+            TourRequestViewModel tourRequesViewModel = new TourRequestViewModel(userId);
+            DataContext = tourRequesViewModel;
             if (DataContext is IClose vm)
             {
                 vm.Close += () =>
@@ -40,6 +34,5 @@ namespace SIMS.View.OwnerView
                 };
             }
         }
-
     }
 }

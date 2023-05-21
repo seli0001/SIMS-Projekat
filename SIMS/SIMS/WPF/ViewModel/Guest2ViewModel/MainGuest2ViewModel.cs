@@ -20,6 +20,7 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
     {
         private readonly TourService _tourService;
         public ObservableCollection<Tour> tours { get; set; }
+        private readonly TourRequestService _tourRequestService;
         public Tour selectedTour { get; set; }
         public int userId;
         public Action Close { get; set; }
@@ -28,7 +29,11 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
         {
             this.userId = userId;
             _tourService = new TourService();
+            _tourRequestService = new TourRequestService();
             tours = new ObservableCollection<Tour>(_tourService.GetNotStarted());
+            CheckRequestNotify();
+
+
         }
 
         #region commands
@@ -195,6 +200,24 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
             return tours;
         }
 
+        public  void CheckRequestNotify()
+        {
+            List<TourRequest> requests = _tourRequestService.GetByUser(userId);
+            
+            foreach (TourRequest t in requests)
+            {
+                if (t.Status == RequestStatus.Accepted && t.Notify==false)
+                {
+                    MessageBox.Show("Vodic je prihvatio vasu turu" + t.Location.City + "vreme pogledajte u prozoru zahtevi");
+                    
+                        t.Notify = true;
+                    _tourRequestService.Update(t);
+                    
+                   
+                }
+            }
+
+        }
         private void NumberOfToursClick()
         {
             NumberOfTourGuestView numberOfTourGuestView = new NumberOfTourGuestView(selectedTour, userId, 100000);

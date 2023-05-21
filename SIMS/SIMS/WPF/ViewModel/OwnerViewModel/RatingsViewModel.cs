@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace SIMS.WPF.ViewModel.OwnerViewModel
 {
-    public class ShowRatingsViewModel : ViewModelBase
+    public class RatingsViewModel : ViewModelBase
     {
         private readonly OwnerRatingRepository _ownerRatingRepository;
         private readonly GuestRatingService _guestRatingService;
@@ -16,7 +16,8 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         public OwnerRating SelectedRating { get; set; }
         public User Owner { get; set; }
 
-        public ShowRatingsViewModel(User user)
+        public RatingsViewModel() { }
+        public RatingsViewModel(User user)
         {
             _ownerRatingRepository = new OwnerRatingRepository();
             _guestRatingService = new GuestRatingService();

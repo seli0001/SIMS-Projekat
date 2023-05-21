@@ -7,6 +7,7 @@ using SIMS.Domain.Model;
 using SIMS.WPF.View;
 using SIMS.View.OwnerView;
 using SIMS.WPF.ViewModel.ViewModel;
+using SIMS.WPF.View.OwnerView;
 
 namespace SIMS.WPF.ViewModel
 {
@@ -78,7 +79,7 @@ namespace SIMS.WPF.ViewModel
                 {
                     if (user.Role == ROLE.Owner)
                     {
-                        OwnerMainView ownerMainView = new OwnerMainView(user);
+                        OwnerMain ownerMainView = new OwnerMain(user);
                         ownerMainView.Show();
 
                     }
@@ -122,7 +123,7 @@ namespace SIMS.WPF.ViewModel
         {
             User user = _userRepository.GetUserByUsername("Sloba");
 
-            OwnerMainView ownerMainView = new OwnerMainView(user);
+            OwnerMain ownerMainView = new OwnerMain(user);
             ownerMainView.Show();
         }
     }

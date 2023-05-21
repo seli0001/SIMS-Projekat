@@ -94,5 +94,18 @@ namespace SIMS.Service.Services
             request = _reschedulingRequestsRepository.Update(request);
             return request;
         }
+
+        public double GetRescheduledResNumForYear(int year, Accommodation accommodation)
+        {
+            return _reschedulingRequestsRepository.GetRescheduledResNumForYear(year, accommodation);
+        }
+
+        
+
+        public double GetRescheduledResNumForMonth(int year,int month, Accommodation accommodation)
+        {
+            return _reschedulingRequestsRepository.GetRescheduledResNumForMonth(year, month, accommodation);
+        }
+
     }
 }
