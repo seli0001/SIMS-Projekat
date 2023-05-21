@@ -68,6 +68,24 @@ namespace SIMS.Repository
             return _reservations.Where(reservation => reservation.Accommodation.User.Id == id).ToList();
         }
 
+        public List<Reservation> GetRecentForGuest(User user)
+        {
+            _reservations = GetByUserId(user.Id);
+            List<Reservation> recents = new List<Reservation>();
+            DateTime now = DateTime.Now;
+            foreach(Reservation res in _reservations)
+            {
+                DateTime date = res.ToDate.ToDateTime(new TimeOnly());
+                TimeSpan difference = now - date;
+                if (difference.Days < 365)
+                    recents.Add(res);
+            }
+            return recents;
+        }
+
+
+        
+
 
 
         public Reservation Save(Reservation reservation)

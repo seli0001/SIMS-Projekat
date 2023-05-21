@@ -24,6 +24,8 @@ namespace SIMS.Repository
         private readonly ImageRepository _imageRepository;
         private readonly SuperOwnerRepository _superOwnerRepository;
 
+        private readonly SuperGuestRepository _superGuestRepository;
+
         public AccommodationRepository()
         {
             _serializer = new Serializer<Accommodation>();
@@ -32,7 +34,7 @@ namespace SIMS.Repository
             _locationRepository = new LocationRepository();
             _imageRepository = new ImageRepository();
             _superOwnerRepository = new SuperOwnerRepository();
-
+            _superGuestRepository = new SuperGuestRepository();
         }
 
         public List<Accommodation> GetAll()
@@ -124,6 +126,20 @@ namespace SIMS.Repository
                 accommodation.Super = false;
                 accommodation.Name = accommodation.Name.Substring(1, accommodation.Name.Length - 1);
             }
+            _serializer.ToCSV(_filePath, _accommodations);
+        }
+
+        public void makeSuperGuest(User user)
+        {
+            _accommodations = GetByUser(user);
+            _superGuestRepository.Save(user);
+            _serializer.ToCSV(_filePath, _accommodations);
+        }
+
+        public void deleteSuperGuest(User user)
+        {
+            _accommodations = GetByUser(user);
+            _superGuestRepository.Delete(user);
             _serializer.ToCSV(_filePath, _accommodations);
         }
 

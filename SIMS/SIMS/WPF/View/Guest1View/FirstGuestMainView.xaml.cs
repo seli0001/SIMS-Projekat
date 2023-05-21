@@ -18,6 +18,10 @@ using SIMS.Model;
 using SIMS.Repository;
 using SIMS.Domain.Model;
 using SIMS.Service.UseCases;
+using SIMS.Service;
+using SIMS.WPF.ViewModel.OwnerViewModel;
+using SIMS.Service.Services;
+using System.Threading;
 
 namespace SIMS.View.FirstGuestView
 {
@@ -38,11 +42,15 @@ namespace SIMS.View.FirstGuestView
         public ObservableCollection<Location> Locations { get; set; }
 
         private readonly LocationRepository _locationRepository;
+        private readonly AccommodationService _accommodationService;
 
         public ObservableCollection<Accommodation> Accommodations { get; set; }
         public User LoggedInUser { get; set; }
 
         private readonly AccommodationService _service;
+        private readonly GuestMainService _guestMainService;
+        private Timer timer;
+
 
         public FirstGuestMainView(User user)
         {
@@ -52,10 +60,33 @@ namespace SIMS.View.FirstGuestView
             _service = new AccommodationService();
             Accommodations = new ObservableCollection<Accommodation>(_service.GetAll());
             LoggedInUser = user;
+            _guestMainService = new GuestMainService();
+            _accommodationService = new AccommodationService();
+            timer = new Timer(CheckCondition, null, TimeSpan.Zero, TimeSpan.FromSeconds(15));
         }
 
+        private void CheckCondition(object? state)
+        {
+            App.Current.Dispatcher.Invoke((Action)delegate
+            {
 
-        public void Update()
+                int temp = _guestMainService.checkIsSuperGuest(LoggedInUser);
+
+                if (temp == 1)
+                {
+                    _accommodationService.makeSuperGuest(LoggedInUser);
+                    MessageBox.Show("Congratulations You Have Became a SUPERGUEST!!!!");
+                }
+                else if (temp == 0)
+                {
+                    _accommodationService.deleteSuperGuest(LoggedInUser);
+                    MessageBox.Show("You have lost superguest title");
+                }
+            });
+
+        }
+
+            public void Update()
         {
             throw new NotImplementedException();
         }

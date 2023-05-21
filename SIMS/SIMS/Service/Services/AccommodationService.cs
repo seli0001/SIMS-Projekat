@@ -65,6 +65,17 @@ namespace SIMS.Service.UseCases
             _accommodationRepository.deleteSuperOwner(user);
         }
 
+        public void makeSuperGuest(User user)
+        {
+            _accommodationRepository.makeSuperGuest(user);
+        }
+
+        public void deleteSuperGuest(User user)
+        {
+            _accommodationRepository.deleteSuperGuest(user);
+        }
+
+
         public void RegulateRenovations()
         {
             _accommodationRepository.RegulateRenovations();
