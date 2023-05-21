@@ -4,7 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="TourRegistrationView" Height="450" Width="600" ResizeMode="NoResize">
+        Title="TourRegistrationView" Height="450" Width="850" ResizeMode="NoResize"
+        PreviewKeyDown="Window_PreviewKeyDown">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -25,16 +26,18 @@
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
-                <RowDefinition Height="1.4*" />
+                <RowDefinition />
+                <RowDefinition />
                 <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="1.3*" />
-                <ColumnDefinition Width="0.15*" />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
+                <ColumnDefinition Width="20*" />
+                <ColumnDefinition Width="26*" />
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="30*" />
+                <ColumnDefinition Width="20*" />
+                <ColumnDefinition Width="20*" />
+                <ColumnDefinition Width="20*" />
             </Grid.ColumnDefinitions>
             <Label HorizontalAlignment="Right" Content="Naizv" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" />
             <Label HorizontalAlignment="Right" Content="Grad" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" />
@@ -43,38 +46,40 @@
             <Label HorizontalAlignment="Right" Content="Jezik" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" />
             <TextBlock HorizontalAlignment="Right" TextWrapping="WrapWithOverflow" Grid.Row="6" Grid.Column="0" Padding="0,0,5,0" TextAlignment="Right"
                    VerticalAlignment="Center">Maksimalan broj gostiju</TextBlock>
-            <TextBlock HorizontalAlignment="Right" TextWrapping="WrapWithOverflow" Grid.Row="7" Grid.Column="0" TextAlignment="Right" Padding="0,0,5,0"
+            <TextBlock HorizontalAlignment="Center" TextWrapping="WrapWithOverflow" Grid.Row="4" Grid.Column="3" TextAlignment="Right" Padding="0,0,5,0"
                    VerticalAlignment="Center" >Datum i vreme pocetka</TextBlock>
-            <Label HorizontalAlignment="Right" Content="Trajanje" Grid.Row="8" Grid.Column="0"
+            <Label HorizontalAlignment="Right" Content="Trajanje" Grid.Row="7" Grid.Column="0"
                    VerticalAlignment="Center" />
             <Label HorizontalAlignment="Center" Content="Slike" Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" />
-            <Label HorizontalAlignment="Center" Content="Kljucne tacke" Grid.Row="4" Grid.Column="3"
+            <Label HorizontalAlignment="Center" Content="Kljucne tacke" Grid.Row="4" Grid.Column="5"
                    VerticalAlignment="Center" />
 
 
             <TextBox Text="{Binding Path=Tour.Name, UpdateSourceTrigger=LostFocus}" Grid.Row="0" Grid.Column="1"
-                     VerticalAlignment="Center" />
+                     VerticalAlignment="Center" TabIndex="0" />
             <TextBox Text="{Binding Path=Tour.Location.City, UpdateSourceTrigger=LostFocus}" Grid.Row="1"
-                     Grid.Column="1" VerticalAlignment="Center" />
+                     Grid.Column="1" VerticalAlignment="Center" TabIndex="1" />
             <TextBox Text="{Binding Path=Tour.Location.Country, UpdateSourceTrigger=LostFocus}" Grid.Row="2"
-                     Grid.Column="1" VerticalAlignment="Center" />
+                     Grid.Column="1" VerticalAlignment="Center" TabIndex="2" />
             <TextBox Text="{Binding Path=Tour.Description, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" Grid.RowSpan="2"
-                     Grid.Row="3" Grid.Column="1" />
+                     Grid.Row="3" Grid.Column="1" TabIndex="3" />
             <TextBox Text="{Binding Path=Tour.Language, UpdateSourceTrigger=LostFocus}" Grid.Row="5" Grid.Column="1"
-                     VerticalAlignment="Center" />
+                     VerticalAlignment="Center" TabIndex="4" />
             <TextBox Name="maxNumberTextBox" Text="{Binding Path=Tour.MaxNumberOfPeople, UpdateSourceTrigger=LostFocus}" Grid.Row="6"
-                     Grid.Column="1" VerticalAlignment="Center" />
-            <ComboBox x:Name="hourComboBox" Grid.Row="7" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="18" Margin="0,0,0,40" Grid.RowSpan="2"></ComboBox>
-            <ComboBox x:Name="minutesComboBox" Grid.Row="7" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="18" Margin="0,0,0,40" Grid.RowSpan="2"></ComboBox>
-            <Button x:Name="AddDateButton" Grid.Row="7" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="18" Margin="0,0,0,40" Grid.RowSpan="2" Content="+" Width="28" Click="AddDateButton_Click"></Button>
+                     Grid.Column="1" VerticalAlignment="Center" TabIndex="5" />
+            <ComboBox x:Name="hourComboBox" Grid.Row="6" Grid.Column="4" HorizontalAlignment="Left" Margin="5,5" Width="40" TabIndex="9" ></ComboBox>
+            <ComboBox x:Name="minutesComboBox" Grid.Row="6" Grid.Column="4" HorizontalAlignment="Right" Margin="10,5" Width="40" TabIndex="10" ></ComboBox>
+            <Button x:Name="AddDateButton" Grid.Row="7" Grid.Column="4" VerticalAlignment="Center" Margin="5"  Content="Dodaj termin (F3)"  Click="AddDateButton_Click" TabIndex="11"></Button>
+            <Button x:Name="RemoveDateButton" Grid.Row="8" Grid.Column="4" VerticalAlignment="Center" Margin="5"  Content="Obrisi termin (F4)"  Click="RemoveDate"></Button>
 
-            <DatePicker x:Name="date" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="115" Margin="0,40,0,0" Grid.RowSpan="2"/>
-            <TextBox Name="durationTextBox" Text="{Binding Path=Tour.Duration, UpdateSourceTrigger=LostFocus}" Grid.Row="8" Grid.Column="1"
-                     VerticalAlignment="Center" />
-            <Button Content="Dodaj sliku" Grid.Column="4" Grid.Row="0" VerticalAlignment="Center" Click="AddImageFromFileDialog"  Width="80" />
-            <Button Content="Obrisi sliku" Grid.Column="5" Grid.Row="0" VerticalAlignment="Center" Click="RemoveImage"  Width="80" />
-           
-            <ListView x:Name="imageListView" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Grid.RowSpan="3">
+            <DatePicker x:Name="date" Grid.Row="5" Grid.Column="4"  Margin="5" VerticalAlignment="Center" SelectedDateChanged="date_SelectedDateChanged" TabIndex="8">
+            </DatePicker>
+            <TextBox Name="durationTextBox" Text="{Binding Path=Tour.Duration, UpdateSourceTrigger=LostFocus}" Grid.Row="7" Grid.Column="1"
+                     VerticalAlignment="Center" TabIndex="6" />
+            <Button Content="Dodaj sliku (F1)" Grid.Column="4" Grid.Row="0" VerticalAlignment="Center" Click="AddImageFromFileDialog"  Width="90" TabIndex="7" />
+            <Button Content="Obrisi sliku (F2)" Grid.Column="5" Grid.Row="0" VerticalAlignment="Center" Click="RemoveImage"  Width="90" />
+            <ListView x:Name="imageListView" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="4" Grid.RowSpan="3">
+
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel Orientation="Horizontal" />
@@ -86,22 +91,29 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <TextBox x:Name="CheckPointTextBox" Grid.Row="5" Grid.Column="3" VerticalAlignment="Center" />
-            <Button Content="Dodaj tacku" Grid.Column="4" Grid.Row="5" VerticalAlignment="Center"
-                    Click="AddNewCheckpoint" Width="80" />
-            <Button Content="Obrisi tacku" Grid.Column="5" Grid.Row="5" VerticalAlignment="Center"
-                    Click="RemoveCheckpoint" Width="80" />
-            <ListView x:Name="checkpointListView" Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="3" Grid.RowSpan="3">
+            <TextBox x:Name="CheckPointTextBox" Grid.Row="5" Grid.Column="7" VerticalAlignment="Center" Margin="5" TabIndex="12" />
+            <Button Content="Dodaj tacku (F5)" Grid.Column="7" Grid.Row="7" VerticalAlignment="Center"
+                    Click="AddNewCheckpoint" Margin="5" TabIndex="13" />
+            <Button Content="Obrisi tacku (F6)" Grid.Column="6" Grid.Row="8" VerticalAlignment="Center"
+                    Click="RemoveCheckpoint" Margin="5" />
+            <ListView x:Name="checkpointListView" Grid.Row="5" Grid.Column="5" Grid.ColumnSpan="1" Grid.RowSpan="4">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Width="310" Header="Name" DisplayMemberBinding="{Binding Name}" />
+                        <GridViewColumn Width="115" Header="Name" DisplayMemberBinding="{Binding Name}" />
                     </GridView>
                 </ListView.View>
             </ListView>
-
+            <ListView x:Name="datesListView" Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="1" Grid.RowSpan="4">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Width="158" Header="Datum" DisplayMemberBinding="{Binding}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
         </Grid>
-        <Button Content="Kreiraj" Height="26" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center"
-                VerticalAlignment="Center" Width="159" Click="RegisterTour" />
+        <Button Content="Kreiraj (ctrl + s)" Height="26" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left"
+                VerticalAlignment="Center" Width="159" Click="RegisterTour" Margin="222,0,0,0" />
+        <Button Grid.Column="1" Content="Odustani (ctrl + o)" HorizontalAlignment="Left" Height="26" Grid.Row="2" VerticalAlignment="Center" Width="158" Margin="391,0,0,0" Click="Button_Click"/>
 
     </Grid>
 </Window>

@@ -26,12 +26,15 @@ namespace SIMS.WPF.View
     /// </summary>
     public partial class TourReviewView : Window
     {
+        private readonly TourRatingService _tourRatingService;
         public TourRating SelectedTourRating { get; set; }
         public ObservableCollection<TourRating> TourRatings { get; set; }
+        private TourReviewViewModel tourReviewViewModel;
         public TourReviewView(int tourId)
         {
             InitializeComponent();
-            TourReviewViewModel tourReviewViewModel = new TourReviewViewModel(tourId);
+            tourReviewViewModel = new TourReviewViewModel(tourId);
+
             DataContext = tourReviewViewModel;
             if (DataContext is IClose vm)
             {
@@ -39,6 +42,23 @@ namespace SIMS.WPF.View
                 {
                     this.Close();
                 };
+            }
+        }
+
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                Close();
+            }
+            else if (e.Key == Key.F1)
+            {
+                if (reviewDataGrid.SelectedIndex != -1) tourReviewViewModel.RatingDeatails();
+                else MessageBox.Show("Morate izabrati recenziju!");
+            }
+            else if (e.Key == Key.F2)
+            {
+                Close();
             }
         }
     }

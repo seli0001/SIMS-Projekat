@@ -42,6 +42,17 @@ namespace SIMS.WPF.View.GuideView
             }
         }
 
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                Close();
+            }
+            else if (e.Key == Key.F1)
+            {
+                Close();
+            }
+        }
     }
     
 }

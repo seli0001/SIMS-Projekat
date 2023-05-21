@@ -23,12 +23,11 @@ namespace SIMS.WPF.View
     /// </summary>
     public partial class TourRatingDetailsView : Window
     {
-        private readonly TourRatingService _tourRatingService;
-        private TourRating rating;
+        private TourRatringDetailsViewModel tourRatringDetailsViewModel;
         public TourRatingDetailsView(TourRating tourRating)
         {
             InitializeComponent();
-            TourRatringDetailsViewModel tourRatringDetailsViewModel = new TourRatringDetailsViewModel(tourRating);
+            tourRatringDetailsViewModel = new TourRatringDetailsViewModel(tourRating);
             DataContext = tourRatringDetailsViewModel;
 
             if (DataContext is IClose vm)
@@ -39,6 +38,21 @@ namespace SIMS.WPF.View
                 };
             }
         }
-
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                Close();
+            }
+            else if (e.Key == Key.F1)
+            {
+                if (tourRatringDetailsViewModel.IsEnabled) tourRatringDetailsViewModel.Report();
+                else MessageBox.Show("Ne mozete prijaviti recenziju!");
+            }
+            else if (e.Key == Key.F2)
+            {
+                Close();
+            }
+        }
     }
 }

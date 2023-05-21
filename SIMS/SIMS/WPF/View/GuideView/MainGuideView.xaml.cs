@@ -17,6 +17,7 @@ using SIMS.Repository;
 using SIMS.Service.Services;
 using SIMS.WPF.View;
 using SIMS.WPF.View.GuideView;
+using SIMS.WPF.ViewModel;
 
 namespace SIMS.View.GuideView
 {
@@ -32,6 +33,7 @@ namespace SIMS.View.GuideView
         public ObservableCollection<Tour> Tours { get; set; }
         public ObservableCollection<Tour> AllTours { get; set; }
         public Tour SelectedTour { get; set; }
+
         public MainGuideView(User guide)
         {
             InitializeComponent();
@@ -42,14 +44,91 @@ namespace SIMS.View.GuideView
             Tours = new ObservableCollection<Tour>(GetTours());
             AllTours = new ObservableCollection<Tour>(_tourService.GetAll());
             SelectedTour = new Tour();
-            StartTourButton.IsEnabled = !HasTourInProgress();
+            StartTourButton.IsEnabled = !HasTourInProgress() && Tours.Count > 0 && Tours.FirstOrDefault(t => t.Status == TourStatus.NOT_STARTED) != null;
             ViewStartedTourButton.IsEnabled = HasTourInProgress();
+            mostVisitedButton.IsEnabled = AllTours.FirstOrDefault(t => t.Status == TourStatus.FINISHED) != null;
+            cancelTourButton.IsEnabled = false;
+            tourRatingButton.IsEnabled = false;
+            tourStatisticButton.IsEnabled = false;
             DataContext = this;
         }
         
         public List<Tour> GetTours()
         {
             return _tourService.GetAllByGuideId(_guide.Id).Where(t => DateTime.Now.Date.Equals(t.StartTime.Time.Date)).ToList();
+        }
+
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.F1)
+            {
+                if(TabControl.SelectedIndex == 0)
+                    RegisterTour();
+                else if(TabControl.SelectedIndex == 1)
+                    if (cancelTourButton.IsEnabled)
+                        cancelTourButton_Click(null, null);
+                    else
+                        MessageBox.Show("Morate odabrati turu koja moze da se otkaze!");
+            }
+            if (e.Key == Key.F2)
+            {
+                if (TabControl.SelectedIndex == 0)
+                {
+                    if (StartTourButton.IsEnabled) StartTourButtonClick();
+                    else MessageBox.Show("Morate odabrati turu koju zelite da zapocnete!");
+                }
+                else if (TabControl.SelectedIndex == 1)
+                {
+                    if (tourRatingButton.IsEnabled) tourRatingButton_Click(null, null);
+                    else MessageBox.Show("Morate odabrati turu koju zelite da ocenite!");
+                }
+            }
+            if (e.Key == Key.F3)
+            {
+                if ( TabControl.SelectedIndex == 0)
+                {
+                    if (ViewStartedTourButton.IsEnabled) ViewStartedTourButtonClick();
+                    else MessageBox.Show("Nemate zapocetu turu!");
+                }
+                else if (TabControl.SelectedIndex == 1)
+                {
+                    if (tourStatisticButton.IsEnabled) tourStatisticButton_Click(null, null);
+                    else MessageBox.Show("Morate odabrati turu za koju zelite da vidite statistiku!");
+                }
+                
+            }
+            if (e.Key == Key.F4)
+            {
+                if (TabControl.SelectedIndex == 1)
+                {
+                    if (mostVisitedButton.IsEnabled) mostVisitedButton_Click(null, null);
+                    else MessageBox.Show("Nemate zavrsenu turu!");
+                }
+            }
+            if (e.Key == Key.D1 && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                TabControl.SelectedIndex = 0;
+            }
+            if (e.Key == Key.D2 && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                TabControl.SelectedIndex = 1;
+            }
+            if (e.Key == Key.D3 && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                TabControl.SelectedIndex = 2;
+            }
+            if (e.Key == Key.D4 && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                TabControl.SelectedIndex = 3;
+            }
+        }
+
+        public void RegisterTour()
+        {
+            TourRegistrationView tourRegistrationView = new TourRegistrationView(_guide);
+            tourRegistrationView.ShowDialog();
+            UpdateDataGrid();
+            UpdateAllTours();
         }
 
         private void RegisterTour(object sender, RoutedEventArgs e)
@@ -103,6 +182,11 @@ namespace SIMS.View.GuideView
 
         private void StartTourButton_Click(object sender, RoutedEventArgs e)
         {
+            StartTourButtonClick();
+        }
+
+        private void StartTourButtonClick()
+        {
             SelectedTour.Status = TourStatus.STARTED;
             StartTourButton.IsEnabled = false;
             _tourService.Update(SelectedTour);
@@ -113,13 +197,18 @@ namespace SIMS.View.GuideView
 
         private void ViewStartedTourButton_Click(object sender, RoutedEventArgs e)
         {
+            ViewStartedTourButtonClick();
+        }
+
+        private void ViewStartedTourButtonClick()
+        {
             Tour tourInProgress = Tours.FirstOrDefault(t => t.Status == TourStatus.STARTED);
             if (tourInProgress != null)
             {
                 ViewStartedTourButton.IsEnabled = false;
                 LiveTourTrackingView liveTourTrackingView = new LiveTourTrackingView(tourInProgress);
                 liveTourTrackingView.ShowDialog();
-                
+
             }
             ViewStartedTourButton.IsEnabled = HasTourInProgress();
         }
@@ -156,6 +245,34 @@ namespace SIMS.View.GuideView
         {
             TourStatisticsView tourStatisticsView = new TourStatisticsView(_tourService.GetMostVisited());
             tourStatisticsView.ShowDialog();
+        }
+
+        private void dataGridAllTours_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (dataGridAllTours.SelectedIndex == -1)
+            {
+                cancelTourButton.IsEnabled = false;
+                tourRatingButton.IsEnabled = false;
+                tourStatisticButton.IsEnabled = false;
+            }
+            if (SelectedTour.Status == TourStatus.NOT_STARTED && SelectedTour.StartTime.Time >= DateTime.Now.AddDays(2))
+            {
+                cancelTourButton.IsEnabled = true;
+                tourRatingButton.IsEnabled = false;
+                tourStatisticButton.IsEnabled = false;
+            }
+            else if (SelectedTour.Status == TourStatus.FINISHED)
+            {
+                cancelTourButton.IsEnabled = false;
+                tourRatingButton.IsEnabled = true;
+                tourStatisticButton.IsEnabled = true;
+            }
+            else
+            {
+                cancelTourButton.IsEnabled = false;
+                tourRatingButton.IsEnabled = false;
+                tourStatisticButton.IsEnabled = false;
+            }
         }
     }
 }
