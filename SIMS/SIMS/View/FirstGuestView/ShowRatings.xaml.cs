@@ -52,7 +52,7 @@ namespace SIMS.View.FirstGuestView
         {
             foreach (var rating in GuestRatings)
             {
-                OwnerRatings = new ObservableCollection<OwnerRating>(_ownerRatingRepository.GetByUserId(rating.User.Id)));
+                OwnerRatings = new ObservableCollection<OwnerRating>(_ownerRatingRepository.GetByUserId(rating.User.Id));
                 rating.User = Users.FirstOrDefault(a => a.Id == rating.User.Id);
             }
         }
