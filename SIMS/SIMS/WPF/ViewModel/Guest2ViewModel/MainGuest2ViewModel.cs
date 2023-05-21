@@ -215,6 +215,13 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
                     
                    
                 }
+
+                if ( (t.StartDate - DateTime.Now).TotalDays <= 2 && t.Status==RequestStatus.Waiting)
+                {
+                    t.Status = RequestStatus.Rejected;
+                    _tourRequestService.Update(t);
+                }
+
             }
 
         }
