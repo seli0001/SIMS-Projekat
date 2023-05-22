@@ -101,6 +101,22 @@ namespace SIMS.Repository
             return true;
         }
 
+        public List<Reservation> GetRecentForGuest(User user)
+        {
+            List<Reservation> reservations = GetByUserId(user.Id);
+            List<Reservation> recents = new List<Reservation>();
+            DateTime now = DateTime.Now;
+            foreach (Reservation res in reservations)
+            {
+                DateTime date = res.ToDate;
+                TimeSpan difference = now - date;
+                if (difference.Days < 365)
+                    recents.Add(res);
+            }
+            return recents;
+        }
+
+
         public bool AvailableReschedulingAccommodation(ReschedulingRequests reservation, Accommodation accommodation)
         {
             List<Reservation> bookedReservations = GetByAccommodationsId(accommodation.Id);

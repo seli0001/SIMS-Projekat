@@ -16,6 +16,9 @@ using System.Xml.Linq;
 using SIMS.Repository;
 using SIMS.Domain.Model;
 using SIMS.Domain.Model;
+using SIMS.Service.UseCases;
+using SIMS.Service.Services;
+using System.Threading;
 
 namespace SIMS.View.FirstGuestView
 {
@@ -41,6 +44,9 @@ namespace SIMS.View.FirstGuestView
         public User LoggedInUser { get; set; }
 
         private readonly AccommodationRepository _repository;
+        private readonly AccommodationService _accommodationService;
+        private readonly GuestMainService _guestMainService;
+        private Timer timer;
 
         public FirstGuestMainView(User user)
         {
@@ -50,6 +56,30 @@ namespace SIMS.View.FirstGuestView
             _repository = new AccommodationRepository();
             Accommodations = new ObservableCollection<Accommodation>(_repository.GetForView());
             LoggedInUser = user;
+            _guestMainService = new GuestMainService();
+            _accommodationService = new AccommodationService();
+            timer = new Timer(CheckCondition, null, TimeSpan.Zero, TimeSpan.FromSeconds(15));
+        }
+
+        private void CheckCondition(object? state)
+        {
+            App.Current.Dispatcher.Invoke((Action)delegate
+            {
+
+                int temp = _guestMainService.checkIsSuperGuest(LoggedInUser);
+
+                if (temp == 1)
+                {
+                    _accommodationService.makeSuperGuest(LoggedInUser);
+                    MessageBox.Show("Congratulations You Have Became a SUPERGUEST!!!!");
+                }
+                else if (temp == 0)
+                {
+                    _accommodationService.deleteSuperGuest(LoggedInUser);
+                    MessageBox.Show("You have lost superguest title");
+                }
+            });
+
         }
 
 
