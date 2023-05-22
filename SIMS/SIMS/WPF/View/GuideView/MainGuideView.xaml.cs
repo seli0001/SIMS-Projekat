@@ -32,17 +32,23 @@ namespace SIMS.View.GuideView
         private readonly VoucherService _voucherService;
         public ObservableCollection<Tour> Tours { get; set; }
         public ObservableCollection<Tour> AllTours { get; set; }
+        public ObservableCollection<TourRequest> TourRequests { get; set; }
+        private readonly TourRequestService _tourRequestService;
         public Tour SelectedTour { get; set; }
+        public TourRequest SelectedTourRequest { get; set; }
 
         public MainGuideView(User guide)
         {
             InitializeComponent();
+            SelectedTourRequest = new TourRequest();
+            _tourRequestService = new TourRequestService();
             _guide = guide;
             _tourService = new TourService();
             _bookedTourService = new BookedTourService();
             _voucherService = new VoucherService();
             Tours = new ObservableCollection<Tour>(GetTours());
             AllTours = new ObservableCollection<Tour>(_tourService.GetAll());
+            TourRequests = new ObservableCollection<TourRequest>(_tourRequestService.GetAll().Where(t=>t.Status == RequestStatus.Waiting));
             SelectedTour = new Tour();
             StartTourButton.IsEnabled = !HasTourInProgress() && Tours.Count > 0 && Tours.FirstOrDefault(t => t.Status == TourStatus.NOT_STARTED) != null;
             ViewStartedTourButton.IsEnabled = HasTourInProgress();
@@ -272,6 +278,45 @@ namespace SIMS.View.GuideView
                 cancelTourButton.IsEnabled = false;
                 tourRatingButton.IsEnabled = false;
                 tourStatisticButton.IsEnabled = false;
+            }
+        }
+
+        private void UpdateRequest()
+        {
+            TourRequests.Clear();
+            foreach(TourRequest t in _tourRequestService.GetAll().Where(t=> t.Status == RequestStatus.Waiting))
+            {
+                TourRequests.Add(t);
+            }
+        }
+
+        private void AcceptTourRequestButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(dataGridTourRequest.SelectedIndex != -1)
+            {
+                AcceptTourRequest acceptTourRequest = new AcceptTourRequest(SelectedTourRequest,_guide);
+                acceptTourRequest.ShowDialog();
+                UpdateRequest();
+            }
+        }
+
+        private void CreateByLocation_Click(object sender, RoutedEventArgs e)
+        {
+            Location location = _tourRequestService.GetLocationMostRequested();
+            if(location != null)
+            {
+                TourRegistrationView tourRegistrationView = new TourRegistrationView(_guide, location);
+                tourRegistrationView.ShowDialog();
+            }
+        }
+
+        private void CreateByLanguage_Click(object sender, RoutedEventArgs e)
+        {
+            string language = _tourRequestService.GetLanguageMostVisited();
+            if(language != "")
+            {
+                TourRegistrationView tourRegistrationView = new TourRegistrationView(_guide, null, language);
+                tourRegistrationView.ShowDialog();
             }
         }
     }

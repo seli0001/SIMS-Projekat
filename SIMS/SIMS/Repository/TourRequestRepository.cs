@@ -25,7 +25,37 @@ namespace SIMS.Repository
 
         public List<TourRequest> GetAll()
         {
-           return _serializer.FromCSV(_filePath);
+            List<TourRequest> tourRequests = _serializer.FromCSV(_filePath);
+            foreach( TourRequest t in tourRequests)
+            {
+                t.Location = _locationRepository.GetById(t.Location.Id);
+            }
+            return tourRequests;
+        }
+
+        public Location GetMostLocation()
+        {
+            var groupedRequests = GetAll().GroupBy(r => r.Location.City).OrderByDescending(g => g.Count()).FirstOrDefault();
+            foreach ( TourRequest t in groupedRequests)
+            {
+                return t.Location;
+            }
+            return null;
+        }
+
+        public string GetMostLanguage()
+        {
+            var groupedRequests = GetAll().GroupBy(r => r.Language).OrderByDescending(g => g.Count()).FirstOrDefault();
+            foreach (TourRequest t in groupedRequests)
+            {
+                return t.Language;
+            }
+            return "";
+        }
+
+        public TourRequest GetById(int id)
+        {
+            return GetAll().FirstOrDefault(t => t.Id == id);
         }
 
         public List<TourRequest> GetByUser(int userId)

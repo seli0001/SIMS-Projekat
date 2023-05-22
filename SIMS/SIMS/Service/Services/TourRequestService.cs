@@ -33,6 +33,11 @@ namespace SIMS.Service.Services
            return  _tourRequestRepository.GetByUser(userId);
         }
 
+        public List<TourRequest> GetAll()
+        {
+            return _tourRequestRepository.GetAll();
+        }
+
         public void Update(TourRequest tourRequest)
         {
             _tourRequestRepository.Update(tourRequest);
@@ -127,6 +132,16 @@ namespace SIMS.Service.Services
                 }
             }
             return numberOfPeople / counter;
+        }
+
+        public Location GetLocationMostRequested()
+        {
+            return _tourRequestRepository.GetMostLocation();
+        }
+
+        public string GetLanguageMostVisited()
+        {
+            return _tourRequestRepository.GetMostLanguage();
         }
 
     }

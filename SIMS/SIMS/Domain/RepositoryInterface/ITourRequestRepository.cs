@@ -18,5 +18,8 @@ namespace SIMS.Domain.RepositoryInterface
         public Dictionary<string, int> GetLanguageGraphData(int userId);
         public Dictionary<string, int> GetLocationGraphData(int userId);
         public List<int> GetYearsOfRequests(int userId);
+
+        public Location GetMostLocation();
+        public string GetMostLanguage();
     }
 }

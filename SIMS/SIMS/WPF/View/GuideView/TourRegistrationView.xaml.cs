@@ -32,7 +32,7 @@ public partial class TourRegistrationView : Window
     public ObservableCollection<BitmapImage> Images;
     public Tour Tour { get; set; }
     public ObservableCollection<DateTime> StartDates { get; set; }
-    public TourRegistrationView(User guide)
+    public TourRegistrationView(User guide, Location location = null, string language = "")
     {
         InitializeComponent();
         _tourRepository = new TourRepository();
@@ -43,6 +43,14 @@ public partial class TourRegistrationView : Window
         imageListView.ItemsSource = Images;
         checkpointListView.ItemsSource = Checkpoints;
         datesListView.ItemsSource = StartDates;
+        if(location != null)
+        {
+            Tour.Location = location;
+        }
+        if(language != "")
+        {
+            Tour.Language = language;
+        }
         PopulateComboBoxes();
         _guide = guide;
         DataContext = this;

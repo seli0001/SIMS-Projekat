@@ -107,6 +107,48 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Zahtevi (ctrl + 3)" Width="199">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition>
+                        </RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="10*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Content="Sve Ture" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="20"></Label>
+                    <Border  BorderBrush="Black" BorderThickness="1px" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3">
+                        <Grid Margin="0,20">
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Button Content="Prihvati zahtev" x:Name="AcceptTourRequestButton" Click="AcceptTourRequestButton_Click"></Button>
+                            <Button Grid.Row="1" Content="Kreiraj spram statistike o lokaciji" Name="CreateByLocation" Click="CreateByLocation_Click"></Button>
+                            <Button Grid.Row="2" Content="Kreiraj spram statistike o jeziku" Name="CreateByLanguage" Click="CreateByLanguage_Click" ></Button>
+                        </Grid>
+                    </Border>
+
+                    <DataGrid Margin="10,0" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="2" x:Name="dataGridTourRequest" ItemsSource="{Binding TourRequests, UpdateSourceTrigger=PropertyChanged}"  
+                          SelectedItem="{Binding SelectedTourRequest, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single" 
+                          AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="dataGridAllTours_SelectionChanged">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Width="*" Header="Naziv ture" Binding="{Binding Location.City }"></DataGridTextColumn>
+                            <DataGridTextColumn Width="*" Header="Status" Binding="{Binding StartDate}"></DataGridTextColumn>
+                            <DataGridTextColumn Width="*" Header="Datum i vreme" Binding="{Binding EndDate}"></DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
             </TabItem>
             <TabItem Header="Podesavanja (ctrl + 4)" Width="199">
             </TabItem>
