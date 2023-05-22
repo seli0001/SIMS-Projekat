@@ -1,0 +1,50 @@
+@startuml
+actor "Vodic" as vodic
+
+participant "MainGuideView" as MainGuideView
+participant "AcceptTourRequestView" as act
+participant "TourRequestModel" as trm
+participant "TourRequestSerice" as trs
+participant "TourRequestRepository" as trr
+participant "Serializer" as ser
+
+activate vodic
+
+vodic -> MainGuideView: Izbor zahteva za turu
+vodic -> MainGuideView: Confirm button
+
+
+MainGuideView -> act: Odabrani zahtev za turu
+
+vodic -> act: izbor datuma za turu
+vodic -> act: Confirm button
+
+deactivate vodic
+
+opt IsDateValid
+
+act-> vodic: MessageBox.Show
+end
+
+alt CheckGuideAvailable
+
+act -> trm: setterStatus()
+activate act
+act -> trs: Update(tourRequest)
+
+trs-> trr: Update(tourRequest)
+activate trs
+activate trr
+trr -> trr: GetAll()
+trr -> trr: RemoveById()
+trr -> trr: Add(tourRequest)
+trr -> ser: ToCSV()
+deactivate trr
+deactivate trs
+act -> vodic: MessageBox.Show
+deactivate act
+else
+act -> vodic: MessageBox.Show
+end
+
+
