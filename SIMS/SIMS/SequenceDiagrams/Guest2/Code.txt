@@ -1,0 +1,73 @@
+@startuml
+actor Gost2
+participant TourRequestViewModel
+participant Guest2NotificationViewModel
+participant Guest2NotificationService
+participant TourService
+participant TourRepository
+participant TourRequestService
+participant TourRequestRepository
+
+Guest2NotificationViewModel++
+Gost2->Guest2NotificationViewModel:Page loaded
+
+Guest2NotificationService++
+Guest2NotificationViewModel->Guest2NotificationService:CheckNotifications()
+
+TourService++
+Guest2NotificationService->TourService:GetNewTours()
+TourRepository++
+TourService->TourRepository:GetNewTours()
+TourRepository--->TourService:NewTours
+TourRepository--
+TourService--->Guest2NotificationService:NewTours
+TourService--
+
+TourRequestService++
+Guest2NotificationService->TourRequestService:GetRequestByGuest(int id)
+
+TourRequestRepository++
+TourRequestService->TourRequestRepository:GetRequestByGuest(int id)
+TourRequestRepository-->TourRequestService:UserRequests
+
+loop for each request in requests
+opt location.id==tourRequest.location.id || language==tourRequest.language
+TourRequestService->TourRequestRepository:GetFilteredRequest(User id)
+
+TourRequestRepository--->TourRequestService:FilteredRequests
+end
+end
+TourRequestService--->Guest2NotificationService:FilteredRequests
+
+TourRequestService--
+TourRequestRepository--
+
+Guest2NotificationService--->Guest2NotificationViewModel:FilteredRequests
+
+Guest2NotificationService--
+
+Guest2NotificationViewModel--->Gost2:TourNotification
+Guest2NotificationViewModel--
+
+TourRequestViewModel++
+Gost2->TourRequestViewModel:New Tour Detals Page loaded
+
+TourService++
+TourRequestViewModel->TourService:GetTourById(int id)
+TourRepository++
+loop for each tour in tours
+opt tour.id==id
+TourService->TourRepository:GetTourById(int id)
+TourRepository-->TourService:Tour
+end
+end
+TourRepository--
+
+TourService-->TourRequestViewModel:Tour
+
+TourService--
+
+TourRequestViewModel-->Gost2:Tour
+TourRequestViewModel--
+
+@enduml
