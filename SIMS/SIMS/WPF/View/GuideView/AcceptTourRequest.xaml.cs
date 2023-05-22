@@ -25,11 +25,10 @@ namespace SIMS.WPF.View.GuideView
         public User User { get; set; }
         private BookedTourService _bookedTourService;
         private TourRequestService _tourRequestService;
-        public AcceptTourRequest(TourRequest tourRequest1, User user)
+        public AcceptTourRequest(TourRequest tourRequest1)
         {
             InitializeComponent();
             tourRequest = tourRequest1;
-            User = user;
             _bookedTourService = new BookedTourService();
             _tourRequestService = new TourRequestService();
         }
@@ -38,24 +37,39 @@ namespace SIMS.WPF.View.GuideView
         {
             string startTime = seli.SelectedDate.Value.Date.ToShortDateString() + ' ' + seli2.Text;
             DateTime date = DateTime.Parse(startTime);
-            if(date.CompareTo(tourRequest.StartDate) < 0 || date.CompareTo(tourRequest.EndDate) > 0)
+            if (IsDateValid(date))
             {
                 MessageBox.Show("Morate odabrat datum unutar intervala");
                 return;
             }
             List<BookedTour> bts = _bookedTourService.GetByUser(User.Id);
 
-            if (bts.FirstOrDefault(bt => bt.Tour.StartTime.Time.CompareTo(date) < 0 && bt.Tour.StartTime.Time.AddHours(bt.Tour.Duration).CompareTo(date) > 0) == null)
+            if (CheckGuideAvailable(date, bts))
             {
-                tourRequest.Status = RequestStatus.Accepted;
-                _tourRequestService.Update(tourRequest);
-                MessageBox.Show("Uspesno ste prihvatili turu");
-                Close();
+                AcceptTour();
             }
             else
             {
                 MessageBox.Show("Vec imate turu u tom periodu");
             }
+        }
+
+        private bool IsDateValid(DateTime date)
+        {
+            return date.CompareTo(tourRequest.StartDate) < 0 || date.CompareTo(tourRequest.EndDate) > 0;
+        }
+
+        private static bool CheckGuideAvailable(DateTime date, List<BookedTour> bts)
+        {
+            return bts.FirstOrDefault(bt => bt.Tour.StartTime.Time.CompareTo(date) < 0 && bt.Tour.StartTime.Time.AddHours(bt.Tour.Duration).CompareTo(date) > 0) == null;
+        }
+
+        private void AcceptTour()
+        {
+            tourRequest.Status = RequestStatus.Accepted;
+            _tourRequestService.Update(tourRequest);
+            MessageBox.Show("Uspesno ste prihvatili turu");
+            Close();
         }
     }
 }
