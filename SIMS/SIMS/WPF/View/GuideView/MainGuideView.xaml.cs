@@ -294,7 +294,7 @@ namespace SIMS.View.GuideView
         {
             if(dataGridTourRequest.SelectedIndex != -1)
             {
-                AcceptTourRequest acceptTourRequest = new AcceptTourRequest(SelectedTourRequest);
+                AcceptTourRequest acceptTourRequest = new AcceptTourRequest(SelectedTourRequest, _guide);
                 acceptTourRequest.ShowDialog();
                 UpdateRequest();
             }

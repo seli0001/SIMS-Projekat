@@ -25,10 +25,11 @@ namespace SIMS.WPF.View.GuideView
         public User User { get; set; }
         private BookedTourService _bookedTourService;
         private TourRequestService _tourRequestService;
-        public AcceptTourRequest(TourRequest tourRequest1)
+        public AcceptTourRequest(TourRequest tourRequest1, User user)
         {
             InitializeComponent();
             tourRequest = tourRequest1;
+            User = user;
             _bookedTourService = new BookedTourService();
             _tourRequestService = new TourRequestService();
         }
