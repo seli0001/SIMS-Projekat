@@ -15,10 +15,23 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Assets\back.png" />
+    <None Remove="Resources\Assets\burger.png" />
+    <None Remove="Resources\Assets\house.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0" />
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.0-beta.710" />
     <PackageReference Include="Syncfusion.SfChart.WPF" Version="21.2.5" />
+    <PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Assets\back.png" />
+    <Resource Include="Resources\Assets\burger.png" />
+    <Resource Include="Resources\Assets\house.png" />
   </ItemGroup>
 
 </Project>

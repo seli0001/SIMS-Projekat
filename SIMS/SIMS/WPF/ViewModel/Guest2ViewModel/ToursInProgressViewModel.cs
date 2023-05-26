@@ -17,7 +17,7 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
     {
         public ObservableCollection<BookedTour> tours { get; set; }
         private readonly BookedTourService _bookedTourService;
-        public BookedTour selectedTour { get; set; }
+       // public BookedTour selectedTour { get; set; }
 
         public int userId;
 
@@ -30,6 +30,18 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
         }
 
         #region commands
+
+
+        private BookedTour _selectedTour;
+        public BookedTour SelectedTour
+        {
+            get { return _selectedTour; }
+            set
+            {
+                _selectedTour = value;
+                OnPropertyChanged(nameof(SelectedTour));
+            }
+        }
 
         private ICommand _selectTourClickCommand;
         public ICommand SelectTourClickCommand
@@ -61,7 +73,7 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
 
         private void SelectTourClick()
         {
-            TourInProgressView tourInProgress = new TourInProgressView(selectedTour, userId);
+            TourInProgressView tourInProgress = new TourInProgressView(SelectedTour, userId);
             tourInProgress.Show();
             Close();
         }

@@ -5,17 +5,34 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SIMS.WPF.View"
         mc:Ignorable="d"
-        Title="BookingTourView" Height="250" Width="500">
-    <Grid>
+        Title="BookingTourView" Height="750" Width="430">
+    <Grid Background="AliceBlue">
         <Grid.RowDefinitions>
-            <RowDefinition Height="180"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
             <RowDefinition></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Da li zelite da potvrdite rezervaciju?"></Label>
+        <Grid Grid.Row="0">
+
+            <ToolBar>
+                <Button Command="{Binding MenuClickCommand}">
+                    <Image Source="pack://application:,,,/Resources/Assets/burger.png"></Image>
+                </Button>
+                <Button Content="                                                                                        "></Button>
+                <Button  Command="{Binding MainGuest2ViewClickCommand}">
+                    <Image Source="pack://application:,,,/Resources/Assets/house.png"></Image>
+                </Button>
+            </ToolBar>
+
+        </Grid>
+        
+        
+        
+        <Label Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Da li zelite da potvrdite rezervaciju?"></Label>
         <Label HorizontalAlignment="Left"  VerticalAlignment="Center"  Margin="320,0,0,0"/>
 
-        <Button Grid.Row="1" Margin="5" Content="Potvrdi" HorizontalAlignment="Left" Width="150" Command="{Binding BookedClickCommand}" ></Button>
-        <Button Grid.Row="1" Margin="5" Content="Promeni broj" HorizontalAlignment="Right" Width="150" Command="{Binding BackToNumberFormClickCommand}" ></Button>
+        <Button Grid.Row="2"  Content="Potvrdi" HorizontalAlignment="Right" Width="180" Command="{Binding BookedClickCommand}" ></Button>
+        <Button Grid.Row="2"  Content="Promeni broj" HorizontalAlignment="Left" Width="180" Command="{Binding BackToNumberFormClickCommand}" ></Button>
     </Grid>
 </Window>

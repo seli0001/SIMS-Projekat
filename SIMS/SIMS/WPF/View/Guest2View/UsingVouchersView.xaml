@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:SIMS.WPF.View"
         mc:Ignorable="d"
         Title="UsingVouchers" Height="750" Width="430">
-    <Grid>
+    <Grid Background="AliceBlue">
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
             <RowDefinition Height="40"></RowDefinition>
             <RowDefinition Height="30"></RowDefinition>
             <RowDefinition></RowDefinition>
@@ -19,21 +19,33 @@
 
             <ToolBar>
 
-                <Button Content="                                                                             "></Button>
-                <Button Command="{Binding BackClickCommand}">Nazad</Button>
-                <Button  >Glavni prozor</Button>
+                <Button Content="                                                                                             "></Button>
+                <Button Command="{Binding BackClickCommand}">
+                    <Image Source="pack://application:,,,/Resources/Assets/back.png"></Image>
+                </Button>
+                <Button  >
+                    <Image Source="pack://application:,,,/Resources/Assets/house.png"></Image>
+                </Button>
             </ToolBar>
 
         </Grid>
         <Button Grid.Row="4" Command="{Binding UseVoucherClickCommand}" >Iskoristi</Button>
-        <Grid Grid.Row="3">
-            <DataGrid ItemsSource="{Binding vouchers, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" IsReadOnly="True" SelectedItem="{Binding selectedVoucher, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single" >
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Naziv" Binding="{Binding Name}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Vazi do" Binding="{Binding ValidUntil}"></DataGridTextColumn>
 
-                </DataGrid.Columns>
-            </DataGrid>
-        </Grid>
+        <ListView Grid.Row="3" Background="AliceBlue" ItemsSource="{Binding vouchers, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding selectedVoucher, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single" >
+            <ListView.Resources>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Height" Value="50" />
+                    <!-- Ovde podesite željenu visinu redova -->
+                </Style>
+            </ListView.Resources>
+            <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Naziv" DisplayMemberBinding="{Binding Name}" />
+                        <GridViewColumn Header="Vazi do" DisplayMemberBinding="{Binding ValidUntil}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+ 
     </Grid>
 </Window>

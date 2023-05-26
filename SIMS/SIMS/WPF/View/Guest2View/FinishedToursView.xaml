@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:SIMS.WPF.View"
         mc:Ignorable="d"
         Title="FinishedTours" Height="750" Width="430">
-    <Grid>
+    <Grid Background="AliceBlue">
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="30"></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
@@ -19,25 +19,38 @@
         <Grid Grid.Row="0">
 
             <ToolBar>
-                <Button Command="{Binding BackToMenuClickCommand}"  >Meni</Button>
-                <Button Content="                                                                                "></Button>
-                <Button Command="{Binding BackToMainGuest2ViewClickCommand}"   >Glavni prozor</Button>
+                <Button Command="{Binding BackToMenuClickCommand}"  >
+                    <Image Source="pack://application:,,,/Resources/Assets/burger.png"></Image>
+                </Button>
+                <Button Content="                                                                                               "></Button>
+                <Button Command="{Binding BackToMainGuest2ViewClickCommand}"   >
+                    <Image Source="pack://application:,,,/Resources/Assets/house.png"></Image>
+                </Button>
             </ToolBar>
 
         </Grid>
-        <Grid  Grid.Row="2">
-            <DataGrid ItemsSource="{Binding tours, UpdateSourceTrigger=PropertyChanged}"  SelectedItem="{Binding selectedTour, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single" AutoGenerateColumns="False" IsReadOnly="True">
-                <DataGrid.Columns>
 
-                    <DataGridTextColumn Header="Grad" Binding="{Binding Tour.Location.City}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Drzava" Binding="{Binding Tour.Location.Country}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Trajanje" Binding="{Binding Tour.Duration}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Jezik" Binding="{Binding Tour.Language}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Broj ljudi" Binding="{Binding Tour.MaxNumberOfPeople}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Datum" Binding="{Binding Tour.StartTime.Time}"></DataGridTextColumn>
-                </DataGrid.Columns>
-            </DataGrid>
-        </Grid>
+        <ListView Background="AliceBlue" Grid.Row="2" x:Name="lvwTours" ItemsSource="{Binding tours}" SelectedItem="{Binding selectedTour}" SelectionMode="Single">
+            <ListView.Resources>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Height" Value="50" />
+                    <!-- Ovde podesite željenu visinu redova -->
+                </Style>
+            </ListView.Resources>
+            <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Tour.Location.City}" Margin="5"/>
+                            <TextBlock Text="{Binding Tour.Location.Country}" Margin="5"/>
+                            <TextBlock Text="{Binding Tour.Duration}" Margin="5"/>
+                            <TextBlock Text="{Binding Tour.Language}" Margin="5"/>
+                            <TextBlock Text="{Binding Tour.MaxNumberOfPeople}" Margin="5"/>
+                            <TextBlock Text="{Binding Tour.StartTime.Time}" Margin="5"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+       
     </Grid>
 
 </Window>

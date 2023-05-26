@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:SIMS.WPF.View"
         mc:Ignorable="d"
         Title="RateTourView" Height="750" Width="430">
-    <Grid>
+    <Grid Background="AliceBlue">
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition Height="30"></RowDefinition>
@@ -18,10 +18,16 @@
         <Grid Grid.Row="0">
 
             <ToolBar>
-                <Button  Command="{Binding BackToMenuClickCommand}" >Meni</Button>
-                <Button Content="                                                                       "></Button>
-                <Button >Nazad</Button>
-                <Button Command="{Binding BackToMainGuest2ViewClickCommand}"  >Glavni prozor</Button>
+                <Button  Command="{Binding BackToMenuClickCommand}" >
+                    <Image Source="pack://application:,,,/Resources/Assets/burger.png"></Image>
+                </Button>
+                <Button Content="                                                                            "></Button>
+                <Button >
+                    <Image Source="pack://application:,,,/Resources/Assets/back.png"></Image>
+                </Button>
+                <Button Command="{Binding BackToMainGuest2ViewClickCommand}"  >
+                    <Image Source="pack://application:,,,/Resources/Assets/house.png"></Image>
+                </Button>
             </ToolBar>
 
         </Grid>

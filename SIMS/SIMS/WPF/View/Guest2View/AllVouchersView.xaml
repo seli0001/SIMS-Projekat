@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:SIMS.WPF.View"
         mc:Ignorable="d"
         Title="AllVouchers" Height="750" Width="430">
-    <Grid>
+    <Grid Background="AliceBlue">
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="40"></RowDefinition>
             <RowDefinition Height="30"></RowDefinition>
             <RowDefinition></RowDefinition>
@@ -17,23 +17,43 @@
         <Grid Grid.Row="0">
 
             <ToolBar>
-                <Button Command="{Binding MenuClickCommand}">Meni</Button>
-                <Button Content="                                                                                "></Button>
-                <Button  Command="{Binding MainGuest2ViewClickCommand}">Glavni prozor</Button>
+                <Button Command="{Binding MenuClickCommand}">
+                    <Image Source="pack://application:,,,/Resources/Assets/burger.png"></Image>
+                </Button>
+                <Button Content="                                                                                               "></Button>
+                <Button  Command="{Binding MainGuest2ViewClickCommand}">
+                    <Image Source="pack://application:,,,/Resources/Assets/house.png"></Image>
+                </Button>
             </ToolBar>
 
         </Grid>
 
-        <Grid Grid.Row="3">
-            <DataGrid ItemsSource="{Binding vouchers, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" IsReadOnly="True" >
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Naziv" Binding="{Binding Name}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Vazi do" Binding="{Binding ValidUntil}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Iskoriscen" Binding="{Binding Status}"></DataGridTextColumn>
-                </DataGrid.Columns>
-            </DataGrid>
-        </Grid>
 
+        <ListView Background="AliceBlue" Grid.Row="3" Margin="5" ItemsSource="{Binding vouchers}" SelectionMode="Single">
+            <ListView.Resources>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Height" Value="50" />
+                    <!-- Ovde podesite željenu visinu redova -->
+                </Style>
+            </ListView.Resources>
+            <ListView.ItemTemplate>
+                    
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" Text="{Binding Name}" Margin="5" />
+                            <TextBlock Grid.Column="1" Text="{Binding ValidUntil}" Margin="5" />
+                            <TextBlock Grid.Column="2" Text="{Binding Status}" Margin="5" />
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+       
 
     </Grid>
 </Window>

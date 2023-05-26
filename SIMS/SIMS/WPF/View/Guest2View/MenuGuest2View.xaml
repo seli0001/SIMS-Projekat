@@ -6,18 +6,18 @@
         xmlns:local="clr-namespace:SIMS.WPF.View"
         mc:Ignorable="d"
         Title="MenuGuest2" Height="750" Width="430">
-    <Grid>
+    <Grid Background="AliceBlue">
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"></RowDefinition>
-            <RowDefinition></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
 
             <ToolBar>
                 <Button Content="                                                                                                        "></Button>
                 <Button Command="{Binding MainGuest2ViewClickCommand}" >
-                    Main
+                    <Image Source="pack://application:,,,/Resources/Assets/house.png"></Image>
                 </Button>
             </ToolBar>
 

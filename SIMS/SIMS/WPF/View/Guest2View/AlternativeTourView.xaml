@@ -5,33 +5,84 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SIMS.WPF.View"
         mc:Ignorable="d"
-        Title="AlternativeTourView" Height="450" Width="800">
-    <Grid>
+        Title="AlternativeTourView" Height="750" Width="430">
+    <Grid Background="AliceBlue">
         <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition  Height="70"></RowDefinition>
+            <RowDefinition  Height="70"></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Label Content="NEMA DOVOLJNO MESTA!" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+        <Grid Grid.Row="0">
+            <ToolBar>
+                <Button  Command="{Binding MenuClickCommand}">
+                    <Image Source="pack://application:,,,/Resources/Assets/burger.png"></Image>
+                </Button>
+                <Button Content="                                                                                       "></Button>
+                <Button Command="{Binding BackToMainFormCommand}">
+                    <Image Source="pack://application:,,,/Resources/Assets/house.png"></Image>
+                </Button>
+            </ToolBar>
+
+        </Grid>
+        
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="120"></ColumnDefinition>
+
+
+            </Grid.ColumnDefinitions>
+
+            <TextBox Grid.Column="0" Margin="25"  x:Name="tbLocation"  Text="{Binding tbLocation, Mode=TwoWay}"></TextBox>
+            <TextBox Grid.Column="1" Margin="25" x:Name="tbCountry" Text="{Binding tbCountry, Mode=TwoWay}"></TextBox>
+            <TextBox Grid.Column="2" Margin="25" x:Name="tbNumber" Text="{Binding tbNumber, Mode=TwoWay}"></TextBox>
 
 
 
-        <TabControl Grid.Row="1" Margin="20">
+            <Label Grid.Column="0" Grid.ColumnSpan="2"  Content="Grad" Margin="0,0,0,45"></Label>
+
+            <Label Grid.Column="2" Grid.ColumnSpan="2" Content="Broj ljudi" Margin="0,0,0,45"></Label>
+            <Label Grid.Column="1" Grid.ColumnSpan="2" Content="Drzava" Margin="0,0,0,45"></Label>
+
+
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="120"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <TextBox Grid.Column="1" Margin="25" x:Name="tbDuration" Text="{Binding tbDuration, Mode=TwoWay}"></TextBox>
+            <TextBox Grid.Column="0" Margin="25" x:Name="tbLanguage" Text="{Binding tbLanguage, Mode=TwoWay}"></TextBox>
+
+            <Label Grid.Column="1" Grid.ColumnSpan="2" Content="Trajanje" Margin="0,0,0,45" ></Label>
+            <Label Grid.Column="0" Grid.ColumnSpan="2" Content="Jezik" Margin="0,0,0,45"></Label>
+
+
+        </Grid>
+        <Label Grid.Row="3" Content="NEMA DOVOLJNO MESTA!" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+
+
+
+        <TabControl Grid.Row="4" Margin="20">
             <TabItem Header="Alternativne ture">
-                <DataGrid Name="dgwTours" ItemsSource="{Binding tours, UpdateSourceTrigger=PropertyChanged}"  SelectedItem="{Binding selectedTour, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single" AutoGenerateColumns="False" IsReadOnly="True">
-                    <DataGrid.Columns>
-
-                        <DataGridTextColumn Header="Lokacija" Binding="{Binding Location.City}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Trajanje" Binding="{Binding Duration}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Jezik" Binding="{Binding Language}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Broj ljudi" Binding="{Binding MaxNumberOfPeople}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Datum" Binding="{Binding StartTime.Time}"></DataGridTextColumn>
-                    </DataGrid.Columns>
-
-
-                </DataGrid>
-
+                <ListView Background="AliceBlue" Name="lvwTours" ItemsSource="{Binding tours, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding selectedTour, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single" >
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Lokacija" DisplayMemberBinding="{Binding Location.City}" />
+                            <GridViewColumn Header="Trajanje" DisplayMemberBinding="{Binding Duration}" />
+                            <GridViewColumn Header="Jezik" DisplayMemberBinding="{Binding Language}" />
+                            <GridViewColumn Header="Broj ljudi" DisplayMemberBinding="{Binding MaxNumberOfPeople}" />
+                            <GridViewColumn Header="Datum" DisplayMemberBinding="{Binding StartTime.Time}" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
             </TabItem>
 
         </TabControl>
@@ -41,16 +92,14 @@
 
 
 
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="5">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
+                
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="2" Content="Rezervisi" Background="Teal"  Command="{Binding NumberOfTourClickCommand}"></Button>
-            <Button Grid.Column="3" Content="Odustani" Background="DarkRed" Height="50"  Command="{Binding BackToMainFormCommand}" VerticalAlignment="Top"></Button>
+            <Button Grid.Column="2" Content="Rezervisi" Margin="50,0,0,0" Background="Teal"  Command="{Binding NumberOfTourClickCommand}"></Button>
 
         </Grid>
     </Grid>
