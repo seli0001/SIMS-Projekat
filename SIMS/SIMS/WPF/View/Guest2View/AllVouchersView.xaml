@@ -9,8 +9,8 @@
     <Grid Background="AliceBlue">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
             <RowDefinition Height="40"></RowDefinition>
-            <RowDefinition Height="30"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
@@ -27,8 +27,33 @@
             </ToolBar>
 
         </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="120"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
 
+            <TextBox Grid.Column="0" Margin="20"></TextBox>
+            <Label Grid.Column="0">Naziv</Label>
+            <Label Grid.Column="1">Vazi do</Label>
+            <DatePicker Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"></DatePicker>
+        </Grid>
 
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="2"  Content="Istorija" Margin="2"></Button>
+            <Button Grid.Column="3"  Content="Pretrazi" Margin="2" Command="{Binding SearchClickCommand}" ></Button>
+
+        </Grid>
+        
         <ListView Background="AliceBlue" Grid.Row="3" Margin="5" ItemsSource="{Binding vouchers}" SelectionMode="Single">
             <ListView.Resources>
                 <Style TargetType="ListViewItem">

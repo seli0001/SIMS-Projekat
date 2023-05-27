@@ -26,11 +26,34 @@
             </ToolBar>
 
         </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="1">
+                <Label  HorizontalAlignment="Center" VerticalAlignment="Center" Content="Da li zelite da potvrdite rezervaciju?" ></Label>
+            </Grid>
+            
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition ></ColumnDefinition>
+                    <ColumnDefinition ></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label  HorizontalAlignment="Center" VerticalAlignment="Center"  Content="Broj slobodnih mesta:" ></Label>
+                <Label  Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="40"  Margin="40" Content="{Binding Path=FreeSpace}" />
+            </Grid>
+            
+        </Grid>
+
+       
         
-        
-        
-        <Label Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Da li zelite da potvrdite rezervaciju?"></Label>
-        <Label HorizontalAlignment="Left"  VerticalAlignment="Center"  Margin="320,0,0,0"/>
+       
+       
 
         <Button Grid.Row="2"  Content="Potvrdi" HorizontalAlignment="Right" Width="180" Command="{Binding BookedClickCommand}" ></Button>
         <Button Grid.Row="2"  Content="Promeni broj" HorizontalAlignment="Left" Width="180" Command="{Binding BackToNumberFormClickCommand}" ></Button>

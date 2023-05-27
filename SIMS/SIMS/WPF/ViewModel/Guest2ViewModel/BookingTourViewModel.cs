@@ -3,7 +3,9 @@ using SIMS.Service.Services;
 using SIMS.WPF.ViewModel.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,7 +13,7 @@ using System.Windows.Input;
 
 namespace SIMS.WPF.ViewModel.Guest2ViewModel
 {
-    public class BookingTourViewModel : ViewModelBase, IClose
+    public class BookingTourViewModel : ViewModelBase, IClose, INotifyPropertyChanged
     {
         private readonly BookedTourService _bookedTourService;
         private readonly TourService _tourService;
@@ -31,10 +33,32 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
 
             _bookedTourService = new BookedTourService();
             freeSpace = freespace;
+            FreeSpace = freespace;
             MessageBox.Show("Ostalo je" + freeSpace.ToString() + "Mesta");
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+
         #region commands
+
+        private int _freeSpace;
+        public int FreeSpace
+        {
+            get => _freeSpace;
+            set
+            {
+                if (value != _freeSpace)
+                {
+                    _freeSpace = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         private ICommand _bookedClickCommand;
         public ICommand BookedClickCommand
