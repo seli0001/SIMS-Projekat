@@ -10,11 +10,11 @@
         Title="RequestToursView" Height="750" Width="430">
     <Grid Background="AliceBlue">
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
-            <RowDefinition Height="40"></RowDefinition>
-            <RowDefinition Height="120"></RowDefinition>
-            <RowDefinition  Height="130"></RowDefinition>
+            <RowDefinition Height="68"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="110"></RowDefinition>
+            <RowDefinition  Height="120"></RowDefinition>
             <RowDefinition ></RowDefinition>
             <RowDefinition ></RowDefinition>
         </Grid.RowDefinitions>
@@ -24,7 +24,7 @@
                 <Button  Command="{Binding BackToMenuClickCommand}"   >
                     <Image Source="pack://application:,,,/Resources/Assets/burger.png"></Image>
                 </Button>
-                <Button Content="                                                                                             "></Button>
+                <Button Content="                                                                                        "></Button>
                 <Button Command="{Binding BackToMainGuest2ViewClickCommand}">
                     <Image Source="pack://application:,,,/Resources/Assets/house.png"></Image>
                 </Button>
@@ -32,11 +32,63 @@
 
         </Grid>
 
-        <Grid Grid.Row="3">
-            <DataGrid ItemsSource="{Binding requests, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="True" IsReadOnly="True">
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="120"></ColumnDefinition>
 
-            </DataGrid>
+
+            </Grid.ColumnDefinitions>
+
+            <TextBox Grid.Column="0" Margin="25"  x:Name="tbLocation"  ></TextBox>
+            <TextBox Grid.Column="1" Margin="25" x:Name="tbCountry" ></TextBox>
+            <ComboBox Grid.Column="2" Margin="25" x:Name="cbStatus"></ComboBox>
+
+
+            <Label Grid.Column="0" Grid.ColumnSpan="2"  Content="Grad" Margin="0,0,0,45"></Label>
+
+            <Label Grid.Column="2" Grid.ColumnSpan="2" Content="Status" Margin="0,0,0,45"></Label>
+            <Label Grid.Column="1" Grid.ColumnSpan="2" Content="Drzava" Margin="0,0,0,45"></Label>
+
+
         </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="2"  Content="Istorija" Margin="2"></Button>
+            <Button Grid.Column="3"  Content="Pretrazi" Margin="2" Command="{Binding SearchClickCommand}" ></Button>
+
+        </Grid>
+        
+        <ListView Background="AliceBlue" Grid.Row="3" x:Name="lvwTours" ItemsSource="{Binding requests, UpdateSourceTrigger=PropertyChanged}" >
+
+            <ListView.Resources>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Height" Value="70" />
+                    <!-- Ovde podesite željenu visinu redova -->
+                </Style>
+            </ListView.Resources>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Location.City}" Margin="5"/>
+                        <TextBlock Text="{Binding Language}" Margin="5"/>
+                        <TextBlock Text="{Binding Status}" Margin="5"/>
+                        <TextBlock Text="{Binding TourTime}" Margin="5"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        
         <Grid Grid.Row="4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>

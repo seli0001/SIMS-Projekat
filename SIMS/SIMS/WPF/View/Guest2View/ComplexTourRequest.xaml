@@ -6,7 +6,113 @@
         xmlns:local="clr-namespace:SIMS.WPF.View.Guest2View"
         mc:Ignorable="d"
         Title="ComplexTourRequest" Height="750" Width="430">
-    <Grid>
-        
+    <Grid Background="AliceBlue">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <ToolBar>
+                <Button Content="                                                                                                      "></Button>
+                <Button Command="{Binding BackToMainGuest2ViewClickCommand}">
+                    <Image Source="pack://application:,,,/Resources/Assets/house.png"></Image>
+                </Button>
+            </ToolBar>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="70"></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition  Height="160"></RowDefinition>
+                <RowDefinition  Height="160"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center">Deo slozene ture:1</Label>
+            </Grid>
+            <Grid Grid.Row="1" Height="50">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0"  Content="Grad" VerticalContentAlignment="Center" HorizontalAlignment="Center"></Label>
+                <TextBox  Grid.Column="1"  Margin="10"  Text="{Binding Path=tbCity, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            </Grid>
+
+            <Grid Grid.Row="2" Height="50">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0"  Content="Drzava" VerticalContentAlignment="Center" HorizontalAlignment="Center"></Label>
+                <TextBox  Grid.Column="1"  Margin="10"  Text="{Binding Path=tbCountry, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            </Grid>
+
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0"  Content="Opis" VerticalContentAlignment="Center" HorizontalAlignment="Center"></Label>
+                <TextBox   Grid.Column="1"  Margin="10"  Text="{Binding Path=tbDescription, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            </Grid>
+
+            <Grid Grid.Row="4" Height="50">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0"  Content="Jezik" VerticalContentAlignment="Center" HorizontalAlignment="Center"></Label>
+                <TextBox  Grid.Column="1"  Margin="10" Text="{Binding Path=tbLanguage, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            </Grid>
+
+            <Grid Grid.Row="5" Height="50">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0"  Content="Broj gostiju" VerticalContentAlignment="Center" HorizontalAlignment="Center"></Label>
+                <TextBox  Grid.Column="1" Margin="10" Text="{Binding Path=tbGuestNumber, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"></TextBox>
+            </Grid>
+
+            <Grid Grid.Row="6" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0"  Content="Datum od" VerticalContentAlignment="Center" HorizontalAlignment="Center"></Label>
+                <Calendar  Grid.Column="1"  SelectedDate="{Binding tbStartDate, Mode=TwoWay}"></Calendar>
+            </Grid>
+
+            <Grid Grid.Row="7">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0"  Content="Datum do" VerticalContentAlignment="Center" HorizontalAlignment="Center"></Label>
+                <Calendar  Grid.Column="1" SelectedDate="{Binding tbEndDate, Mode=TwoWay}"></Calendar>
+            </Grid>
+
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="1" Command="{Binding NextClickCommand}">Dalje</Button>
+        </Grid>
+
     </Grid>
 </Window>

@@ -29,13 +29,29 @@
 
         </Grid>
 
-        <Grid Grid.Row="1">
-            <DataGrid ItemsSource="{Binding checkpoints, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="True" IsReadOnly="True">
 
-            </DataGrid>
+        <ListView Background="AliceBlue" Grid.Row="1" x:Name="lvwTours" ItemsSource="{Binding checkpoints, UpdateSourceTrigger=PropertyChanged}" >
 
-        </Grid>
-
+            <ListView.Resources>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Height" Value="70" />
+                    <!-- Ovde podesite željenu visinu redova -->
+                </Style>
+            </ListView.Resources>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Tour.Name}" Margin="5"/>
+                        <TextBlock Text="{Binding Name}" Margin="5"/>
+                        <TextBlock Text="{Binding Index}" Margin="5"/>
+                        <TextBlock Text="{Binding IsChecked}" Margin="5"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        
+        
+        
 
     </Grid>
 </Window>

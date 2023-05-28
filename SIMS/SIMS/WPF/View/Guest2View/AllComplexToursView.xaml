@@ -7,6 +7,55 @@
         mc:Ignorable="d"
         Title="AllComplexToursView" Height="750" Width="430">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+
+            <ToolBar>
+                <Button  Command="{Binding BackToMenuClickCommand}"   >
+                    <Image Source="pack://application:,,,/Resources/Assets/burger.png"></Image>
+                </Button>
+                <Button Content="                                                                                              "></Button>
+                <Button Command="{Binding BackToMainGuest2ViewClickCommand}">
+                    <Image Source="pack://application:,,,/Resources/Assets/house.png"></Image>
+                </Button>
+            </ToolBar>
+
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0" Margin="20"></TextBox>
+            <Label Grid.Column="0">Naziv</Label>
+            <TextBox Grid.Column="1" Margin="20"></TextBox>
+            <Label Grid.Column="1">Broj etapa</Label>
+        </Grid>
         
+        
+        
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="2"  Content="Istorija" Margin="2"></Button>
+            <Button Grid.Column="3"  Content="Pretrazi" Margin="2" Command="{Binding SearchClickCommand}" ></Button>
+
+        </Grid>
+        
+
     </Grid>
 </Window>

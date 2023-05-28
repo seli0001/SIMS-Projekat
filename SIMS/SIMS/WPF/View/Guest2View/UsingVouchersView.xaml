@@ -3,16 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:ei="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions"
         xmlns:local="clr-namespace:SIMS.WPF.View"
         mc:Ignorable="d"
         Title="UsingVouchers" Height="750" Width="430">
     <Grid Background="AliceBlue">
         <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
             <RowDefinition Height="40"></RowDefinition>
-            <RowDefinition Height="40"></RowDefinition>
-            <RowDefinition Height="30"></RowDefinition>
             <RowDefinition></RowDefinition>
-            <RowDefinition Height="30"></RowDefinition>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
@@ -29,7 +30,34 @@
             </ToolBar>
 
         </Grid>
-        <Button Grid.Row="4" Command="{Binding UseVoucherClickCommand}" >Iskoristi</Button>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="120"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <TextBox Grid.Column="0" Margin="20"></TextBox>
+            <Label Grid.Column="0">Naziv</Label>
+            <Label Grid.Column="1">Vazi do</Label>
+            <DatePicker Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"></DatePicker>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="2"  Content="Istorija" Margin="2"></Button>
+            <Button Grid.Column="3"  Content="Pretrazi" Margin="2" Command="{Binding SearchClickCommand}" ></Button>
+
+        </Grid>
+        
+
 
         <ListView Grid.Row="3" Background="AliceBlue" ItemsSource="{Binding vouchers, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding selectedVoucher, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single" >
             <ListView.Resources>
@@ -38,6 +66,14 @@
                     <!-- Ovde podesite željenu visinu redova -->
                 </Style>
             </ListView.Resources>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction Command="{Binding DataContext.UseVoucherClickCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                   CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+
+
             <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Naziv" DisplayMemberBinding="{Binding Name}" />

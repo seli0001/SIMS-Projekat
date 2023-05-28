@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="ComplexTourView" Height="750" Width="430">
     <Grid>
-        
+
+
     </Grid>
 </Window>

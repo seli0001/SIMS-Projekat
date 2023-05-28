@@ -17,7 +17,7 @@
                 <Button Command="{Binding BackToMenuClickCommand}"  >
                     <Image Source="pack://application:,,,/Resources/Assets/burger.png"></Image>
                 </Button>
-                <Button Content="                                                                                            "></Button>
+                <Button Content="                                                                                        "></Button>
                 <Button Command="{Binding BackToMainClickCommand}"   >
                     <Image Source="pack://application:,,,/Resources/Assets/house.png"></Image>
                 </Button>
