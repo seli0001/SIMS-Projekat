@@ -13,6 +13,7 @@ namespace SIMS.Repository
         private const string _filePath = "../../../../SIMS/Resources/Data/Locations.csv";
         private readonly Serializer<Location> _serializer;
 
+
         public LocationRepository()
         {
             _serializer = new Serializer<Location>();
@@ -58,5 +59,7 @@ namespace SIMS.Repository
             }
             return -1;
         }
+
+       
     }
 }

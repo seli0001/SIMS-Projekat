@@ -14,6 +14,7 @@ namespace SIMS.Repository
 
         private readonly AccommodationRepository _accommodationRepository;
         private readonly UserRepository _userRepository;
+
         private List<Reservation> _reservations;
 
         public ReservationRepository()
@@ -193,6 +194,21 @@ namespace SIMS.Repository
             }
 
             return count;
+        }
+
+        public int CountResForLocation(Location location)
+        {
+            _reservations = GetAll();
+            int sum = 0;
+            foreach(Reservation res in _reservations)
+            {
+                if(res.Accommodation.Location.Id == location.Id)
+                {
+                    sum++;
+                }
+            }
+
+            return sum;
         }
 
     }

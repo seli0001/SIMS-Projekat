@@ -121,7 +121,8 @@
                 <Button Content="Pogledaj predlog sistema"
                         Background="Transparent"
                         Foreground="White"
-                        Margin="0 0 40 0"/>
+                        Margin="0 0 40 0"
+                        Command="{Binding ProposalCommand}"/>
 
                 <Button Content="Pogledaj tutorijal"
                         Background="Transparent"

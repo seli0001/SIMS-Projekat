@@ -113,8 +113,11 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             rescheduledReservationsMonthStats = new ObservableCollection<double>();
 
             GenerateUI();
-            InitializeMonths(AvailableYears[AvailableYears.Count-1]);
-            SelectedYear = AvailableYears[AvailableYears.Count - 1];
+            if(AvailableYears.Count != 0)
+            {
+                InitializeMonths(AvailableYears[AvailableYears.Count-1]);
+                SelectedYear = AvailableYears[AvailableYears.Count - 1];
+            }
         }
 
         private void GenerateUI()

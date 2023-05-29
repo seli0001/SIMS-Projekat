@@ -17,7 +17,6 @@ namespace SIMS.Service.UseCases
         {
             _locationRepository = new LocationRepository();
         }
-
         public List<Location> GetAll()
         {
             return _locationRepository.GetAll();
@@ -26,8 +25,6 @@ namespace SIMS.Service.UseCases
         {
             return _locationRepository.GetById(id);
         }
-       
-
         public int IsExists(Location location)
         {
             return _locationRepository.IsExists(location);
