@@ -17,6 +17,10 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         public RenovationsViewModel RenovationsVM { get;  set; }
 
         public AccommodationStatisticsViewModel AccommodationStatisticsVM { get; set; }
+
+        public SystemProposalViewModel SystemProposalVM { get; set; }
+
+
         public Accommodation SelectedAccommodation { get; set; }
 
         private double _ownerRating;
@@ -166,6 +170,22 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
                         }, true));
             }
         }
+
+        private ICommand _proposalCommand;
+        public ICommand ProposalCommand
+        {
+            get
+            {
+                return _proposalCommand ??
+                    (_proposalCommand = new CommandBase(
+                        () => {
+                            SystemProposalVM = new SystemProposalViewModel(LoggedInUser);
+                            CurrentView = SystemProposalVM;
+                        }, true));
+            }
+        }
+
+        
 
         #endregion
 
