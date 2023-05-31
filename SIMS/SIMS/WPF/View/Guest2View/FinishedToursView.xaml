@@ -8,7 +8,7 @@
         xmlns:local="clr-namespace:SIMS.WPF.View"
         mc:Ignorable="d"
         Title="FinishedTours" Height="750" Width="430">
-    <Grid Background="AliceBlue">
+    <Grid Background="{DynamicResource AppBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="70"></RowDefinition>

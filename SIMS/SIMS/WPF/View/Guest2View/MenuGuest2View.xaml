@@ -6,15 +6,43 @@
         xmlns:local="clr-namespace:SIMS.WPF.View"
         mc:Ignorable="d"
         Title="MenuGuest2" Height="750" Width="430">
-    <Grid Background="AliceBlue">
-        <Grid.RowDefinitions>
+    <Window.Resources>
+        <Style x:Key="ThemeToggleButtonStyle" TargetType="ToggleButton">
+            <Setter Property="Background" Value="AliceBlue"/>
+            <Setter Property="Foreground" Value="#FF2D2D30"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+
+                                <Setter Property="Background" Value="#FF2D2D30"/>
+                                <Setter Property="Foreground" Value="AliceBlue"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+
+    <Grid Background="{DynamicResource AppBackground}">
+        <Grid.RowDefinitions >
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition Height="60"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
 
-            <ToolBar>
+            <ToolBar   Background="{DynamicResource ToolBar}" >
                 <Button Content="                                                                                                    "></Button>
                 <Button Command="{Binding MainGuest2ViewClickCommand}" >
                     <Image Source="pack://application:,,,/Resources/Assets/house.png"></Image>
@@ -36,17 +64,71 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <Button Grid.Column="0" Grid.Row="0" Content="Kreiraj zahtev za turu" Margin="35" Command="{Binding TourRequestClickCommand}" ></Button>
-            <Button Grid.Column="0" Grid.Row="1" Content="Kreiraj zahtez za slozenu" Margin="35"></Button>
-            <Button Grid.Column="0" Grid.Row="3" Content="Izvestaj" Margin="35"></Button>
-            <Button Grid.Column="0" Grid.Row="4" Content="Jezik" Margin="35"></Button>
-            <Button Grid.Column="1" Grid.Row="0" Content="Statistika i zahtevi" Margin="35" Command="{Binding ToursRequestAndStatisticClickCommand}"></Button>
-            <Button Grid.Column="1" Grid.Row="1" Content="Zahtevi za zlosene ture" Margin="35"></Button>
-            <Button Grid.Column="1" Grid.Row="4" Content="Teme" Margin="35"></Button>
+            <Button Grid.Column="0" Grid.Row="0" Margin="35"  Background="{DynamicResource ButtonBackground}"  Command="{Binding TourRequestClickCommand}">
+                <Button.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="Kreiraj zahtev za turu" Foreground="{DynamicResource AppForeground}" />
+                    </DataTemplate>
+                </Button.ContentTemplate>
+            </Button>
+            <Button Grid.Column="0" Grid.Row="1" Margin="35" Background="{DynamicResource ButtonBackground}">
+                <Button.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="Kreiraj zahtez za slozenu"  Foreground="{DynamicResource AppForeground}" />
+                    </DataTemplate>
+                </Button.ContentTemplate>
+            </Button>
+            <Button Grid.Column="0" Grid.Row="3"  Margin="35" Command="{Binding GenerateReportClickCommand}" Background="{DynamicResource ButtonBackground}">
+                <Button.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="Izvestaj" Foreground="{DynamicResource AppForeground}" Background="{DynamicResource ButtonBackground}" />
+                    </DataTemplate>
+                </Button.ContentTemplate>
+            </Button>
+            <Button Grid.Column="0" Grid.Row="4" Margin="35" Background="{DynamicResource ButtonBackground}" Command="{Binding ChangeLanguageClickCommand}">
+                <Button.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="Jezik" Foreground="{DynamicResource AppForeground}" />
+                    </DataTemplate>
+                </Button.ContentTemplate>
+            </Button>
+            <Button Grid.Column="1" Grid.Row="0"  Margin="35" Command="{Binding ToursRequestAndStatisticClickCommand}" Background="{DynamicResource ButtonBackground}">
+                <Button.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="Statistika i zahtevi" Foreground="{DynamicResource AppForeground}" />
+                    </DataTemplate>
+                </Button.ContentTemplate>
+            </Button>
+            <Button Grid.Column="1" Grid.Row="1"  Margin="35" Background="{DynamicResource ButtonBackground}">
+                <Button.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="Zahtevi za zlosene ture" Foreground="{DynamicResource AppForeground}"/>
+                    </DataTemplate>
+                </Button.ContentTemplate>
+            </Button>
+            <ToggleButton Grid.Column="1"   Grid.Row="4" Content="Teme" Margin="35" x:Name="ThemeToggleButton" Style="{StaticResource ThemeToggleButtonStyle}" Command="{Binding ThemeClickCommand}" IsChecked="{Binding IsDarkTheme, Mode=TwoWay}"/>
 
-            <Button Grid.Column="0" Grid.Row="2" Content="Prati" Margin="35" Command="{Binding ToursInProgressClickCommand}"></Button>
-            <Button Grid.Column="1" Grid.Row="2" Content="Oceni" Margin="35" Command="{Binding FinishedToursClickCommand}"></Button>
-            <Button Grid.Column="1" Grid.Row="3" Content="Vauceri" Margin="35" Command="{Binding AllVouchersClickCommand}" ></Button>
+            <Button Grid.Column="0" Grid.Row="2"  Margin="35" Command="{Binding ToursInProgressClickCommand}" Background="{DynamicResource ButtonBackground}">
+                <Button.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="Prati" Foreground="{DynamicResource AppForeground}" />
+                    </DataTemplate>
+                </Button.ContentTemplate>
+            </Button>
+            <Button Grid.Column="1" Grid.Row="2"  Margin="35" Command="{Binding FinishedToursClickCommand}" Background="{DynamicResource ButtonBackground}">
+                <Button.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="Oceni" Foreground="{DynamicResource AppForeground}" />
+                    </DataTemplate>
+                </Button.ContentTemplate>
+            </Button>
+            <Button Grid.Column="1" Grid.Row="3"  Margin="35" Command="{Binding AllVouchersClickCommand}" Background="{DynamicResource ButtonBackground}">
+                <Button.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="Vauceri" Foreground="{DynamicResource AppForeground}" />
+                    </DataTemplate>
+                </Button.ContentTemplate>
+            </Button>
 
         </Grid>
         <Grid Grid.Row="3">
@@ -54,7 +136,13 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="1" Command="{Binding SignOutClickCommand}" >Odjavi se</Button>
+            <Button Grid.Column="1" Command="{Binding SignOutClickCommand}" Background="{DynamicResource ButtonBackground}">
+                <Button.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="Odjavi se" Foreground="{DynamicResource AppForeground}" />
+                    </DataTemplate>
+                </Button.ContentTemplate>
+            </Button>
 
         </Grid>
     </Grid>

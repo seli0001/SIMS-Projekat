@@ -8,7 +8,7 @@
         xmlns:ei="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions"
         mc:Ignorable="d"
         Title="ToursInProgressView" Height="750" Width="430">
-    <Grid Background="AliceBlue" >
+    <Grid Background="{DynamicResource AppBackground}" >
         <Grid.RowDefinitions>
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="70"></RowDefinition>

@@ -3,17 +3,44 @@ using SIMS.Service.Services;
 using SIMS.WPF.View;
 using SIMS.WPF.View.Guest2View;
 using SIMS.WPF.ViewModel.ViewModel;
+using SkiaSharp;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
+using System.IO;
 using System.Linq;
+using System.Printing;
+using System.Reflection.Emit;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Xml;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
+using iText.Layout.Properties;
+using System.Windows.Markup;
+using Xceed.Wpf.AvalonDock.Properties;
+using System.Diagnostics;
+using System.Data;
+using Org.BouncyCastle.Asn1.Utilities;
+using Org.BouncyCastle.Math;
+using System.Windows.Controls.Primitives;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Windows.Media;
+using System.Threading;
+using System.Globalization;
+using System.Resources;
+
 
 namespace SIMS.WPF.ViewModel.Guest2ViewModel
 {
-    public class MenuGuest2ViewModel : ViewModelBase, IClose
+    public class MenuGuest2ViewModel : ViewModelBase, IClose, INotifyPropertyChanged
     {
         public Action Close { get; set; }
         private readonly BookedTourService _bookedTourService;
@@ -26,6 +53,13 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
             this.userId = userId;
             _bookedTourService = new BookedTourService();
             CheckNotify();
+        }
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #region commands
@@ -98,8 +132,80 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
             }
         }
 
+        private ICommand _generateReportClickCommand;
+        public ICommand GenerateReportClickCommand
+        {
+            get
+            {
+                return _generateReportClickCommand ?? (_generateReportClickCommand = new CommandBase(() => GenerateReportClick(), true));
+            }
+        }
+
+
+
+        private bool _isDarkTheme;
+        public bool IsDarkTheme
+        {
+            get { return _isDarkTheme; }
+            set
+            {
+                _isDarkTheme = value;
+                OnPropertyChanged(IsDarkTheme.ToString());
+                ChangeTheme();
+            }
+        }
+
+        private ICommand _themeClickCommand;
+        public ICommand ThemeClickCommand
+        {
+            get
+            {
+                return _themeClickCommand ?? (_themeClickCommand = new CommandBase(() => ChangeThemeClick(), true));
+            }
+        }
+
+        
+
+        private ICommand _changeLanguageClickCommand;
+        public ICommand ChangeLanguageClickCommand
+        {
+            get
+            {
+                return _changeLanguageClickCommand ?? (_changeLanguageClickCommand = new CommandBase(() => ChangeLanguageClick(), true));
+            }
+        }
 
         #endregion
+
+        private void ChangeLanguageClick()
+        {
+          /*  if (Thread.CurrentThread.CurrentCulture.Name == "sr-Latn-RS")
+            {
+                ApplyLanguageChangeToAllWindows(new CultureInfo("en-US"));
+            }
+            else
+            {
+                ApplyLanguageChangeToAllWindows(new CultureInfo("sr-Latn-RS"));
+            }*/
+        }
+
+   /*     private void ApplyLanguageChangeToAllWindows(CultureInfo culture)
+        {
+            foreach (Window window in Application.Current.Windows)
+            {
+                if (window is Window wpfWindow)
+                {
+                    Thread.CurrentThread.CurrentCulture = culture;
+                    Thread.CurrentThread.CurrentUICulture = culture;
+
+                    var rm = new ResourceManager("SIMS.Localization.Resource", typeof(Resource).Assembly);
+                    wpfWindow.Title = rm.GetString("FormTitle");
+
+                    // Osvežite ostale kontrole na prozoru koje želite da lokalizujete
+                }
+            }
+        }
+   */
 
         public void CheckNotify()
         {
@@ -171,6 +277,61 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
             FinishedToursView selectFinishedTour = new FinishedToursView(userId);
             selectFinishedTour.Show();
             Close();
+        }
+
+        private void ChangeThemeClick()
+        {
+            IsDarkTheme = !IsDarkTheme;
+        }
+
+
+        private void ChangeTheme()
+        {
+            if (IsDarkTheme)
+            {
+                // Promeni na tamnu temu
+                Application.Current.Resources["AppBackground"] = new SolidColorBrush(Color.FromRgb(45, 45, 48));
+                Application.Current.Resources["AppForeground"] = new SolidColorBrush(Colors.White);
+                Application.Current.Resources["ButtonBackground"] = new SolidColorBrush(Colors.DarkBlue);
+                Application.Current.Resources["ToolBar"] = new SolidColorBrush(Colors.DarkBlue);
+            }
+            else
+            {
+                // Promeni na svetlu temu
+                Application.Current.Resources["AppBackground"] = new SolidColorBrush(Colors.AliceBlue);
+                Application.Current.Resources["AppForeground"] = new SolidColorBrush(Colors.Black);
+                Application.Current.Resources["ButtonBackground"] = new SolidColorBrush(Colors.White);
+                Application.Current.Resources["ToolBar"] = new SolidColorBrush(Colors.LightBlue);
+
+            }
+        }
+
+
+        private void GenerateReportClick()
+        {  
+            string putanjaIzvestaja = @"../../../../SIMS/Reports/izvestaj"+ DateTime.Now.ToString("hh_mm_ss").ToString() + ".pdf";
+
+            // Kreirajte novi PDF dokument iz iText7 biblioteke
+            iText.Kernel.Pdf.PdfDocument pdfDokument = new iText.Kernel.Pdf.PdfDocument(new iText.Kernel.Pdf.PdfWriter(putanjaIzvestaja));
+            iText.Layout.Document dokument = new iText.Layout.Document(pdfDokument);
+
+
+            iText.Layout.Element.Paragraph naslovParagraf = new iText.Layout.Element.Paragraph("Prisustvo na turama")
+                .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
+                .SetFontSize(18)
+                .SetBold();
+            dokument.Add(naslovParagraf);
+
+            iText.Layout.Element.Paragraph informacijeParagraf = new iText.Layout.Element.Paragraph()
+                .Add("Novi sad Tura\n")
+                .Add(" Star: 23.04.2001, End Date: 15.05.2002\n")
+                .Add("Beograd Tura\n")
+                .Add(" Star: 23.04.2001, End Date: 15.05.2002");
+            dokument.Add(informacijeParagraf);
+
+
+            dokument.Close();
+
         }
 
     }
