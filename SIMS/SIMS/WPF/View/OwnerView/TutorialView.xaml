@@ -7,6 +7,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="650" d:DesignWidth="950">
     <Grid>
-        <MediaElement x:Name="mediaPlayer" Source="Tutorijal.mp4" />
+        <MediaElement x:Name="mediaPlayer" Source="/WPF/View/OwnerView/Tutorijal.mp4" IsMuted="True" Width="900" Height="600" />
     </Grid>
 </UserControl>
