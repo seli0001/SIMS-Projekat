@@ -25,10 +25,6 @@
                 <view:HomeView />
             </DataTemplate>
             
-            <DataTemplate DataType="{x:Type guestViewModel:HomeViewModel}">
-                <guestView:HomeView />
-            </DataTemplate>
-
             <DataTemplate DataType="{x:Type viewModel:UnratedReservationsViewModel}">
                 <view:UnratedReservationView />
             </DataTemplate>
@@ -59,6 +55,18 @@
 
             <DataTemplate DataType="{x:Type viewModel:SystemProposalViewModel}">
                 <view:SystemProposalView />
+            </DataTemplate>
+
+
+
+
+            <DataTemplate DataType="{x:Type guestViewModel:Guest1MainViewModel}">
+                <guestView:Guest1Main />
+            </DataTemplate>
+
+
+            <DataTemplate DataType="{x:Type guestViewModel:HomeViewModel}">
+                <guestView:HomeView />
             </DataTemplate>
 
 

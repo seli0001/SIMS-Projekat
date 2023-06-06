@@ -118,7 +118,7 @@ namespace SIMS.WPF.ViewModel
 
             //FirstGuestMainView firstGuestMainView = new FirstGuestMainView(user);
             //firstGuestMainView.Show();
-            Guest1Main guest1Main = new Guest1Main();
+            Guest1Main guest1Main = new Guest1Main(user);
             guest1Main.Show();
         }
 

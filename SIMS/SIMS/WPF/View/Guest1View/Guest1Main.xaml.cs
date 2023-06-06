@@ -1,4 +1,7 @@
-﻿using System;
+﻿using SIMS.Domain.Model;
+using SIMS.WPF.ViewModel.OwnerViewModel;
+using SIMS.WPF.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using SIMS.WPF.ViewModel.Guest1ViewModel;
 
 namespace SIMS.WPF.View.Guest1View
 {
@@ -21,7 +25,20 @@ namespace SIMS.WPF.View.Guest1View
     {
         public Guest1Main()
         {
+
+        }
+        public Guest1Main(User user)
+        {
             InitializeComponent();
+            Guest1MainViewModel guestMainVM = new Guest1MainViewModel(user);
+            DataContext = guestMainVM;
+            if (DataContext is IClose vm)
+            {
+                vm.Close += () =>
+                {
+                    this.Close();
+                };
+            }
         }
     }
 }

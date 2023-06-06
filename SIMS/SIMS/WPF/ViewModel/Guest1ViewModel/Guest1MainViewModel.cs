@@ -19,6 +19,7 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
         public UnratedReservationsViewModel UnratedReservationsVM { get; set; }
         public HomeViewModel HomeVM { get; set; }
 
+
         private object _currentView;
         public object CurrentView
         {
