@@ -75,11 +75,10 @@
                     Height="25"
                     Width="auto"
                     Style="{StaticResource ButtonTheme}"
-                    Command="{Binding }"/>
+                    Command="{Binding GenerateReportCommand}"/>
 
-                
+
             </StackPanel>
-
         </Grid>
     </Grid>
 </UserControl>
