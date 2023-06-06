@@ -5,21 +5,20 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SIMS.WPF.View.OwnerView"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="650" d:DesignWidth="950">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
 
         <Grid Margin="30">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="400"></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0" Grid.Column="0" Width="430" Height="300">
+            <Grid Grid.Row="0" Grid.Column="0" Width="430">
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
@@ -31,21 +30,27 @@
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                    <ColumnDefinition Width="200"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Label Grid.Row="0" Grid.Column="0" Height="30">Naziv</Label>
-                <Label Grid.Row="1" Grid.Column="0" Height="30">Grad</Label>
-                <Label Grid.Row="2" Grid.Column="0" Height="30">Drzava</Label>
-                <Label Grid.Row="3" Grid.Column="0" Height="30">Tip smestaja</Label>
-                <Label Grid.Row="4" Grid.Column="0" Height="30">Maksimalni broj gostiju</Label>
-                <Label Grid.Row="5" Grid.Column="0" Height="30">Minimalni broj dana</Label>
-                <Label Grid.Row="6" Grid.Column="0" Height="30">Broj dana za otkazivanje</Label>
+                <Label Grid.Row="0" Grid.Column="0" Height="30" Style="{StaticResource LabelInputTheme}">Naziv</Label>
+                <Label Grid.Row="1" Grid.Column="0" Height="30" Style="{StaticResource LabelInputTheme}">Grad</Label>
+                <Label Grid.Row="2" Grid.Column="0" Height="30" Style="{StaticResource LabelInputTheme}">Drzava</Label>
+                <Label Grid.Row="3" Grid.Column="0" Height="30" Style="{StaticResource LabelInputTheme}">Tip smestaja</Label>
+                <Label Grid.Row="4" Grid.Column="0" Height="30" Style="{StaticResource LabelInputTheme}">Maksimalni broj gostiju</Label>
+                <Label Grid.Row="5" Grid.Column="0" Height="30" Style="{StaticResource LabelInputTheme}">Minimalni broj dana</Label>
+                <Label Grid.Row="6" Grid.Column="0" Height="30" Style="{StaticResource LabelInputTheme}">Broj dana za otkazivanje</Label>
 
 
                 <StackPanel Grid.Row="0" Grid.Column="1">
                     <TextBox Text="{Binding Path=AccommodationName, UpdateSourceTrigger=LostFocus}"
-                     Height="20"></TextBox>
-                    <Label FontSize="11" Grid.Row="0" Grid.Column="1" Foreground="Red" Visibility="{Binding NameValidator.Visibility}" Content="{Binding NameValidator.Content}" />
+                     Height="20"
+                     Margin="0 20 0 0"></TextBox>
+                    <Label FontSize="11" 
+                           Grid.Row="0" 
+                           Grid.Column="1" 
+                           Foreground="Red" 
+                           Visibility="{Binding validators[0]}" 
+                           Content="Veliko pocetno slovo" />
                 </StackPanel>
                 <StackPanel Grid.Row="1" Grid.Column="1">
                     <TextBox Text="{Binding Path=City, UpdateSourceTrigger=LostFocus}" 
@@ -86,11 +91,13 @@
             </Grid>
         </Grid>
 
-        <Grid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2">
+        <Grid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
+              Margin="30"
+              VerticalAlignment="Center">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"></RowDefinition>
-                <RowDefinition Height="150"></RowDefinition>
-                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="400"></RowDefinition>
+                <RowDefinition Height="100"></RowDefinition>
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
@@ -99,10 +106,35 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <Label HorizontalAlignment="Center" Content="Slike" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" />
-            <Button Command="{Binding AddImageCommand}" Content="Dodaj sliku" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Width="80" />
-            <Button Command="{Binding RemoveImageCommand}" Content="Obrisi sliku" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center"  Width="80" />
-            <ListView x:Name="imageListView" ItemsSource="{Binding Images}" SelectedIndex="{Binding SelectedIndex}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
+            <Label HorizontalAlignment="Center" 
+                   Content="Slike" 
+                   Grid.Row="0" 
+                   Grid.Column="0" 
+                   VerticalAlignment="Center"
+                   Style="{StaticResource LabelInputTheme}"/>
+            <Button Command="{Binding AddImageCommand}" 
+                    Style="{StaticResource ButtonTheme}"
+                    Height="22"
+                     Content="Dodaj sliku" Grid.Column="1" 
+                    Grid.Row="0" 
+                    VerticalAlignment="Center" 
+                    Width="auto" />
+            <Button Command="{Binding RemoveImageCommand}" 
+                    Content="Obrisi sliku" 
+                    Grid.Column="2" Grid.Row="0" 
+                    VerticalAlignment="Center"  
+                    Width="auto"
+                    Height="22"
+                    Style="{StaticResource ButtonTheme}"
+                        />
+            <ListView x:Name="imageListView" 
+                      ItemsSource="{Binding Images}" 
+                      SelectedIndex="{Binding SelectedIndex}" 
+                      Grid.Row="1" 
+                      Grid.Column="0" 
+                      Grid.ColumnSpan="3"
+                      VerticalAlignment="Top"
+                      Height="100">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel Orientation="Horizontal" />
@@ -115,14 +147,30 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <WrapPanel Grid.Row="2" Grid.ColumnSpan="3"
-                       >
-                <Button Command="{Binding SaveAccommodationCommand}" x:Name="BtnSubmit" Content="Potvrdi" IsCancel="True" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20, 5, 20, 5"
-                IsEnabled="{Binding IsEnabled}"/>
-                <Button  x:Name="BtnCancel" Content="Odustani" 
-                     IsDefault="True" HorizontalAlignment="Left" 
-                     VerticalAlignment="Top" Margin="20, 5, 20, 5"
-                     Command="{Binding CloseWindowCommand}"
+            <WrapPanel Grid.Row="2" 
+                       Grid.ColumnSpan="3" 
+                       VerticalAlignment="Bottom"
+                       HorizontalAlignment="Right">
+                
+                <Button Command="{Binding SaveAccommodationCommand}"
+                        Style="{StaticResource BtnSubmitTheme}"
+                        x:Name="BtnSubmit" 
+                        Content="Potvrdi" 
+                        Height="30"
+                        IsCancel="True" 
+                        HorizontalAlignment="Left" 
+                        VerticalAlignment="Top" 
+                        Margin="20, 5, 20, 5"
+                        IsEnabled="{Binding IsEnabled}"/>
+                
+                <Button  x:Name="BtnCancel" 
+                         Content="Odustani" 
+                         Height="30"
+                         Style="{StaticResource BtnCancelTheme}"
+                         IsDefault="True" 
+                         HorizontalAlignment="Left" 
+                         VerticalAlignment="Top" Margin="20, 5, 20, 5"
+                         Command="{Binding CloseWindowCommand}"
                 />
             </WrapPanel>
         </Grid>

@@ -5,25 +5,31 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SIMS.WPF.View.OwnerView"
              mc:Ignorable="d" 
-             d:DesignHeight="480" d:DesignWidth="800">
+             d:DesignHeight="650" d:DesignWidth="950">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="150"/>
             <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
         
-        <StackPanel Margin="50 0 0 0">
+        <StackPanel Margin="10">
             <TextBlock Text="Prikaz ocena"
-                       Style="{StaticResource TitleTheme}"/>
+                       Style="{StaticResource TitleTheme}"
+                       Padding="0 10 10 10"/>
+            
             <TextBlock Text="U tabeli se nalaze izlistane ocene koje su vam gosti ostavili" 
                        FontSize="18"
                        Foreground="White"/>
         </StackPanel>
+        
         <DataGrid
                   ItemsSource="{Binding Path=Ratings, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding Path=SelectedRating, UpdateSourceTrigger=PropertyChanged}"
-                  AutoGenerateColumns="False" IsReadOnly="True"
-                  Width="450" Height="340" Grid.Row="1">
+                  AutoGenerateColumns="False" 
+                  IsReadOnly="True"
+                  Grid.Row="1"
+                  Margin="10"
+                  Style="{StaticResource DatGridTheme}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Gost" Binding="{Binding User.Username}" Width="*"></DataGridTextColumn>
                 <DataGridTextColumn Header="Cistoca" Binding="{Binding Cleanliness}" Width="*"></DataGridTextColumn>

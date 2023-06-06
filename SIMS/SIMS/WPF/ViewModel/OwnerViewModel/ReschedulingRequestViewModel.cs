@@ -58,15 +58,6 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             }
         }
 
-        private ICommand _showRejectWindowComman;
-        public ICommand ShowRejectWindowCommand
-        {
-            get
-            {
-                return _showRejectWindowComman ?? (_showRejectWindowComman = new CommandBase(() => ShowRejectWindow(), true));
-            }
-        }
-
         private ICommand _rejectCommand;
         public ICommand RejectCommand
         {
@@ -91,14 +82,6 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             }
         }
 
-        private void ShowRejectWindow()
-        {
-            if (SelectedRequests != null)
-            {
-                RejectReason rejectReason = new RejectReason(this);
-                rejectReason.Show();
-            }
-        }
 
         private void RejectRequest()
         {
