@@ -141,15 +141,6 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             }
         }
 
-        private ICommand _updateAccommodationCommand;
-        public ICommand UpdateAccommodationCommand
-        {
-            get
-            {
-                return _updateAccommodationCommand ?? (_updateAccommodationCommand = new CommandBase(() => ShowUpdateAccommodationForm(), true));
-            }
-        }
-
         private ICommand _deleteAccommodationCommand;
         public ICommand DeleteAccommodationCommand
         {
@@ -217,13 +208,6 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
                 mainViewModel.SelectedAccommodation = SelectedAccommodation;
                 mainViewModel.StatisticsComand.Execute(null);
             }
-        }
-
-
-        private void ShowUpdateAccommodationForm()
-        {
-            ShowAccommodationView showAccommodation = new ShowAccommodationView(SelectedAccommodation, LoggedInUser);
-            showAccommodation.Show();
         }
 
         private void DeleteAccommodationHandler()

@@ -12,6 +12,10 @@
                 <ResourceDictionary Source="Theme/ButtonTheme.xaml" />
                 <ResourceDictionary Source="Theme/TitleTheme.xaml" />
                 <ResourceDictionary Source="Theme/TextTheme.xaml" />
+                <ResourceDictionary Source="Theme/LabelInputTheme.xaml" />
+                <ResourceDictionary Source="Theme/DataGridTheme.xaml" />
+                <ResourceDictionary Source="Theme/BtnCancelTheme.xaml" />
+                <ResourceDictionary Source="Theme/BtnSubmitTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate DataType="{x:Type viewModel:MainViewModel}">
@@ -52,6 +56,10 @@
 
             <DataTemplate DataType="{x:Type viewModel:SystemProposalViewModel}">
                 <view:SystemProposalView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:TutorialViewModel}">
+                <view:TutorialView />
             </DataTemplate>
 
 

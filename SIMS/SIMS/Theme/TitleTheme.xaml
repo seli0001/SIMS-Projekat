@@ -5,9 +5,9 @@
 
         <Style.Setters>
             <Setter Property="FontFamily" Value="Arial"/>
-            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontSize" Value="30"/>
             <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Padding" Value="10 0 10 10"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
         </Style.Setters>
 

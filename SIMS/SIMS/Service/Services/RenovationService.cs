@@ -47,6 +47,12 @@ namespace SIMS.Service
             return _renovationRepository.AvailableDates(startTime, endTime, daysStaying, accommodation);
         }
 
+        public List<Renovation> GetFromToDate(DateOnly startTime, DateOnly endTime)
+        {
+            return _renovationRepository.GetFromToDate(startTime, endTime);
+        }
+
+        
         public void Delete(Renovation renovation)
         {
             _renovationRepository.Delete(renovation);

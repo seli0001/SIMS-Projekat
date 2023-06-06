@@ -18,11 +18,27 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         public Accommodation SelectedAccommodation { get; set; }
         public User LoggedInUser { get; set; }
         public static ObservableCollection<DatesDTO> AvailableDates { get; set; }
-        public DatesDTO SelectedDate { get; set; }
+        private DatesDTO _selectedDate;
+        public DatesDTO SelectedDate {
+
+            get => _selectedDate;
+                
+            set {
+                _selectedDate = value;
+                validator2[1] = 1;
+                IsEnabled = true;
+                ValidatorTest();
+                OnPropertyChanged();
+            } 
+            
+        }
 
         private readonly RenovationService _renovationService;
 
         private MainViewModel mainViewModel;
+
+        private readonly int[] validator;
+        private readonly int[] validator2;
 
 
         public SchedulingRenovationViewModel()
@@ -37,11 +53,14 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             SelectedAccommodation = selectedAccommodation;
             mainViewModel = mvm;
             LoggedInUser = user;
+            validator = new int[3];
+            validator2 = new int[2];
+
         }
 
         #region data
 
-        private bool _isEnabled;
+        private bool _isEnabled=false;
         public bool IsEnabled
         {
             get => _isEnabled;
@@ -51,6 +70,17 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
                 OnPropertyChanged();
             }
         }
+        private bool _isEnabled2 = false;
+        public bool IsEnabled2
+        {
+            get => _isEnabled2;
+            set
+            {
+                _isEnabled2 = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         private DateTime _fromDate = DateTime.Now;
         public DateTime FromDate
@@ -58,7 +88,14 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             get => _fromDate;
             set
             {
-                _fromDate = value;
+                if(value < ToDate || ToDate.Date == DateTime.Now.Date)
+                {
+                    _fromDate = value;
+                    validator[0] = 1;
+                }
+                IsEnabled = true;
+                ValidatorTest();
+                OnPropertyChanged();
             }
         }
 
@@ -69,7 +106,14 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             get => _toDate;
             set
             {
-                _toDate = value;
+                if (value > FromDate || FromDate.Date == DateTime.Now.Date)
+                {
+                    _toDate = value;
+                    validator[1] = 1;
+                }
+                IsEnabled = true;
+                ValidatorTest();
+                OnPropertyChanged();
             }
         }
 
@@ -77,9 +121,16 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         public int NumOfDays
         {
             get => _numOfDays;
-            set
-            {
-                _numOfDays = value;
+            set { 
+            
+                if(value != _numOfDays && value > 0)
+                {
+                    _numOfDays = value;
+                    validator[2] = 1;
+                }
+                IsEnabled = true;
+                ValidatorTest();
+                OnPropertyChanged();
             }
         }
 
@@ -89,7 +140,19 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             get => _description;
             set
             {
+                if(value != "")
+                {
                 _description = value;
+                validator2[0] = 1;
+
+                }
+                else
+                {
+                    validator2[0] = 0;
+                }
+                IsEnabled2 = true;
+                ValidatorTest2();
+                OnPropertyChanged();
             }
         }
 
@@ -115,6 +178,28 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         }
 
         #endregion
+
+        private void ValidatorTest()
+        {
+            foreach (int kon in validator)
+            {
+                if (kon == 0)
+                {
+                    IsEnabled = false;
+                }
+            }
+        }
+
+        private void ValidatorTest2()
+        {
+            foreach (int kon in validator2)
+            {
+                if (kon == 0)
+                {
+                    IsEnabled2 = false;
+                }
+            }
+        }
 
         private void SearchDates()
         {

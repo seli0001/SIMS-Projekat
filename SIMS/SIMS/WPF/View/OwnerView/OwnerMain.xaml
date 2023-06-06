@@ -12,7 +12,6 @@
         Background="Transparent"
         AllowsTransparency="True" 
         WindowStartupLocation="CenterScreen">
-
     <Window.DataContext>
         <viewModel:MainViewModel/>
     </Window.DataContext>
@@ -21,12 +20,12 @@
 
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="240" />
+                <ColumnDefinition Width="260" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="75"/>
+                <RowDefinition Height="100"/>
                 <RowDefinition />
             </Grid.RowDefinitions>
 
@@ -51,53 +50,55 @@
                            FontSize="32"/>
                 <TextBlock Text="ocena vlasnika" 
                            Foreground="White" 
-                           FontSize="16"
+                           FontSize="18"
                            VerticalAlignment="Center"
                            Margin="15 0 0 0"/>
                 </StackPanel>
             </Border>
 
             <StackPanel Grid.Row="1"
-                        VerticalAlignment="Center">
+                        VerticalAlignment="Center"
+                        Margin="0 50 0 0">
                 
                 <RadioButton Content="Smestaji" 
                              Height="50" 
                              Foreground="White" 
-                             FontSize="14"
                              Style="{StaticResource MenuButtonTheme}"
                              IsChecked="True"
+                             Margin="0 0 0 30"
                              Command="{Binding HomeViewCommand}"/>
 
                 <RadioButton Content="Neocenjene rezervacije" 
                              Height="50" 
                              Foreground="White" 
-                             FontSize="14"
                              Style="{StaticResource MenuButtonTheme}"
+                             Margin="0 0 0 30"
                              Command="{Binding UnratedReservationsCommand}"/>
 
                 <RadioButton Content="Prikazi renoviranja" 
                              Height="50" 
                              Foreground="White" 
-                             FontSize="14"
                               BorderThickness="0"
-                             Style="{StaticResource MenuButtonTheme}"
+                             Style="{StaticResource MenuButtonTheme}"                             Margin="0 0 0 30"
                              Command="{Binding RenovationsCommand}"
                               />
 
                 <RadioButton Content="Ocene gostiju" 
                              Height="50" 
                              Foreground="White" 
-                             FontSize="14"
                               BorderThickness="0"
                              Style="{StaticResource MenuButtonTheme}"
+                             
+                             Margin="0 0 0 30"
                              Command="{Binding GuestRatingsViewCommand}"/>
 
                 <RadioButton Content="Zahtevi gostiju" 
                              Height="50" 
                              Foreground="White" 
-                             FontSize="14"
                               BorderThickness="0"
                              Style="{StaticResource MenuButtonTheme}"
+                             
+                             Margin="0 0 0 30"
                              Command="{Binding ReschedulingCommand}"/>
             </StackPanel>
 
@@ -109,6 +110,7 @@
                     Height="30"
                     Width="100"
                     BorderThickness="0"
+                    FontSize="18"
                     Background="Transparent"
                     Foreground="White"
                     Command="{Binding LogOutCommand}"/>
@@ -118,16 +120,23 @@
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
                         Margin="0 30 30 0">
+                
                 <Button Content="Pogledaj predlog sistema"
                         Background="Transparent"
                         Foreground="White"
                         Margin="0 0 40 0"
-                        Command="{Binding ProposalCommand}"/>
+                        BorderThickness="0"
+                        FontSize="18"
+                        Command="{Binding ProposalCommand}"
+                        />
 
                 <Button Content="Pogledaj tutorijal"
                         Background="Transparent"
                         Foreground="White"
-                         Margin="0 0 40 0"/>
+                        Margin="0 0 40 0"
+                        BorderThickness="0"
+                        FontSize="18"
+                        Command="{Binding TutorialCommand}"/>
 
             </StackPanel>
 

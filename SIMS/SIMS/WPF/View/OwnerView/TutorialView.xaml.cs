@@ -1,6 +1,4 @@
-﻿using SIMS.WPF.ViewModel;
-using SIMS.WPF.ViewModel.OwnerViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,27 +10,21 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace SIMS.WPF.View.OwnerView
 {
     /// <summary>
-    /// Interaction logic for RejectReason.xaml
+    /// Interaction logic for TutorialView.xaml
     /// </summary>
-    public partial class RejectReason : Window
+    public partial class TutorialView : UserControl
     {
-        public RejectReason(ReschedulingRequestViewModel vm)
+        public TutorialView()
         {
             InitializeComponent();
-            DataContext = vm;
-
-            if(DataContext is IClose dc)
-            {
-                dc.Close += () =>
-                {
-                    this.Close();
-                };
-            }
         }
+
+
     }
 }
