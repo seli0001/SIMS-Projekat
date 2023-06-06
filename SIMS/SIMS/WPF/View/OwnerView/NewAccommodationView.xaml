@@ -41,28 +41,22 @@
                 <Label Grid.Row="6" Grid.Column="0" Height="30" Style="{StaticResource LabelInputTheme}">Broj dana za otkazivanje</Label>
 
 
-                <StackPanel Grid.Row="0" Grid.Column="1">
+                <StackPanel Grid.Row="0" Grid.Column="1"
+                            VerticalAlignment="Center">
                     <TextBox Text="{Binding Path=AccommodationName, UpdateSourceTrigger=LostFocus}"
-                     Height="20"
-                     Margin="0 20 0 0"></TextBox>
-                    <Label FontSize="11" 
-                           Grid.Row="0" 
-                           Grid.Column="1" 
-                           Foreground="Red" 
-                           Visibility="Hidden" 
-                           Content="Veliko pocetno slovo" />
+                     Height="20"></TextBox>
                 </StackPanel>
-                <StackPanel Grid.Row="1" Grid.Column="1">
+                <StackPanel Grid.Row="1" Grid.Column="1"
+                            VerticalAlignment="Center">
                     <TextBox Text="{Binding Path=City, UpdateSourceTrigger=LostFocus}" 
                      Height="20"></TextBox>
-                    <Label x:Name="CityValidator" FontSize="11" Foreground="Red" Visibility="Hidden">Veliko pocetno slovo</Label>
                 </StackPanel>
 
-                <StackPanel Grid.Row="2" Grid.Column="1">
+                <StackPanel Grid.Row="2" Grid.Column="1"
+                            VerticalAlignment="Center">
                     <TextBox Text="{Binding Path=Country, UpdateSourceTrigger=LostFocus}" 
                      Height="20"></TextBox>
-                    <Label x:Name="CountryValidator" FontSize="11" Foreground="Red" Visibility="Hidden">Veliko pocetno slovo</Label>
-                </StackPanel>
+                 </StackPanel>
 
                 <ComboBox x:Name="CBAccommodationType" Grid.Row="3" Grid.Column="1" 
                       Height="20" SelectedIndex="{Binding Path=AccommodationType, Mode=OneWayToSource}">
@@ -71,28 +65,28 @@
                     <ComboBoxItem Content="Hut"></ComboBoxItem>
                 </ComboBox>
 
-                <StackPanel Grid.Row="4" Grid.Column="1">
+                <StackPanel Grid.Row="4" Grid.Column="1"
+                            VerticalAlignment="Center">
                     <TextBox Text="{Binding Path=MaxGuestNum, UpdateSourceTrigger=LostFocus}" 
                      Height="20"></TextBox>
-                    <Label x:Name="MaxGuestNumValidator" FontSize="11" Foreground="Red" Visibility="Hidden">Veliko pocetno slovo</Label>
                 </StackPanel>
 
-                <StackPanel Grid.Row="5" Grid.Column="1">
+                <StackPanel Grid.Row="5" Grid.Column="1"
+                            VerticalAlignment="Center">
                     <TextBox Text="{Binding Path=MinReservationDays, UpdateSourceTrigger=LostFocus}" 
                      Height="20"></TextBox>
-                    <Label x:Name="MinReservationDaysValidator" FontSize="11" Foreground="Red" Visibility="Hidden">Veliko pocetno slovo</Label>
                 </StackPanel>
 
-                <StackPanel Grid.Row="6" Grid.Column="1">
+                <StackPanel Grid.Row="6" Grid.Column="1"
+                            VerticalAlignment="Center">
                     <TextBox Text="{Binding Path=CancelDaysNumber, UpdateSourceTrigger=LostFocus}" 
                      Height="20"></TextBox>
-                    <Label x:Name="CancelDaysNumberValidator" FontSize="11" Foreground="Red" Visibility="Hidden">Veliko pocetno slovo</Label>
                 </StackPanel>
             </Grid>
         </Grid>
 
         <Grid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
-              Margin="30"
+              Margin="20"
               VerticalAlignment="Center">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"></RowDefinition>
@@ -134,7 +128,7 @@
                       Grid.Column="0" 
                       Grid.ColumnSpan="3"
                       VerticalAlignment="Top"
-                      Height="100">
+                      Height="200">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel Orientation="Horizontal" />
