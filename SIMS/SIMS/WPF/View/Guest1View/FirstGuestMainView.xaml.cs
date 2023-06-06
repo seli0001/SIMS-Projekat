@@ -14,10 +14,12 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Xml.Linq;
-using SIMS.Model;
+using SIMS.Domain.Model;
 using SIMS.Repository;
 using SIMS.Domain.Model;
 using SIMS.Service.UseCases;
+using SIMS.WPF.ViewModel;
+using SIMS.WPF.ViewModel.Guest1ViewModel;
 
 namespace SIMS.View.FirstGuestView
 {
@@ -47,11 +49,9 @@ namespace SIMS.View.FirstGuestView
         public FirstGuestMainView(User user)
         {
             InitializeComponent();
-            DataContext = this;
+            FirstGuestMainViewModel firstGuestMainViewModel = new FirstGuestMainViewModel(user);
+            DataContext = firstGuestMainViewModel;
             cbSearch.ItemsSource = Enum.GetValues(typeof(Type));
-            _service = new AccommodationService();
-            Accommodations = new ObservableCollection<Accommodation>(_service.GetAll());
-            LoggedInUser = user;
         }
 
 

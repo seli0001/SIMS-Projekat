@@ -5,25 +5,56 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SIMS.View.FirstGuestView"
         mc:Ignorable="d"
-        Title="RequestsView" Height="600" Width="800">
+        Title="RequestsView" Height="750" Width="430">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="100"></RowDefinition>
-            <RowDefinition></RowDefinition>
-        </Grid.RowDefinitions>
+
 
         <DataGrid
-                  ItemsSource="{Binding Path=ReschedulingRequests, UpdateSourceTrigger=PropertyChanged}"
+                  ItemsSource="{Binding Path=ReservationsForRescheduling, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding Path=SelectedRequest, UpdateSourceTrigger=PropertyChanged}"
-                  AutoGenerateColumns="False" IsReadOnly="True"
-                   Width="600" Height="340" Margin="59,32,141,212" Grid.RowSpan="2">
+                  AutoGenerateColumns="False" IsReadOnly="True" Margin="10,270,10,292">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Smestaj" Binding="{Binding Reservation.Accommodation.Name}" Width="*"></DataGridTextColumn>
-                <DataGridTextColumn Header="From Date" Binding="{Binding FromDate}" Width="*"></DataGridTextColumn>
-                <DataGridTextColumn Header="To Date" Binding="{Binding ToDate}" Width="*"></DataGridTextColumn>
-                <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Name" Binding="{Binding Accommodation.Name}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Guests" Binding="{Binding NumberOfGuests}" Width="100"></DataGridTextColumn>
+                <DataGridTextColumn Header="From Date" Width="80" >
+                    <DataGridTextColumn.Binding>
+                        <Binding Path="FromDate" StringFormat="{}{0:d}" />
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="To Date" Width="80">
+                    <DataGridTextColumn.Binding>
+                        <Binding Path="ToDate" StringFormat="{}{0:d}" />
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
+        <Rectangle HorizontalAlignment="Center" Height="45" Margin="0,695,0,0" Stroke="Black" VerticalAlignment="Top" Width="430"/>
+        <Label Content="User Rescheduling Requests" HorizontalAlignment="Left" FontSize="20" Margin="14,228,0,0" VerticalAlignment="Top"/>
+        <Rectangle HorizontalAlignment="Left" Height="100" Margin="14,115,0,0" Stroke="Black" VerticalAlignment="Top" Width="100"/>
+        <Label Content="Guest1" HorizontalAlignment="Left" Margin="130,115,0,0" VerticalAlignment="Top"/>
+        <Rectangle HorizontalAlignment="Center" Height="100" Margin="0,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="410"/>
+        <Label Content="User Canceling Requests" HorizontalAlignment="Left" FontSize="20" Margin="10,447,0,0" VerticalAlignment="Top"/>
+        <DataGrid
+            ItemsSource="{Binding Reservations, UpdateSourceTrigger=PropertyChanged}"
+            SelectedItem="{Binding SelectedCancelingRequest, UpdateSourceTrigger=PropertyChanged}"
+            AutoGenerateColumns="False" IsReadOnly="True" Margin="10,489,10,73">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding Accommodation.Name}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Guests" Binding="{Binding NumberOfGuests}" Width="55"></DataGridTextColumn>
+                <DataGridTextColumn Header="From Date" Width="80" >
+                    <DataGridTextColumn.Binding>
+                        <Binding Path="FromDate" StringFormat="{}{0:d}" />
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="To Date" Width="80">
+                    <DataGridTextColumn.Binding>
+                        <Binding Path="ToDate" StringFormat="{}{0:d}" />
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+
 
     </Grid>
 </Window>

@@ -4,6 +4,9 @@
              xmlns:local="clr-namespace:SIMS"
              xmlns:viewModel="clr-namespace:SIMS.WPF.ViewModel.OwnerViewModel"
              xmlns:view="clr-namespace:SIMS.WPF.View.OwnerView"
+             
+             xmlns:guestViewModel="clr-namespace:SIMS.WPF.ViewModel.Guest1ViewModel"
+             xmlns:guestView="clr-namespace:SIMS.WPF.View.Guest1View"
              StartupUri="WPF/View/MainWindowView.xaml">
     <Application.Resources>
         <ResourceDictionary>
@@ -20,6 +23,10 @@
 
             <DataTemplate DataType="{x:Type viewModel:HomeViewModel}">
                 <view:HomeView />
+            </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type guestViewModel:HomeViewModel}">
+                <guestView:HomeView />
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type viewModel:UnratedReservationsViewModel}">

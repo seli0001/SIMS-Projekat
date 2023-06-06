@@ -85,5 +85,11 @@ namespace SIMS.View.FirstGuestView
             MessageBox.Show("Request Sent");
             Close();
         }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            ShowRatings showRatings = new ShowRatings(LoggedInUser);
+            showRatings.Show();
+        }
     }
 }
