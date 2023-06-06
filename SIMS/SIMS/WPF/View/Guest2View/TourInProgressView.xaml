@@ -14,12 +14,12 @@
 
         <Grid Grid.Row="0">
 
-            <ToolBar>
+            <ToolBar Background="{DynamicResource ToolBar}">
                 <Button  Command="{Binding BackToMenuClickCommand}">
                     <Image Source="pack://application:,,,/Resources/Assets/burger.png"></Image>
                 </Button>
                 <Button Content="                                                                          " ></Button>
-                <Button>
+                <Button Command="{Binding BackClickCommand}">
                     <Image Source="pack://application:,,,/Resources/Assets/back.png"></Image>
                 </Button>
                 <Button  Command="{Binding BackToMainGuest2ViewClickCommand}"  >
@@ -30,7 +30,7 @@
         </Grid>
 
 
-        <ListView Background="AliceBlue" Grid.Row="1" x:Name="lvwTours" ItemsSource="{Binding checkpoints, UpdateSourceTrigger=PropertyChanged}" >
+        <ListView Background="{DynamicResource List}" Grid.Row="1" x:Name="lvwTours" ItemsSource="{Binding checkpoints, UpdateSourceTrigger=PropertyChanged}" >
 
             <ListView.Resources>
                 <Style TargetType="ListViewItem">

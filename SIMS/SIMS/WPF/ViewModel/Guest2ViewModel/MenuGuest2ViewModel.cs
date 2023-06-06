@@ -294,6 +294,9 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
                 Application.Current.Resources["AppForeground"] = new SolidColorBrush(Colors.White);
                 Application.Current.Resources["ButtonBackground"] = new SolidColorBrush(Colors.DarkBlue);
                 Application.Current.Resources["ToolBar"] = new SolidColorBrush(Colors.DarkBlue);
+                Application.Current.Resources["List"] = new SolidColorBrush(Colors.DarkGray);
+                Application.Current.Resources["MainButton"] = new SolidColorBrush(Colors.DarkCyan);
+                Application.Current.Resources["Text"] = new SolidColorBrush(Colors.White);
             }
             else
             {
@@ -302,7 +305,9 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
                 Application.Current.Resources["AppForeground"] = new SolidColorBrush(Colors.Black);
                 Application.Current.Resources["ButtonBackground"] = new SolidColorBrush(Colors.White);
                 Application.Current.Resources["ToolBar"] = new SolidColorBrush(Colors.LightBlue);
-
+                Application.Current.Resources["List"] = new SolidColorBrush(Colors.White);
+                Application.Current.Resources["MainButton"] = new SolidColorBrush(Colors.DodgerBlue);
+                Application.Current.Resources["Text"] = new SolidColorBrush(Colors.Black);
             }
         }
 

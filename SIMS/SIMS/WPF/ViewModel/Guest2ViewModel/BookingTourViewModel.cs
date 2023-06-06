@@ -1,5 +1,6 @@
 ﻿using SIMS.Domain.Model;
 using SIMS.Service.Services;
+using SIMS.WPF.View;
 using SIMS.WPF.ViewModel.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -34,7 +35,7 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
             _bookedTourService = new BookedTourService();
             freeSpace = freespace;
             FreeSpace = freespace;
-            MessageBox.Show("Ostalo je" + freeSpace.ToString() + "Mesta");
+           // MessageBox.Show("Ostalo je" + freeSpace.ToString() + "Mesta");
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -78,7 +79,45 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
             }
         }
 
+        
+        
+
+            private ICommand _menuClickCommand;
+        public ICommand MenuClickCommand
+        {
+            get
+            {
+                return _menuClickCommand ?? (_menuClickCommand = new CommandBase(() => MenuClick(), true));
+            }
+        }
+
+        private ICommand _mainGuest2ViewClickCommand;
+        public ICommand MainGuest2ViewClickCommand
+        {
+            get
+            {
+                return _mainGuest2ViewClickCommand ?? (_mainGuest2ViewClickCommand = new CommandBase(() => BackToMainClick(), true));
+            }
+        }
+
+
         #endregion
+
+        private void MenuClick()
+        {
+            MenuGuest2View menuGuest2 = new MenuGuest2View(userId);
+            menuGuest2.Show();
+            Close();
+        }
+
+        private void BackToMainClick()
+        {
+  
+            MainGuest2View mainGuest2View = new MainGuest2View(userId);
+            mainGuest2View.Show();
+
+            Close();
+        }
 
         private void BookedClick()
         {

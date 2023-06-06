@@ -145,6 +145,17 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
             }
         }
 
+        
+
+          private ICommand _backClickCommand;
+        public ICommand BackClickCommand
+        {
+            get
+            {
+                return _backClickCommand ?? (_backClickCommand = new CommandBase(() => BackClick(), true));
+            }
+        }
+
         #endregion
 
 
@@ -153,6 +164,17 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        private void BackClick()
+        {
+            FinishedToursView selectFinishedTour = new FinishedToursView(userId);
+            selectFinishedTour.Show();
+            Close();
+
+        }
+
+
+
 
         private void RateTourClick()
         {

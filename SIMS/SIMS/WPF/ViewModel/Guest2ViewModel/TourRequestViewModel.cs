@@ -152,6 +152,17 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
             }
         }
 
+        
+
+        private ICommand _backToMenuClickCommand;
+        public ICommand BackToMenuClickCommand
+        {
+            get
+            {
+                return _backToMenuClickCommand ?? (_backToMenuClickCommand = new CommandBase(() => BackToMenuClick(), true));
+            }
+        }
+
         #endregion
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -164,6 +175,13 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
         {
             MainGuest2View mainGuest2View = new MainGuest2View(userId);
             mainGuest2View.Show();
+            Close();
+        }
+
+        private void BackToMenuClick()
+        {
+            MenuGuest2View menuGuest2View = new MenuGuest2View(userId);
+            menuGuest2View.Show();
             Close();
         }
 

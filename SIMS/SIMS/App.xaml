@@ -57,7 +57,13 @@
             <SolidColorBrush x:Key="ButtonBackground" Color="White"/>
             <SolidColorBrush x:Key="DarkButtonTextBackground" Color="White" ></SolidColorBrush>
             <SolidColorBrush x:Key="ToolBar" Color="LightBlue"/>
-
+            <SolidColorBrush x:Key="List" Color="White"/>
+            <SolidColorBrush x:Key="MainButton" Color="DodgerBlue"/>
+            
+            <SolidColorBrush x:Key="Text" Color="Black"/>
+            
+            
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -18,7 +18,7 @@
 
         <Grid Grid.Row="0">
 
-            <ToolBar>
+            <ToolBar Background="{DynamicResource ToolBar}">
 
                 <Button Content="                                                                                             "></Button>
                 <Button Command="{Binding BackClickCommand}">
@@ -37,8 +37,16 @@
             </Grid.ColumnDefinitions>
 
             <TextBox Grid.Column="0" Margin="20"></TextBox>
-            <Label Grid.Column="0">Naziv</Label>
-            <Label Grid.Column="1">Vazi do</Label>
+            <Label Grid.Column="0" Content="Naziv">
+                <Label.Foreground>
+                    <StaticResource ResourceKey="Text" />
+                </Label.Foreground>
+            </Label>
+            <Label Grid.Column="1" Content="Vazi do">
+                <Label.Foreground>
+                    <StaticResource ResourceKey="Text" />
+                </Label.Foreground>
+            </Label>
             <DatePicker Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"></DatePicker>
         </Grid>
 
@@ -52,14 +60,26 @@
 
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="2"  Content="Istorija" Margin="2"></Button>
-            <Button Grid.Column="3"  Content="Pretrazi" Margin="2" Command="{Binding SearchClickCommand}" ></Button>
+            <Button Background="{DynamicResource ButtonBackground}" Grid.Column="2"  Content="Istorija" Margin="2">
+                <Button.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="Istorija" Foreground="{DynamicResource AppForeground}" />
+                    </DataTemplate>
+                </Button.ContentTemplate>
+            </Button>
+            <Button Background="{DynamicResource ButtonBackground}" Grid.Column="3"  Content="Pretrazi" Margin="2" Command="{Binding SearchClickCommand}" >
+                <Button.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="Pretrazi" Foreground="{DynamicResource AppForeground}" />
+                    </DataTemplate>
+                </Button.ContentTemplate>
+            </Button>
 
         </Grid>
-        
 
 
-        <ListView Grid.Row="3" Background="AliceBlue" ItemsSource="{Binding vouchers, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding selectedVoucher, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single" >
+
+        <ListView Grid.Row="3" Background="{DynamicResource List}" ItemsSource="{Binding vouchers, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding selectedVoucher, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single" >
             <ListView.Resources>
                 <Style TargetType="ListViewItem">
                     <Setter Property="Height" Value="50" />

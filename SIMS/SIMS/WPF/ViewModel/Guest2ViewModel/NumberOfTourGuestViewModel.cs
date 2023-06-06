@@ -72,14 +72,33 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
             }
         }
 
+       
+
+            private ICommand _backToMenuClickCommand;
+        public ICommand BackToMenuClickCommand
+        {
+            get
+            {
+                return _backToMenuClickCommand ?? (_backToMenuClickCommand = new CommandBase(() => MenuClick(), true));
+            }
+        }
 
         #endregion
+
+        private void MenuClick()
+        {
+            MenuGuest2View menuGuest2 = new MenuGuest2View(userId);
+            menuGuest2.Show();
+            Close();
+        }
+
+
 
         private void BookingTourViewClick()
         {
             if (tour.MaxNumberOfPeople < Convert.ToInt32(tbNumber) || (tour.MaxNumberOfPeople - tour.NumberOfPeople) < Convert.ToInt32(tbNumber))
             {
-                MessageBox.Show("Nema mesta,evo alternativa!");
+                //MessageBox.Show("Nema mesta,evo alternativa!");
                 AlternativeTourView alternativeTourView = new AlternativeTourView(tour, userId);
                 alternativeTourView.Show();
                 Close();
@@ -88,8 +107,8 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
             {
                 int freeSpace = tour.MaxNumberOfPeople - Convert.ToInt32(tbNumber) - tour.NumberOfPeople;
                 BookingTourView bookingTourView = new BookingTourView(freeSpace, tour, userId, Convert.ToInt32(tbNumber));
-                bookingTourView.ShowDialog();
-
+                bookingTourView.Show();
+                Close();
 
 
             }

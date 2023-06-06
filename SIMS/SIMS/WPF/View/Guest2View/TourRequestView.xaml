@@ -14,8 +14,11 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <ToolBar>
-                <Button Content="                                                                                                      "></Button>
+            <ToolBar Background="{DynamicResource ToolBar}">
+                <Button Command="{Binding BackToMenuClickCommand}">
+                    <Image Source="pack://application:,,,/Resources/Assets/burger.png"></Image>
+                </Button>
+                <Button Content="                                                                                     "></Button>
                 <Button Command="{Binding BackToMainGuest2ViewClickCommand}">
                     <Image Source="pack://application:,,,/Resources/Assets/house.png"></Image>
                 </Button>
@@ -38,7 +41,11 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="0"  Content="Grad" VerticalContentAlignment="Center" HorizontalAlignment="Center"></Label>
+                <Label Grid.Column="0"  Content="Grad" VerticalContentAlignment="Center" HorizontalAlignment="Center">
+                    <Label.Foreground>
+                        <StaticResource ResourceKey="Text" />
+                    </Label.Foreground>
+                </Label>
                 <TextBox  Grid.Column="1"  Margin="10"  Text="{Binding Path=tbCity, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             </Grid>
 
@@ -48,7 +55,11 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="0"  Content="Drzava" VerticalContentAlignment="Center" HorizontalAlignment="Center"></Label>
+                <Label Grid.Column="0"  Content="Drzava" VerticalContentAlignment="Center" HorizontalAlignment="Center">
+                    <Label.Foreground>
+                        <StaticResource ResourceKey="Text" />
+                    </Label.Foreground>
+                </Label>
                 <TextBox  Grid.Column="1"  Margin="10"  Text="{Binding Path=tbCountry, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             </Grid>
 
@@ -58,7 +69,11 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="0"  Content="Opis" VerticalContentAlignment="Center" HorizontalAlignment="Center"></Label>
+                <Label Grid.Column="0"  Content="Opis" VerticalContentAlignment="Center" HorizontalAlignment="Center">
+                    <Label.Foreground>
+                        <StaticResource ResourceKey="Text" />
+                    </Label.Foreground>
+                </Label>
                 <TextBox   Grid.Column="1"  Margin="10"  Text="{Binding Path=tbDescription, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             </Grid>
 
@@ -68,7 +83,11 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="0"  Content="Jezik" VerticalContentAlignment="Center" HorizontalAlignment="Center"></Label>
+                <Label Grid.Column="0"  Content="Jezik" VerticalContentAlignment="Center" HorizontalAlignment="Center">
+                    <Label.Foreground>
+                        <StaticResource ResourceKey="Text" />
+                    </Label.Foreground>
+                </Label>
                 <TextBox  Grid.Column="1"  Margin="10" Text="{Binding Path=tbLanguage, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             </Grid>
 
@@ -78,7 +97,11 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="0"  Content="Broj gostiju" VerticalContentAlignment="Center" HorizontalAlignment="Center"></Label>
+                <Label Grid.Column="0"  Content="Broj gostiju" VerticalContentAlignment="Center" HorizontalAlignment="Center">
+                    <Label.Foreground>
+                        <StaticResource ResourceKey="Text" />
+                    </Label.Foreground>
+                </Label>
                 <TextBox  Grid.Column="1" Margin="10" Text="{Binding Path=tbGuestNumber, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"></TextBox>
             </Grid>
 
@@ -88,7 +111,11 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="0"  Content="Datum od" VerticalContentAlignment="Center" HorizontalAlignment="Center"></Label>
+                <Label Grid.Column="0"  Content="Datum od" VerticalContentAlignment="Center" HorizontalAlignment="Center">
+                    <Label.Foreground>
+                        <StaticResource ResourceKey="Text" />
+                    </Label.Foreground>
+                </Label>
                 <Calendar  Grid.Column="1"  SelectedDate="{Binding tbStartDate, Mode=TwoWay}"></Calendar>
             </Grid>
 
@@ -98,7 +125,11 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="0"  Content="Datum do" VerticalContentAlignment="Center" HorizontalAlignment="Center"></Label>
+                <Label Grid.Column="0"  Content="Datum do" VerticalContentAlignment="Center" HorizontalAlignment="Center">
+                    <Label.Foreground>
+                        <StaticResource ResourceKey="Text" />
+                    </Label.Foreground>
+                </Label>
                 <Calendar  Grid.Column="1" SelectedDate="{Binding tbEndDate, Mode=TwoWay}"></Calendar>
             </Grid>
 
@@ -108,7 +139,13 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="1" Command="{Binding RequesTourClickCommand}">Posalji</Button>
+            <Button Background="{DynamicResource ButtonBackground}" Grid.Column="1" Command="{Binding RequesTourClickCommand}">
+                <Button.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="Posalji" Foreground="{DynamicResource AppForeground}" />
+                    </DataTemplate>
+                </Button.ContentTemplate>
+            </Button>
         </Grid>
         
     </Grid>

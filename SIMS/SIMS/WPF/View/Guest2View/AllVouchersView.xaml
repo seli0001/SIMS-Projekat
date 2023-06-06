@@ -16,7 +16,7 @@
 
         <Grid Grid.Row="0">
 
-            <ToolBar>
+            <ToolBar Background="{DynamicResource ToolBar}">
                 <Button Command="{Binding MenuClickCommand}">
                     <Image Source="pack://application:,,,/Resources/Assets/burger.png"></Image>
                 </Button>
@@ -34,8 +34,16 @@
             </Grid.ColumnDefinitions>
 
             <TextBox Grid.Column="0" Margin="20"></TextBox>
-            <Label Grid.Column="0">Naziv</Label>
-            <Label Grid.Column="1">Vazi do</Label>
+            <Label Grid.Column="0" Content="Naziv">
+                <Label.Foreground>
+                    <StaticResource ResourceKey="Text" />
+                </Label.Foreground>
+            </Label>
+            <Label Grid.Column="1" Content="Vazi do">
+                <Label.Foreground>
+                    <StaticResource ResourceKey="Text" />
+                </Label.Foreground>
+            </Label>
             <DatePicker Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"></DatePicker>
         </Grid>
 
@@ -49,12 +57,12 @@
 
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="2"  Content="Istorija" Margin="2"></Button>
-            <Button Grid.Column="3"  Content="Pretrazi" Margin="2" Command="{Binding SearchClickCommand}" ></Button>
+            <Button Grid.Column="2"  Content="Istorija" Margin="2" Background="{DynamicResource ButtonBackground}"></Button>
+            <Button Grid.Column="3"  Content="Pretrazi" Margin="2" Command="{Binding SearchClickCommand}" Background="{DynamicResource ButtonBackground}" ></Button>
 
         </Grid>
-        
-        <ListView Background="AliceBlue" Grid.Row="3" Margin="5" ItemsSource="{Binding vouchers}" SelectionMode="Single">
+
+        <ListView Background="{DynamicResource List}" Grid.Row="3" Margin="5" ItemsSource="{Binding vouchers}" SelectionMode="Single">
             <ListView.Resources>
                 <Style TargetType="ListViewItem">
                     <Setter Property="Height" Value="50" />

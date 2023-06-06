@@ -13,7 +13,7 @@
             <RowDefinition Height="50"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <ToolBar>
+            <ToolBar Background="{DynamicResource ToolBar}">
                 <Button Command="{Binding BackToMenuClickCommand}"  >
                     <Image Source="pack://application:,,,/Resources/Assets/burger.png"></Image>
                 </Button>
@@ -29,7 +29,11 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             
-            <Label Grid.Row="0" Grid.Column="0" Content="Broj gostiju" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+            <Label Grid.Row="0" Grid.Column="0" Content="Broj gostiju" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Label.Foreground>
+                    <StaticResource ResourceKey="Text" />
+                </Label.Foreground>
+            </Label>
             <Grid Grid.Row="0" Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
@@ -49,9 +53,15 @@
            
             </Grid.ColumnDefinitions>
 
-            <Button   Grid.Column="1"  Margin="50,0,0,0"  Content="Rezervisi"    Command="{Binding BookingTourViewClickCommand}" ></Button>
+            <Button   Grid.Column="1"  Background="{DynamicResource MainButton}" Margin="50,0,0,0"  Content="Rezervisi"    Command="{Binding BookingTourViewClickCommand}" ></Button>
 
-            <Button  Grid.Column="0"  Margin="0,0,50,0" Content="Iskoristi vaucer"   Command="{Binding UsingVoucherCommand}" ></Button>
+            <Button  Background="{DynamicResource ButtonBackground}"  Grid.Column="0"  Margin="0,0,50,0"   Command="{Binding UsingVoucherCommand}" >
+                <Button.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="Iskoristi vaucer" Foreground="{DynamicResource AppForeground}" />
+                    </DataTemplate>
+                </Button.ContentTemplate>
+            </Button>
             
         </Grid>
         

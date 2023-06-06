@@ -15,7 +15,7 @@
 
         <Grid Grid.Row="0">
 
-            <ToolBar>
+            <ToolBar Background="{DynamicResource ToolBar}">
                 <Button Command="{Binding MenuClickCommand}">
                     <Image Source="pack://application:,,,/Resources/Assets/burger.png"></Image>
                 </Button>
@@ -44,18 +44,32 @@
                     <ColumnDefinition ></ColumnDefinition>
                     <ColumnDefinition ></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Label  HorizontalAlignment="Center" VerticalAlignment="Center"  Content="Broj slobodnih mesta:" ></Label>
-                <Label  Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="40"  Margin="40" Content="{Binding Path=FreeSpace}" />
+                <Label  HorizontalAlignment="Center" VerticalAlignment="Center"  Content="Broj slobodnih mesta:" >
+                    <Label.Foreground>
+                        <StaticResource ResourceKey="Text" />
+                    </Label.Foreground>
+                </Label>
+                <Label  Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="40"  Margin="40" Content="{Binding Path=FreeSpace}" >
+                    <Label.Foreground>
+                        <StaticResource ResourceKey="Text" />
+                    </Label.Foreground>
+                </Label>
             </Grid>
             
         </Grid>
 
-       
-        
-       
-       
 
-        <Button Grid.Row="2"  Content="Potvrdi" HorizontalAlignment="Right" Width="180" Command="{Binding BookedClickCommand}" ></Button>
-        <Button Grid.Row="2"  Content="Promeni broj" HorizontalAlignment="Left" Width="180" Command="{Binding BackToNumberFormClickCommand}" ></Button>
+
+
+
+
+        <Button Grid.Row="2"  Background="{DynamicResource MainButton}" Content="Potvrdi"  HorizontalAlignment="Right" Width="180" Command="{Binding BookedClickCommand}" ></Button>
+        <Button Grid.Row="2"  Background="{DynamicResource ButtonBackground}" HorizontalAlignment="Left" Width="180" Command="{Binding BackToNumberFormClickCommand}" >
+            <Button.ContentTemplate>
+                <DataTemplate>
+                    <TextBlock Text="Promeni broj" Foreground="{DynamicResource AppForeground}" />
+                </DataTemplate>
+            </Button.ContentTemplate>
+        </Button>
     </Grid>
 </Window>

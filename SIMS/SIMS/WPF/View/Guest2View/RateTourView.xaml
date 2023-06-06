@@ -17,12 +17,12 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
 
-            <ToolBar>
+            <ToolBar Background="{DynamicResource ToolBar}">
                 <Button  Command="{Binding BackToMenuClickCommand}" >
                     <Image Source="pack://application:,,,/Resources/Assets/burger.png"></Image>
                 </Button>
                 <Button Content="                                                                            "></Button>
-                <Button >
+                <Button  Command="{Binding BackClickCommand}">
                     <Image Source="pack://application:,,,/Resources/Assets/back.png"></Image>
                 </Button>
                 <Button Command="{Binding BackToMainGuest2ViewClickCommand}"  >
@@ -39,25 +39,41 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel  Grid.Column="0" Margin="40,40,18,40">
-                <Label>Znanje vodica</Label>
+                <Label Content="Znanje vodica">
+                    <Label.Foreground>
+                        <StaticResource ResourceKey="Text" />
+                    </Label.Foreground>
+                </Label>
                 <TextBox TextWrapping="Wrap" AcceptsReturn="True" Height="20" Margin="20" Text="{Binding Path=GuideKnown, UpdateSourceTrigger=PropertyChanged}"/>
 
             </StackPanel>
 
             <StackPanel  Grid.Column="1" Margin="40,40,18,40">
-                <Label>Jezik vodica</Label>
+                <Label Content="Jezik vodica">
+                    <Label.Foreground>
+                        <StaticResource ResourceKey="Text" />
+                    </Label.Foreground>
+                </Label>
                 <TextBox TextWrapping="Wrap" AcceptsReturn="True" Height="20" Margin="20" Text="{Binding Path=GuideLanguage, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
 
             <StackPanel  Grid.Column="2" Margin="40,40,18,40">
-                <Label>Zanimljivost</Label>
+                <Label Content="Zanimljivost">
+                    <Label.Foreground>
+                        <StaticResource ResourceKey="Text" />
+                    </Label.Foreground>
+                </Label>
                 <TextBox TextWrapping="Wrap" AcceptsReturn="True" Height="20" Margin="20" Text="{Binding Path=TourReview, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
 
         </Grid>
 
         <Grid Grid.Row="2">
-            <Label>Ostavi komentar:</Label>
+            <Label Content="Ostavi komentar:">
+                <Label.Foreground>
+                    <StaticResource ResourceKey="Text" />
+                </Label.Foreground>
+            </Label>
             <TextBox TextWrapping="Wrap" AcceptsReturn="True" Height="150" Margin="20" Text="{Binding Path=Commet, UpdateSourceTrigger=PropertyChanged}"/>
 
 
@@ -68,10 +84,22 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <TextBox Grid.Column="0"  Text="{Binding Path=tbImage, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <Button Grid.Column="1" Command="{Binding AddImageClickCommand}">Dodaj sliku</Button>
+            <Button Background="{DynamicResource ButtonBackground}" Grid.Column="1" Command="{Binding AddImageClickCommand}">
+                <Button.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="Dodaj sliku" Foreground="{DynamicResource AppForeground}" />
+                    </DataTemplate>
+                </Button.ContentTemplate>
+            </Button>
         </Grid>
         <Grid  Grid.Row="6">
-            <Button  Command="{Binding RateTourClickCommand}">Oceni</Button>
+            <Button  Command="{Binding RateTourClickCommand}" Background="{DynamicResource ButtonBackground}">
+                <Button.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="Oceni" Foreground="{DynamicResource AppForeground}" />
+                    </DataTemplate>
+                </Button.ContentTemplate>
+            </Button>
         </Grid>
     </Grid>
 </Window>

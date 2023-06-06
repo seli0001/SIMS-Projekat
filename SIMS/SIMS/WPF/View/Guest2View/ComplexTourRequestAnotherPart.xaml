@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <ToolBar>
+            <ToolBar Background="{DynamicResource ToolBar}">
                 <Button Content="                                                                                                      "></Button>
                 <Button Command="{Binding BackToMainGuest2ViewClickCommand}">
                     <Image Source="pack://application:,,,/Resources/Assets/house.png"></Image>

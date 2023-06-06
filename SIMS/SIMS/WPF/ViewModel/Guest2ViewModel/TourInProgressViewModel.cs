@@ -51,9 +51,28 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
             }
         }
 
+     
+
+              private ICommand _backClickCommand;
+        public ICommand BackClickCommand
+        {
+            get
+            {
+                return _backClickCommand ?? (_backClickCommand = new CommandBase(() => BackClick(), true));
+            }
+        }
+
+
         #endregion
 
-
+        private void BackClick()
+        {
+            
+                ToursInProgressView toursInProgress = new ToursInProgressView(userId);
+                toursInProgress.Show();
+                Close();
+            
+        }
         private void BackToMainGuest2ViewClick()
         {
             MainGuest2View mainGuest2View = new MainGuest2View(userId);
