@@ -135,7 +135,8 @@
                         Foreground="White"
                         Margin="0 0 40 0"
                         BorderThickness="0"
-                        FontSize="18"/>
+                        FontSize="18"
+                        Command="{Binding TutorialCommand}"/>
 
             </StackPanel>
 

@@ -73,7 +73,6 @@ namespace SIMS.Service.UseCases
         public Accommodation makeSuper(Accommodation accommodation)
         {
             accommodation.Super = true;
-            accommodation.Name = "*" + accommodation.Name;
             Save(accommodation);
             return accommodation;
         }

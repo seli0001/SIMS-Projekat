@@ -15,12 +15,9 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         public NewAccommodationViewModel newAccommodationVM { get; set; }
         public UnratedReservationsViewModel UnratedReservationsVM { get; set; }
         public RenovationsViewModel RenovationsVM { get;  set; }
-
         public AccommodationStatisticsViewModel AccommodationStatisticsVM { get; set; }
-
         public SystemProposalViewModel SystemProposalVM { get; set; }
-
-
+        public TutorialViewModel TutorialVM { get; set; }
         public Accommodation SelectedAccommodation { get; set; }
 
         private double _ownerRating;
@@ -185,7 +182,21 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             }
         }
 
-        
+        private ICommand _tutorialCommand;
+        public ICommand TutorialCommand
+        {
+            get
+            {
+                return _tutorialCommand ??
+                    (_tutorialCommand = new CommandBase(
+                        () => {
+                            TutorialVM = new TutorialViewModel();
+                            CurrentView = TutorialVM;
+                        }, true));
+            }
+        }
+
+
 
         #endregion
 
@@ -208,6 +219,7 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             RatingsVM = new RatingsViewModel(user);
             ReschedulingRequestVM = new ReschedulingRequestViewModel(user);
             RenovationsVM = new RenovationsViewModel(user, this);
+            TutorialVM = new TutorialViewModel();
 
             LoggedInUser = user;
             CurrentView = HomeVM;
