@@ -5,12 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SIMS.WPF.View.Guest1View"
              mc:Ignorable="d" 
-             d:DesignHeight="700" d:DesignWidth="430">
+             d:DesignHeight="606" d:DesignWidth="430">
     <Grid>
         <DataGrid
                   ItemsSource="{Binding Path=ReservationsForRescheduling, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding Path=SelectedRequest, UpdateSourceTrigger=PropertyChanged}"
-                  AutoGenerateColumns="False" IsReadOnly="True" Margin="10,270,10,292">
+                  AutoGenerateColumns="False" IsReadOnly="True" Margin="10,162,10,253">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Accommodation.Name}" Width="*"></DataGridTextColumn>
                 <DataGridTextColumn Header="Guests" Binding="{Binding NumberOfGuests}" Width="100"></DataGridTextColumn>
@@ -26,13 +26,13 @@
                 </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Label Content="User Rescheduling Requests" HorizontalAlignment="Left" FontSize="20" Margin="14,228,0,0" VerticalAlignment="Top"/>
-        <Label Content="Guest1" HorizontalAlignment="Left" Margin="130,115,0,0" VerticalAlignment="Top"/>
-        <Label Content="User Canceling Requests" HorizontalAlignment="Left" FontSize="20" Margin="10,447,0,0" VerticalAlignment="Top"/>
+        <Label Content="User Rescheduling Requests" HorizontalAlignment="Left" FontSize="20" Margin="10,120,0,0" VerticalAlignment="Top"/>
+        <Label Content="Guest1" HorizontalAlignment="Left" Margin="10,89,0,0" VerticalAlignment="Top"/>
+        <Label Content="User Canceling Requests" HorizontalAlignment="Left" FontSize="20" Margin="10,358,0,0" VerticalAlignment="Top"/>
         <DataGrid
             ItemsSource="{Binding Reservations, UpdateSourceTrigger=PropertyChanged}"
             SelectedItem="{Binding SelectedCancelingRequest, UpdateSourceTrigger=PropertyChanged}"
-            AutoGenerateColumns="False" IsReadOnly="True" Margin="10,489,10,73">
+            AutoGenerateColumns="False" IsReadOnly="True" Margin="10,400,10,21">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Accommodation.Name}" Width="*"></DataGridTextColumn>
                 <DataGridTextColumn Header="Guests" Binding="{Binding NumberOfGuests}" Width="55"></DataGridTextColumn>

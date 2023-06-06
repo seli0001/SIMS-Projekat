@@ -75,6 +75,14 @@
             <DataTemplate DataType="{x:Type guestViewModel:ReservationViewModel}">
                 <guestView:ReservationView />
             </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type guestViewModel:RequestViewModel}">
+                <guestView:RequestView />
+            </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type guestViewModel:RatingsViewModel}">
+                <guestView:RatingsView />
+            </DataTemplate>
 
 
 

@@ -14,12 +14,12 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
     public class Guest1MainViewModel : ViewModelBase, IClose
     {
         public User LoggedInUser { get; set; }
-        public RatingsViewModel RatingsVM { get; set; }
         public ReschedulingRequestViewModel ReschedulingRequestVM { get; set; }
         public UnratedReservationsViewModel UnratedReservationsVM { get; set; }
         public CreateReschedulingRequestViewModel CreateReschedulingRequestVM { get; set; }
-        public RequestsViewModel RequestsVM { get; set; }
+        public RequestViewModel RequestsVM { get; set; }
         public ReservationViewModel ReservationVM { get; set; }
+        public RatingsViewModel RatingsVM { get; set; }
         public HomeViewModel HomeVM { get; set; }
 
 
@@ -74,7 +74,7 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
                 return _requestsCommand ?? (_requestsCommand = new CommandBase(
                     () =>
                     {
-                        RequestsVM = new RequestsViewModel(LoggedInUser);
+                        RequestsVM = new RequestViewModel(LoggedInUser);
                         CurrentView = RequestsVM;
                     }, true));
             }
@@ -101,6 +101,20 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
                     {
                         ReservationVM = new ReservationViewModel(LoggedInUser);
                         CurrentView = ReservationVM;
+                    }, true));
+            }
+        }
+
+        private ICommand _profileCommand;
+        public ICommand ProfileCommand
+        {
+            get
+            {
+                return _profileCommand ?? (_profileCommand = new CommandBase(
+                    () =>
+                    {
+                        RatingsVM = new RatingsViewModel(LoggedInUser);
+                        CurrentView = RatingsVM;
                     }, true));
             }
         }
@@ -177,7 +191,7 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
             RatingsVM = new RatingsViewModel(user);
             ReschedulingRequestVM = new ReschedulingRequestViewModel(user);
             ReservationVM = new ReservationViewModel(user);
-            RequestsVM = new RequestsViewModel(user);
+            RequestsVM = new RequestViewModel(user);
 
             LoggedInUser = user;
             CurrentView = HomeVM;
