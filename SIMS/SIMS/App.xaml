@@ -64,9 +64,16 @@
                 <guestView:Guest1Main />
             </DataTemplate>
 
-
             <DataTemplate DataType="{x:Type guestViewModel:HomeViewModel}">
                 <guestView:HomeView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type guestViewModel:CreateReschedulingRequestViewModel}">
+                <guestView:CreateReschedulingRequestView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type guestViewModel:ReservationViewModel}">
+                <guestView:ReservationView />
             </DataTemplate>
 
 

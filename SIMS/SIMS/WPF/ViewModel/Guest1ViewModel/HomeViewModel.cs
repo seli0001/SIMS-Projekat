@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xceed.Wpf.Toolkit;
 
 namespace SIMS.WPF.ViewModel.Guest1ViewModel
 {
@@ -30,7 +31,7 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
             _guestRatingService = new GuestRatingService();
             _accommodationService = new AccommodationService();
 
-            Accommodations = new ObservableCollection<Accommodation>(_accommodationService.GetByUser(user));
+            Accommodations = new ObservableCollection<Accommodation>(_accommodationService.GetAll());
             guest1MainViewModel = mvm;
         }
     }

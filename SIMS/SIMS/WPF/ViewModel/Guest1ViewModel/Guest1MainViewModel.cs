@@ -11,14 +11,19 @@ using System.Windows.Input;
 
 namespace SIMS.WPF.ViewModel.Guest1ViewModel
 {
-    public class Guest1MainViewModel : ViewModelBase
+    public class Guest1MainViewModel : ViewModelBase, IClose
     {
         public User LoggedInUser { get; set; }
         public RatingsViewModel RatingsVM { get; set; }
         public ReschedulingRequestViewModel ReschedulingRequestVM { get; set; }
         public UnratedReservationsViewModel UnratedReservationsVM { get; set; }
+        public CreateReschedulingRequestViewModel CreateReschedulingRequestVM { get; set; }
+        public RequestsViewModel RequestsVM { get; set; }
+        public ReservationViewModel ReservationVM { get; set; }
         public HomeViewModel HomeVM { get; set; }
 
+
+        public Action Close { get; set; }
 
         private object _currentView;
         public object CurrentView
@@ -47,67 +52,58 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
         //    }
         //}
 
-        //private ICommand _homeViewCommand;
-        //public ICommand HomeViewCommand
-        //{
-        //    get
-        //    {
-        //        return _homeViewCommand ?? (_homeViewCommand = new CommandBase(
-        //            () => {
-        //                HomeVM = new HomeViewModel(LoggedInUser, this);
-        //                CurrentView = HomeVM;
-        //            }, true));
-        //    }
-        //}
+        private ICommand _homeCommand;
+        public ICommand HomeCommand
+        {
+            get
+            {
+                return _homeCommand ?? (_homeCommand = new CommandBase(
+                    () =>
+                    {
+                        HomeVM = new HomeViewModel(LoggedInUser, this);
+                        CurrentView = HomeVM;
+                    }, true));
+            }
+        }
 
-        //private ICommand _guestRatingsViewCommand;
-        //public ICommand GuestRatingsViewCommand
-        //{
-        //    get
-        //    {
-        //        return _guestRatingsViewCommand ?? (_guestRatingsViewCommand = new CommandBase(
-        //            () => {
-        //                RatingsVM = new RatingsViewModel(LoggedInUser);
-        //                CurrentView = RatingsVM;
-        //            }, true));
-        //    }
-        //}
+        private ICommand _requestsCommand;
+        public ICommand RequestsCommand
+        {
+            get
+            {
+                return _requestsCommand ?? (_requestsCommand = new CommandBase(
+                    () =>
+                    {
+                        RequestsVM = new RequestsViewModel(LoggedInUser);
+                        CurrentView = RequestsVM;
+                    }, true));
+            }
+        }
 
-        //private ICommand _logOutCommand;
-        //public ICommand LogOutCommand
-        //{
-        //    get
-        //    {
-        //        return _logOutCommand ?? (_logOutCommand = new CommandBase(() => Close(), true));
-        //    }
-        //}
+        private ICommand _closeCommand;
+        public ICommand CloseCommand
+        {
+            get
+            {
+                return _closeCommand ?? (_closeCommand = new CommandBase(() => Close(), true));
+            }
+        }
 
-        //private ICommand _newAccommodationCommand;
-        //public ICommand NewAccommodationCommand
-        //{
-        //    get
-        //    {
-        //        return _newAccommodationCommand ?? (_newAccommodationCommand = new CommandBase(
-        //            () => {
-        //                newAccommodationVM = new NewAccommodationViewModel(LoggedInUser, this);
-        //                CurrentView = newAccommodationVM;
-        //            }, true));
-        //    }
-        //}
 
-        //private ICommand _reschReqCommand;
-        //public ICommand ReschedulingCommand
-        //{
-        //    get
-        //    {
-        //        return _reschReqCommand ?? (_reschReqCommand = new CommandBase(
-        //            () =>
-        //            {
-        //                ReschedulingRequestVM = new ReschedulingRequestViewModel(LoggedInUser);
-        //                CurrentView = ReschedulingRequestVM;
-        //            }, true));
-        //    }
-        //}
+
+        private ICommand _reservationCommand;
+        public ICommand ReservationCommand
+        {
+            get
+            {
+                return _reservationCommand ?? (_reservationCommand = new CommandBase(
+                    () =>
+                    {
+                        ReservationVM = new ReservationViewModel(LoggedInUser);
+                        CurrentView = ReservationVM;
+                    }, true));
+            }
+        }
 
         //private ICommand _schedulingRenovationCommand;
         //public ICommand SchedulingRenovationCommand
@@ -180,6 +176,8 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
             UnratedReservationsVM = new UnratedReservationsViewModel(user);
             RatingsVM = new RatingsViewModel(user);
             ReschedulingRequestVM = new ReschedulingRequestViewModel(user);
+            ReservationVM = new ReservationViewModel(user);
+            RequestsVM = new RequestsViewModel(user);
 
             LoggedInUser = user;
             CurrentView = HomeVM;

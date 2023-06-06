@@ -5,19 +5,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SIMS.WPF.View.Guest1View"
              mc:Ignorable="d" 
-             d:DesignHeight="700" d:DesignWidth="430">
+             d:DesignHeight="606" d:DesignWidth="430">
     <Grid>
-        <DataGrid x:Name="gridGuest" DockPanel.Dock="Bottom" ColumnWidth="*"
+        <DataGrid
           ItemsSource="{Binding Path=Accommodations, UpdateSourceTrigger=PropertyChanged}"
           SelectedItem="{Binding Path=SelectedAccommodation, UpdateSourceTrigger=PropertyChanged}"
           AutoGenerateColumns="False" IsReadOnly="True" Margin="10,295,10,103">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Country" Binding="{Binding Location.Country}"></DataGridTextColumn>
-                <DataGridTextColumn Header="City" Binding="{Binding Location.City}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Country" Binding="{Binding Location.Country}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="City" Binding="{Binding Location.City}" Width="*" ></DataGridTextColumn>
                 <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="*" ></DataGridTextColumn>
-                <DataGridTextColumn Header="Guests" Binding="{Binding MaxGuestsNumber}" Width="*"></DataGridTextColumn>
-                <DataGridTextColumn Header="Minimum Days" Binding="{Binding MinBookingDays}" Width="*"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
         <TextBox x:Name ="txtSearch" HorizontalAlignment="Left" Margin="17,225,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Height="25"/>
