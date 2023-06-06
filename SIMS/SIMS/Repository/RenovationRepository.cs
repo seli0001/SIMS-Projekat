@@ -145,6 +145,20 @@ namespace SIMS.Repository
             return true;
         }
 
+        public List<Renovation> GetFromToDate(DateOnly startDate, DateOnly endDate)
+        {
+            _renovations = GetAll();
+            List<Renovation> results = new List<Renovation>();
+            foreach(Renovation ren in _renovations)
+            {
+                if(ren.StartDate > startDate && ren.StartDate < endDate && ren.EndDate > startDate && ren.EndDate < endDate)
+                {
+                    results.Add(ren);
+                }
+            }
+            return results;
+        }
+
     }
 
 }

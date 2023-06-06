@@ -99,7 +99,8 @@
                     Height="25"
                     Width="auto"
                     Style="{StaticResource ButtonTheme}"
-                    Command="{Binding GenerateReportCommand}"/>
+                    Command="{Binding GenerateReportCommand}"
+                    IsEnabled="{Binding IsEnabled}"/>
 
 
             </StackPanel>

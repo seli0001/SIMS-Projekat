@@ -74,7 +74,8 @@
                         Width="auto"
                         Height="25"
                         Command="{Binding SearchForDatesCommand}"
-                        Style="{StaticResource ButtonTheme}"/>
+                        Style="{StaticResource ButtonTheme}"
+                        IsEnabled="{Binding IsEnabled}"/>
             </WrapPanel>
 
             <Grid Grid.Row="1"
@@ -125,7 +126,8 @@
                     Width="auto"
                     Margin="10 0 0 0"
                     Command="{Binding ScheduleCommand}"
-                    Style="{StaticResource ButtonTheme}"/>
+                    Style="{StaticResource ButtonTheme}"
+                    IsEnabled="{Binding IsEnabled2}"/>
 
         </Grid>
     </Grid>

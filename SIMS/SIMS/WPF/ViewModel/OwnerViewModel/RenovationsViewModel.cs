@@ -17,6 +17,8 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         public User LoggedInUser { get; set; }
         public static ObservableCollection<Renovation> Renovations { get; set; }
 
+        private readonly int[] validator;
+
         private bool _isEnabled;
         public bool IsEnabled
         {
@@ -72,6 +74,42 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             _renovationService = new RenovationService();
             LoggedInUser = user;
             Renovations = new ObservableCollection<Renovation>(_renovationService.GetByOwnerId(user.Id));
+            validator = new int[2];
+        }
+
+        private DateTime _fromDate = DateTime.Now;
+        public DateTime FromDate
+        {
+            get => _fromDate;
+            set
+            {
+                if (value < ToDate || ToDate.Date == DateTime.Now.Date)
+                {
+                    _fromDate = value;
+                    validator[0] = 1;
+                }
+                IsEnabled = true;
+                ValidatorTest();
+                OnPropertyChanged();
+            }
+        }
+
+        private DateTime _toDate = DateTime.Now;
+
+        public DateTime ToDate
+        {
+            get => _toDate;
+            set
+            {
+                if (value > FromDate || FromDate.Date == DateTime.Now.Date)
+                {
+                    _toDate = value;
+                    validator[1] = 1;
+                }
+                IsEnabled = true;
+                ValidatorTest();
+                OnPropertyChanged();
+            }
         }
 
         private ICommand _cancelRenovationCommand;
@@ -98,6 +136,17 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             {
                 _renovationService.Delete(SelectedRenovation);
                 Renovations.Remove(SelectedRenovation);
+            }
+        }
+
+        private void ValidatorTest()
+        {
+            foreach (int kon in validator)
+            {
+                if (kon == 0)
+                {
+                    IsEnabled = false;
+                }
             }
         }
 
@@ -128,7 +177,8 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             position.Y += 30;
 
             // Ispisite podatke iz ObservableCollection-a
-            foreach (var item in Renovations)
+            ObservableCollection<Renovation> fromToRenovations = new ObservableCollection<Renovation>(_renovationService.GetFromToDate(DateOnly.FromDateTime(FromDate), DateOnly.FromDateTime(ToDate)));
+            foreach (var item in fromToRenovations)
             {
                 gfx.DrawString($"Smestaj: {item.Accommodation.Name}", dataFont, XBrushes.Black, position);
                 position.Y += 20;
