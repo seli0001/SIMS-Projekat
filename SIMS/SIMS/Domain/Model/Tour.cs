@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Security.RightsManagement;
 using System.Text;
 using System.Threading.Tasks;
+using SIMS.Core;
 using SIMS.Serializer;
 
 namespace SIMS.Domain.Model
@@ -16,12 +17,21 @@ namespace SIMS.Domain.Model
         STARTED,
         FINISHED
     }
-    public class Tour : ISerializable, INotifyPropertyChanged
+    public class Tour : ValidationBase, ISerializable, INotifyPropertyChanged
     {
         private TourStatus _status;
 
         public int Id { get; set; }
-        public string Name { get; set; }
+        private string _name;
+        public string Name { get => _name; set 
+            {
+                if (_name != value)
+                {
+                    _name = value;
+                    OnPropertyChanged("Name");
+                }
+            } 
+        }
         public string Description { get; set; }
         public string Language { get; set; }
         public int MaxNumberOfPeople { get; set; }
@@ -85,6 +95,33 @@ namespace SIMS.Domain.Model
             Status = (TourStatus)Enum.Parse(typeof(TourStatus), csvValues[10]);
         }
 
+        protected override void ValidateSelf()
+        {
+            if (string.IsNullOrWhiteSpace(this.Name))
+            {
+                this.ValidationErrors["Name"] = "Name is required.";
+            }
+            if (string.IsNullOrWhiteSpace(this.Description))
+            {
+                this.ValidationErrors["Description"] = "Description cannot be empty.";
+            }
+            if (string.IsNullOrWhiteSpace(this.Language))
+            {
+                this.ValidationErrors["Language"] = "Language cannot be empty.";
+            }
+            if (this.MaxNumberOfPeople < 1)
+            {
+                this.ValidationErrors["MaxNumberOfPeople"] = "Max number of people must be greater than 0.";
+            }
+            if (this.Duration < 1)
+            {
+                this.ValidationErrors["Duration"] = "Duration must be greater than 0.";
+            }
+            if (this.Checkpoints.Count < 2)
+            {
+                this.ValidationErrors["Checkpoints"] = "Tour must have at least two checkpoint.";
+            }
+        }
 
     }
 }

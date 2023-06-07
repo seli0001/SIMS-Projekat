@@ -8,6 +8,7 @@ using SIMS.WPF.View;
 using SIMS.View.OwnerView;
 using SIMS.WPF.ViewModel.ViewModel;
 using SIMS.WPF.View.OwnerView;
+using SIMS.WPF.ViewModel.GuideViewModel;
 
 namespace SIMS.WPF.ViewModel
 {

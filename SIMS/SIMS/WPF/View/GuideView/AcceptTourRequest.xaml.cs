@@ -29,14 +29,31 @@ namespace SIMS.WPF.View.GuideView
         {
             InitializeComponent();
             tourRequest = tourRequest1;
+            po.Content += tourRequest.StartDate.ToShortDateString();
+            kr.Content += tourRequest.EndDate.ToShortDateString();
+            dr.Content += tourRequest.Location.Country;
+            gr.Content += tourRequest.Location.City;
             User = user;
             _bookedTourService = new BookedTourService();
             _tourRequestService = new TourRequestService();
+            List<string> Hours = new List<string>();
+            List<string> Minutes = new List<string>();
+            for (int i = 0; i < 24; i++)
+            {
+                Hours.Add(i.ToString("00"));
+            }
+            for (int i = 0; i < 60; i += 5)
+            {
+                Minutes.Add(i.ToString("00"));
+            }
+            hourComboBox.ItemsSource = Hours;
+            minutesComboBox.ItemsSource = Minutes;
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            string startTime = seli.SelectedDate.Value.Date.ToShortDateString() + ' ' + seli2.Text;
+            string startTime = seli.SelectedDate.Value.Date.ToShortDateString() + ' ' + hourComboBox.Text + ":" + minutesComboBox.Text;
             DateTime date = DateTime.Parse(startTime);
             if (IsDateValid(date))
             {

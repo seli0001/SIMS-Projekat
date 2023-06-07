@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="TourReviewWindows" Height="350" Width="370"
         PreviewKeyDown="Window_PreviewKeyDown">
-    <Grid>
+    <Grid Background="#444444">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
@@ -20,8 +20,8 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Detalji recenzije (F1)"  Command="{Binding DetailsCommand}"></Button>
-            <DataGrid x:Name="reviewDataGrid" Grid.Row="1" Grid.Column="1" IsReadOnly="True" SelectionMode="Single" AutoGenerateColumns="False"
+            <Button Grid.Row="0" Grid.Column="1" Height="22" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Detalji recenzije (F1)" Width="130"  Command="{Binding DetailsCommand}" Style="{StaticResource StyledButtonStyle}"></Button>
+            <DataGrid x:Name="reviewDataGrid" Grid.Row="1" Grid.Column="1" IsReadOnly="True" SelectionMode="Single" AutoGenerateColumns="False" Style="{StaticResource StyledDataGridStyle}"
                       ItemsSource="{Binding TourRatings,UpdateSourceTrigger=Default}" SelectedItem="{Binding SelectedTourRating}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Ime Gosta" Binding="{Binding bookedTour.User.Username}" Width="2*"></DataGridTextColumn>
@@ -32,7 +32,7 @@
                 </DataGrid.Columns>
                 
             </DataGrid>
-            <Button Content="Zatvori (F2)" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding CancelCommand}"></Button>
+            <Button Content="Zatvori (F2)" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding CancelCommand}" Width="130" Height="22" Style="{StaticResource StyledButtonStyle}"></Button>
         </Grid>
         
     </Grid>

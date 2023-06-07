@@ -3,10 +3,26 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+
         mc:Ignorable="d"
-        Title="TourRegistrationView" Height="450" Width="850" ResizeMode="NoResize"
-        PreviewKeyDown="Window_PreviewKeyDown">
-    <Grid>
+        Title="TourRegistrationView" Height="700" Width="850" ResizeMode="NoResize">
+    <Window.InputBindings>
+        <KeyBinding Key="F1" Command="{Binding AddImage}" />
+        <KeyBinding Key="F2" Command="{Binding RemoveImageCommand}" />
+        <KeyBinding Key="F3" Command="{Binding AddDate}" />
+        <KeyBinding Key="F4" Command="{Binding RemoveDateCommand}" />
+        <KeyBinding Key="F5" Command="{Binding AddCheckpoint}" />
+        <KeyBinding Key="F6" Command="{Binding RemoveCheckpointCommand}" />
+        <KeyBinding Modifiers="Ctrl" Key="s" Command="{Binding CreateTour}"></KeyBinding>
+        <KeyBinding Modifiers="Ctrl" Key="o" Command="{Binding CancelCommand}"></KeyBinding>
+    </Window.InputBindings>
+    <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+    </Window.Resources>
+    <Grid Background="#444444">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="10*" />
@@ -17,8 +33,15 @@
             <ColumnDefinition Width="20*"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Grid Grid.Row="1" Grid.Column="1">
+        <Grid Grid.Row="1" Grid.Column="1" >
             <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
@@ -40,45 +63,61 @@
                 <ColumnDefinition Width="20*" />
             </Grid.ColumnDefinitions>
             <Label HorizontalAlignment="Right" Content="Naizv" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" />
-            <Label HorizontalAlignment="Right" Content="Grad" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" />
-            <Label HorizontalAlignment="Right" Content="Drzava" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" />
-            <Label HorizontalAlignment="Right" Content="Opis" Grid.Row="3"  Grid.Column="0" VerticalAlignment="Center" />
-            <Label HorizontalAlignment="Right" Content="Jezik" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" />
-            <TextBlock HorizontalAlignment="Right" TextWrapping="WrapWithOverflow" Grid.Row="6" Grid.Column="0" Padding="0,0,5,0" TextAlignment="Right"
+            <Label HorizontalAlignment="Right" Content="Grad" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" />
+            <Label HorizontalAlignment="Right" Content="Drzava" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" />
+            <Label HorizontalAlignment="Right" Content="Opis" Grid.Row="6"  Grid.Column="0" VerticalAlignment="Center" />
+            <Label HorizontalAlignment="Right" Content="Jezik" Grid.Row="11" Grid.Column="0" VerticalAlignment="Center" />
+            <TextBlock Foreground="White" HorizontalAlignment="Right" TextWrapping="WrapWithOverflow" Grid.Row="13" Grid.Column="0" Padding="0,0,5,0" TextAlignment="Right"
                    VerticalAlignment="Center">Maksimalan broj gostiju</TextBlock>
-            <TextBlock HorizontalAlignment="Center" TextWrapping="WrapWithOverflow" Grid.Row="4" Grid.Column="3" TextAlignment="Right" Padding="0,0,5,0"
+            <TextBlock Foreground="White" HorizontalAlignment="Center" TextWrapping="WrapWithOverflow" Grid.Row="8" Grid.Column="3" TextAlignment="Right" Padding="0,0,5,0"
                    VerticalAlignment="Center" >Datum i vreme pocetka</TextBlock>
-            <Label HorizontalAlignment="Right" Content="Trajanje" Grid.Row="7" Grid.Column="0"
+            <Label HorizontalAlignment="Right" Content="Trajanje" Grid.Row="15" Grid.Column="0"
                    VerticalAlignment="Center" />
             <Label HorizontalAlignment="Center" Content="Slike" Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" />
-            <Label HorizontalAlignment="Center" Content="Kljucne tacke" Grid.Row="4" Grid.Column="5"
+            <Label HorizontalAlignment="Center" Content="Kljucne tacke" Grid.Row="8" Grid.Column="5"
                    VerticalAlignment="Center" />
 
 
             <TextBox Text="{Binding Path=Tour.Name, UpdateSourceTrigger=LostFocus}" Grid.Row="0" Grid.Column="1"
-                     VerticalAlignment="Center" TabIndex="0" />
-            <TextBox Text="{Binding Path=Tour.Location.City, UpdateSourceTrigger=LostFocus}" Grid.Row="1"
-                     Grid.Column="1" VerticalAlignment="Center" TabIndex="1" />
-            <TextBox Text="{Binding Path=Tour.Location.Country, UpdateSourceTrigger=LostFocus}" Grid.Row="2"
-                     Grid.Column="1" VerticalAlignment="Center" TabIndex="2" />
-            <TextBox Text="{Binding Path=Tour.Description, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" Grid.RowSpan="2"
-                     Grid.Row="3" Grid.Column="1" TabIndex="3" />
-            <TextBox Text="{Binding Path=Tour.Language, UpdateSourceTrigger=LostFocus}" Grid.Row="5" Grid.Column="1"
-                     VerticalAlignment="Center" TabIndex="4" />
-            <TextBox Name="maxNumberTextBox" Text="{Binding Path=Tour.MaxNumberOfPeople, UpdateSourceTrigger=LostFocus}" Grid.Row="6"
-                     Grid.Column="1" VerticalAlignment="Center" TabIndex="5" />
-            <ComboBox x:Name="hourComboBox" Grid.Row="6" Grid.Column="4" HorizontalAlignment="Left" Margin="5,5" Width="40" TabIndex="9" ></ComboBox>
-            <ComboBox x:Name="minutesComboBox" Grid.Row="6" Grid.Column="4" HorizontalAlignment="Right" Margin="10,5" Width="40" TabIndex="10" ></ComboBox>
-            <Button x:Name="AddDateButton" Grid.Row="7" Grid.Column="4" VerticalAlignment="Center" Margin="5"  Content="Dodaj termin (F3)"  Click="AddDateButton_Click" TabIndex="11"></Button>
-            <Button x:Name="RemoveDateButton" Grid.Row="8" Grid.Column="4" VerticalAlignment="Center" Margin="5"  Content="Obrisi termin (F4)"  Click="RemoveDate"></Button>
+                     VerticalAlignment="Center" TabIndex="0" Style="{StaticResource StyledTextBoxStyle}" />
 
-            <DatePicker x:Name="date" Grid.Row="5" Grid.Column="4"  Margin="5" VerticalAlignment="Center" SelectedDateChanged="date_SelectedDateChanged" TabIndex="8">
+            <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding NameError}"
+                               Foreground="Red"/>
+            <TextBox Text="{Binding Path=Tour.Location.City, UpdateSourceTrigger=LostFocus}" Grid.Row="2" Style="{StaticResource StyledTextBoxStyle}"
+                     Grid.Column="1" VerticalAlignment="Center" TabIndex="1" />
+            <TextBox Text="{Binding Path=Tour.Location.Country, UpdateSourceTrigger=LostFocus}" Grid.Row="4" Style="{StaticResource StyledTextBoxStyle}"
+                     Grid.Column="1" VerticalAlignment="Center" TabIndex="2" />
+            <TextBox Text="{Binding Path=Tour.Description, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" Grid.RowSpan="4" Style="{StaticResource StyledTextBoxStyle}"
+                     Grid.Row="6" Grid.Column="1" TabIndex="3" />
+            <TextBlock Grid.Row="10" Grid.Column="1" Text="{Binding DescriptionError}"
+                               Foreground="Red"/>
+            <TextBox Text="{Binding Path=Tour.Language, UpdateSourceTrigger=LostFocus}" Grid.Row="11" Grid.Column="1" Style="{StaticResource StyledTextBoxStyle}"
+                     VerticalAlignment="Center" TabIndex="4" />
+            <TextBlock Grid.Column="1" Grid.Row="12" Text="{Binding LanguageError}"
+                               Foreground="Red"/>
+            <TextBox Name="maxNumberTextBox" Text="{Binding Path=Tour.MaxNumberOfPeople, UpdateSourceTrigger=LostFocus}" Grid.Row="13" Style="{StaticResource StyledTextBoxStyle}"
+                     Grid.Column="1" VerticalAlignment="Center" TabIndex="5" />
+            <TextBlock Grid.Column="1" Grid.Row="14" Text="{Binding MaxNumberOfPeopleError}"
+                               Foreground="Red"/>
+            <TextBlock Grid.Column="1" Grid.Row="16" Text="{Binding DurationError}"
+                               Foreground="Red"/>
+            <ComboBox x:Name="hourComboBox" Grid.Row="10" Grid.Column="4" HorizontalAlignment="Left" Margin="5,5" Width="40" TabIndex="9" ItemsSource="{Binding Hours}" SelectedIndex="{Binding HourSelectedIndex}" SelectedItem="{Binding HourSelectedItem}"></ComboBox>
+            <ComboBox x:Name="minutesComboBox" Grid.Row="10" Grid.Column="4" HorizontalAlignment="Right" Margin="10,5" Width="40" TabIndex="10" ItemsSource="{Binding Minutes}" SelectedIndex="{Binding MinuteSelectedIndex}" SelectedItem="{Binding MinuteSelectedItem}"></ComboBox>
+            <Button x:Name="AddDateButton" Grid.Row="11" Grid.Column="4" VerticalAlignment="Center" Margin="5"  Content="Dodaj termin (F3)" TabIndex="11" Command="{Binding AddDate}" Style="{StaticResource StyledButtonStyle}"></Button>
+            <Button x:Name="RemoveDateButton" Grid.Row="12" Grid.Column="4" VerticalAlignment="Center" Margin="5"  Content="Obrisi termin (F4)" Command="{Binding RemoveDateCommand}" Style="{StaticResource StyledButtonStyleRED}"></Button>
+            <TextBlock Grid.Column="5" Grid.ColumnSpan="2"  Grid.Row="15" Text="{Binding CheckpointsError}"
+                               Foreground="Red"/>
+            <TextBlock Grid.Column="1"  Grid.Row="3" Text="{Binding CityError}"
+                               Foreground="Red"/>
+            <TextBlock Grid.Column="1"  Grid.Row="5" Text="{Binding CountryError}"
+                               Foreground="Red"/>
+            <DatePicker x:Name="date" Grid.Row="9" Grid.Column="4"  Margin="5" VerticalAlignment="Center"  TabIndex="8" SelectedDate="{Binding SelectedDate}">
             </DatePicker>
-            <TextBox Name="durationTextBox" Text="{Binding Path=Tour.Duration, UpdateSourceTrigger=LostFocus}" Grid.Row="7" Grid.Column="1"
+            <TextBox Name="durationTextBox" Text="{Binding Path=Tour.Duration, UpdateSourceTrigger=LostFocus}" Grid.Row="15" Grid.Column="1" Style="{StaticResource StyledTextBoxStyle}"
                      VerticalAlignment="Center" TabIndex="6" />
-            <Button Content="Dodaj sliku (F1)" Grid.Column="4" Grid.Row="0" VerticalAlignment="Center" Click="AddImageFromFileDialog"  Width="90" TabIndex="7" />
-            <Button Content="Obrisi sliku (F2)" Grid.Column="5" Grid.Row="0" VerticalAlignment="Center" Click="RemoveImage"  Width="90" />
-            <ListView x:Name="imageListView" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="4" Grid.RowSpan="3">
+            <Button Content="Dodaj sliku (F1)" Grid.Column="4" Grid.Row="0" VerticalAlignment="Center"   Width="90" TabIndex="7" Command="{Binding AddImage}" Style="{StaticResource StyledButtonStyle}" />
+            <Button Content="Obrisi sliku (F2)" Grid.Column="5" Grid.Row="0" VerticalAlignment="Center"   Width="90" Command="{Binding RemoveImageCommand}" Style="{StaticResource StyledButtonStyleRED}" />
+            <ListView x:Name="imageListView" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="4" Grid.RowSpan="5" ItemsSource="{Binding Images}" SelectedIndex="{Binding ImageSelectedIndex}" Background="#444444">
 
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -91,29 +130,29 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <TextBox x:Name="CheckPointTextBox" Grid.Row="5" Grid.Column="7" VerticalAlignment="Center" Margin="5" TabIndex="12" />
-            <Button Content="Dodaj tacku (F5)" Grid.Column="7" Grid.Row="7" VerticalAlignment="Center"
-                    Click="AddNewCheckpoint" Margin="5" TabIndex="13" />
-            <Button Content="Obrisi tacku (F6)" Grid.Column="6" Grid.Row="8" VerticalAlignment="Center"
-                    Click="RemoveCheckpoint" Margin="5" />
-            <ListView x:Name="checkpointListView" Grid.Row="5" Grid.Column="5" Grid.ColumnSpan="1" Grid.RowSpan="4">
+            <TextBox x:Name="CheckPointTextBox" Grid.Row="9" Grid.Column="7" VerticalAlignment="Center" Margin="5" TabIndex="12" Text="{Binding Path=CheckpointName, Mode=TwoWay}" Style="{StaticResource StyledTextBoxStyle}" />
+            <Button Content="Dodaj tacku (F5)" Grid.Column="7" Grid.Row="11" VerticalAlignment="Center" Style="{StaticResource StyledButtonStyle}"
+                     Margin="5" TabIndex="13" Command="{Binding AddCheckpoint}" />
+            <Button Content="Obrisi tacku (F6)" Grid.Column="6" Grid.Row="12" VerticalAlignment="Center" Style="{StaticResource StyledButtonStyleRED}"
+                     Margin="5" Command="{Binding RemoveCheckpointCommand}" />
+            <ListView x:Name="checkpointListView" Grid.Row="9" Grid.Column="5" Grid.ColumnSpan="1" Grid.RowSpan="6" ItemsSource="{Binding Checkpoints}" SelectedIndex="{Binding CheckpointSelectedIndex}" Background="#444444">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Width="115" Header="Name" DisplayMemberBinding="{Binding Name}" />
+                        <GridViewColumn Width="98"  Header="Name" DisplayMemberBinding="{Binding Name}" />
                     </GridView>
                 </ListView.View>
             </ListView>
-            <ListView x:Name="datesListView" Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="1" Grid.RowSpan="4">
+            <ListView x:Name="datesListView" Grid.Row="9" Grid.Column="3" Grid.ColumnSpan="1" Grid.RowSpan="6" ItemsSource="{Binding StartDates}" SelectedIndex="{Binding DatesSelectedIndex}" Background="#444444" Foreground="Black" >
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Width="158" Header="Datum" DisplayMemberBinding="{Binding}" />
+                        <GridViewColumn Width="154" Header="Datum" DisplayMemberBinding="{Binding}" />
                     </GridView>
                 </ListView.View>
             </ListView>
         </Grid>
-        <Button Content="Kreiraj (ctrl + s)" Height="26" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left"
-                VerticalAlignment="Center" Width="159" Click="RegisterTour" Margin="222,0,0,0" />
-        <Button Grid.Column="1" Content="Odustani (ctrl + o)" HorizontalAlignment="Left" Height="26" Grid.Row="2" VerticalAlignment="Center" Width="158" Margin="391,0,0,0" Click="Button_Click"/>
+        <Button Content="Kreiraj (ctrl + s)" Height="26" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Style="{StaticResource StyledButtonStyle}" Command="{Binding CreateTour}"
+                VerticalAlignment="Center" Width="159"  Margin="222,0,0,0" />
+        <Button Grid.Column="1" Content="Odustani (ctrl + o)" HorizontalAlignment="Left" Height="26" Grid.Row="2" VerticalAlignment="Center" Width="158" Margin="391,0,0,0" Style="{StaticResource StyledButtonStyle}" Command="{Binding CancelCommand}"  />
 
     </Grid>
 </Window>

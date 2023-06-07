@@ -16,6 +16,11 @@
                 <ResourceDictionary Source="Theme/DataGridTheme.xaml" />
                 <ResourceDictionary Source="Theme/BtnCancelTheme.xaml" />
                 <ResourceDictionary Source="Theme/BtnSubmitTheme.xaml" />
+                <ResourceDictionary Source="Theme/StyledButton.xaml"/>
+                <ResourceDictionary Source="Theme/StyledButtonRed.xaml"/>
+                <ResourceDictionary Source="Theme/DatagridStyle.xaml"/>
+                <ResourceDictionary Source="Theme/textboxstyled.xaml"/>
+                <ResourceDictionary Source="Theme/StyledListView.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate DataType="{x:Type viewModel:MainViewModel}">

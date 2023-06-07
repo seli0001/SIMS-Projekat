@@ -5,11 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SIMS.WPF.View.GuideView"
         mc:Ignorable="d"
-        Title="AcceptTourRequest" Height="210" Width="319">
-    <Grid>
-        <DatePicker Name="seli" HorizontalAlignment="Left" Margin="96,51,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="seli2" HorizontalAlignment="Left" Margin="96,97,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="102"/>
-        <Button Content="Button" Margin="50,136,92,20" Click="Button_Click"/>
+        Title="AcceptTourRequest" Height="225" Width="345">
+    <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="White"></Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Background="#444444">
+        <Label Content="Drzava:" Margin="0,0,221,167" Name="dr" ></Label>
+        <DatePicker Name="seli" HorizontalAlignment="Center" Margin="0,60,0,0" VerticalAlignment="Top"/>
+        <Button Content="Prihvati zahtev" Margin="82,148,82,21" Click="Button_Click" Style="{StaticResource StyledButtonStyle}"/>
+        <ComboBox x:Name="hourComboBox"  Width="40"  ItemsSource="{Binding Hours}" SelectedIndex="{Binding HourSelectedIndex}" SelectedItem="{Binding HourSelectedItem}" Margin="122,99,183,66"/>
+        <ComboBox x:Name="minutesComboBox"  Width="40" TabIndex="10" ItemsSource="{Binding Minutes}" SelectedIndex="{Binding MinuteSelectedIndex}" SelectedItem="{Binding MinuteSelectedItem}" Margin="183,99,122,66"/>
+        <Label Content="Grad:" Name="gr" Margin="160,0,21,167" />
+        <Label Content="Krajnji Datum:" Name="kr" Margin="160,23,21,144" />
+        <Label Content="Pocetni Datum:" Name="po" Margin="0,23,181,144" />
 
     </Grid>
 </Window>

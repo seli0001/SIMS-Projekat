@@ -1,5 +1,6 @@
 ﻿using SIMS.Domain.RepositoryInterface;
 using SIMS.Repository;
+using SIMS.WPF.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace SIMS.Injector
             _implementations.Add(typeof(IVoucherRepository), voucherRepository);
             _implementations.Add(typeof(ITourRatingRepository), tourRatingRepository);
             _implementations.Add(typeof(ITourRequestRepository), tourRequestRepository);
+            _implementations.Add(typeof(IMessageBoxService), new MessageBoxService());
         }
 
         public static T CreateInstance<T>()
