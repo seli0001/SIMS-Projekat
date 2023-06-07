@@ -39,9 +39,9 @@
 
             </Grid.ColumnDefinitions>
 
-            <TextBox Grid.Column="0" Margin="25"  x:Name="tbLocation"  Text="{Binding tbLocation, Mode=TwoWay}"></TextBox>
-            <TextBox Grid.Column="1" Margin="25" x:Name="tbCountry" Text="{Binding tbCountry, Mode=TwoWay}"></TextBox>
-            <TextBox Grid.Column="2" Margin="25" x:Name="tbNumber" Text="{Binding tbNumber, Mode=TwoWay}"></TextBox>
+            <TextBox Grid.Column="0" Margin="25"  x:Name="tbLocation"  ></TextBox>
+            <TextBox Grid.Column="1" Margin="25" x:Name="tbCountry" ></TextBox>
+            <TextBox Grid.Column="2" Margin="25" x:Name="tbNumber" ></TextBox>
 
 
 
@@ -70,8 +70,8 @@
                 <ColumnDefinition Width="120"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <TextBox Grid.Column="1" Margin="25" x:Name="tbDuration" Text="{Binding tbDuration, Mode=TwoWay}"></TextBox>
-            <TextBox Grid.Column="0" Margin="25" x:Name="tbLanguage" Text="{Binding tbLanguage, Mode=TwoWay}"></TextBox>
+            <TextBox Grid.Column="1" Margin="25" x:Name="tbDuration" ></TextBox>
+            <TextBox Grid.Column="0" Margin="25" x:Name="tbLanguage" ></TextBox>
 
             <Label Grid.Column="1" Grid.ColumnSpan="2" Content="Trajanje" Margin="0,0,0,45" >
                 <Label.Foreground>
@@ -104,7 +104,7 @@
                     </DataTemplate>
                 </Button.ContentTemplate>
             </Button>
-            <Button Background="{DynamicResource ButtonBackground}" Grid.Column="3"  Content="Pretrazi" Margin="2" Command="{Binding SearchClickCommand}" >
+            <Button Background="{DynamicResource ButtonBackground}" Grid.Column="3"  Content="Pretrazi" Margin="2"  >
                 <Button.ContentTemplate>
                     <DataTemplate>
                         <TextBlock Text="Pretrazi" Foreground="{DynamicResource AppForeground}" />

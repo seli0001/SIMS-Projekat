@@ -52,6 +52,7 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
         this.userId=userId;
             this.userId = userId;
             _bookedTourService = new BookedTourService();
+           
             CheckNotify();
         }
 
@@ -63,6 +64,27 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
         }
 
         #region commands
+
+        
+
+            private ICommand _complexTourRequests;
+        public ICommand ComplexTourRequests
+        {
+            get
+            {
+                return _complexTourRequests ?? (_complexTourRequests = new CommandBase(() => ComplexTourRequestsClick(), true));
+            }
+        }
+
+        private ICommand _complexTourClickCommand;
+        public ICommand ComplexTourClickCommand
+        {
+            get
+            {
+                return _complexTourClickCommand ?? (_complexTourClickCommand = new CommandBase(() => ComplexTourClick(), true));
+            }
+        }
+
 
         private ICommand _mainGuest2ViewClickCommand;
         public ICommand MainGuest2ViewClickCommand
@@ -176,36 +198,17 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
         }
 
         #endregion
-
+        private void ComplexTourRequestsClick()
+        {
+            ComplexTourView complexTour = new ComplexTourView(userId);
+            complexTour.Show();
+            Close();
+        }
         private void ChangeLanguageClick()
         {
-          /*  if (Thread.CurrentThread.CurrentCulture.Name == "sr-Latn-RS")
-            {
-                ApplyLanguageChangeToAllWindows(new CultureInfo("en-US"));
-            }
-            else
-            {
-                ApplyLanguageChangeToAllWindows(new CultureInfo("sr-Latn-RS"));
-            }*/
+            
+
         }
-
-   /*     private void ApplyLanguageChangeToAllWindows(CultureInfo culture)
-        {
-            foreach (Window window in Application.Current.Windows)
-            {
-                if (window is Window wpfWindow)
-                {
-                    Thread.CurrentThread.CurrentCulture = culture;
-                    Thread.CurrentThread.CurrentUICulture = culture;
-
-                    var rm = new ResourceManager("SIMS.Localization.Resource", typeof(Resource).Assembly);
-                    wpfWindow.Title = rm.GetString("FormTitle");
-
-                    // Osvežite ostale kontrole na prozoru koje želite da lokalizujete
-                }
-            }
-        }
-   */
 
         public void CheckNotify()
         {
@@ -241,6 +244,14 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
             MainGuest2View mainGuest2View = new MainGuest2View(userId);
             mainGuest2View.Show();
             Close();
+        }
+
+        private void ComplexTourClick()
+        {
+            ComplexTourRequest complexTourRequest = new ComplexTourRequest(userId);
+            complexTourRequest.Show();
+            Close();
+
         }
 
         private void TourRequestClick()
@@ -295,7 +306,7 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
                 Application.Current.Resources["ButtonBackground"] = new SolidColorBrush(Colors.DarkBlue);
                 Application.Current.Resources["ToolBar"] = new SolidColorBrush(Colors.DarkBlue);
                 Application.Current.Resources["List"] = new SolidColorBrush(Colors.DarkGray);
-                Application.Current.Resources["MainButton"] = new SolidColorBrush(Colors.DarkCyan);
+                Application.Current.Resources["MainButton"] = new SolidColorBrush(Colors.DarkMagenta);
                 Application.Current.Resources["Text"] = new SolidColorBrush(Colors.White);
             }
             else

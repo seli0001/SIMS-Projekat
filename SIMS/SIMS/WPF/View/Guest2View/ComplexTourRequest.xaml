@@ -8,15 +8,20 @@
         Title="ComplexTourRequest" Height="750" Width="430">
     <Grid Background="{DynamicResource AppBackground}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
             <ToolBar Background="{DynamicResource ToolBar}">
-                <Button Content="                                                                                                      "></Button>
-                <Button Command="{Binding BackToMainGuest2ViewClickCommand}">
+                <Button Click="Button_Click3">
+                    <Image Source="pack://application:,,,/Resources/Assets/burger.png"></Image>
+                </Button>
+                
+                
+                <Button Content="                                                                                            "></Button>
+                <Button Click="Button_Click2">
                     <Image Source="pack://application:,,,/Resources/Assets/house.png"></Image>
                 </Button>
             </ToolBar>
@@ -33,7 +38,12 @@
                 <RowDefinition  Height="160"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
-                <Label HorizontalAlignment="Center" VerticalAlignment="Center">Deo slozene ture:1</Label>
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="Deo slozene ture:1">
+                    <Label.Foreground>
+                        <StaticResource ResourceKey="Text" />
+                    </Label.Foreground>
+
+                </Label>
             </Grid>
             <Grid Grid.Row="1" Height="50">
                 <Grid.ColumnDefinitions>
@@ -41,7 +51,11 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="0"  Content="Grad" VerticalContentAlignment="Center" HorizontalAlignment="Center"></Label>
+                <Label Grid.Column="0"  Content="Grad" VerticalContentAlignment="Center" HorizontalAlignment="Center">
+                    <Label.Foreground>
+                        <StaticResource ResourceKey="Text" />
+                    </Label.Foreground>
+                </Label>
                 <TextBox  Grid.Column="1"  Margin="10"  Text="{Binding Path=tbCity, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             </Grid>
 
@@ -51,7 +65,11 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="0"  Content="Drzava" VerticalContentAlignment="Center" HorizontalAlignment="Center"></Label>
+                <Label Grid.Column="0"  Content="Drzava" VerticalContentAlignment="Center" HorizontalAlignment="Center">
+                    <Label.Foreground>
+                        <StaticResource ResourceKey="Text" />
+                    </Label.Foreground>
+                </Label>
                 <TextBox  Grid.Column="1"  Margin="10"  Text="{Binding Path=tbCountry, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             </Grid>
 
@@ -61,7 +79,11 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="0"  Content="Opis" VerticalContentAlignment="Center" HorizontalAlignment="Center"></Label>
+                <Label Grid.Column="0"  Content="Opis" VerticalContentAlignment="Center" HorizontalAlignment="Center">
+                    <Label.Foreground>
+                        <StaticResource ResourceKey="Text" />
+                    </Label.Foreground>
+                </Label>
                 <TextBox   Grid.Column="1"  Margin="10"  Text="{Binding Path=tbDescription, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             </Grid>
 
@@ -71,7 +93,11 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="0"  Content="Jezik" VerticalContentAlignment="Center" HorizontalAlignment="Center"></Label>
+                <Label Grid.Column="0"  Content="Jezik" VerticalContentAlignment="Center" HorizontalAlignment="Center">
+                    <Label.Foreground>
+                        <StaticResource ResourceKey="Text" />
+                    </Label.Foreground>
+                </Label>
                 <TextBox  Grid.Column="1"  Margin="10" Text="{Binding Path=tbLanguage, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             </Grid>
 
@@ -81,7 +107,11 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="0"  Content="Broj gostiju" VerticalContentAlignment="Center" HorizontalAlignment="Center"></Label>
+                <Label Grid.Column="0"  Content="Broj gostiju" VerticalContentAlignment="Center" HorizontalAlignment="Center">
+                    <Label.Foreground>
+                        <StaticResource ResourceKey="Text" />
+                    </Label.Foreground>
+                </Label>
                 <TextBox  Grid.Column="1" Margin="10" Text="{Binding Path=tbGuestNumber, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"></TextBox>
             </Grid>
 
@@ -91,7 +121,11 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="0"  Content="Datum od" VerticalContentAlignment="Center" HorizontalAlignment="Center"></Label>
+                <Label Grid.Column="0"  Content="Datum od" VerticalContentAlignment="Center" HorizontalAlignment="Center">
+                    <Label.Foreground>
+                        <StaticResource ResourceKey="Text" />
+                    </Label.Foreground>
+                </Label>
                 <Calendar  Grid.Column="1"  SelectedDate="{Binding tbStartDate, Mode=TwoWay}"></Calendar>
             </Grid>
 
@@ -101,7 +135,11 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="0"  Content="Datum do" VerticalContentAlignment="Center" HorizontalAlignment="Center"></Label>
+                <Label Grid.Column="0"  Content="Datum do" VerticalContentAlignment="Center" HorizontalAlignment="Center">
+                    <Label.Foreground>
+                        <StaticResource ResourceKey="Text" />
+                    </Label.Foreground>
+                </Label>
                 <Calendar  Grid.Column="1" SelectedDate="{Binding tbEndDate, Mode=TwoWay}"></Calendar>
             </Grid>
 
@@ -111,7 +149,13 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="1" Command="{Binding NextClickCommand}">Dalje</Button>
+            <Button Grid.Column="1"  Click="Button_Click"  Background="{DynamicResource ButtonBackground}">
+                <Button.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="Dalje" Foreground="{DynamicResource AppForeground}" />
+                    </DataTemplate>
+                </Button.ContentTemplate>
+            </Button>
         </Grid>
 
     </Grid>

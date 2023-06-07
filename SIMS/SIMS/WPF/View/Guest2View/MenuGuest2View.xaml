@@ -71,7 +71,7 @@
                     </DataTemplate>
                 </Button.ContentTemplate>
             </Button>
-            <Button Grid.Column="0" Grid.Row="1" Margin="35" Background="{DynamicResource ButtonBackground}">
+            <Button Grid.Column="0" Grid.Row="1" Margin="35" Background="{DynamicResource ButtonBackground}" Command="{Binding ComplexTourClickCommand}">
                 <Button.ContentTemplate>
                     <DataTemplate>
                         <TextBlock Text="Kreiraj zahtez za slozenu"  Foreground="{DynamicResource AppForeground}" />
@@ -99,7 +99,7 @@
                     </DataTemplate>
                 </Button.ContentTemplate>
             </Button>
-            <Button Grid.Column="1" Grid.Row="1"  Margin="35" Background="{DynamicResource ButtonBackground}">
+            <Button Grid.Column="1" Grid.Row="1"  Margin="35" Background="{DynamicResource ButtonBackground}" Command="{Binding ComplexTourRequests}">
                 <Button.ContentTemplate>
                     <DataTemplate>
                         <TextBlock Text="Zahtevi za zlosene ture" Foreground="{DynamicResource AppForeground}"/>

@@ -172,13 +172,12 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
             string country = tbCountry;
             List<Tour> tours = _tourService.GetAll();
             List<Tour> filtratedTours = new List<Tour>();
-            filtratedTours = GetFiltratedTours(tours, city, country, duration, language, numberOfPeople);
-            dgwTours = filtratedTours;
+           
         }
 
         public List<Tour> GetFiltratedTours(List<Tour> tours, string city, string country, string duration, string language, int numberOfPeople)
-        {
-            if (duration != "")
+        { 
+            if (duration != "" && city!="" && country!="" && language!=null && numberOfPeople!=null)
             {
                 tours = tours.Where(t => t.Language.StartsWith(language, StringComparison.OrdinalIgnoreCase)
                 && t.Duration.ToString().Equals(duration)
@@ -188,7 +187,7 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
                 && t.Status.ToString().Equals("NOT_STARTED")
                 ).ToList();
             }
-            else
+            else 
             {
                 tours = tours.Where(t => t.Language.StartsWith(language, StringComparison.OrdinalIgnoreCase)
                 && (t.MaxNumberOfPeople >= numberOfPeople)

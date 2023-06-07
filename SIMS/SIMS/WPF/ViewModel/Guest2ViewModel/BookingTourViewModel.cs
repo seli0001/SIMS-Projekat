@@ -131,7 +131,12 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
 
         private void BackToNumberFormClick()
         {
+            NumberOfTourGuestView numberOfTourGuestView = new NumberOfTourGuestView(tour, userId, 100000);
+            numberOfTourGuestView.Show();
             Close();
+
+
+            
         }
     }
 

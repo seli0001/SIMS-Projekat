@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="MainGuest2View" Height="750" Width="430">
 
+  
+    
 
     <Grid Background="{DynamicResource AppBackground}" >
         
@@ -16,7 +18,7 @@
             <RowDefinition Height="70"></RowDefinition>
             <RowDefinition Height="40"></RowDefinition>
             <RowDefinition></RowDefinition>
-            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="80"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <ToolBar Background="{DynamicResource ToolBar}">
@@ -41,10 +43,11 @@
 
 
 
-            <Label Grid.Column="0" Grid.ColumnSpan="2"  Content="Grad" Margin="0,0,0,45" >
+            <Label Grid.Column="0" Grid.ColumnSpan="2" Content="Grad"  Margin="0,0,0,45" >
                 <Label.Foreground>
-                    <StaticResource ResourceKey="Text" />
+                    <DynamicResource ResourceKey="Text" />
                 </Label.Foreground>
+                
             </Label>
             <Label Grid.Column="2" Grid.ColumnSpan="2" Content="Broj ljudi" Margin="0,0,0,45">
                 <Label.Foreground>
@@ -146,7 +149,14 @@
                 
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="1"  Width="220" Content="Rezervisi"  Background="{DynamicResource MainButton}"   Command="{Binding NumberOfToursClickCommand}"  ></Button>
+            <Button Grid.Column="1"  Width="220" Height="50" VerticalAlignment="Bottom"  Background="{DynamicResource MainButton}"   Command="{Binding NumberOfToursClickCommand}"  >
+           
+                <Button.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="Rezervisi" Foreground="{DynamicResource AppForeground}" />
+                    </DataTemplate>
+                </Button.ContentTemplate>
+            </Button>
             
 
         </Grid>

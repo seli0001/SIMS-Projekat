@@ -1,0 +1,53 @@
+﻿<Window x:Class="SIMS.WPF.View.Guest2View.ComplexTourPartView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SIMS.WPF.View.Guest2View"
+        mc:Ignorable="d"
+        Title="ComplexTourPartView" Height="750" Width="430">
+    <Grid>
+
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <ToolBar Background="{DynamicResource ToolBar}">
+                <Button Click="Button_Click3">
+                    <Image Source="pack://application:,,,/Resources/Assets/burger.png"></Image>
+                </Button>
+
+
+                <Button Content="                                                                                            "></Button>
+                <Button Click="Button_Click2">
+                    <Image Source="pack://application:,,,/Resources/Assets/house.png"></Image>
+                </Button>
+            </ToolBar>
+
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <ListView x:Name="tourListView" ItemsSource="{Binding Ethapes}">
+                <ListView.Resources>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Height" Value="50" />
+                        <!-- Ovde podesite željenu visinu redova -->
+                    </Style>
+                </ListView.Resources>
+                
+
+                <ListView.View>
+                    
+                    <GridView>
+                        <GridViewColumn Header="Ime" DisplayMemberBinding="{Binding TourName}" />
+                        <GridViewColumn Header="Broj etapa" DisplayMemberBinding="{Binding EthapeName}" />
+                        <GridViewColumn Header="Status" DisplayMemberBinding="{Binding status}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+
+    </Grid>
+</Window>

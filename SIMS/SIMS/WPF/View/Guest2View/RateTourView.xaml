@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SIMS.WPF.View"
         mc:Ignorable="d"
         Title="RateTourView" Height="750" Width="430">
-    <Grid Background="AliceBlue">
+    <Grid Background="{DynamicResource AppBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition></RowDefinition>
@@ -38,35 +38,55 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <StackPanel  Grid.Column="0" Margin="40,40,18,40">
+            <StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"> 
                 <Label Content="Znanje vodica">
                     <Label.Foreground>
                         <StaticResource ResourceKey="Text" />
                     </Label.Foreground>
                 </Label>
-                <TextBox TextWrapping="Wrap" AcceptsReturn="True" Height="20" Margin="20" Text="{Binding Path=GuideKnown, UpdateSourceTrigger=PropertyChanged}"/>
 
+                <StackPanel Orientation="Vertical">
+                    <RadioButton Content="1" Foreground="{StaticResource Text}" />
+                    <RadioButton Content="2" GroupName="GuideKnownGroup"  Foreground="{StaticResource Text}" />
+                    <RadioButton Content="3" GroupName="GuideKnownGroup" Foreground="{StaticResource Text}" />
+                    <RadioButton Content="4" GroupName="GuideKnownGroup" Foreground="{StaticResource Text}"/>
+                    <RadioButton Content="5" GroupName="GuideKnownGroup" Foreground="{StaticResource Text}"/>
+                </StackPanel>
             </StackPanel>
 
-            <StackPanel  Grid.Column="1" Margin="40,40,18,40">
+            <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Label Content="Jezik vodica">
                     <Label.Foreground>
                         <StaticResource ResourceKey="Text" />
                     </Label.Foreground>
                 </Label>
-                <TextBox TextWrapping="Wrap" AcceptsReturn="True" Height="20" Margin="20" Text="{Binding Path=GuideLanguage, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <StackPanel Orientation="Vertical">
+                    <RadioButton Content="1" GroupName="GuideLanguageGroup" Foreground="{StaticResource Text}" />
+                    <RadioButton Content="2" GroupName="GuideLanguageGroup" Foreground="{StaticResource Text}" />
+                    <RadioButton Content="3" GroupName="GuideLanguageGroup"  Foreground="{StaticResource Text}"/>
+                    <RadioButton Content="4" GroupName="GuideLanguageGroup" Foreground="{StaticResource Text}" />
+                    <RadioButton Content="5" GroupName="GuideLanguageGroup"  Foreground="{StaticResource Text}"/>
+                </StackPanel>
             </StackPanel>
 
-            <StackPanel  Grid.Column="2" Margin="40,40,18,40">
+            <StackPanel Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Label Content="Zanimljivost">
                     <Label.Foreground>
                         <StaticResource ResourceKey="Text" />
                     </Label.Foreground>
                 </Label>
-                <TextBox TextWrapping="Wrap" AcceptsReturn="True" Height="20" Margin="20" Text="{Binding Path=TourReview, UpdateSourceTrigger=PropertyChanged}"/>
-            </StackPanel>
 
+                <StackPanel Orientation="Vertical">
+                    <RadioButton Content="1" GroupName="TourReviewGroup" Foreground="{StaticResource Text}" />
+                    <RadioButton Content="2" GroupName="TourReviewGroup" Foreground="{StaticResource Text}" />
+                    <RadioButton Content="3" GroupName="TourReviewGroup"  Foreground="{StaticResource Text}"/>
+                    <RadioButton Content="4" GroupName="TourReviewGroup"  Foreground="{StaticResource Text}"/>
+                    <RadioButton Content="5" GroupName="TourReviewGroup"  Foreground="{StaticResource Text}"/>
+                </StackPanel>
+            </StackPanel>
         </Grid>
+
 
         <Grid Grid.Row="2">
             <Label Content="Ostavi komentar:">

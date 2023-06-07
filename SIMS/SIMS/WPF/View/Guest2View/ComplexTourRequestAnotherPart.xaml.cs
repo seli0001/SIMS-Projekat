@@ -19,9 +19,31 @@ namespace SIMS.WPF.View.Guest2View
     /// </summary>
     public partial class ComplexTourRequestAnotherPart : Window
     {
-        public ComplexTourRequestAnotherPart()
+        public int userId;
+        public ComplexTourRequestAnotherPart(int userId)
         {
             InitializeComponent();
+            this.userId=userId;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MainGuest2View mainGuest2View = new MainGuest2View(userId);
+            mainGuest2View.Show();
+            Close();
+        }
+
+        private void Button_Click3(object sender, RoutedEventArgs e)
+        {
+            MenuGuest2View mainGuest2View = new MenuGuest2View(userId);
+            mainGuest2View.Show();
+            Close();
+        }
+        private void Button_Click4(object sender, RoutedEventArgs e)
+        {
+            ComplexTourRequest complexTourRequest = new ComplexTourRequest(userId);
+            complexTourRequest.Show();
+            Close();
         }
     }
 }

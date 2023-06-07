@@ -180,7 +180,7 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
         {
             bookedTour.Review = true;
             _bookedTourService.Update(bookedTour);
-            _tourRatingService.Save(bookedTour, userId, int.Parse(GuideKnown), int.Parse(GuideLanguage),int.Parse(TourReview), _comment, images.ToList());
+            _tourRatingService.Save(bookedTour, userId,5, 5,5, _comment, images.ToList());
             MessageBox.Show("Uspesno ste ocenili!");
             MainGuest2View mainGuest2View = new MainGuest2View(userId);
             mainGuest2View.Show();

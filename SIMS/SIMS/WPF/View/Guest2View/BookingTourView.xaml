@@ -36,7 +36,11 @@
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="1">
-                <Label  HorizontalAlignment="Center" VerticalAlignment="Center" Content="Da li zelite da potvrdite rezervaciju?" ></Label>
+                <Label  HorizontalAlignment="Center" VerticalAlignment="Center" Content="Da li zelite da potvrdite rezervaciju?" >
+                    <Label.Foreground>
+                        <StaticResource ResourceKey="Text" />
+                    </Label.Foreground>
+                </Label>
             </Grid>
             
             <Grid Grid.Row="2">
