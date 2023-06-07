@@ -7,7 +7,7 @@
         xmlns:ei="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions"
         xmlns:local="clr-namespace:SIMS.WPF.View"
         mc:Ignorable="d"
-        Title="UsingVouchers" Height="750" Width="430">
+        Title="UsingVouchers" Height="750" Width="430" WindowStartupLocation="CenterScreen">
     <Grid Background="{DynamicResource AppBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"></RowDefinition>
@@ -56,18 +56,12 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="150"></ColumnDefinition>
 
             </Grid.ColumnDefinitions>
 
-            <Button Background="{DynamicResource ButtonBackground}" Grid.Column="2"  Content="Istorija" Margin="2">
-                <Button.ContentTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="Istorija" Foreground="{DynamicResource AppForeground}" />
-                    </DataTemplate>
-                </Button.ContentTemplate>
-            </Button>
-            <Button Background="{DynamicResource ButtonBackground}" Grid.Column="3"  Content="Pretrazi" Margin="2" Command="{Binding SearchClickCommand}" >
+            
+            <Button Background="{DynamicResource ButtonBackground}" Grid.Column="3"  Content="Pretrazi" Margin="2"  >
                 <Button.ContentTemplate>
                     <DataTemplate>
                         <TextBlock Text="Pretrazi" Foreground="{DynamicResource AppForeground}" />

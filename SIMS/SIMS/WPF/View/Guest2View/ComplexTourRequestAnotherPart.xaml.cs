@@ -28,6 +28,7 @@ namespace SIMS.WPF.View.Guest2View
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show("Uspesno ste kreirali!");
             MainGuest2View mainGuest2View = new MainGuest2View(userId);
             mainGuest2View.Show();
             Close();

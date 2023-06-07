@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SIMS.WPF.View"
         mc:Ignorable="d"
-        Title="MainGuest2View" Height="750" Width="430">
+        Title="MainGuest2View" Height="750" Width="430" WindowStartupLocation="CenterScreen">
 
   
     

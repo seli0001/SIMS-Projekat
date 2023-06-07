@@ -245,10 +245,17 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
 
         }
         private void NumberOfToursClick()
-        {
-            NumberOfTourGuestView numberOfTourGuestView = new NumberOfTourGuestView(selectedTour, userId, 100000);
-            numberOfTourGuestView.Show();
-            Close();
+        {   if (selectedTour!=null)
+             {
+                NumberOfTourGuestView numberOfTourGuestView = new NumberOfTourGuestView(selectedTour, userId, 100000);
+                numberOfTourGuestView.Show();
+                Close();
+            }
+        else
+            {
+                MessageBox.Show("Morate selektovati turu");
+            }
+            
         }
 
         private void MenuClick()

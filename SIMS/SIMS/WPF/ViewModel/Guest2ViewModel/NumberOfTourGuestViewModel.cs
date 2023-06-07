@@ -96,22 +96,37 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
 
         private void BookingTourViewClick()
         {
-            if (tour.MaxNumberOfPeople < Convert.ToInt32(tbNumber) || (tour.MaxNumberOfPeople - tour.NumberOfPeople) < Convert.ToInt32(tbNumber))
+            string input = tbNumber;
+            int number;
+
+            if (int.TryParse(input, out number))
             {
-                //MessageBox.Show("Nema mesta,evo alternativa!");
-                AlternativeTourView alternativeTourView = new AlternativeTourView(tour, userId);
-                alternativeTourView.Show();
-                Close();
+                if (tour.MaxNumberOfPeople < Convert.ToInt32(tbNumber) || (tour.MaxNumberOfPeople - tour.NumberOfPeople) < Convert.ToInt32(tbNumber))
+                {
+                    //MessageBox.Show("Nema mesta,evo alternativa!");
+                    AlternativeTourView alternativeTourView = new AlternativeTourView(tour, userId);
+                    alternativeTourView.Show();
+                    Close();
+                }
+                else
+                {
+                    int freeSpace = tour.MaxNumberOfPeople - Convert.ToInt32(tbNumber) - tour.NumberOfPeople;
+                    BookingTourView bookingTourView = new BookingTourView(freeSpace, tour, userId, Convert.ToInt32(tbNumber));
+                    bookingTourView.Show();
+                    Close();
+
+
+                }
             }
             else
             {
-                int freeSpace = tour.MaxNumberOfPeople - Convert.ToInt32(tbNumber) - tour.NumberOfPeople;
-                BookingTourView bookingTourView = new BookingTourView(freeSpace, tour, userId, Convert.ToInt32(tbNumber));
-                bookingTourView.Show();
-                Close();
-
-
+                // Vrednost u tbNumber nije validan broj
+                MessageBox.Show("Morate  uneti broj!");
             }
+
+
+
+           
         }
         private void BackToMainClick()
         {
@@ -125,7 +140,7 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
         private void UsingVoucher()
         {
             UsingVouchersView usingVaucher = new UsingVouchersView(userId, tour);
-            usingVaucher.ShowDialog();
+            usingVaucher.Show();
             Close();
         }
 

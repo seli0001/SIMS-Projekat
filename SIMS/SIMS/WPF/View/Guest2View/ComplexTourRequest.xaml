@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SIMS.WPF.View.Guest2View"
         mc:Ignorable="d"
-        Title="ComplexTourRequest" Height="750" Width="430">
+        Title="ComplexTourRequest" Height="750" Width="430" WindowStartupLocation="CenterScreen">
     <Grid Background="{DynamicResource AppBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"></RowDefinition>

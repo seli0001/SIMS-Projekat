@@ -7,7 +7,7 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:ei="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions"
         mc:Ignorable="d"
-        Title="ToursInProgressView" Height="750" Width="430">
+        Title="ToursInProgressView" Height="750" Width="430" WindowStartupLocation="CenterScreen">
     <Grid Background="{DynamicResource AppBackground}" >
         <Grid.RowDefinitions>
             <RowDefinition Height="50"></RowDefinition>

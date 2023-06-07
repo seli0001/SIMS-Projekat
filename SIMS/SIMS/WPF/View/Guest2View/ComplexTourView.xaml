@@ -6,7 +6,7 @@
                         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:local="clr-namespace:SIMS.WPF.View.Guest2View"
         mc:Ignorable="d"
-        Title="ComplexTourView" Height="750" Width="430">
+        Title="ComplexTourView" Height="750" Width="430" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid Background="{DynamicResource AppBackground}">
             <Grid.RowDefinitions>
@@ -15,7 +15,7 @@
                 <RowDefinition Height="50"></RowDefinition>
                 <RowDefinition Height="50"></RowDefinition>
                 <RowDefinition></RowDefinition>
-                <RowDefinition Height="50"></RowDefinition>
+               
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">

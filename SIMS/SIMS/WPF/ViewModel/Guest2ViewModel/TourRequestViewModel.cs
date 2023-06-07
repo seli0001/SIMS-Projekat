@@ -187,22 +187,39 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
 
         private void RequesTourClick()
         {
-            Location location = new Location(tbCountry,tbCity);
-            
-            int id=_locationService.IsExists(location);
+           
 
-            if(id==-1)
+             string input = tbGuestNumber;
+            int number;
+
+            if (int.TryParse(input, out number))
             {
-                location=_locationService.Save(location);
-                _tourRequestService.Save(location, tbDescription, tbLanguage, int.Parse(tbGuestNumber),tbStartDate, tbEndDate, RequestStatus.Waiting,userId);
-                MessageBox.Show("Uspesno!");
+                Location location = new Location(tbCountry, tbCity);
+
+                int id = _locationService.IsExists(location);
+
+                if (id == -1)
+                {
+                    location = _locationService.Save(location);
+                    _tourRequestService.Save(location, tbDescription, tbLanguage, int.Parse(tbGuestNumber), tbStartDate, tbEndDate, RequestStatus.Waiting, userId);
+                    MessageBox.Show("Uspesno!");
+                }
+                else
+                {
+                    location.Id = id;
+                    _tourRequestService.Save(location, tbDescription, tbLanguage, int.Parse(tbGuestNumber), tbStartDate, tbEndDate, RequestStatus.Waiting, userId);
+                    MessageBox.Show("Uspesno!");
+                }
+            }
+            else if(tbEndDate==null || tbCity==null ||tbCountry==null || tbDescription==null || tbStartDate==null|| tbGuestNumber==null)
+            {
+                MessageBox.Show("Morate uneti sva polja!");
             }
             else
             {
-                location.Id = id;
-                _tourRequestService.Save(location, tbDescription, tbLanguage, int.Parse(tbGuestNumber), tbStartDate, tbEndDate, RequestStatus.Waiting,userId);
-                MessageBox.Show("Uspesno!");
+                MessageBox.Show("Broj gostiju mora biti unet kao broj!");
             }
+            
             
         }
 

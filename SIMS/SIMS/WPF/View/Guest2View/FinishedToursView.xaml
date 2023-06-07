@@ -7,7 +7,7 @@
         xmlns:ei="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions"
         xmlns:local="clr-namespace:SIMS.WPF.View"
         mc:Ignorable="d"
-        Title="FinishedTours" Height="750" Width="430">
+        Title="FinishedTours" Height="750" Width="430" WindowStartupLocation="CenterScreen">
     <Grid Background="{DynamicResource AppBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"></RowDefinition>
