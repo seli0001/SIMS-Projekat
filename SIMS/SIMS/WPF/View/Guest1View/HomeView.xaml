@@ -6,11 +6,11 @@
              xmlns:local="clr-namespace:SIMS.WPF.View.Guest1View"
              mc:Ignorable="d" 
              d:DesignHeight="606" d:DesignWidth="430">
-    <Grid>
+    <Grid Background="#F3F3F3" Height="606">
         <DataGrid
           ItemsSource="{Binding Path=Accommodations, UpdateSourceTrigger=PropertyChanged}"
           SelectedItem="{Binding Path=SelectedAccommodation, UpdateSourceTrigger=PropertyChanged}"
-          AutoGenerateColumns="False" IsReadOnly="True" Margin="10,295,10,103">
+          AutoGenerateColumns="False" IsReadOnly="True" Margin="10,173,5,64" RowHeight="60" Background="White" BorderBrush="Transparent" RowBackground="White" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"></DataGridTextColumn>
                 <DataGridTextColumn Header="Country" Binding="{Binding Location.Country}" Width="*"></DataGridTextColumn>
@@ -18,20 +18,30 @@
                 <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="*" ></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <TextBox x:Name ="txtSearch" HorizontalAlignment="Left" Margin="17,225,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Height="25"/>
-        <TextBox x:Name ="txtSearch1" HorizontalAlignment="Left" Margin="122,225,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Height="25"/>
-        <ComboBox x:Name ="cbSearch" HorizontalAlignment="Left" Margin="227,225,0,0" VerticalAlignment="Top" Width="100" Height="25"/>
-        <Button x:Name="BtnClear" Content="Clear" HorizontalAlignment="Left" Margin="227,268,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.833,0.553" Height="25" Width="100" />
-
-        <TextBox x:Name ="txtSearch2" HorizontalAlignment="Left" Margin="17,268,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Height="25"/>
-        <TextBox x:Name ="txtSearch3" HorizontalAlignment="Left" Margin="122,268,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Height="25"/>
 
 
-        <Button x:Name="BtnSearch" Content="Search" HorizontalAlignment="Left" Margin="332,241,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.833,0.553" Height="37" Width="83"  />
-        <Label Content="Name" HorizontalAlignment="Left" Margin="17,200,0,0" Height="30" VerticalAlignment="Top" Width="70"/>
-        <Label Content="Location" HorizontalAlignment="Left" Margin="122,200,0,0" Height="30" VerticalAlignment="Top" Width="70"/>
-        <Label Content="Type" HorizontalAlignment="Left" Margin="227,200,0,0" Height="30" VerticalAlignment="Top" Width="70"/>
-        <Label Content="Guests" HorizontalAlignment="Left" Margin="17,241,0,0" Height="30" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0.529,0.485"/>
-        <Label Content="Days" HorizontalAlignment="Left" Margin="122,244,0,0" Height="31" VerticalAlignment="Top" Width="70"/>
+
+
+        <TextBox x:Name ="txtSearch" HorizontalAlignment="Left" Margin="10,143,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Height="25" RenderTransformOrigin="0.59,-0.946"/>
+        <TextBox x:Name ="txtSearch1" HorizontalAlignment="Left" Margin="115,143,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Height="25"/>
+        <TextBox x:Name ="txtSearch2" HorizontalAlignment="Left" Margin="220,143,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Height="25"/>
+        <TextBox x:Name ="txtSearch3" HorizontalAlignment="Left" Margin="325,143,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Height="25"/>
+        <Button x:Name="BtnSearch" Style="{StaticResource ButtonTheme}" Command="{Binding SearchCommand}"  Content="Search" HorizontalAlignment="Left" Margin="290,88,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.833,0.553" Height="37" Width="127"  />
+
+
+
+
+
+
+
+        <Label Content="Name" HorizontalAlignment="Left" Margin="10,122,0,0" Height="30" VerticalAlignment="Top" Width="70"/>
+        <Label Content="Location" HorizontalAlignment="Left" Margin="115,122,0,0" Height="30" VerticalAlignment="Top" Width="70"/>
+        <Label Content="Guests" HorizontalAlignment="Left" Margin="220,125,0,0" Height="30" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0.529,0.485"/>
+        <Label Content="Days" HorizontalAlignment="Left" Margin="325,124,0,0" Height="32" VerticalAlignment="Top" Width="70"/>
+        <Button Content="Book" Command="{Binding BookCommand}" HorizontalAlignment="Center" Margin="0,556,0,0" VerticalAlignment="Top" Width="200"
+                Height="40"
+                Background="#007AFF"
+                Foreground="White"
+                ToolTip="Book the selected reservation"/>
     </Grid>
 </UserControl>

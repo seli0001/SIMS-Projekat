@@ -6,20 +6,22 @@
              xmlns:local="clr-namespace:SIMS.WPF.View.Guest1View"
              mc:Ignorable="d" 
              d:DesignHeight="606" d:DesignWidth="430">
-    <Grid>
-        <DataGrid
-                  ItemsSource="{Binding Path=GuestRatings, UpdateSourceTrigger=PropertyChanged}"
+    <Grid Background="#F3F3F3" Height="606">
+        <Label Content="User Ratings" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40,0,0" />
+
+        <StackPanel Margin="10,120,10,96">
+            <DataGrid ItemsSource="{Binding Path=GuestRatings, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding Path=SelectedGuestRating, UpdateSourceTrigger=PropertyChanged}"
-                  AutoGenerateColumns="False" IsReadOnly="True" Margin="10,270,10,96">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Binding="{Binding User.Username}" Width="100"></DataGridTextColumn>
-                <DataGridTextColumn Header="Cleanliness" Binding="{Binding Cleanliness}" Width="*"></DataGridTextColumn>
-                <DataGridTextColumn Header="Respecting Rules" Binding="{Binding RulesRespect}" Width="*"></DataGridTextColumn>
-            </DataGrid.Columns>
-        </DataGrid>
-        <Label Content="User Ratings" HorizontalAlignment="Left" FontSize="20" Margin="14,228,0,0" VerticalAlignment="Top"/>
-        <Label Content="Guest1" HorizontalAlignment="Left" Margin="130,115,0,0" VerticalAlignment="Top"/>
+                  AutoGenerateColumns="False" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name" Binding="{Binding User.Username}" Width="*" />
+                    <DataGridTextColumn Header="Cleanliness" Binding="{Binding Cleanliness}" Width="*" />
+                    <DataGridTextColumn Header="Respecting Rules" Binding="{Binding RulesRespect}" Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
 
-
+        <Label Content="Guest1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0" />
     </Grid>
+
 </UserControl>

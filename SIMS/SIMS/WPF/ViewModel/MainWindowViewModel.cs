@@ -86,8 +86,8 @@ namespace SIMS.WPF.ViewModel
                     }
                     else if (user.Role == ROLE.Guest1)
                     {
-                        FirstGuestMainView firstGuestMainView = new FirstGuestMainView(user);
-                        firstGuestMainView.Show();
+                        Guest1Main guest1Main = new Guest1Main(user);
+                        guest1Main.Show();
                     }
                     else if (user.Role == ROLE.Guest2)
                     {

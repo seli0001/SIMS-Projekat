@@ -69,7 +69,7 @@
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type guestViewModel:CreateReschedulingRequestViewModel}">
-                <guestView:CreateReschedulingRequestView />
+                <guestView:CreateReschedulingRequestsView />
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type guestViewModel:ReservationViewModel}">
@@ -82,6 +82,10 @@
             
             <DataTemplate DataType="{x:Type guestViewModel:RatingsViewModel}">
                 <guestView:RatingsView />
+            </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type guestViewModel:BookingViewModel}">
+                <guestView:BookingView />
             </DataTemplate>
 
 

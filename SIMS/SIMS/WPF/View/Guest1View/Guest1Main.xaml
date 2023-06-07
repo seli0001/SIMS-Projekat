@@ -13,7 +13,7 @@
         AllowsTransparency="True" 
         WindowStartupLocation="CenterScreen">
     <Grid>
-        <Border Background="MediumAquamarine" CornerRadius="20"/>
+        <Border Background="DodgerBlue" CornerRadius="20"/>
         <StackPanel Orientation="Vertical" VerticalAlignment="Top" Height="47">
             <Label
                 Foreground="White" 
@@ -31,10 +31,10 @@
 
         <StackPanel Orientation="Vertical" VerticalAlignment="Top" Height="47" Margin="0,653,0,0">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="0,0" Height="47">
-                <Button Content="Home" Command="{Binding HomeCommand}" Margin="0"  Width="110"/>
-                <Button Content="Request" Command="{Binding RequestsCommand}" Margin="0"  Width="105"/>
-                <Button Content="Reservations" Command="{Binding ReservationCommand}" Margin="0"  Width="105"/>
-                <Button Content="Profile" Command="{Binding ProfileCommand}" Margin="0"  Width="110"/>
+                <Button Style="{Binding ButtonTheme}" Background="DodgerBlue" Content="Home" Command="{Binding HomeCommand}" Margin="0"  Width="110" ToolTip="Go to home screen"/>
+                <Button Style="{Binding ButtonTheme}" Background="DodgerBlue" Content="Request" Command="{Binding RequestsCommand}" Margin="0"  Width="105" ToolTip="Go to user requests screen"/>
+                <Button Style="{Binding ButtonTheme}" Background="DodgerBlue" Content="Reservations" Command="{Binding ReservationCommand}" Margin="0"  Width="105" ToolTip="Go to user reservations screen"/>
+                <Button Style="{Binding ButtonTheme}" Background="DodgerBlue" Content="Profile" Command="{Binding ProfileCommand}" Margin="0"  Width="110" ToolTip="Go to user profile"/>
             </StackPanel>
         </StackPanel>
         <Button Content="X" FontSize="12"  Margin="408,0,0,675" Background="Red" Foreground="White" Command="{Binding CloseCommand}">

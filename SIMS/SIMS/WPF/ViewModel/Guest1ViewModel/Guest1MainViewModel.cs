@@ -21,6 +21,7 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
         public ReservationViewModel ReservationVM { get; set; }
         public RatingsViewModel RatingsVM { get; set; }
         public HomeViewModel HomeVM { get; set; }
+        public BookingViewModel BookVM { get; set; }
 
 
         public Action Close { get; set; }
@@ -38,19 +39,6 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
 
 
         //#region commands
-
-        //private ICommand _unratedReservationsCommand;
-        //public ICommand UnratedReservationsCommand
-        //{
-        //    get
-        //    {
-        //        return _unratedReservationsCommand ?? (_unratedReservationsCommand = new CommandBase(
-        //            () => {
-        //                UnratedReservationsVM = new UnratedReservationsViewModel(LoggedInUser);
-        //                CurrentView = UnratedReservationsVM;
-        //            }, true));
-        //    }
-        //}
 
         private ICommand _homeCommand;
         public ICommand HomeCommand
@@ -99,7 +87,7 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
                 return _reservationCommand ?? (_reservationCommand = new CommandBase(
                     () =>
                     {
-                        ReservationVM = new ReservationViewModel(LoggedInUser);
+                        ReservationVM = new ReservationViewModel(LoggedInUser, this);
                         CurrentView = ReservationVM;
                     }, true));
             }
@@ -190,8 +178,9 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
             UnratedReservationsVM = new UnratedReservationsViewModel(user);
             RatingsVM = new RatingsViewModel(user);
             ReschedulingRequestVM = new ReschedulingRequestViewModel(user);
-            ReservationVM = new ReservationViewModel(user);
+            ReservationVM = new ReservationViewModel(user, this);
             RequestsVM = new RequestViewModel(user);
+            //BookVM = new BookingViewModel(selectedAccommodation, user);
 
             LoggedInUser = user;
             CurrentView = HomeVM;

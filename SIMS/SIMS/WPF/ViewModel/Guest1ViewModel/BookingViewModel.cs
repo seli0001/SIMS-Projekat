@@ -1,0 +1,196 @@
+﻿using SIMS.Domain.Model;
+using SIMS.Service.Services;
+using SIMS.Service.UseCases;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
+using PdfSharp;
+using PdfSharp.Drawing;
+using PdfSharp.Pdf;
+
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System.IO;
+
+
+
+namespace SIMS.WPF.ViewModel.Guest1ViewModel
+{
+    public class BookingViewModel
+    {
+        public Accommodation SelectedAccommodation { get; set; }
+        string filePath = "../../../../SIMS/PDF/pdf.pdf";
+
+        public User LoggedInUser { get; set; }
+
+        private readonly AccommodationService _repository;
+        private readonly ReservationService _reservationService;
+
+        public BookingViewModel(User user, Accommodation selectedAccommodation) 
+        {
+            _repository = new AccommodationService();
+            _reservationService = new ReservationService();
+            SelectedAccommodation = selectedAccommodation;
+            LoggedInUser = user;
+        }
+
+        private DateTime _fromDate = DateTime.Now;
+
+        public DateTime FromDate
+        {
+            get => _fromDate;
+            set
+            {
+                _fromDate = value;
+            }
+        }
+
+        private DateTime _toDate = DateTime.Now;
+
+        public DateTime ToDate
+        {
+            get => _toDate;
+            set
+            {
+                _toDate = value;
+            }
+        }
+
+        private int _timeOfStay = 1;
+        public int TimeOfStay
+        {
+            get => _timeOfStay;
+            set
+            {
+                if (value != _timeOfStay)
+                {
+                    _timeOfStay = value;
+                }
+
+            }
+        }
+
+        private int _numberOfGuests = 1;
+        public int NumberOfGuests
+        {
+            get => _numberOfGuests;
+            set
+            {
+                if (value != _numberOfGuests)
+                {
+                    _numberOfGuests = value;
+                }
+
+            }
+        }
+
+        private ICommand _saveBookingCommand;
+        public ICommand SaveBookingCommand
+        {
+            get
+            {
+                return _saveBookingCommand ?? (_saveBookingCommand = new CommandBase(() => SaveBooking(), true));
+            }
+        }
+
+        private void SaveBooking()
+        {
+            if(FromDate < DateTime.Today || ToDate < FromDate)
+            {
+                ValidationDatess();
+                return;
+            }
+            else if (TimeOfStay < SelectedAccommodation.MinBookingDays)
+            {
+                ValidationTime();
+
+                return;
+            }
+            else if (NumberOfGuests > SelectedAccommodation.MaxGuestsNumber)
+            {
+                ValidationGuests();
+
+                return;
+            }
+            Reservation reservation = new Reservation(DateOnly.FromDateTime(FromDate), DateOnly.FromDateTime(FromDate.AddDays(TimeOfStay)), SelectedAccommodation, TimeOfStay, NumberOfGuests, LoggedInUser);
+            if (_reservationService.AvailableAccommodation(reservation))
+            {
+                _reservationService.Save(reservation);
+
+                GeneratePdf("Accommodation " + SelectedAccommodation.Name + " successfully booked from " + FromDate.ToShortDateString() + " to " + FromDate.AddDays(TimeOfStay).ToShortDateString());
+            }
+        }
+
+        private bool _validationDates;
+        public bool ValidationDates
+        {
+            get => _validationDates;
+            set
+            {
+                if (value != _validationDates)
+                {
+                    _validationDates = value;
+                }
+
+            }
+        }
+        private bool _validationTime;
+        public bool ValidationTimes
+        {
+            get => _validationTime;
+            set
+            {
+                if (value != _validationTime)
+                {
+                    _validationTime = value;
+                }
+
+            }
+        }
+        private bool _validationGuest;
+        public bool ValidationGuest
+        {
+            get => _validationGuest;
+            set
+            {
+                if (value != _validationGuest)
+                {
+                    _validationGuest = value;
+                }
+
+            }
+        }
+
+        public void ValidationDatess()
+        {
+            ValidationDates = false;
+        }
+        public void ValidationTime()
+        {
+            ValidationTimes =  false;
+        }
+        public void ValidationGuests()
+        {
+            ValidationGuest = false;
+        }
+
+        public void GeneratePdf(String s)
+        {
+            Document document = new Document();
+            PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(filePath, FileMode.Create));
+            document.Open();
+            Paragraph paragraph = new Paragraph(s);
+            document.Add(paragraph);
+            document.Close();
+        }
+
+
+
+}
+}

@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace SIMS.WPF.ViewModel.Guest1ViewModel
 {
@@ -21,15 +22,19 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
         private ReservationService _reservationService;
         private CancelingRequestsRepository _cancelingRequestsRepository;
 
+        Guest1MainViewModel guest1MainViewModel;
+
         public ReservationViewModel()
         {
         }
 
-        public ReservationViewModel(User user)
+        public ReservationViewModel(User user, Guest1MainViewModel mvm)
         {
             _cancelingRequestsRepository = new CancelingRequestsRepository();
             _reservationService = new ReservationService();
             Reservations = new ObservableCollection<Reservation>(_reservationService.GetByUserId(user.Id));
+
+            guest1MainViewModel = mvm;
             LoggedInUser = user;
         }
 
@@ -57,6 +62,25 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
             int days = difference.Days;
             if (days > 5) return false;
             else return true;
+        }
+
+
+        private ICommand _requestCommand;
+        public ICommand RequestCommand
+        {
+            get
+            {
+                return _requestCommand ?? (_requestCommand = new CommandBase(() => Reservation(), true));
+            }
+        }
+
+        private void Reservation()
+        {
+            if (SelectedAccommodation != null)
+            {
+                CreateReschedulingRequestViewModel CRRVM = new CreateReschedulingRequestViewModel(SelectedReservation, LoggedInUser);
+                guest1MainViewModel.CurrentView = CRRVM;
+            }
         }
 
 
