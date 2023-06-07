@@ -1,6 +1,7 @@
 ﻿using SIMS.Domain.Model;
 using SIMS.Service.Services;
 using SIMS.WPF.View;
+using SIMS.WPF.View.Guest2View;
 using SIMS.WPF.ViewModel.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -37,6 +38,19 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
         }
 
         #region commands
+
+
+        
+
+        private ICommand _historiClickCommand;
+        public ICommand HistoriClickCommand
+        {
+            get
+            {
+                return _historiClickCommand ?? (_historiClickCommand = new CommandBase(() => HistoriClick(), true));
+            }
+        }
+
         private ICommand _searchClickCommand;
         public ICommand SearchClickCommand
         {
@@ -155,6 +169,14 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        private void HistoriClick()
+        {
+            SearchHistory searchHistory = new SearchHistory(userId);
+            searchHistory.Show();
+            Close();
+        }
+
 
         private void SearchClick()
         {

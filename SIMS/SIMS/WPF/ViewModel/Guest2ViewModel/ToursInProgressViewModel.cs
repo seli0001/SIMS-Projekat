@@ -1,6 +1,7 @@
 ﻿using SIMS.Domain.Model;
 using SIMS.Service.Services;
 using SIMS.WPF.View;
+using SIMS.WPF.View.Guest2View;
 using SIMS.WPF.ViewModel.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -69,6 +70,19 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
                 return _backToMenuClickCommand ?? (_backToMenuClickCommand = new CommandBase(() => BackToMenuClick(), true));
             }
         }
+
+
+        private ICommand _historiClickCommand;
+        public ICommand HistoriClickCommand
+        {
+            get
+            {
+                return _historiClickCommand ?? (_historiClickCommand = new CommandBase(() => HistoriClick(), true));
+            }
+        }
+
+
+
         #endregion
 
         private void SelectTourClick()
@@ -84,6 +98,14 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
             mainGuest2View.Show();
             Close();
         }
+
+        private void HistoriClick()
+        {
+            SearchHistory searchHistory = new SearchHistory(userId);
+            searchHistory.Show();
+            Close();
+        }
+
 
         private void BackToMenuClick()
         {

@@ -20,7 +20,10 @@
                 </Button>
 
 
-                <Button Content="                                                                                            "></Button>
+                <Button Content="                                                                        "></Button>
+                <Button Click="Button_Click4">
+                    <Image Source="pack://application:,,,/Resources/Assets/back.png"></Image>
+                </Button>
                 <Button Click="Button_Click2">
                     <Image Source="pack://application:,,,/Resources/Assets/house.png"></Image>
                 </Button>
@@ -29,7 +32,7 @@
         </Grid>
 
         <Grid Grid.Row="1">
-            <ListView x:Name="tourListView" ItemsSource="{Binding Ethapes}">
+            <ListView Background="{DynamicResource List}" x:Name="tourListView" ItemsSource="{Binding Ethapes}">
                 <ListView.Resources>
                     <Style TargetType="ListViewItem">
                         <Setter Property="Height" Value="50" />

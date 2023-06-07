@@ -41,7 +41,12 @@ namespace SIMS.WPF.View.Guest2View
             mainGuest2View.Show();
             Close();
         }
-
+        private void Button_Click4(object sender, RoutedEventArgs e)
+        {
+            ComplexTourView complexTourView = new ComplexTourView(UserId);
+            complexTourView.Show();
+            Close();
+        }
         private void Button_Click3(object sender, RoutedEventArgs e)
         {
             MenuGuest2View mainGuest2View = new MenuGuest2View(UserId);

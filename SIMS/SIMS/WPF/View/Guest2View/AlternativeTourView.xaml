@@ -97,6 +97,15 @@
         <TabControl Grid.Row="4" Margin="20">
             <TabItem Header="Alternativne ture">
                 <ListView Background="{DynamicResource List}" Name="lvwTours" ItemsSource="{Binding tours, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding selectedTour, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single" >
+
+                    <ListView.Resources>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Height" Value="40" />
+                            <!-- Ovde podesite željenu visinu redova -->
+                        </Style>
+                    </ListView.Resources>
+                    
+
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Lokacija" DisplayMemberBinding="{Binding Location.City}" />
@@ -123,7 +132,7 @@
                 <ColumnDefinition></ColumnDefinition>
                 
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="2" Content="Rezervisi" Margin="50,0,0,0" Background="Teal"  Command="{Binding NumberOfTourClickCommand}"></Button>
+            <Button Grid.Column="2" Content="Rezervisi" Margin="50,0,0,0" Background="{DynamicResource MainButton}"  Command="{Binding NumberOfTourClickCommand}"></Button>
 
         </Grid>
     </Grid>

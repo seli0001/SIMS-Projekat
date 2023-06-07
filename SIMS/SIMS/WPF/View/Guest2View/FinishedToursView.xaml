@@ -14,6 +14,7 @@
             <RowDefinition Height="70"></RowDefinition>
             <RowDefinition Height="70"></RowDefinition>
             <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
             <RowDefinition></RowDefinition>
 
         </Grid.RowDefinitions>
@@ -24,7 +25,7 @@
                 <Button Command="{Binding BackToMenuClickCommand}"  >
                     <Image Source="pack://application:,,,/Resources/Assets/burger.png"></Image>
                 </Button>
-                <Button Content="                                                                                               "></Button>
+                <Button Content="                                                                                  " ></Button>
                 <Button Command="{Binding BackToMainGuest2ViewClickCommand}"   >
                     <Image Source="pack://application:,,,/Resources/Assets/house.png"></Image>
                 </Button>
@@ -101,7 +102,7 @@
 
             </Grid.ColumnDefinitions>
 
-            <Button Background="{DynamicResource ButtonBackground}" Grid.Column="2"  Content="Istorija" Margin="2">
+            <Button Background="{DynamicResource ButtonBackground}" Grid.Column="2"  Content="Istorija" Margin="2" Command="{Binding HistoriClickCommand}">
                 <Button.ContentTemplate>
                     <DataTemplate>
                         <TextBlock Text="Istorija" Foreground="{DynamicResource AppForeground}" />
@@ -118,8 +119,17 @@
 
         </Grid>
 
+        <Grid Grid.Row="4">
+            <Label Content="ZAVRSENE TURE:" Background="{DynamicResource AppBackground}"  HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Label.Foreground>
+                    <StaticResource ResourceKey="Text" />
+                </Label.Foreground>
+            </Label>
+        </Grid>
+        
+        
 
-        <ListView Background="{DynamicResource List}" Grid.Row="4" x:Name="lvwTours" ItemsSource="{Binding tours}" SelectedItem="{Binding selectedTour}" SelectionMode="Single">
+        <ListView Background="{DynamicResource List}" Grid.Row="5" x:Name="lvwTours" ItemsSource="{Binding tours}" SelectedItem="{Binding selectedTour}" SelectionMode="Single">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseDoubleClick">
                     <i:InvokeCommandAction Command="{Binding DataContext.RateTourClickCommand, RelativeSource={RelativeSource AncestorType=ListView}}"

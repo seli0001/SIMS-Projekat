@@ -11,6 +11,7 @@
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="70"></RowDefinition>
             <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
@@ -20,7 +21,7 @@
                 <Button Command="{Binding MenuClickCommand}">
                     <Image Source="pack://application:,,,/Resources/Assets/burger.png"></Image>
                 </Button>
-                <Button Content="                                                                                               "></Button>
+                <Button Content="                                                                                    "></Button>
                 <Button  Command="{Binding MainGuest2ViewClickCommand}">
                     <Image Source="pack://application:,,,/Resources/Assets/house.png"></Image>
                 </Button>
@@ -74,7 +75,15 @@
 
         </Grid>
 
-        <ListView Background="{DynamicResource List}" Grid.Row="3" Margin="5" ItemsSource="{Binding vouchers}" SelectionMode="Single">
+        <Grid Grid.Row="3">
+            <Label Content="VAUCERI KORISNIKA:" Background="{DynamicResource AppBackground}"  HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Label.Foreground>
+                    <StaticResource ResourceKey="Text" />
+                </Label.Foreground>
+            </Label>
+        </Grid>
+        
+        <ListView Background="{DynamicResource List}" Grid.Row="4" Margin="5" ItemsSource="{Binding vouchers}" SelectionMode="Single">
             <ListView.Resources>
                 <Style TargetType="ListViewItem">
                     <Setter Property="Height" Value="50" />

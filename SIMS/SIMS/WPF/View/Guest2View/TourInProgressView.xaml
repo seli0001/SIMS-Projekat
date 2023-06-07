@@ -9,9 +9,20 @@
     <Grid Background="{DynamicResource AppBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
+        <Grid Grid.Row="1">
+            <Label Content="TEKUCA TURA" Background="{DynamicResource AppBackground}"  HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Label.Foreground>
+                    <StaticResource ResourceKey="Text" />
+                </Label.Foreground>
+            </Label>
+        </Grid>
+        
+        
+        
         <Grid Grid.Row="0">
 
             <ToolBar Background="{DynamicResource ToolBar}">
@@ -30,7 +41,7 @@
         </Grid>
 
 
-        <ListView Background="{DynamicResource List}" Grid.Row="1" x:Name="lvwTours" ItemsSource="{Binding checkpoints, UpdateSourceTrigger=PropertyChanged}" >
+        <ListView Background="{DynamicResource List}" Grid.Row="2" x:Name="lvwTours" ItemsSource="{Binding checkpoints, UpdateSourceTrigger=PropertyChanged}" >
 
             <ListView.Resources>
                 <Style TargetType="ListViewItem">

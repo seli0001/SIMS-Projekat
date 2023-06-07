@@ -1,6 +1,7 @@
 ﻿using SIMS.Domain.Model;
 using SIMS.Service.Services;
 using SIMS.WPF.View;
+using SIMS.WPF.View.Guest2View;
 using SIMS.WPF.ViewModel.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -58,6 +59,18 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
             }
         }
 
+
+        private ICommand _historiClickCommand;
+        public ICommand HistoriClickCommand
+        {
+            get
+            {
+                return _historiClickCommand ?? (_historiClickCommand = new CommandBase(() => HistoriClick(), true));
+            }
+        }
+
+
+
         #endregion
 
         private void RateTourClick()
@@ -66,6 +79,14 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
             rateTour.Show();
             Close();
         }
+
+        private void HistoriClick()
+        {
+            SearchHistory searchHistory = new SearchHistory(userId);
+            searchHistory.Show();
+            Close();
+        }
+
 
         private void BackToMainGuest2ViewClick()
         {
