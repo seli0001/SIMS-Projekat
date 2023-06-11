@@ -22,6 +22,7 @@
         </StackPanel>
 
         <Label Content="Guest1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0" />
+        <Button Content="Forum" Command="{Binding ForumCommand}" HorizontalAlignment="Left" Margin="123,554,0,0" VerticalAlignment="Top" Height="42" Width="227"/>
     </Grid>
 
 </UserControl>

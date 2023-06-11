@@ -101,67 +101,11 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
                 return _profileCommand ?? (_profileCommand = new CommandBase(
                     () =>
                     {
-                        RatingsVM = new RatingsViewModel(LoggedInUser);
+                        RatingsVM = new RatingsViewModel(LoggedInUser, this);
                         CurrentView = RatingsVM;
                     }, true));
             }
         }
-
-        //private ICommand _schedulingRenovationCommand;
-        //public ICommand SchedulingRenovationCommand
-        //{
-        //    get
-        //    {
-        //        return _schedulingRenovationCommand ??
-        //            (_schedulingRenovationCommand = new CommandBase(
-        //                () => {
-        //                    SchedulingRenovationVM = new SchedulingRenovationViewModel(LoggedInUser, this, SelectedAccommodation);
-        //                    CurrentView = SchedulingRenovationVM;
-        //                }, true));
-        //    }
-        //}
-
-        //private ICommand _renovationsCommand;
-        //public ICommand RenovationsCommand
-        //{
-        //    get
-        //    {
-        //        return _renovationsCommand ??
-        //            (_renovationsCommand = new CommandBase(
-        //                () => {
-        //                    RenovationsVM = new RenovationsViewModel(LoggedInUser, this);
-        //                    CurrentView = RenovationsVM;
-        //                }, true));
-        //    }
-        //}
-
-        //private ICommand _statisticsComand;
-        //public ICommand StatisticsComand
-        //{
-        //    get
-        //    {
-        //        return _statisticsComand ??
-        //            (_statisticsComand = new CommandBase(
-        //                () => {
-        //                    AccommodationStatisticsVM = new AccommodationStatisticsViewModel(LoggedInUser, this, SelectedAccommodation);
-        //                    CurrentView = AccommodationStatisticsVM;
-        //                }, true));
-        //    }
-        //}
-
-        //private ICommand _proposalCommand;
-        //public ICommand ProposalCommand
-        //{
-        //    get
-        //    {
-        //        return _proposalCommand ??
-        //            (_proposalCommand = new CommandBase(
-        //                () => {
-        //                    SystemProposalVM = new SystemProposalViewModel(LoggedInUser);
-        //                    CurrentView = SystemProposalVM;
-        //                }, true));
-        //    }
-        //}
 
 
 
@@ -176,7 +120,7 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
         {
             HomeVM = new HomeViewModel(user, this);
             UnratedReservationsVM = new UnratedReservationsViewModel(user);
-            RatingsVM = new RatingsViewModel(user);
+            RatingsVM = new RatingsViewModel(user, this);
             ReschedulingRequestVM = new ReschedulingRequestViewModel(user);
             ReservationVM = new ReservationViewModel(user, this);
             RequestsVM = new RequestViewModel(user);

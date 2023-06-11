@@ -96,6 +96,11 @@
                 <guestView:BookingView />
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type guestViewModel:ForumViewModel}">
+                <guestView:ForumView />
+            </DataTemplate>
+
+
 
 
         </ResourceDictionary>
