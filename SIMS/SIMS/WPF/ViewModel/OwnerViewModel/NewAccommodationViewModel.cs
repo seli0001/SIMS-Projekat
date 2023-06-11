@@ -10,6 +10,7 @@ using System.Windows.Input;
 using SIMS.Domain.Model;
 using SIMS.Service.UseCases;
 using SIMS.WPF.ViewModel.ViewModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace SIMS.WPF.ViewModel.OwnerViewModel
 {
@@ -37,6 +38,8 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         {
             LoggedInUser = user;
             validator = new int[6];
+
+            
 
             _accommodationService = new AccommodationService();
             _imageService = new AccommodationImageService();
@@ -71,14 +74,11 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
                 if (value != _name)
                 {
                     if (!Regex.Match(value, @"\p{Lu}\p{Ll}{2,9}").Success)
-                    {/*
-                        NameValidator.Content = "Veliko pocetno slovo";
-                        NameValidator.Visibility = Visibility.Visible;*/
+                    {
                         validator[0] = 0;
                     }
                     else
                     {
-                        //  NameValidator.Visibility = Visibility.Hidden;
                         validator[0] = 1;
                     }
                     IsEnabled = true;
@@ -174,7 +174,6 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
 
         }
 
-
         private int _maxGuestNum = 1;
         public int MaxGuestNum
         {
@@ -184,7 +183,7 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
 
                 if (value != _maxGuestNum)
                 {
-                    if (value < 1)
+                    if (!validateNumbers(value.ToString()) || value < 1)
                     {
                         //MaxGuestNumValidator.Content = "Broj gostiju mora biti veci od 0";
                         //MaxGuestNumValidator.Visibility = Visibility.Visible;
@@ -285,13 +284,21 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             }
         }
 
+        private bool validateNumbers(string text)
+        {
+            if(Regex.Match(text, @"^\d+$").Success)
+            {
+                return true;
+            }
+            return false;
+        }
+
         private void ValidatorTest()
         {
             foreach (int kon in validator)
             {
                 if (kon == 0)
                 {
-
                     IsEnabled = false;
                 }
             }

@@ -27,6 +27,7 @@ namespace SIMS.Domain.Model
         public List<Image> Images { get; set; }
         public User User { get; set; }
         public DateOnly RenovatedOn { get; set; }
+        public bool Renovated { get; set; }
 
         public Accommodation()
         {
@@ -60,6 +61,7 @@ namespace SIMS.Domain.Model
              Location.Id.ToString(),
              User.Id.ToString(),
              RenovatedOn.ToString(),
+             Renovated.ToString(),
             };
             return csvValues;
         }
@@ -76,6 +78,7 @@ namespace SIMS.Domain.Model
             Location = new Location() { Id = Convert.ToInt32(values[7]) };
             User = new User() { Id = Convert.ToInt32(values[8]) };
             RenovatedOn = DateOnly.FromDateTime(Convert.ToDateTime(values[9]));
+            Renovated = Convert.ToBoolean(values[10]);
         }
     }
 }

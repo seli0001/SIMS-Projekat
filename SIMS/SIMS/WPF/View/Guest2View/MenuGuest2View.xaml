@@ -37,11 +37,11 @@
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
             <Button Grid.Column="0" Grid.Row="0" Content="Kreiraj zahtev za turu" Margin="35" Command="{Binding TourRequestClickCommand}" ></Button>
-            <Button Grid.Column="0" Grid.Row="1" Content="Kreiraj zahtez za slozenu" Margin="35"></Button>
+            <Button Grid.Column="0" Grid.Row="1" Content="Kreiraj zahtez za slozenu" Margin="35" Command="{Binding ComplexTourRequestClickCommand}"></Button>
             <Button Grid.Column="0" Grid.Row="3" Content="Izvestaj" Margin="35"></Button>
             <Button Grid.Column="0" Grid.Row="4" Content="Jezik" Margin="35"></Button>
             <Button Grid.Column="1" Grid.Row="0" Content="Statistika i zahtevi" Margin="35" Command="{Binding ToursRequestAndStatisticClickCommand}"></Button>
-            <Button Grid.Column="1" Grid.Row="1" Content="Zahtevi za zlosene ture" Margin="35"></Button>
+            <Button Grid.Column="1" Grid.Row="1" Content="Zahtevi za zlosene ture" Margin="35" Command="{Binding ComplexToursClickCommand}"></Button>
             <Button Grid.Column="1" Grid.Row="4" Content="Teme" Margin="35"></Button>
 
             <Button Grid.Column="0" Grid.Row="2" Content="Prati" Margin="35" Command="{Binding ToursInProgressClickCommand}"></Button>

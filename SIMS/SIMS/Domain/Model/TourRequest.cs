@@ -44,6 +44,7 @@ namespace SIMS.Domain.Model
         }
         public TourRequest(int id, Location location, string description, string language, int maxNumberOfPeople, DateTime startDate, DateTime endDate, RequestStatus status,int userId)
         {
+            User = new User();
             Id = id;
             Location = location;
             Description = description;

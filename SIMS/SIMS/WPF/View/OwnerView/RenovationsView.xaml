@@ -5,18 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SIMS.WPF.View.OwnerView"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="650" d:DesignWidth="950">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="120"/>
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <StackPanel Margin="50 0 0 0">
+        <StackPanel Margin="0 10 10 10">
             <TextBlock Text="Renoviranja"
                        Style="{StaticResource TitleTheme}"/>
             <TextBlock Text="U tabeli se nalaze sva renoviranja, obavljena za vase smestaje" 
-                        Style="{StaticResource TextTheme}"/>
+                        Style="{StaticResource TextTheme}"
+                       Margin="0 0 0 5"/>
             <TextBlock Text="Zakazana renoviranja mozete otkazati do 5 dana unapred" 
                         Style="{StaticResource TextTheme}"/>
 
@@ -24,51 +25,85 @@
 
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="2*" />
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="6*" />
+                <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
 
-            
 
-            <StackPanel Grid.Row="0"
-                        Margin="10">
-                <Button Content="Otkazi"
-                        Height="20"
-                        Width="100"
-                        Margin="0 10 0 10"
-                        HorizontalAlignment="Left"
-                        IsEnabled="{Binding IsEnabled}"
-                        Command="{Binding CancelRenovationCommand}"/>
+
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="300"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
                 <DataGrid
                           ItemsSource="{Binding Path=Renovations, UpdateSourceTrigger=PropertyChanged}"
                           SelectedItem="{Binding Path=SelectedRenovation, UpdateSourceTrigger=PropertyChanged}"
                           AutoGenerateColumns="False" 
                           IsReadOnly="True"
-                          Height="150"
-                         >
+                          Grid.Row="0"
+                          Margin="0 10 10 10"
+                          Style="{StaticResource DatGridTheme}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Smestaj" Binding="{Binding Accommodation.Name}" Width="*"></DataGridTextColumn>
                         <DataGridTextColumn Header="Pocetak renoviranja" Binding="{Binding StartDate}" Width="*"></DataGridTextColumn>
                         <DataGridTextColumn Header="Kraj renoviranja" Binding="{Binding EndDate}" Width="*"></DataGridTextColumn>
                     </DataGrid.Columns>
                 </DataGrid>
-            </StackPanel>
+
+                <Button Content="Otkazi"
+                        Height="30"
+                        Width="auto"
+                        Grid.Row="1"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Margin="0 10 10 20"
+                        IsEnabled="{Binding IsEnabled}"
+                        Command="{Binding CancelRenovationCommand}"
+                        Style="{StaticResource ButtonTheme}"/>
+            </Grid>
 
             <StackPanel Grid.Row="1"
-                        Margin="10 0 0 0">
-                
-            <Button Content="Generisi izvestaj"
+                        Margin="10">
+                <WrapPanel Grid.Row="0"
+                       Margin="10">
+                    <StackPanel Orientation="Horizontal"
+                            Margin="0 0 50 0"
+                            VerticalAlignment="Center">
+                        <TextBlock Text="Od"
+                               Foreground="White"
+                               FontSize="16"
+                               Margin="0 0 10 0"/>
+                        <DatePicker SelectedDate="{Binding FromDate}"
+                                BorderThickness="0"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            Margin="0 0 50 0">
+                        <TextBlock Text="Do"
+                               Foreground="White"
+                               FontSize="16"
+                               Margin="0 0 10 0"/>
+                        <DatePicker SelectedDate="{Binding ToDate}"
+                                BorderThickness="0"/>
+                    </StackPanel>
+                </WrapPanel>
+
+                <TextBlock  Text="Pritiskom na dugme cete preuzeti izvestaj prikazan u tabeli"
+                            Style="{StaticResource TextTheme}"
+                            Margin="0 0 0 10"/>
+                <Button Content="Generisi izvestaj"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     Height="25"
-                    Width="100"
-                    Command="{Binding }"/>
+                    Width="auto"
+                    Style="{StaticResource ButtonTheme}"
+                    Command="{Binding GenerateReportCommand}"
+                    IsEnabled="{Binding IsEnabled}"/>
 
-                <TextBlock  Text="Pritiskom na dugme cete preuzeti izvestaj prikazan u tabeli"
-                            Foreground="White"
-                            Margin="0 20 0 0"/>
+
             </StackPanel>
-
         </Grid>
     </Grid>
 </UserControl>

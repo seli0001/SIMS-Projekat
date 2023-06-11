@@ -5,6 +5,7 @@ using SIMS.WPF.View.Guest2View;
 using SIMS.WPF.ViewModel.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,17 +19,44 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
         public Action Close { get; set; }
         private readonly BookedTourService _bookedTourService;
         public List<BookedTour> bookedTours;
-
+        private readonly ComplexTourService _complexTourService;
         public int userId;
 
         public MenuGuest2ViewModel(int userId) {
         this.userId=userId;
             this.userId = userId;
             _bookedTourService = new BookedTourService();
+            _complexTourService = new ComplexTourService();
             CheckNotify();
+            ChangeStatus();
+           
+
         }
 
         #region commands
+
+        
+
+               private ICommand _complexToursClickCommand;
+        public ICommand ComplexToursClickCommand
+        {
+            get
+            {
+                return _complexToursClickCommand ?? (_complexToursClickCommand = new CommandBase(() => ComplexToursClick(), true));
+            }
+        }
+
+
+
+        private ICommand _complexTourRequestClickCommand;
+        public ICommand ComplexTourRequestClickCommand
+        {
+            get
+            {
+                return _complexTourRequestClickCommand ?? (_complexTourRequestClickCommand = new CommandBase(() => ComplexTourRequestClick(), true));
+            }
+        }
+
 
         private ICommand _mainGuest2ViewClickCommand;
         public ICommand MainGuest2ViewClickCommand
@@ -101,6 +129,19 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
 
         #endregion
 
+        private void ComplexToursClick()
+        {
+            ComplexToursView complexToursView = new ComplexToursView(userId);
+            complexToursView.Show();
+            Close();
+
+        }
+
+        private void ChangeStatus()
+        {
+            _complexTourService.ChangeStatus(userId);
+        }
+
         public void CheckNotify()
         {
             bookedTours = _bookedTourService.GetByUser(userId);
@@ -123,6 +164,15 @@ namespace SIMS.WPF.ViewModel.Guest2ViewModel
                 }
             }
         }
+
+        private void ComplexTourRequestClick()
+        {
+            ComplexTourRequestView complexTourRequestView = new ComplexTourRequestView(userId);
+            complexTourRequestView.Show();
+            Close();
+        }
+
+
 
         private void ToursRequestAndStatisticClick()
         {

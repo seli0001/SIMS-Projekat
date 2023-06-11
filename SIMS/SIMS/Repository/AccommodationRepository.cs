@@ -110,7 +110,7 @@ namespace SIMS.Repository
             foreach (Accommodation accommodation in _accommodations)
             {
                 accommodation.Super = true;
-                accommodation.Name = "*" + accommodation.Name;
+              //  accommodation.Name = "*" + accommodation.Name;
             }
             _serializer.ToCSV(_filePath, _accommodations);
         }
@@ -122,7 +122,7 @@ namespace SIMS.Repository
             foreach (Accommodation accommodation in _accommodations)
             {
                 accommodation.Super = false;
-                accommodation.Name = accommodation.Name.Substring(1, accommodation.Name.Length - 1);
+             //   accommodation.Name = accommodation.Name.Substring(1, accommodation.Name.Length - 1);
             }
             _serializer.ToCSV(_filePath, _accommodations);
         }
@@ -130,7 +130,7 @@ namespace SIMS.Repository
         public void MakeRenovated(Accommodation acc)
         {
             Accommodation accommodation = GetById(acc.Id);
-            accommodation.Name = accommodation.Name + " *renovated";
+            accommodation.Renovated = true;
             Update(accommodation);
         }
 
@@ -141,14 +141,14 @@ namespace SIMS.Repository
             {
                 if(acc.RenovatedOn < DateOnly.FromDateTime(DateTime.Today) && acc.RenovatedOn.AddYears(1) > DateOnly.FromDateTime(DateTime.Today))
                 {
-                    if(!acc.Name.Contains("renovated"))
+                    if(!acc.Renovated)
                     {
                         MakeRenovated(acc);
                     }
                 }
                 else
                 {
-                    if(acc.Name.Contains("renovated"))
+                    if(acc.Renovated)
                     {
                         DeleteRenovation(acc);
                     }
@@ -167,18 +167,12 @@ namespace SIMS.Repository
         {
             Accommodation accommodation = GetById(acc.Id);
             accommodation.RenovatedOn = DateOnly.FromDateTime(new DateTime(1970, 01, 01));
-            if(accommodation.Name.Contains("renovated"))
+            if(accommodation.Renovated)
             {
-                accommodation.Name = accommodation.Name.Substring(0, accommodation.Name.Length - 11);
+                accommodation.Renovated = false;
             }
             Update(accommodation);
         }
-
-        
-
-
-
-
 
     }
 }
