@@ -1,19 +1,9 @@
-﻿using Aplikacija.Core;
-using SIMS.Domain.Model;
-using SIMS.Service;
+﻿using SIMS.Domain.Model;
 using SIMS.Service.UseCases;
-using SIMS.View.FirstGuestView;
-using SIMS.WPF.ViewModel.OwnerViewModel;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Input;
-using Xceed.Wpf.Toolkit;
-using System.ComponentModel;
 
 
 namespace SIMS.WPF.ViewModel.Guest1ViewModel
@@ -29,9 +19,6 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
                 _accommodations = value;
             }
         }
-
-
-
         public Accommodation SelectedAccommodation { get; set; }
 
         private readonly GuestRatingService _guestRatingService;
@@ -129,7 +116,6 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
                 return _searchCommand ?? (_searchCommand = new CommandBase(() => SearchMethod(), true));
             }
         }
-
 
         private void SearchMethod()
         {
