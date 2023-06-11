@@ -9,6 +9,7 @@ using SIMS.View.OwnerView;
 using SIMS.WPF.ViewModel.ViewModel;
 using SIMS.WPF.View.OwnerView;
 using SIMS.WPF.ViewModel.GuideViewModel;
+using SIMS.WPF.View.Guest1View;
 
 namespace SIMS.WPF.ViewModel
 {
@@ -86,8 +87,8 @@ namespace SIMS.WPF.ViewModel
                     }
                     else if (user.Role == ROLE.Guest1)
                     {
-                        FirstGuestMainView firstGuestMainView = new FirstGuestMainView(user);
-                        firstGuestMainView.Show();
+                        Guest1Main guest1Main = new Guest1Main(user);
+                        guest1Main.Show();
                     }
                     else if (user.Role == ROLE.Guest2)
                     {
@@ -116,8 +117,10 @@ namespace SIMS.WPF.ViewModel
         {
             User user = _userRepository.GetUserByUsername("Guest1");
 
-            FirstGuestMainView firstGuestMainView = new FirstGuestMainView(user);
-            firstGuestMainView.Show();
+            //FirstGuestMainView firstGuestMainView = new FirstGuestMainView(user);
+            //firstGuestMainView.Show();
+            Guest1Main guest1Main = new Guest1Main(user);
+            guest1Main.Show();
         }
 
         private void SlobaClick()

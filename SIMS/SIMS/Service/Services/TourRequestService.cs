@@ -28,6 +28,10 @@ namespace SIMS.Service.Services
             _tourRequestRepository.Save(location,description,language, maxNumberOfPeople,startDate,endDate, status,userId);
         }
        
+        public List<TourRequest> GetRequestsById(List<int> ids)
+        {
+            return _tourRequestRepository.GetRequestsById(ids);
+        }
         public List<TourRequest> GetByUser(int userId)
         {
            return  _tourRequestRepository.GetByUser(userId);

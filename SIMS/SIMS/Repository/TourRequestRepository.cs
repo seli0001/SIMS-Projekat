@@ -33,6 +33,24 @@ namespace SIMS.Repository
             return tourRequests;
         }
 
+        public List<TourRequest> GetRequestsById(List<int> ids)
+        {
+            List<TourRequest> requests = GetAll();
+            List<TourRequest> requestsInComplex = new List<TourRequest>();
+            foreach (int id in ids)
+                {
+                    foreach( TourRequest t in requests)
+                        {
+                            if(id==t.Id)
+                                {
+                             requestsInComplex.Add(t);
+                                }
+                        }
+                }
+
+            return requestsInComplex.ToList();
+        }
+
         public Location GetMostLocation()
         {
             var groupedRequests = GetAll().GroupBy(r => r.Location.City).OrderByDescending(g => g.Count()).FirstOrDefault();
@@ -78,12 +96,31 @@ namespace SIMS.Repository
             }
         }
 
-        public void Save (Location location, string description, string language, int maxNumberOfPeople, DateTime startDate, DateTime endDate, RequestStatus status, int userId)
+        public int GenerateLocationId()
         {
+            List<Location> locations = _locationRepository.GetAll();
+
+            if (locations.Count == 0)
+            {
+                return 0;
+            }
+            else
+            {
+                return locations[locations.Count - 1].Id + 1;
+            }
+        }
+
+
+
+        public TourRequest Save (Location location, string description, string language, int maxNumberOfPeople, DateTime startDate, DateTime endDate, RequestStatus status, int userId)
+        {   
             List<TourRequest> requests = GetAll();
             TourRequest tourRequest = new TourRequest();
             tourRequest.Id = GenerateId();
+            tourRequest.Location = new Location();
+            tourRequest.Location.Id = GenerateLocationId();
             tourRequest.Location = location;
+            _locationRepository.Save(location);
             tourRequest.StartDate = startDate;
             tourRequest.Language = language;
             tourRequest.EndDate = endDate;
@@ -93,6 +130,7 @@ namespace SIMS.Repository
             tourRequest.User.Id = userId;
             requests.Add(tourRequest);
             _serializer.ToCSV(_filePath, requests);
+            return tourRequest;
         }
 
         public void Update(TourRequest tourRequest)

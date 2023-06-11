@@ -1,0 +1,14 @@
+@startuml
+
+start
+:Owner selects a guest comment on the forum;
+if (Guest has never been on the location) then (yes)
+  :Owner reports the comment as inaccurate;
+  :Increment the report count for the selected comment;
+  :Update the report count visibility for all forum users;
+else (no)
+  
+endif
+stop
+
+@enduml

@@ -81,5 +81,17 @@ namespace SIMS.Repository
             return rating;
         }
 
+        public List<GuestRating> GetByUserId(int id)
+        {
+            List<GuestRating> guestRatings = GetAll();
+            List<Reservation> reservations = _reservationRepository.GetByUserId(id);
+            foreach (Reservation reservation in reservations)
+            {
+                guestRatings.Where(guestRating => guestRating.Reservation == reservation);
+            }
+            return guestRatings;
+
+        }
+
     }
 }
