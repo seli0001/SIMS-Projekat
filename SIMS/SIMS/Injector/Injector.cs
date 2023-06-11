@@ -21,10 +21,13 @@ namespace SIMS.Injector
             TourRatingRepository tourRatingRepository = new TourRatingRepository();
             GuestRatingRepository guestRatingRepository = new GuestRatingRepository();
             TourRequestRepository tourRequestRepository = new TourRequestRepository();
+            ComplexTourRepository complexTourRepository = new ComplexTourRepository();
+            
             _implementations.Add(typeof(IGuestRatingRepository), guestRatingRepository);
             _implementations.Add(typeof(IVoucherRepository), voucherRepository);
             _implementations.Add(typeof(ITourRatingRepository), tourRatingRepository);
             _implementations.Add(typeof(ITourRequestRepository), tourRequestRepository);
+            _implementations.Add(typeof(IComplexTourRepository), complexTourRepository);
         }
 
         public static T CreateInstance<T>()
