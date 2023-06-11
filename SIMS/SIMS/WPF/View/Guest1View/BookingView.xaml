@@ -7,7 +7,7 @@
              mc:Ignorable="d"
              d:DesignHeight="606" d:DesignWidth="430">
     
-    <Grid Background="#F3F3F3" Height="606">
+    <Grid Background="#444444" Height="606">
 
 
         <Label Content="Accommodation Reservation"
@@ -75,7 +75,7 @@
                 Height="40"
                 Background="#007AFF"
                 Foreground="White"
-                ToolTip="Book a reservation under fillend in conditions"/>
+                ToolTip="Book a reservation under fillend in conditions" />
 
         <Label x:Name="MaxGuestNumValidator"
                FontSize="11"
@@ -100,6 +100,5 @@
                HorizontalAlignment="Center"
                Margin="0,20,0,0"
                VerticalAlignment="Top" />
-        <Label Visibility="{Binding ValidationGuest, Converter={StaticResource BooleanToVisibilityConverter}}" Content="Label" HorizontalAlignment="Left" Margin="58,153,0,0" VerticalAlignment="Top"/>
     </Grid>
 </UserControl>

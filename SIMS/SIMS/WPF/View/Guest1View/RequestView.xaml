@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:SIMS.WPF.View.Guest1View"
              mc:Ignorable="d"
              d:DesignHeight="606" d:DesignWidth="430">
-    <Grid Background="#F3F3F3">
+    <Grid Background="#444444">
 
         <Label Content="User Rescheduling Requests"
                HorizontalAlignment="Left"

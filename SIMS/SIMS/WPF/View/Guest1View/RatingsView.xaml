@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:SIMS.WPF.View.Guest1View"
              mc:Ignorable="d" 
              d:DesignHeight="606" d:DesignWidth="430">
-    <Grid Background="#F3F3F3" Height="606">
+    <Grid Background="#444444" Height="606">
         <Label Content="User Ratings" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40,0,0" />
 
         <StackPanel Margin="10,120,10,96">

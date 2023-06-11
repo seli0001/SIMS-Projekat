@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:SIMS.WPF.View.Guest1View"
              mc:Ignorable="d" 
              d:DesignHeight="606" d:DesignWidth="430">
-    <Grid Background="#F3F3F3" Height="606">
+    <Grid Background="#444444" Height="606">
         <Label Content="User Reservations"
                FontSize="24"
                HorizontalAlignment="Center"

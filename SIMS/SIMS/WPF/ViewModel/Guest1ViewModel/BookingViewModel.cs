@@ -17,8 +17,7 @@ using PdfSharp.Pdf;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System.IO;
-
-
+using System.Diagnostics;
 
 namespace SIMS.WPF.ViewModel.Guest1ViewModel
 {
@@ -104,16 +103,21 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
             if(FromDate < DateTime.Today || ToDate < FromDate)
             {
                 ValidationDatess();
+                MessageBox.Show("Check if the dates are put in correctly ");
+
                 return;
             }
-            else if (TimeOfStay < SelectedAccommodation.MinBookingDays)
+            else if (TimeOfStay <= SelectedAccommodation.MinBookingDays)
             {
+                MessageBox.Show("Minimum number of days is " + SelectedAccommodation.MinBookingDays);
                 ValidationTime();
 
                 return;
             }
-            else if (NumberOfGuests > SelectedAccommodation.MaxGuestsNumber)
+            else if (NumberOfGuests > SelectedAccommodation.MaxGuestsNumber-1)
             {
+                MessageBox.Show("Maximum number of guests is " + SelectedAccommodation.MaxGuestsNumber);
+
                 ValidationGuests();
 
                 return;
@@ -123,7 +127,7 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
             {
                 _reservationService.Save(reservation);
 
-                GeneratePdf("Accommodation " + SelectedAccommodation.Name + " successfully booked from " + FromDate.ToShortDateString() + " to " + FromDate.AddDays(TimeOfStay).ToShortDateString());
+                MakePDF(reservation);
             }
         }
 
@@ -180,17 +184,90 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
             ValidationGuest = false;
         }
 
-        public void GeneratePdf(String s)
+        //public void GeneratePdf(string bookingDetails)
+        //{
+        //    string filePath = "BookingDetails.pdf";
+
+        //    // Create a new PDF document
+        //    Document document = new Document();
+
+        //    // Create a PDF writer to write the document to a file
+        //    PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(filePath, FileMode.Create));
+
+        //    // Open the document
+        //    document.Open();
+
+        //    // Create a header table with user information
+        //    PdfPTable headerTable = new PdfPTable(2);
+        //    headerTable.DefaultCell.Border = Rectangle.NO_BORDER;
+        //    headerTable.WidthPercentage = 100;
+
+        //    // Add user information to the header table
+        //    headerTable.AddCell(new Phrase("User: " + LoggedInUser.Username));
+        //    headerTable.AddCell(new Phrase("Age: " + LoggedInUser.Age));
+        //    headerTable.AddCell(new Phrase("Date: " + DateTime.Now.ToString()));
+
+        //    // Add the header table to the document
+        //    document.Add(headerTable);
+
+        //    // Add a line break
+        //    document.Add(new Paragraph("\n"));
+
+        //    // Add booking details
+        //    Paragraph bookingParagraph = new Paragraph(bookingDetails);
+        //    document.Add(bookingParagraph);
+
+        //    // Close the document
+        //    document.Close();
+
+        //    MessageBox.Show("PDF generated successfully. File saved at: " + filePath);
+        //}
+
+
+
+        public void MakePDF(Reservation reservation)
         {
-            Document document = new Document();
-            PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(filePath, FileMode.Create));
-            document.Open();
-            Paragraph paragraph = new Paragraph(s);
-            document.Add(paragraph);
-            document.Close();
+            // Register code pages encoding provider
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
+            // Create a new PDF document
+            PdfSharp.Pdf.PdfDocument document = new PdfSharp.Pdf.PdfDocument();
+
+            // Add a page to the document
+            PdfSharp.Pdf.PdfPage page = document.AddPage();
+
+            // Create graphics for drawing on the page
+            XGraphics gfx = XGraphics.FromPdfPage(page);
+
+            // Set font for titles
+            XFont titleFont = new XFont("Helvetica", 18);
+
+            // Set font for data
+            XFont dataFont = new XFont("Helvetica", 12);
+
+            // Set initial position for drawing
+            XPoint position = new XPoint(50, 50);
+            XFont headerFont = new XFont("Arial", 14, XFontStyle.Bold);
+            XPoint headerPosition = new XPoint(50, 30);
+            // Draw header information
+            gfx.DrawString(LoggedInUser.Username, headerFont, XBrushes.Black, headerPosition);
+            headerPosition.Y += 20;
+            gfx.DrawString(DateTime.Now.ToString(), headerFont, XBrushes.Black, headerPosition);
+            headerPosition.Y += 30;
+            position.Y = headerPosition.Y;            // Draw title
+            gfx.DrawString("Rezervacija" + reservation.Accommodation.Name + " uspesno napravljena,\n i zakazana od " + reservation.FromDate + " do " + reservation.ToDate  , titleFont, XBrushes.Black, position);
+            position.Y += 30;
+
+
+            string fileName = "pdf.pdf";
+            // Save the PDF document to a file
+            document.Save(fileName);
+
+            // Open the generated PDF file
+            Process.Start(new ProcessStartInfo { FileName = fileName, UseShellExecute = true });
+
         }
 
 
-
-}
+    }
 }

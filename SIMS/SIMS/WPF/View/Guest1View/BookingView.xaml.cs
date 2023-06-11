@@ -24,5 +24,6 @@ namespace SIMS.WPF.View.Guest1View
         {
             InitializeComponent();
         }
+
     }
 }
