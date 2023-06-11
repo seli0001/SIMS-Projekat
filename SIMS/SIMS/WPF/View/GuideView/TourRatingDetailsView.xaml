@@ -7,7 +7,12 @@
         mc:Ignorable="d"
         Title="TourRatingDetailsView" Height="420" Width="450"
         PreviewKeyDown="Window_PreviewKeyDown">
-    <Grid>
+    <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="White"></Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Background="#444444">
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition Height="5*"></RowDefinition>
@@ -20,8 +25,8 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Label FontSize="20" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom">RECENZIJA</Label>
-        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1px" Grid.Column="1" Grid.ColumnSpan="2" Background="#FFFDF9">
-            <Grid Margin="10">
+        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1px" Grid.Column="1" Grid.ColumnSpan="2" Background="#FFFDF9" >
+            <Grid Background="#444444">
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
@@ -40,11 +45,11 @@
                 <Label Name="tourLabel" Grid.Row="1" Grid.Column="3"  Content="{Binding TourRating}" VerticalAlignment="Center"></Label>
                 <Label Name="checkpointLabel" Grid.Row="2"  Content="{Binding Checkpoint}" VerticalAlignment="Center" Grid.ColumnSpan="4"></Label>
                 <Label Grid.Row="3" Content="Opis: " VerticalAlignment="Top"></Label>
-                <TextBlock x:Name="comment" Text="{Binding Comment}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,5,0,0"></TextBlock>
+                <TextBlock x:Name="comment" Text="{Binding Comment}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,5,0,0" Foreground="White"></TextBlock>
 
             </Grid>
         </Border>
-        <Button x:Name="reportButton" Grid.Column="1" Grid.Row="2" IsEnabled="{Binding IsEnabled}" VerticalAlignment="Center" HorizontalAlignment="Right" Content="Prijavi (F1)" Width="100" Height="35" Margin="0,0,5,0" Command="{Binding ReportCommand}"></Button>
-        <Button x:Name="closeButton" Grid.Column="2" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Odustani (F2)" Width="100" Height="35" Margin="5,0,0,0" Command="{Binding CancelCommand}"></Button>
+        <Button x:Name="reportButton" Grid.Column="1" Grid.Row="2" IsEnabled="{Binding IsEnabled}" VerticalAlignment="Center" HorizontalAlignment="Right" Content="Prijavi (F1)" Width="100" Height="35" Margin="0,0,5,0" Command="{Binding ReportCommand}" Style="{StaticResource StyledButtonStyle}"></Button>
+        <Button x:Name="closeButton" Grid.Column="2" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Odustani (F2)" Width="100" Height="35" Margin="5,0,0,0" Command="{Binding CancelCommand}" Style="{StaticResource StyledButtonStyle}"></Button>
     </Grid>
 </Window>

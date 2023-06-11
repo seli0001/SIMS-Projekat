@@ -1,4 +1,5 @@
-﻿using SIMS.Serializer;
+﻿using SIMS.Core;
+using SIMS.Serializer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SIMS.Domain.Model
 {
-    public class Location : ISerializable
+    public class Location : ValidationBase, ISerializable
     {
         public int Id { get; set; }
         public string Country { get; set; }
@@ -40,6 +41,18 @@ namespace SIMS.Domain.Model
             Id = int.Parse(csvValues[0]);
             Country = csvValues[1];
             City = csvValues[2];
+        }
+
+        protected override void ValidateSelf()
+        {
+            if (string.IsNullOrWhiteSpace(this.Country))
+            {
+                this.ValidationErrors["Country"] = "Country is required.";
+            }
+            if (string.IsNullOrWhiteSpace(this.City))
+            {
+                this.ValidationErrors["City"] = "City cannot be empty.";
+            }
         }
     }
 }

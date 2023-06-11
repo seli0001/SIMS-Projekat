@@ -8,7 +8,12 @@
         mc:Ignorable="d"
         Title="TourStatisticsView" Height="450" Width="450"
         PreviewKeyDown="Window_PreviewKeyDown">
-    <Grid Margin="10">
+    <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="White"></Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Background="#444444" >
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition Height="2*"></RowDefinition>
@@ -39,14 +44,14 @@
         </Border>
         <ch:PieChart Grid.Row="2"  Grid.Column="0" Series="{Binding SeriesCollectionAge}" LegendLocation="Bottom">
             <ch:PieChart.ChartLegend>
-                <ch:DefaultLegend BulletSize="15" TextBlock.FontSize="8"></ch:DefaultLegend>
+                <ch:DefaultLegend BulletSize="15" TextBlock.FontSize="8" Foreground="White"></ch:DefaultLegend>
             </ch:PieChart.ChartLegend>
         </ch:PieChart>
         <ch:PieChart Grid.Row="2"  Grid.Column="1" Series="{Binding SeriesCollectionVoucher}" LegendLocation="Bottom">
             <ch:PieChart.ChartLegend>
-                <ch:DefaultLegend BulletSize="15" TextBlock.FontSize="8"></ch:DefaultLegend>
+                <ch:DefaultLegend BulletSize="15" TextBlock.FontSize="8" Foreground="White"></ch:DefaultLegend>
             </ch:PieChart.ChartLegend>
         </ch:PieChart>
-        <Button x:Name="closeWindowButton" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Content="Zatvori (F1)" VerticalAlignment="Center" HorizontalAlignment="Center" Width="70" Height="30" Command="{Binding CancelCommand}"></Button>
+        <Button x:Name="closeWindowButton" Style="{StaticResource StyledButtonStyle}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Content="Zatvori (F1)" VerticalAlignment="Center" HorizontalAlignment="Center" Width="90" Height="30" Command="{Binding CancelCommand}"></Button>
     </Grid>
 </Window>

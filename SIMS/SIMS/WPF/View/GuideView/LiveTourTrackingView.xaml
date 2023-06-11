@@ -7,7 +7,12 @@
         mc:Ignorable="d"
         Title="LiveTourTrackingView" Height="450" Width="600"
         PreviewKeyDown="Window_PreviewKeyDown">
-    <Grid>
+    <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="White"></Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Background="#444444">
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
@@ -22,20 +27,20 @@
             <ColumnDefinition Width="10*"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Button Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" HorizontalContentAlignment="Center" Width="80" x:Name="CheckpointButton" Content="Sledeca (F2)" Click="CheckCheckpoint_Click"></Button>
+        <Button Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" HorizontalContentAlignment="Center" Width="80" x:Name="CheckpointButton" Content="Sledeca (F2)" Click="CheckCheckpoint_Click" Style="{StaticResource StyledButtonStyle}" ></Button>
         <Label Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Kljucne tacke"></Label>
 
-        <DataGrid x:Name="CheckpointsDataGrid" Grid.Row="2" Grid.Column="1" IsReadOnly="True" SelectionMode="Single" AutoGenerateColumns="False" ItemsSource="{Binding Checkpoints}">
+        <DataGrid x:Name="CheckpointsDataGrid" Grid.Row="2" Grid.Column="1" IsReadOnly="True" SelectionMode="Single" AutoGenerateColumns="False" ItemsSource="{Binding Checkpoints}" Style="{StaticResource StyledDataGridStyle}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Naziv" Width="*" Binding="{Binding Name}"></DataGridTextColumn>
                 <DataGridCheckBoxColumn Header="Obidjene tacke" Width="*" Binding="{Binding IsChecked}"></DataGridCheckBoxColumn>
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button Grid.Row="3" Grid.Column="3" VerticalAlignment="Center" HorizontalContentAlignment="Center" Width="80" x:Name="UsersButton" Content="Prisutan (F3)" Click="UsersButton_Click"></Button>
+        <Button Grid.Row="3" Grid.Column="3" VerticalAlignment="Center" HorizontalContentAlignment="Center" Width="80" x:Name="UsersButton" Content="Prisutan (F3)" Click="UsersButton_Click"  Style="{StaticResource StyledButtonStyle}"></Button>
         <Label Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Spisak gostiju"></Label>
 
-        <DataGrid x:Name="UsersDataGrid" Grid.Row="2" Grid.Column="3" IsReadOnly="True" SelectionMode="Single" AutoGenerateColumns="False" ItemsSource="{Binding BookedTour}" SelectedItem="{Binding SelectedBookedTour}">
+        <DataGrid x:Name="UsersDataGrid" Grid.Row="2" Grid.Column="3" IsReadOnly="True" SelectionMode="Single" AutoGenerateColumns="False" ItemsSource="{Binding BookedTour}"  SelectedItem="{Binding SelectedBookedTour}" Style="{StaticResource StyledDataGridStyle}">
             <DataGrid.Resources>
                 <local:NullableToBoolConverter x:Key="NullableToBoolConverter"/>
             </DataGrid.Resources>
@@ -46,6 +51,6 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button x:Name="FinishTourButton" Content="Zaustavi Turu (F1)" Grid.Row="4" Grid.ColumnSpan="5" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5" Click="FinishTourButton_Click"></Button>
+        <Button x:Name="FinishTourButton" Width="140" Height="26" Content="Zaustavi Turu (F1)" Grid.Row="4" Grid.ColumnSpan="5" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5" Click="FinishTourButton_Click"  Style="{StaticResource StyledButtonStyleRED}"></Button>
     </Grid>
 </Window>

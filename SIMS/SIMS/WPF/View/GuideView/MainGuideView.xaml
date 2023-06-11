@@ -3,18 +3,46 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:local="clr-namespace:SIMS.View.GuideView" xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
-        Title="MainGuideView" Height="450" Width="820"
-        PreviewKeyDown="Window_PreviewKeyDown">
-    <Grid>
+        Title="MainGuideView" Height="450" Width="820">
+    <Window.InputBindings>
+        <KeyBinding Key="F1" Command="{Binding F1Command}" />
+        <KeyBinding Key="F2" Command="{Binding F2Command}" />
+        <KeyBinding Key="F3" Command="{Binding F3Command}" />
+        <KeyBinding Key="F4" Command="{Binding F4Command}" />
+        <KeyBinding Key="F5" Command="{Binding F5Command}" />
+        <KeyBinding Modifiers="Ctrl" Key="D1" Command="{Binding One}"></KeyBinding>
+        <KeyBinding Modifiers="Ctrl" Key="D2" Command="{Binding Two}"></KeyBinding>
+        <KeyBinding Modifiers="Ctrl" Key="D3" Command="{Binding Three}"></KeyBinding>
+        <KeyBinding Modifiers="Ctrl" Key="D4" Command="{Binding Four}"></KeyBinding>
+    </Window.InputBindings>
+    <Grid Background="#444444">
+
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition Height="10*"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <TabControl Grid.Row="1" TabStripPlacement="Bottom" x:Name="TabControl">
-            <TabItem Header="Danasnje Ture (ctrl + 1)" Width="199">
+        <Label Content="Dobrodosli" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" FontSize="20" Margin="10,0,0,0"></Label>
+        <Grid HorizontalAlignment="Right" Width="200" RenderTransformOrigin="0.546,0.526">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="51*"></ColumnDefinition>
+                <ColumnDefinition Width="49*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label x:Name="Username" Content="{Binding Guide.Username}" Grid.Row="0"  Grid.Column="0" Foreground="White" FontSize="15"></Label>
+            <Button  Margin="34,0,32,4" Grid.Column="1" Command="{Binding Four}">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Image Source="pack://application:,,,/Resources/Assets/proba.png" />
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </Grid>
+
+        <TabControl Grid.Row="1" TabStripPlacement="Bottom" x:Name="TabControl" SelectedIndex="{Binding SelectedTab}" Background="#444444">
+            <TabItem Header="Danasnje Ture (ctrl + 1)" Width="199" Background="#007ACC" >
                 <Grid Margin="10">
                     <Grid.RowDefinitions>
                         <RowDefinition>
@@ -28,7 +56,7 @@
                         <ColumnDefinition Width="*"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Content="Danasnje Ture" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="20"></Label>
+                    <Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Content="Danasnje Ture" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="20" Foreground="White"></Label>
                     <Border  BorderBrush="Black" BorderThickness="1px" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3">
                         <Grid Margin="0,20">
                             <Grid.RowDefinitions>
@@ -41,15 +69,21 @@
                                 <RowDefinition></RowDefinition>
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
-                            <Button Grid.Row="0"  Content="Dodaj Turu (F1)" HorizontalAlignment="Center" Height="27"  VerticalAlignment="Center" Width="150"  Click="RegisterTour"/>
+                            <Button Grid.Row="0"  Content="Dodaj Turu (F1)" HorizontalAlignment="Center" Height="27" Style="{StaticResource StyledButtonStyle}" VerticalAlignment="Center" Width="150" Command="{Binding RegisterTourCommand}"/>
 
-                            <Button Grid.Row="1" Width="150" x:Name="StartTourButton" Content="Zapocni turu (F2)" HorizontalAlignment="Center" VerticalAlignment="Center" Click="StartTourButton_Click" Padding="5"/>
-                            <Button Grid.Row="2" Width="150" x:Name="ViewStartedTourButton" Content="Pogledj trenturnu turu (F3)" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5" Click="ViewStartedTourButton_Click"></Button>
+                            <Button  Grid.Row="1" Width="150" x:Name="StartTourButton" Content="Zapocni turu (F2)" Height="27" Style="{StaticResource StyledButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5" IsEnabled="{Binding StartTourButtonEnabled}" Command="{Binding StartTour}"/>
+                            <Button Grid.Row="2" Width="150" x:Name="ViewStartedTourButton" Content="Pogledj trenturnu turu (F3)" Height="27" Style="{StaticResource StyledButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5" IsEnabled="{Binding ViewStartedTourButtonEnabled}" Command="{Binding ViewStartedTour}" ></Button>
                         </Grid>
                     </Border>
-                    <DataGrid Margin="10,0" Grid.Row="2" Grid.ColumnSpan="3" Grid.Column="1" x:Name="dataGridTours" ItemsSource="{Binding Tours, UpdateSourceTrigger=PropertyChanged}"  
-                          SelectedItem="{Binding SelectedTour, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single" 
-                          AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="dataGridTours_SelectionChanged">
+                    <DataGrid Margin="10,0" Grid.Row="2" Grid.ColumnSpan="3" Grid.Column="1" x:Name="dataGridTours" ItemsSource="{Binding Tours, UpdateSourceTrigger=PropertyChanged}"
+                          SelectedItem="{Binding SelectedTour, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"
+                              Style="{StaticResource StyledDataGridStyle}"
+                          AutoGenerateColumns="False" IsReadOnly="True">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding SelectionChangedGrid1}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                         <DataGrid.Columns>
                             <DataGridTextColumn Width="*" Header="Naziv ture" Binding="{Binding Name}"></DataGridTextColumn>
                             <DataGridTextColumn Width="*" Header="Vreme pocetka" Binding="{Binding StartTime.Time}"></DataGridTextColumn>
@@ -59,7 +93,7 @@
 
                 </Grid>
             </TabItem>
-            <TabItem Header="Sve Ture (ctrl + 2)" Width="199">
+            <TabItem Header="Sve Ture (ctrl + 2)" Width="199" Background="#007ACC">
                 <Grid Margin="10">
                     <Grid.RowDefinitions>
                         <RowDefinition>
@@ -73,7 +107,7 @@
                         <ColumnDefinition Width="*"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Content="Sve Ture" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="20"></Label>
+                    <Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Content="Sve Ture" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="20" Foreground="White"></Label>
                     <Border  BorderBrush="Black" BorderThickness="1px" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3">
                         <Grid Margin="0,20">
                             <Grid.RowDefinitions>
@@ -86,62 +120,73 @@
                                 <RowDefinition></RowDefinition>
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
-                            <Button  Width="150" Name="cancelTourButton" Grid.Row="0" Content="Otkazi turu (F1)" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5" Click="cancelTourButton_Click"></Button>
-                            <Button  Width="150" x:Name="tourRatingButton" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Prikazi recenzije (F2)" Padding="5" Click="tourRatingButton_Click"></Button>
-                            <Button  Width="150" x:Name="tourStatisticButton" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Prikazi statistiku ture (F3)" Padding="5" Click="tourStatisticButton_Click"></Button>
-                            <Button  Width="150" x:Name="mostVisitedButton" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Click="mostVisitedButton_Click">
+                            <Button  Width="150" Name="cancelTourButton" Grid.Row="0" Content="Otkazi turu (F1)" HorizontalAlignment="Center" Height="27" Style="{StaticResource StyledButtonStyle}" VerticalAlignment="Center" Padding="5" IsEnabled="{Binding CancelTourButtonEnabled, Mode=TwoWay}" Command="{Binding CancelTour}"></Button>
+                            <Button  Width="150" x:Name="tourRatingButton" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Prikazi recenzije (F2)" Height="27" Style="{StaticResource StyledButtonStyle}" Padding="5" IsEnabled="{Binding TourRatingButtonEnabled, Mode=TwoWay}" Command="{Binding TourRating}"></Button>
+                            <Button  Width="150" x:Name="tourStatisticButton" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Prikazi statistiku ture (F3)" Padding="5" Height="27" Style="{StaticResource StyledButtonStyle}" IsEnabled="{Binding TourStatisticButtonEnabled, Mode=TwoWay}" Command="{Binding TourStatistic}"></Button>
+                            <Button  Width="150" x:Name="mostVisitedButton" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding MostVisited}" Height="35" Style="{StaticResource StyledButtonStyle}" IsEnabled="{Binding MostVisitedTourButtonEnabled, Mode=TwoWay}">
                                 <TextBlock Text="Prikazi statistiku najposecenije ture (F4)" TextWrapping="Wrap" TextAlignment="Center"></TextBlock>
                             </Button>
-                        </Grid>
-                    </Border>
-                    
-                <DataGrid Margin="10,0" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="2" x:Name="dataGridAllTours" ItemsSource="{Binding AllTours, UpdateSourceTrigger=PropertyChanged}"  
-                          SelectedItem="{Binding SelectedTour, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single" 
-                          AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="dataGridAllTours_SelectionChanged">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Width="*" Header="Naziv ture" Binding="{Binding Name}"></DataGridTextColumn>
-                        <DataGridTextColumn Width="*" Header="Status" Binding="{Binding Status}"></DataGridTextColumn>
-                            <DataGridTextColumn Width="*" Header="Datum i vreme" Binding="{Binding StartTime.Time}"></DataGridTextColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Zahtevi (ctrl + 3)" Width="199">
-                <Grid Margin="10">
-                    <Grid.RowDefinitions>
-                        <RowDefinition>
-                        </RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition Height="10*"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Content="Sve Ture" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="20"></Label>
-                    <Border  BorderBrush="Black" BorderThickness="1px" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3">
-                        <Grid Margin="0,20">
-                            <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Button Content="Prihvati zahtev" x:Name="AcceptTourRequestButton" Click="AcceptTourRequestButton_Click"></Button>
-                            <Button Grid.Row="1" Content="Kreiraj spram statistike o lokaciji" Name="CreateByLocation" Click="CreateByLocation_Click"></Button>
-                            <Button Grid.Row="2" Content="Kreiraj spram statistike o jeziku" Name="CreateByLanguage" Click="CreateByLanguage_Click" ></Button>
+                            <DatePicker Grid.Column="0" Grid.Row="5" Width="150" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center" SelectedDate="{Binding StartDate}"></DatePicker>
+                            <DatePicker Grid.Column="0" Grid.Row="6" Width="150" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center" SelectedDate="{Binding EndDate}"></DatePicker>
+                            <Button Grid.Row="7" VerticalAlignment="Center" Padding="5" Content="Generisi Izvestaj (F5)" Width="150" Height="27" Style="{StaticResource StyledButtonStyle}" Command="{Binding GeneratePDF}" ></Button>
                         </Grid>
                     </Border>
 
-                    <DataGrid Margin="10,0" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="2" x:Name="dataGridTourRequest" ItemsSource="{Binding TourRequests, UpdateSourceTrigger=PropertyChanged}"  
-                          SelectedItem="{Binding SelectedTourRequest, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single" 
-                          AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="dataGridAllTours_SelectionChanged">
+                    <DataGrid Margin="10,0" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="2" x:Name="dataGridAllTours" ItemsSource="{Binding AllTours, UpdateSourceTrigger=PropertyChanged}"  
+                          SelectedItem="{Binding SelectedTour, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single" SelectedIndex="{Binding AllDataGridSelectedIndex}"
+                          Style="{StaticResource StyledDataGridStyle}"
+                          AutoGenerateColumns="False" IsReadOnly="True">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding SelectionChangedGrid2}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Width="*" Header="Naziv ture" Binding="{Binding Name}"></DataGridTextColumn>
+                            <DataGridTextColumn Width="*" Header="Status" Binding="{Binding Status}"></DataGridTextColumn>
+                            <DataGridTextColumn Width="*" Header="Datum i vreme" Binding="{Binding StartTime.Time}"></DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Zahtevi (ctrl + 3)" Width="199" Background="#007ACC">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition>
+                        </RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="10*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Content="Sve Ture" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="20" Foreground="White"></Label>
+                    <Border  BorderBrush="Black" BorderThickness="1px" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3">
+                        <Grid Margin="0,20">
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Button Content="Prihvati zahtev (F1)" Command="{Binding AcceptTourRequest}" x:Name="AcceptTourRequestButton" HorizontalAlignment="Center" VerticalAlignment="Center" Height="27" Style="{StaticResource StyledButtonStyle}" Width="150"></Button>
+                            <Button Grid.Row="1" Command="{Binding CreateByLocation}" Content="Kreiraj spram lokacije (F2)" Name="CreateByLocation" VerticalAlignment="Center" Height="27" Style="{StaticResource StyledButtonStyle}" Width="150"></Button>
+                            <Button Grid.Row="2" Command="{Binding CreateByLanguage}" Content="Kreiraj spram jezika (F3)" Name="CreateByLanguage" VerticalAlignment="Center" Height="27" Style="{StaticResource StyledButtonStyle}" Width="150"></Button>
+                            <Button Grid.Row="3" Command="{Binding OpenTourRequest}" Content="Statistika zahteva (F4)" VerticalAlignment="Center" Height="27" Style="{StaticResource StyledButtonStyle}" Width="150" ></Button>
+                        </Grid>
+                    </Border>
+
+                    <DataGrid Margin="10,0" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="2" x:Name="dataGridTourRequest" ItemsSource="{Binding TourRequests, UpdateSourceTrigger=PropertyChanged}"  SelectedIndex="{Binding RequestIndex}"
+                          SelectedItem="{Binding SelectedTourRequest, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"
+                              Style="{StaticResource StyledDataGridStyle}"
+                          AutoGenerateColumns="False" IsReadOnly="True">
                         <DataGrid.Columns>
                             <DataGridTextColumn Width="*" Header="Naziv ture" Binding="{Binding Location.City }"></DataGridTextColumn>
                             <DataGridTextColumn Width="*" Header="Status" Binding="{Binding StartDate}"></DataGridTextColumn>
@@ -150,9 +195,46 @@
                     </DataGrid>
                 </Grid>
             </TabItem>
-            <TabItem Header="Podesavanja (ctrl + 4)" Width="199">
+            <TabItem Header="Podesavanja (ctrl + 4)" Width="199" Background="#007ACC">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*">
+                        </RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="2*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Border  BorderBrush="Black" BorderThickness="1px" Grid.Row="0" Grid.Column="0" Grid.RowSpan="5">
+                        <Grid Margin="0,20">
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Button Content="Otkaz (F1)" x:Name="otkaz" HorizontalAlignment="Center" VerticalAlignment="Center" Height="27" Style="{StaticResource StyledButtonStyle}" Command="{Binding CancelCommand}" Width="150"></Button>
+                            <Button Grid.Row="1" Content="Odjavi se (F2)" Name="logout" VerticalAlignment="Center" Height="27" Style="{StaticResource StyledButtonStyle}" Command="{Binding CancelCommand}" Width="150"></Button>
+                        </Grid>
+                    </Border>
+                    <Image Source="pack://application:,,,/Resources/Assets/proba.png" Grid.Column="2" Grid.Row="0" />
+                    <Label Content="{Binding Guide.Username}" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="White"></Label>
+                    <Label Content="Super vodic (srpski)" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="17" Foreground="White"></Label>
+                    <Image Source="pack://application:,,,/Resources/Assets/star.png" Grid.Column="2" Grid.Row="3" />
+                    <Label Content="Ocena: 9.6" Grid.Column="2" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="17" Foreground="White"></Label>
+                    
+                </Grid>
             </TabItem>
         </TabControl>
-       
     </Grid>
 </Window>

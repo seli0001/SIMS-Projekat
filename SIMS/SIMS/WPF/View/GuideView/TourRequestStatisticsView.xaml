@@ -1,0 +1,44 @@
+﻿<Window x:Class="SIMS.WPF.View.GuideView.TourRequestStatisticsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SIMS.WPF.View.GuideView"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        mc:Ignorable="d"
+        Title="TourRequestStatisticsView" Height="500" Width="450">
+    <Grid Background="#444444">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="6*"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Content="Statistike o zahtevima za ture" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="White"></Label>
+        <ComboBox Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100" SelectedIndex="0">
+            <ComboBoxItem>Godisnja</ComboBoxItem>
+                <ComboBoxItem>Mesecna</ComboBoxItem>
+            </ComboBox>
+        <ComboBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" SelectedIndex="1" HorizontalAlignment="Center" Width="100">
+            <ComboBoxItem>Novi Sad</ComboBoxItem>
+            <ComboBoxItem>Beograd</ComboBoxItem>
+        </ComboBox>
+        <ComboBox Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" SelectedIndex="-1" HorizontalAlignment="Center" Width="100">
+            <ComboBoxItem>Srpski</ComboBoxItem>
+        </ComboBox>
+        <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Left" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2">
+            <lvc:CartesianChart.AxisX>
+                <lvc:Axis Title="Salesman" Labels="{Binding Labels}"></lvc:Axis>
+            </lvc:CartesianChart.AxisX>
+            <lvc:CartesianChart.AxisY>
+                <lvc:Axis Title="Sold Apps" LabelFormatter="{Binding Formatter}"></lvc:Axis>
+            </lvc:CartesianChart.AxisY>
+        </lvc:CartesianChart>
+        <Button Grid.Row="3" Grid.Column="1" Content="Nazad" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="30" Margin="10" Click="Button_Click"></Button>
+    </Grid>
+</Window>
