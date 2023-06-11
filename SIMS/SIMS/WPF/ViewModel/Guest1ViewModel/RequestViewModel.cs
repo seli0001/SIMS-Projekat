@@ -2,12 +2,16 @@
 using SIMS.Model;
 using SIMS.Repository;
 using SIMS.Service.Services;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace SIMS.WPF.ViewModel.Guest1ViewModel
 {
-    public class RequestsViewModel
+    public class RequestViewModel
     {
         public User LoggedInUser { get; set; }
 
@@ -26,7 +30,7 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
         public static ObservableCollection<Reservation> ReservationsForRescheduling { get; set; }
         public CancelingRequests SelectedCancelingRequest { get; set; }
 
-        public RequestsViewModel(User user)
+        public RequestViewModel(User user)
         {
             _reschedulingRequestsRepository = new ReschedulingRequestsRepository();
             _cancelingRequestsRepository = new CancelingRequestsRepository();
@@ -43,21 +47,6 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
             PopulateReservationsForRescheduling();
             LoggedInUser = user;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         private void PopulateReservationsForRescheduling()
         {

@@ -90,6 +90,17 @@ namespace SIMS.Repository
         {
             _ratings = GetAll();
             return _ratings.FindAll(r => r.Reservation.Accommodation.User.Id == id);
-        }   
+        }
+
+        public List<OwnerRating> GetByUserId(int id)
+        {
+            List<OwnerRating> ownerRatings = GetAll();
+            List<Reservation> reservations = _reservationRepository.GetByUserId(id);
+            foreach (Reservation reservation in reservations)
+            {
+                ownerRatings.Where(ownerRating => ownerRating.Reservation == reservation);
+            }
+            return ownerRatings;
+        }
     }
 }
