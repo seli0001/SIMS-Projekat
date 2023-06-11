@@ -10,9 +10,11 @@ namespace SIMS.Domain.RepositoryInterface
 {
     internal interface ITourRequestRepository
     {
-        public List<TourRequest> GetAll();        
+        public List<TourRequest> GetAll();
+        public List<TourRequest> GetRequestsById(List<int> ids);
+
         public int GenerateId();
-        public void Save(Location location, string description, string language, int maxNumberOfPeople, DateTime startDate, DateTime endDate, RequestStatus status,int userId);
+        public TourRequest Save(Location location, string description, string language, int maxNumberOfPeople, DateTime startDate, DateTime endDate, RequestStatus status,int userId);
         public List<TourRequest> GetByUser(int userId);
         public void Update(TourRequest tourRequest);
         public Dictionary<string, int> GetLanguageGraphData(int userId);
