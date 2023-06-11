@@ -11,14 +11,7 @@ participant "ReservationRepositorium" as resRepository
 participant "AccommodationRepositorium" as acRepository
 
 
-vlasnik -> SchedulingRenovationView: Izbor smeštaja i opseg datuma
-vlasnik -> SchedulingRenovationView: Confirm button
-
-
-SchedulingRenovationView-> SchedulingRenovationViewModel: Smestaj i opseg datuma
-
-
-
+vlasnik -> SchedulingRenovationView: Select accommodation and date
 SchedulingRenovationView-> SchedulingRenovationViewModel: SearchDates()
 activate SchedulingRenovationViewModel
 SchedulingRenovationViewModel-> renService: AvailableDates()    
@@ -30,7 +23,7 @@ activate resRepository
 resRepository -> renRepository : accommodations
 deactivate resRepository
 renRepository -> renRepository: GetByAccommodationsId()
-loop
+loop startTime <= endTime
             renRepository -> renRepository : CheckDates()
 renRepository -> renRepository : checkReservations()
 renRepository -> renRepository : checkRenovations()
@@ -62,13 +55,7 @@ SchedulingRenovationView-> vlasnik: No Available Dates
 
 end
 
-vlasnik -> SchedulingRenovationView: Izbor datuma i opis renoviranja
-vlasnik -> SchedulingRenovationView: Confirm button
-
-
-SchedulingRenovationView-> SchedulingRenovationViewModel: Datum i opis renoviranja
-
-
+vlasnik -> SchedulingRenovationView: Select date and description
 
 SchedulingRenovationView-> SchedulingRenovationViewModel: Schedule()
 activate SchedulingRenovationViewModel

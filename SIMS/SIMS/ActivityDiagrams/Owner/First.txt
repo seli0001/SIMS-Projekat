@@ -1,0 +1,26 @@
+@startuml
+
+start
+:Guest opens forum for location;
+if (Does owner have at least one accommodation?) then (yes)
+  :Owner receives notification;
+  if (Owner leaves a comment) then (yes)
+  :Mark comment as owner's comment;
+  if (Does forum have 10 owner's comments?) then (yes)
+    if (Does forum have 20 guest's comments?) then (yes)
+      :Mark forum as highly useful;
+    else (no)
+        
+      endif
+    else (no)
+     
+    endif
+    else (no)
+
+   endif
+
+else (no)
+endif
+stop
+
+@enduml
