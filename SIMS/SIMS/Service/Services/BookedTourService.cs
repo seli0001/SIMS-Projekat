@@ -40,6 +40,11 @@ namespace SIMS.Service.Services
             _bookedToursRepository.Update(bookedTour);
         }
 
+        public void Delete(BookedTour bookedTour)
+        {
+            _bookedToursRepository.Delete(bookedTour);
+        }
+
         public List<BookedTour> GetUserFinished(int userId)
         {
 

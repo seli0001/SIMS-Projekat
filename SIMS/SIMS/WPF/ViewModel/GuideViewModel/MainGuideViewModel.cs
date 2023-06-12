@@ -18,6 +18,7 @@ using PdfSharp.Pdf;
 using PdfSharp.Drawing;
 using PdfSharp.Drawing.Layout;
 using System.Diagnostics;
+using SIMS.Repository;
 
 namespace SIMS.WPF.ViewModel.GuideViewModel
 {
@@ -35,6 +36,7 @@ namespace SIMS.WPF.ViewModel.GuideViewModel
         private readonly TourRequestService _tourRequestService;
         public Tour SelectedTour { get; set; }
         public TourRequest SelectedTourRequest { get; set; }
+        private UserRepository _userRepository;
 
         private int _selectedTab;
         public int SelectedTab
@@ -160,7 +162,8 @@ namespace SIMS.WPF.ViewModel.GuideViewModel
         #region Constructors
         public MainGuideViewModel(User guide) 
         {
-            RequestIndex=-1;
+            _userRepository = new UserRepository();
+            RequestIndex =-1;
             DataGridSelectedIndex = -1;
             AllDataGridSelectedIndex = -1;
             StartDate = DateTime.Now;
@@ -516,6 +519,20 @@ namespace SIMS.WPF.ViewModel.GuideViewModel
                     _openTourRequest = new RelayCommand(param => OpenTourRequestButton_Click());
                 }
                 return _openTourRequest;
+            }
+        }
+
+        private ICommand _resign;
+
+        public ICommand Resign
+        {
+            get
+            {
+                if(_resign == null)
+                {
+                    _resign = new RelayCommand(param => ResignClick());
+                }
+                return _resign;
             }
         }
 
@@ -927,6 +944,21 @@ namespace SIMS.WPF.ViewModel.GuideViewModel
             {
                 _MessageBoxService.ShowMessage("Greska");
             }
+        }
+
+        public void ResignClick()
+        {
+            List<Tour> tours = _tourService.GetAllByGuideId(Guide.Id);
+            foreach(Tour tour in tours)
+            {
+                if (tour.Status == TourStatus.NOT_STARTED)
+                {
+                    _tourService.CancelTour(tour, 2);
+                }
+            }
+            Guide.Active = false;
+            _userRepository.Update(Guide);
+            Close();
         }
         #endregion
 

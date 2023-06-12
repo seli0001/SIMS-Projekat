@@ -223,7 +223,7 @@
                                 <RowDefinition></RowDefinition>
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
-                            <Button Content="Otkaz (F1)" x:Name="otkaz" HorizontalAlignment="Center" VerticalAlignment="Center" Height="27" Style="{StaticResource StyledButtonStyle}" Command="{Binding CancelCommand}" Width="150"></Button>
+                            <Button Content="Otkaz (F1)" x:Name="otkaz" HorizontalAlignment="Center" VerticalAlignment="Center" Height="27" Style="{StaticResource StyledButtonStyle}" Command="{Binding Resign}" Width="150"></Button>
                             <Button Grid.Row="1" Content="Odjavi se (F2)" Name="logout" VerticalAlignment="Center" Height="27" Style="{StaticResource StyledButtonStyle}" Command="{Binding CancelCommand}" Width="150"></Button>
                         </Grid>
                     </Border>

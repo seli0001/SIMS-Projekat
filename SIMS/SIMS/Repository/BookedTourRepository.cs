@@ -3,6 +3,7 @@ using SIMS.Repository.GuideRepository;
 using SIMS.Serializer;
 using System;
 using System.Collections.Generic;
+using System.DirectoryServices;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -120,6 +121,13 @@ namespace SIMS.Repository
                 t.Checkpoint != null &&
                 t.Notify.ToString().Equals("Accepted", StringComparison.InvariantCultureIgnoreCase))
                 .ToList();
+        }
+
+        public void Delete(BookedTour bookedTour)
+        {
+            List<BookedTour> tours = GetAll();
+            tours.RemoveAll(t => t.Id == bookedTour.Id);
+            _serializer.ToCSV(_filePath, tours);
         }
     }
 }

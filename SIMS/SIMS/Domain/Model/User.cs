@@ -22,6 +22,7 @@ namespace SIMS.Domain.Model
         public string Password { get; set; }
         public int Age { get; set; }
         public ROLE Role { get; set; }
+        public bool Active { get; set; }
 
         public User()
         {
@@ -37,6 +38,7 @@ namespace SIMS.Domain.Model
                 Password,
                 Role.ToString(),
                 Age.ToString(),
+                Active.ToString(),
             };
             return csvValues;
         }
@@ -48,6 +50,7 @@ namespace SIMS.Domain.Model
             Password = csvValues[2];
             Role = (ROLE)Enum.Parse(typeof(ROLE), csvValues[3]);
             Age = int.Parse(csvValues[4]);
+            Active = bool.Parse(csvValues[5]);
         }
     }
 }

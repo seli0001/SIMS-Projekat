@@ -60,9 +60,12 @@ namespace SIMS.Service.Services
             _tourRepository.Delete(tour);
         }
 
-        public void CancelTour(Tour tour)
+        public void CancelTour(Tour tour, int valid = 1)
         {
-            _bookedTourService.GetAllByTour(tour.Id).ForEach(b => _voucherService.AddVoucher(new Voucher(DateTime.Now.AddYears(1), tour.Name, b.User.Id)));
+            _bookedTourService.GetAllByTour(tour.Id).ForEach(b => { 
+                _voucherService.AddVoucher(new Voucher(DateTime.Now.AddYears(valid), tour.Name, b.User.Id));
+                _bookedTourService.Delete(b);
+            });
             Delete(tour);
         }
 

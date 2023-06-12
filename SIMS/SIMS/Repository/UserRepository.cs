@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,6 +38,13 @@ namespace SIMS.Repository
         {
             return serializer.FromCSV(filePath);
         }
-        
+
+        public void Update(User updatedUser)
+        {
+            List<User> users = GetAllUsers();
+            users.RemoveAll(u => u.Id == updatedUser.Id);
+            users.Add(updatedUser);
+            serializer.ToCSV(filePath, users);
+        }        
     }
 }
