@@ -105,12 +105,18 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             //    UpdateUI();
             //});
 
+
+
             //Forum
             App.Current.Dispatcher.Invoke((Action)delegate
             {
                 if (_forumRepository.CheckForOwner(LoggedInUser))
                     MessageBox.Show("There is new forum on one of your locations");
+
+                _forumRepository.CheckSuperForum();
             });
+
+
 
         }
 

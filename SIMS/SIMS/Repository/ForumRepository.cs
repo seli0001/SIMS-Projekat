@@ -117,5 +117,36 @@ namespace SIMS.Repository
 
             return false;
         }
+
+        public void MakeSpecial(Forum forum)
+        {
+            _forums = GetAll();
+            Forum newForum = _forums.FirstOrDefault(f => f.Id == forum.Id);
+            newForum.IsSpecial = true;
+            Update(newForum);
+        }
+
+        public void CheckSuperForum()
+        {
+            _forums = GetAll();
+            foreach(Forum forum in _forums)
+            {
+                List<Comment> guestComments = forum.Comments.Where(commment => commment.Role == "Guest").ToList();
+                List<Comment> ownerComments = forum.Comments.Where(commment => commment.Role == "Owner").ToList();
+                if (guestComments.Count > 10 && ownerComments.Count > 5)
+                    MakeSpecial(forum);
+            }
+        }
+
+        public Forum Update(Forum forum)
+        {
+            _forums = GetAll();
+            Forum current = _forums.Find(c => c.Id == forum.Id);
+            int index = _forums.IndexOf(current);
+            _forums.Remove(current);
+            _forums.Insert(index, forum);
+            _serializer.ToCSV(_filePath, _forums);
+            return forum;
+        }
     }
 }
