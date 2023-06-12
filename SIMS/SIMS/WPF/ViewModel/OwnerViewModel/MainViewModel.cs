@@ -18,7 +18,12 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         public AccommodationStatisticsViewModel AccommodationStatisticsVM { get; set; }
         public SystemProposalViewModel SystemProposalVM { get; set; }
         public TutorialViewModel TutorialVM { get; set; }
+
+        public ForumsViewModel ForumsVM { get; set; }
+        public ForumViewModel ForumVM { get; set; }
         public Accommodation SelectedAccommodation { get; set; }
+
+        public Forum SelectedForum { get; set; }
 
         private double _ownerRating;
         public string OwnerRating
@@ -192,6 +197,35 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
                         () => {
                             TutorialVM = new TutorialViewModel();
                             CurrentView = TutorialVM;
+                        }, true));
+            }
+        }
+
+
+        private ICommand _forumsCommand;
+        public ICommand ForumsCommand
+        {
+            get
+            {
+                return _forumsCommand ??
+                    (_forumsCommand = new CommandBase(
+                        () => {
+                            ForumsVM = new ForumsViewModel(LoggedInUser, this);
+                            CurrentView = ForumsVM;
+                        }, true));
+            }
+        }
+
+        private ICommand _forumCommand;
+        public ICommand ForumCommand
+        {
+            get
+            {
+                return _forumCommand ??
+                    (_forumCommand = new CommandBase(
+                        () => {
+                            ForumVM = new ForumViewModel(LoggedInUser, SelectedForum);
+                            CurrentView = ForumVM;
                         }, true));
             }
         }

@@ -1,5 +1,6 @@
 ﻿using SIMS.Domain.Model;
 using SIMS.Repository;
+using SIMS.Service.UseCases;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,6 +17,8 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
         public ForumRepository _forumRepository;
         public UserRepository _userRepository;
         public AccommodationRepository _accommodationRepository;
+        public LocationService _locationService;
+
         public Forum SelectedForum { get; set; }
 
         private CreateForumViewModel CreateForumVM;
@@ -29,11 +32,12 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
             _forumRepository = new ForumRepository();
             _userRepository = new UserRepository();
             _accommodationRepository = new AccommodationRepository();
+            _locationService = new LocationService();
             Forums = new ObservableCollection<Forum>(_forumRepository.GetAll());
             LoggedInUser = user;
             this.guest1MainViewModel = guest1MainViewModel;
             PopulateUsers();
-            PopulateAccommodations();
+            PopulateLocations();
         }
 
         private void PopulateUsers()
@@ -45,11 +49,11 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
             }
         }
 
-        private void PopulateAccommodations()
+        private void PopulateLocations()
         {
             foreach (var forum in Forums)
             {
-                forum.Accommodation = _accommodationRepository.GetById(forum.Accommodation.Id);
+                forum.Location = _locationService.GetById(forum.Location.Id);
             }
         }
 

@@ -35,6 +35,11 @@ namespace SIMS.Service.Services
             return _reservationRepository.GetByUserId(id);
         }
 
+        public List<Reservation> GetByOwnerId(int id)
+        {
+            return _reservationRepository.GetByOwnerId(id);
+        }
+
         public Reservation Save(Reservation reservation)
         {
             return _reservationRepository.Save(reservation);
