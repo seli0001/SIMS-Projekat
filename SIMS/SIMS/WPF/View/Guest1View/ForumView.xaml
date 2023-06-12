@@ -17,7 +17,7 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Owner" Binding="{Binding ForumOwner.Username}" Width="*" />
                         <DataGridTextColumn Header="Date" Binding="{Binding FromDate}" Width="*" />
-                        <DataGridTextColumn Header="Accomodation" Binding="{Binding Accommodation.Name}" Width="*" />
+                        <DataGridTextColumn Header="Location" Binding="{Binding Location.Country}" Width="*" />
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>

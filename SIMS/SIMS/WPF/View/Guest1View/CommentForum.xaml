@@ -28,10 +28,13 @@
                  VerticalAlignment="Top"
                  Width="276" Height="108" />
 
-        <DataGrid ItemsSource="{Binding Path=Comments, UpdateSourceTrigger=PropertyChanged}"
+        <DataGrid ItemsSource="{Binding Path=SelectedForum.Comments, UpdateSourceTrigger=PropertyChanged}"
           AutoGenerateColumns="False" IsReadOnly="True" Margin="10,133,10,266">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Comments" Binding="{Binding}" Width="*" />
+                <DataGridTextColumn Header="Autor Komentara" Binding="{Binding Author.Username}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Uloga" Binding="{Binding Role}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Komentar" Binding="{Binding Text}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Broj prijava komentara" Binding="{Binding ReportNumber}" Width="*"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
 
