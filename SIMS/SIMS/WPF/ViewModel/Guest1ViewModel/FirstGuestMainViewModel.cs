@@ -40,7 +40,6 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
 
         public FirstGuestMainViewModel(User user)
         {
-            //cbSearch.ItemsSource = Enum.GetValues(typeof(Type));
             _service = new AccommodationService();
             Accommodations = new ObservableCollection<Accommodation>(_service.GetAll());
             LoggedInUser = user;
@@ -56,45 +55,5 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
                     && (minDays == 0 || acc.MinBookingDays <= minDays))
                 .Select(acc => acc);
         }
-
-        //private void Book_Click(object sender, RoutedEventArgs e)
-        //{
-        //    if (gridGuest.SelectedIndex != -1)
-        //    {
-        //        FirstGuestBookingView firstGuestBookingView = new FirstGuestBookingView(SelectedAccommodation, LoggedInUser);
-        //        firstGuestBookingView.Show();
-        //    }
-        //}
-
-        //private void Clear_Click(object sender, RoutedEventArgs e)
-        //{
-        //    txtSearch.Text = "";
-        //    txtSearch1.Text = "";
-        //    txtSearch2.Text = "";
-        //    txtSearch3.Text = "";
-        //    cbSearch.SelectedIndex = -1;
-        //}
-
-
-        //private void Search_Click(object sender, RoutedEventArgs e)
-        //{
-        //    string name = txtSearch.Text;
-        //    string location = txtSearch1.Text;
-        //    string type = cbSearch.Text.ToLower();
-        //    int maxGuests;
-        //    int.TryParse(txtSearch2.Text, out maxGuests);
-        //    int minDays;
-        //    int.TryParse(txtSearch3.Text, out minDays);
-        //    if (minDays == 0)
-        //        minDays = 15;
-
-        //    gridGuest.ItemsSource = SearchResults(name, location, type, maxGuests, minDays);
-        //}
-
-        //private void Button_Click(object sender, RoutedEventArgs e)
-        //{
-        //    ShowReservations showReservations = new ShowReservations(LoggedInUser);
-        //    showReservations.Show();
-        //}
     }
 }

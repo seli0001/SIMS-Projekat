@@ -103,6 +103,11 @@ namespace SIMS.Repository
             _accommodations = GetAll();
             return _accommodations.FindAll(c => c.User.Id == user.Id);
         }
+        public Accommodation GetByLocation(Location location)
+        {
+            _accommodations = GetAll();
+            return _accommodations.FirstOrDefault(c => c.Location.Id == location.Id);
+        }
         public void makeSuperOwner(User user)
         {
             _accommodations = GetByUser(user);
@@ -172,6 +177,11 @@ namespace SIMS.Repository
                 accommodation.Renovated = false;
             }
             Update(accommodation);
+        }
+        public int GetAccommodationCount()
+        {
+            _accommodations = GetAll();
+            return _accommodations.Count;
         }
 
     }

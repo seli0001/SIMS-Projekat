@@ -16,8 +16,8 @@ namespace SIMS.Domain.Model
         public DateOnly FromDate { get; set; }
         public List<Comment> Comments { get; set; }
         public User ForumOwner { get; set; }
+        public bool IsOpen { get; set; }
 
-        //neki state nam treba tipa open ili closed da znamo da li mogu idalje da se pisu komentari, samo vlasnik moze da zatvori ovaj forum
 
         public Forum()
         {
@@ -30,6 +30,7 @@ namespace SIMS.Domain.Model
             FromDate = fromDate;
             Comments = coments;
             ForumOwner = forumOwner;
+            IsOpen = true;
         }
 
         public string[] ToCSV()

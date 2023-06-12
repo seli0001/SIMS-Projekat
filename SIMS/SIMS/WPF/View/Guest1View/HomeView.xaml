@@ -26,7 +26,7 @@
         <TextBox x:Name ="txtSearch1" HorizontalAlignment="Left" Margin="115,143,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Height="25"/>
         <TextBox x:Name ="txtSearch2" HorizontalAlignment="Left" Margin="220,143,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Height="25"/>
         <TextBox x:Name ="txtSearch3" HorizontalAlignment="Left" Margin="325,143,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Height="25"/>
-        <Button x:Name="BtnSearch" Style="{StaticResource ButtonTheme}" Command="{Binding SearchCommand}"  Content="Search" HorizontalAlignment="Left" Margin="290,88,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.833,0.553" Height="37" Width="127"  />
+        <Button x:Name="BtnSearch" Style="{StaticResource ButtonTheme}" Command="{Binding SearchCommand}"  Content="Search" HorizontalAlignment="Left" Margin="233,77,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.833,0.553" Height="40" Width="182"  />
 
 
 
@@ -38,7 +38,11 @@
         <Label Content="Location" HorizontalAlignment="Left" Margin="115,122,0,0" Height="30" VerticalAlignment="Top" Width="70"/>
         <Label Content="Guests" HorizontalAlignment="Left" Margin="220,125,0,0" Height="30" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0.529,0.485"/>
         <Label Content="Days" HorizontalAlignment="Left" Margin="325,124,0,0" Height="32" VerticalAlignment="Top" Width="70"/>
-        <Button Content="Book" Command="{Binding BookCommand}" HorizontalAlignment="Center" Margin="0,556,0,0" VerticalAlignment="Top" Width="200"
+        <Button Content="Suprise me" Command="{Binding WhereverCommand}" HorizontalAlignment="Left" Margin="15,77,0,0" VerticalAlignment="Top" Width="200"
+                Height="40"
+                Style="{StaticResource ButtonTheme}"
+                ToolTip="Book the selected reservation"/>
+        <Button Content="Book" Command="{Binding BookCommand}" HorizontalAlignment="Left" Margin="195,556,0,0" VerticalAlignment="Top" Width="200"
                 Height="40"
                 Background="#007AFF"
                 Foreground="White"

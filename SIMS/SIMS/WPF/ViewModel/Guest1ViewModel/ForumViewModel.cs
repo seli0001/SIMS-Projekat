@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace SIMS.WPF.ViewModel.Guest1ViewModel
@@ -22,6 +23,7 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
         public Forum SelectedForum { get; set; }
 
         private CreateForumViewModel CreateForumVM;
+        private CommentForumViewModel CommentForumVM;
 
         public static ObservableCollection<Forum> Forums { get; set; }
 
@@ -67,10 +69,40 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
                 return _createForumCommand ?? (_createForumCommand = new CommandBase(
                     () =>
                     {
-                        CreateForumVM = new CreateForumViewModel(LoggedInUser);
+                        CreateForumVM = new CreateForumViewModel(LoggedInUser, guest1MainViewModel);
                         guest1MainViewModel.CurrentView = CreateForumVM;
                     }, true));
             }
+        }
+
+        private ICommand _commentForumCommand;
+
+        public ICommand CommentForumCommand
+        {
+            get
+            {
+                return _commentForumCommand ?? (_commentForumCommand = new CommandBase(
+                    () =>
+                    {
+                        CommentForumVM = new CommentForumViewModel(LoggedInUser, SelectedForum);
+                        guest1MainViewModel.CurrentView = CommentForumVM;
+                    }, true));
+            }
+        }
+
+        private ICommand _closeForumCommand;
+
+        public ICommand CloseForumCommand
+        {
+            get
+            {
+                return _closeForumCommand ?? (_closeForumCommand = new CommandBase(() => CloseForum(), true));
+            }
+        }
+
+        private void CloseForum()
+        {
+            _forumRepository.CloseForum(SelectedForum);
         }
     }
 }
