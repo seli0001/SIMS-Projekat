@@ -17,28 +17,13 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Content="Statistike o zahtevima za ture" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="White"></Label>
-        <ComboBox Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100" SelectedIndex="0">
-            <ComboBoxItem>Godisnja</ComboBoxItem>
-                <ComboBoxItem>Mesecna</ComboBoxItem>
-            </ComboBox>
-        <ComboBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" SelectedIndex="1" HorizontalAlignment="Center" Width="100">
-            <ComboBoxItem>Novi Sad</ComboBoxItem>
-            <ComboBoxItem>Beograd</ComboBoxItem>
+        <ComboBox Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" SelectedIndex="0" HorizontalAlignment="Center" Width="100" x:Name="izbor" SelectionChanged="izbor_SelectionChanged">
+            <ComboBoxItem>Jezik</ComboBoxItem>
+            <ComboBoxItem>Lokacija</ComboBoxItem>
         </ComboBox>
-        <ComboBox Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" SelectedIndex="-1" HorizontalAlignment="Center" Width="100">
-            <ComboBoxItem>Srpski</ComboBoxItem>
-        </ComboBox>
-        <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Left" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2">
-            <lvc:CartesianChart.AxisX>
-                <lvc:Axis Title="Salesman" Labels="{Binding Labels}"></lvc:Axis>
-            </lvc:CartesianChart.AxisX>
-            <lvc:CartesianChart.AxisY>
-                <lvc:Axis Title="Sold Apps" LabelFormatter="{Binding Formatter}"></lvc:Axis>
-            </lvc:CartesianChart.AxisY>
-        </lvc:CartesianChart>
+        <Label Content="{Binding Statistika}" x:Name="text" Grid.Row="2" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2" Foreground="White"></Label>
         <Button Grid.Row="3" Grid.Column="1" Content="Nazad" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="30" Margin="10" Click="Button_Click"></Button>
     </Grid>
 </Window>

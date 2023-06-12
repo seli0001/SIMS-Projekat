@@ -17,6 +17,7 @@ namespace SIMS.Domain.Model
         public List<Comment> Comments { get; set; }
         public User ForumOwner { get; set; }
         public bool IsOpen { get; set; }
+        public bool IsSpecial { get; set; }
 
 
         public Forum()
@@ -31,6 +32,7 @@ namespace SIMS.Domain.Model
             Comments = coments;
             ForumOwner = forumOwner;
             IsOpen = true;
+            IsSpecial = false;
         }
 
         public string[] ToCSV()
@@ -42,6 +44,7 @@ namespace SIMS.Domain.Model
                 FromDate.ToString("dd-MM-yyyy"),
                 ForumOwner.Id.ToString(),
                 IsOpen.ToString(),
+                IsSpecial.ToString(),
             };
             return csvValues;
         }
@@ -53,6 +56,8 @@ namespace SIMS.Domain.Model
             FromDate = DateOnly.Parse(values[2]);
             ForumOwner = new User() { Id = Convert.ToInt32(values[3]) };
             IsOpen = Convert.ToBoolean(values[4]);
+            IsSpecial = Convert.ToBoolean(values[5]);
+
         }
     }
 }

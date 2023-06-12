@@ -229,10 +229,9 @@
                     </Border>
                     <Image Source="pack://application:,,,/Resources/Assets/proba.png" Grid.Column="2" Grid.Row="0" />
                     <Label Content="{Binding Guide.Username}" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="White"></Label>
-                    <Label Content="Super vodic (srpski)" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="17" Foreground="White"></Label>
-                    <Image Source="pack://application:,,,/Resources/Assets/star.png" Grid.Column="2" Grid.Row="3" />
-                    <Label Content="Ocena: 9.6" Grid.Column="2" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="17" Foreground="White"></Label>
-                    
+                    <Label Content="{Binding SuperText}" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="17" Foreground="White" Visibility="{Binding IsVisible}"></Label>
+                    <Image Source="pack://application:,,,/Resources/Assets/star.png" Grid.Column="2" Grid.Row="3" Visibility="{Binding IsVisible}"/>
+
                 </Grid>
             </TabItem>
         </TabControl>

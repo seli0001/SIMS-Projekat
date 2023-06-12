@@ -10,6 +10,7 @@ using SIMS.Service;
 using SIMS.WPF.ViewModel.OwnerViewModel;
 using SIMS.WPF.ViewModel.ViewModel;
 using SIMS.WPF.View.OwnerView;
+using SIMS.Repository;
 
 namespace SIMS.WPF.ViewModel.OwnerViewModel
 {
@@ -21,6 +22,7 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         private readonly GuestRatingService _guestRatingService;
         private readonly AccommodationService _accommodationService;
         private readonly OwnerMainService _ownerMainService;
+        private readonly ForumRepository _forumRepository;
 
 
         private double _ownerRating;
@@ -56,9 +58,10 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
             _guestRatingService = new GuestRatingService();
             _accommodationService = new AccommodationService();
             _ownerMainService = new OwnerMainService();
+            _forumRepository = new ForumRepository();
 
             Accommodations = new ObservableCollection<Accommodation>(_accommodationService.GetByUser(user));
-            timer = new Timer(CheckCondition, null, TimeSpan.Zero, TimeSpan.FromMinutes(5));
+            timer = new Timer(CheckCondition, null, TimeSpan.Zero, TimeSpan.FromSeconds(15));
             mainViewModel = mvm;
             mainViewModel.setOwnerRating(_ownerMainService.getRating());
         }
@@ -66,41 +69,54 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         private void CheckCondition(object? state)
         {
             //Unreviewed Notification
-            App.Current.Dispatcher.Invoke((Action)delegate
-            {
-                if (_guestRatingService.checkIfNotRated())
-                {
-                    MessageBox.Show("You Have some Unreviewed reservations!");
-                }
-            });
+            //App.Current.Dispatcher.Invoke((Action)delegate
+            //{
+            //    if (_guestRatingService.checkIfNotRated())
+            //    {
+            //        MessageBox.Show("You Have some Unreviewed reservations!");
+            //    }
+            //});
 
 
             //Super owner
-            App.Current.Dispatcher.Invoke((Action)delegate
-            {
-                int temp = _ownerMainService.checkIsSuperOwner(LoggedInUser);
+            //App.Current.Dispatcher.Invoke((Action)delegate
+            //{
+            //    int temp = _ownerMainService.checkIsSuperOwner(LoggedInUser);
 
-                mainViewModel.setOwnerRating(_ownerMainService.getRating());
-                if (temp == 1)
-                {
-                        _accommodationService.makeSuperOwner(LoggedInUser);
-                    MessageBox.Show("Congratulations You Have Became a SUPEROWNER!!!!");
-                        UpdateUI();
-                }
-                else if (temp == 0)
-                {
-                        _accommodationService.deleteSuperOwner(LoggedInUser);
-                    MessageBox.Show("You have lost superowner title");
-                        UpdateUI();
-                }
-            });
+            //    mainViewModel.setOwnerRating(_ownerMainService.getRating());
+            //    if (temp == 1)
+            //    {
+            //            _accommodationService.makeSuperOwner(LoggedInUser);
+            //        MessageBox.Show("Congratulations You Have Became a SUPEROWNER!!!!");
+            //            UpdateUI();
+            //    }
+            //    else if (temp == 0)
+            //    {
+            //            _accommodationService.deleteSuperOwner(LoggedInUser);
+            //        MessageBox.Show("You have lost superowner title");
+            //            UpdateUI();
+            //    }
+            //});
 
             //Renovation
+            //App.Current.Dispatcher.Invoke((Action)delegate
+            //{
+            //    _accommodationService.RegulateRenovations();
+            //    UpdateUI();
+            //});
+
+
+
+            //Forum
             App.Current.Dispatcher.Invoke((Action)delegate
             {
-                _accommodationService.RegulateRenovations();
-                UpdateUI();
+                if (_forumRepository.CheckForOwner(LoggedInUser))
+                    MessageBox.Show("There is new forum on one of your locations");
+
+                _forumRepository.CheckSuperForum();
             });
+
+
 
         }
 

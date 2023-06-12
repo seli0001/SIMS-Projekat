@@ -10,6 +10,7 @@ using SIMS.WPF.ViewModel.ViewModel;
 using SIMS.WPF.View.OwnerView;
 using SIMS.WPF.ViewModel.GuideViewModel;
 using SIMS.WPF.View.Guest1View;
+using System.ComponentModel;
 
 namespace SIMS.WPF.ViewModel
 {
@@ -97,8 +98,16 @@ namespace SIMS.WPF.ViewModel
                     }
                     else if (user.Role == ROLE.Guide)
                     {
-                        MainGuideView mainGuideView = new MainGuideView(user);
-                        mainGuideView.Show();
+                        if (user.Active)
+                        {
+                            MainGuideView mainGuideView = new MainGuideView(user);
+                            mainGuideView.Closing += ChildWindow_Closing;
+                            mainGuideView.Show();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Korisnik je dao otkaz");
+                        }
                     }
                 }
                 else
@@ -111,6 +120,16 @@ namespace SIMS.WPF.ViewModel
                 MessageBox.Show("Wrong username!");
             }
 
+        }
+
+        private void ChildWindow_Closing(object sender, CancelEventArgs e)
+        {
+            // Dispose of the timer when the child window is closing
+            if (sender is MainGuideView mainGuideView)
+            {
+                mainGuideView.Closing -= ChildWindow_Closing;
+                mainGuideView.DisposeTimer();
+            }
         }
 
         private void ZubaClick()
