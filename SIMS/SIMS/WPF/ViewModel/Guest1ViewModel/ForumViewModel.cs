@@ -20,6 +20,7 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
         public Forum SelectedForum { get; set; }
 
         private CreateForumViewModel CreateForumVM;
+        private CommentForumViewModel CommentForumVM;
 
         public static ObservableCollection<Forum> Forums { get; set; }
 
@@ -69,6 +70,36 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
                         guest1MainViewModel.CurrentView = CreateForumVM;
                     }, true));
             }
+        }
+
+        private ICommand _commentForumCommand;
+
+        public ICommand CommentForumCommand
+        {
+            get
+            {
+                return _commentForumCommand ?? (_commentForumCommand = new CommandBase(
+                    () =>
+                    {
+                        CommentForumVM = new CommentForumViewModel(LoggedInUser, SelectedForum);
+                        guest1MainViewModel.CurrentView = CommentForumVM;
+                    }, true));
+            }
+        }
+
+        private ICommand _closeForumCommand;
+
+        public ICommand CloseForumCommand
+        {
+            get
+            {
+                return _closeForumCommand ?? (_closeForumCommand = new CommandBase(() => CloseForum(), true));
+            }
+        }
+
+        private void CloseForum()
+        {
+            _forumRepository.CloseForum(SelectedForum);
         }
     }
 }

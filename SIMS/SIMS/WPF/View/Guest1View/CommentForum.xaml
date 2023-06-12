@@ -1,0 +1,54 @@
+﻿<UserControl x:Class="SIMS.WPF.View.Guest1View.CommentForum"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SIMS.WPF.View.Guest1View"
+             mc:Ignorable="d" 
+             d:DesignHeight="606" d:DesignWidth="430">
+    <Grid Background="#444444" Height="606">
+
+
+        <Label Content="Comment on this forum"
+               FontSize="30"
+               HorizontalAlignment="Center"
+               Margin="0,67,0,0"
+               VerticalAlignment="Top" />
+
+        <Label Content="Write the comment"
+               FontSize="18"
+               HorizontalAlignment="Center"
+               Margin="0,345,0,0"
+               VerticalAlignment="Top" />
+
+        <TextBox HorizontalAlignment="Center"
+                 Margin="0,403,0,0"
+                 TextWrapping="Wrap"
+                 Text="{Binding Path=Comment}"
+                 VerticalAlignment="Top"
+                 Width="276" Height="108" />
+
+        <DataGrid ItemsSource="{Binding Path=Comments, UpdateSourceTrigger=PropertyChanged}"
+          AutoGenerateColumns="False" IsReadOnly="True" Margin="10,133,10,266">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Comments" Binding="{Binding}" Width="*" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+
+
+
+
+
+        <Button x:Name="BtnBook"
+                Command="{Binding CommentForumCommand}"
+                Content="Commet"
+                HorizontalAlignment="Center"
+                Margin="0,532,0,0"
+                VerticalAlignment="Top"
+                Width="200"
+                Height="40"
+                Background="#007AFF"
+                Foreground="White"/>
+    </Grid>
+</UserControl>

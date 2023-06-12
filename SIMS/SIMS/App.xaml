@@ -107,6 +107,10 @@
             <DataTemplate DataType="{x:Type guestViewModel:WhereverWheneverViewModel}">
                 <guestView:WhereverWheneverView />
             </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type guestViewModel:CommentForumViewModel}">
+                <guestView:CommentForum />
+            </DataTemplate>
 
 
 

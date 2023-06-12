@@ -61,6 +61,20 @@ namespace SIMS.Repository
             return _forums.FirstOrDefault(forum => forum.Id == id);
         }
 
+        public void CloseForum(Forum forumm)
+        {
+            _forums = GetAll();
+            Forum forum = _forums.FirstOrDefault(forum => forum.Id == forumm.Id);
+            forum.IsOpen = false;
+        }
+
+        public void AddComment(string comment, Forum forumm)
+        {
+            _forums = GetAll();
+            Forum forum = _forums.FirstOrDefault(forum => forum.Id == forumm.Id);
+            forum.Comments.Add(comment);
+        }
+
 
     }
 }
