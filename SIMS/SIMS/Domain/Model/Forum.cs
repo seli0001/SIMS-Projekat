@@ -34,13 +34,14 @@ namespace SIMS.Domain.Model
         }
 
         public string[] ToCSV()
-        { 
+        {
             string[] csvValues =
             {
                 Id.ToString(),
                 Location.Id.ToString(),
                 FromDate.ToString("dd-MM-yyyy"),
                 ForumOwner.Id.ToString(),
+                IsOpen.ToString(),
             };
             return csvValues;
         }
@@ -51,6 +52,7 @@ namespace SIMS.Domain.Model
             Location = new Location() { Id = Convert.ToInt32(values[1]) };
             FromDate = DateOnly.Parse(values[2]);
             ForumOwner = new User() { Id = Convert.ToInt32(values[3]) };
+            IsOpen = Convert.ToBoolean(values[4]);
         }
     }
 }
