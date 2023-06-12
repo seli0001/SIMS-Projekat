@@ -49,6 +49,15 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
             }
         }
 
+        private ICommand _whereverCommand;
+        public ICommand WhereverCommand
+        {
+            get
+            {
+                return _whereverCommand ?? (_whereverCommand = new CommandBase(() => Wherever(), true));
+            }
+        }
+
 
         private string _searchText1;
         public string SearchText1
@@ -57,7 +66,7 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
             set
             {
                 _searchText1 = value;
-                ValidateSearchText1(); // Call the validation method
+                ValidateSearchText1(); 
             }
         }
 
@@ -68,7 +77,7 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
             set
             {
                 _searchText2 = value;
-                ValidateSearchText2(); // Call the validation method
+                ValidateSearchText2();
             }
         }
 
@@ -79,7 +88,7 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
             set
             {
                 _searchText3 = value;
-                ValidateSearchText1(); // Call the validation method
+                ValidateSearchText1(); 
             }
         }
 
@@ -90,11 +99,10 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
             set
             {
                 _searchText4 = value;
-                ValidateSearchText1(); // Call the validation method
+                ValidateSearchText1(); 
             }
         }
 
-        // Add similar properties and validation methods for SearchText3 and SearchText4
 
         private bool _isSearchValid;
         public bool IsSearchValid
@@ -140,8 +148,6 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
 
         private void ValidateSearchText1()
         {
-            // Add your validation logic for SearchText1
-            // Example validation: Required field validation
             if (string.IsNullOrWhiteSpace(SearchText1))
             {
                 IsSearchValid = false;
@@ -154,8 +160,6 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
 
         private void ValidateSearchText2()
         {
-            // Add your validation logic for SearchText2
-            // Example validation: Required field validation
             if (string.IsNullOrWhiteSpace(SearchText2))
             {
                 IsSearchValid = false;
@@ -186,6 +190,11 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
                 BookingViewModel BookingVM = new BookingViewModel(LoggedInUser, SelectedAccommodation);
                 guest1MainViewModel.CurrentView = BookingVM;
             }
+        }
+        private void Wherever()
+        {
+            WhereverWheneverViewModel WhereverVM = new WhereverWheneverViewModel(LoggedInUser);
+            guest1MainViewModel.CurrentView = WhereverVM;
         }
     }
 }

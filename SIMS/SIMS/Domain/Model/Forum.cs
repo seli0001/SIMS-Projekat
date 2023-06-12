@@ -13,10 +13,10 @@ namespace SIMS.Domain.Model
         public int Id { get; set; }
         public Accommodation Accommodation { get; set; }
         public DateOnly FromDate { get; set; }
-        public string Comment { get; set; }
+        public List<string> Comments { get; set; }
         public User ForumOwner { get; set; }
+        public bool IsOpen { get; set; }
 
-        //neki state nam treba tipa open ili closed da znamo da li mogu idalje da se pisu komentari, samo vlasnik moze da zatvori ovaj forum
 
         public Forum()
         {
@@ -27,8 +27,10 @@ namespace SIMS.Domain.Model
         {
             Accommodation = accommodation;
             FromDate = fromDate;
-            Comment = comment;
+            Comments = new List<string>();
+            Comments.Add(comment);
             ForumOwner = forumOwner;
+            IsOpen = true;
         }
 
         public string[] ToCSV()
@@ -38,8 +40,9 @@ namespace SIMS.Domain.Model
                 Id.ToString(),
                 Accommodation.Id.ToString(),
                 FromDate.ToString("dd-MM-yyyy"),
-                Comment.ToString(),
-                ForumOwner.Id.ToString()
+                string.Join(",", Comments),
+                ForumOwner.Id.ToString(),
+                IsOpen.ToString()
             };
             return csvValues;
         }
@@ -49,8 +52,9 @@ namespace SIMS.Domain.Model
             Id = Convert.ToInt32(values[0]);
             Accommodation = new Accommodation() { Id = Convert.ToInt32(values[1]) };
             FromDate = DateOnly.Parse(values[2]);
-            Comment = values[3];
+            Comments = values[3].Split(',').ToList();
             ForumOwner = new User() { Id = Convert.ToInt32(values[4]) };
+            IsOpen = Convert.ToBoolean(values[5]);
         }
     }
 }
