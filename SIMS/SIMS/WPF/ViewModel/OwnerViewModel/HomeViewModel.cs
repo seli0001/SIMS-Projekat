@@ -107,7 +107,7 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         private void UpdateUI()
         {
             Accommodations.Clear();
-            foreach (Accommodation acc in _accommodationService.GetAll())
+            foreach (Accommodation acc in _accommodationService.GetByUser(LoggedInUser))
             {
                 Accommodations.Add(acc);
             }

@@ -1,4 +1,5 @@
-﻿using SIMS.Model;
+﻿using PdfSharp.Pdf.Content.Objects;
+using SIMS.Model;
 using SIMS.Serializer;
 using System;
 using System.Collections.Generic;
@@ -11,38 +12,35 @@ namespace SIMS.Domain.Model
     public class Forum : ISerializable
     {
         public int Id { get; set; }
-        public Accommodation Accommodation { get; set; }
+        public Location Location { get; set; }
         public DateOnly FromDate { get; set; }
-        public List<string> Comments { get; set; }
+        public List<Comment> Comments { get; set; }
         public User ForumOwner { get; set; }
         public bool IsOpen { get; set; }
 
 
         public Forum()
         {
-
+            Comments = new List<Comment>();
         }
 
-        public Forum(Accommodation accommodation, DateOnly fromDate, string comment, User forumOwner)
+        public Forum(Location location, DateOnly fromDate, List<Comment> coments, User forumOwner)
         {
-            Accommodation = accommodation;
+            Location = location;
             FromDate = fromDate;
-            Comments = new List<string>();
-            Comments.Add(comment);
+            Comments = coments;
             ForumOwner = forumOwner;
             IsOpen = true;
         }
 
         public string[] ToCSV()
-        {
+        { 
             string[] csvValues =
             {
                 Id.ToString(),
-                Accommodation.Id.ToString(),
+                Location.Id.ToString(),
                 FromDate.ToString("dd-MM-yyyy"),
-                string.Join(",", Comments),
                 ForumOwner.Id.ToString(),
-                IsOpen.ToString()
             };
             return csvValues;
         }
@@ -50,11 +48,9 @@ namespace SIMS.Domain.Model
         public void FromCSV(string[] values)
         {
             Id = Convert.ToInt32(values[0]);
-            Accommodation = new Accommodation() { Id = Convert.ToInt32(values[1]) };
+            Location = new Location() { Id = Convert.ToInt32(values[1]) };
             FromDate = DateOnly.Parse(values[2]);
-            Comments = values[3].Split(',').ToList();
-            ForumOwner = new User() { Id = Convert.ToInt32(values[4]) };
-            IsOpen = Convert.ToBoolean(values[5]);
+            ForumOwner = new User() { Id = Convert.ToInt32(values[3]) };
         }
     }
 }

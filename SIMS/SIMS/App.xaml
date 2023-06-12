@@ -70,6 +70,14 @@
                 <view:TutorialView />
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type viewModel:ForumsViewModel}">
+                <view:ForumsView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:ForumViewModel}">
+                <view:ForumView />
+            </DataTemplate>
+
 
 
 

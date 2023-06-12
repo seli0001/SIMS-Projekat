@@ -8,23 +8,21 @@ using System.Threading.Tasks;
 
 namespace SIMS.Repository
 {
-    class ForumRepository
+     class ForumHelperRepository
     {
         private const string _filePath = "../../../../SIMS/Resources/Data/Forums.csv";
         private readonly Serializer<Forum> _serializer;
 
         private readonly LocationRepository _locationRepository;
         private readonly UserRepository _userRepository;
-        private readonly CommentRepository _commentRepository;
 
         private List<Forum> _forums;
 
-        public ForumRepository()
+        public ForumHelperRepository()
         {
             _serializer = new Serializer<Forum>();
             _locationRepository = new LocationRepository();
             _userRepository = new UserRepository();
-            _commentRepository = new CommentRepository();
             _forums = new List<Forum>();
         }
 
@@ -37,15 +35,6 @@ namespace SIMS.Repository
             return forums.Max(forum => forum.Id) + 1;
         }
 
-        public Forum Save(Forum forum)
-        {
-            forum.Id = GetNextId(_forums);
-            _forums = _serializer.FromCSV(_filePath);
-            _forums.Add(forum);
-            _serializer.ToCSV(_filePath, _forums);
-            return forum;
-        }
-
         public List<Forum> GetAll()
         {
             _forums = _serializer.FromCSV(_filePath);
@@ -53,7 +42,6 @@ namespace SIMS.Repository
             {
                 forum.Location = _locationRepository.GetById(forum.Location.Id);
                 forum.ForumOwner = _userRepository.GetById(forum.ForumOwner.Id);
-                forum.Comments = _commentRepository.GetByForumId(forum.Id);
             }
             return _forums;
         }
@@ -63,20 +51,5 @@ namespace SIMS.Repository
             _forums = GetAll();
             return _forums.FirstOrDefault(forum => forum.Id == id);
         }
-
-        public void CloseForum(Forum forumm)
-        {
-            _forums = GetAll();
-            Forum forum = _forums.FirstOrDefault(forum => forum.Id == forumm.Id);
-            forum.IsOpen = false;
-        }
-
-        public void AddComment(string comment, Forum forumm)
-        {
-            _forums = GetAll();
-            Forum forum = _forums.FirstOrDefault(forum => forum.Id == forumm.Id);
-            forum.Comments.Add(comment);
-        }
-
     }
 }
