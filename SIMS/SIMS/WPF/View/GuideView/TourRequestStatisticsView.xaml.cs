@@ -1,5 +1,7 @@
-﻿using LiveCharts;
+﻿using HarfBuzzSharp;
+using LiveCharts;
 using LiveCharts.Wpf;
+using SIMS.Service.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,34 +23,43 @@ namespace SIMS.WPF.View.GuideView
     /// </summary>
     public partial class TourRequestStatisticsView : Window
     {
-        Random random = new Random();
-        SeriesCollection TourRequestStatistics;
+        private TourRequestService requestService;
         public TourRequestStatisticsView()
         {
             InitializeComponent();
-            SeriesCollection = new SeriesCollection
+            requestService = new TourRequestService();
+            var result = requestService.GetAll().GroupBy(g => new { g.Location.City, g.StartDate.Date.Year }).Select(group => new { city = group.Key.City, year = group.Key.Year, number = group.Count()});
+            foreach( var group in result)
             {
-                new ColumnSeries
-                {
-                    Title = "Po godinama, Novi Sad",
-                    Values = new ChartValues<int> { 10, 50, 39, 50 }
-                }
-            };
-
-
-            Labels = new[] { "2020", "2021", "2022", "2023" };
-            Formatter = value => value.ToString("N");
-
-            DataContext = this;
+                text.Content += "Za lokaciju " + group.city + " je bilo: " + group.number + " zahteva u "+ group.year+" godini \n";
+            }
         }
-
-        public SeriesCollection SeriesCollection { get; set; }
-        public string[] Labels { get; set; }
-        public Func<double, string> Formatter { get; set; }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void izbor_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(izbor.SelectedIndex == 0 && requestService != null)
+            {
+                text.Content = "";
+                var result = requestService.GetAll().GroupBy(g => new { g.Location.City, g.StartDate.Date.Year }).Select(group => new { city = group.Key.City, year = group.Key.Year, number = group.Count() });
+                foreach (var group in result)
+                {
+                    text.Content += "Za lokaciju " + group.city + " je bilo: " + group.number + " zahteva u " + group.year + " godini \n";
+                }
+            }
+            else if ( requestService != null)
+            {
+                text.Content = "";
+                var result = requestService.GetAll().GroupBy(g => new { g.Language, g.StartDate.Date.Year }).Select(group => new { language = group.Key.Language, year = group.Key.Year, number = group.Count() });
+                foreach (var group in result)
+                {
+                    text.Content += "Za jezik " + group.language + " je bilo: " + group.number + " zahteva u " + group.year + " godini \n";
+                }
+            }
         }
     }
     

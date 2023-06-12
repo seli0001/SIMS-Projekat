@@ -27,10 +27,11 @@ namespace SIMS.View.GuideView
     /// </summary>
     public partial class MainGuideView : Window
     {
+        private MainGuideViewModel mainGuideViewModel;
            public MainGuideView(User user) 
            {
                 InitializeComponent();
-                MainGuideViewModel mainGuideViewModel = new MainGuideViewModel(user);
+                mainGuideViewModel = new MainGuideViewModel(user);
                 DataContext = mainGuideViewModel;
                 if (DataContext is IClose vm)
                 {
@@ -39,6 +40,11 @@ namespace SIMS.View.GuideView
                         this.Close();
                     };
                 }
+        }
+        public void DisposeTimer()
+        {
+            // Dispose of the timer when the child window is closed
+            mainGuideViewModel.Dispose();
         }
     }
 }

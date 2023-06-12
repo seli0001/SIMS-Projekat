@@ -64,7 +64,7 @@ namespace SIMS.WPF.View.GuideView
 
             if (CheckGuideAvailable(date, bts))
             {
-                AcceptTour();
+                AcceptTour(date);
             }
             else
             {
@@ -82,9 +82,11 @@ namespace SIMS.WPF.View.GuideView
             return bts.FirstOrDefault(bt => bt.Tour.StartTime.Time.CompareTo(date) < 0 && bt.Tour.StartTime.Time.AddHours(bt.Tour.Duration).CompareTo(date) > 0) == null;
         }
 
-        private void AcceptTour()
+        private void AcceptTour(DateTime date)
         {
             tourRequest.Status = RequestStatus.Accepted;
+            tourRequest.Guide = User;
+            tourRequest.TourTime = date;
             _tourRequestService.Update(tourRequest);
             MessageBox.Show("Uspesno ste prihvatili turu");
             Close();

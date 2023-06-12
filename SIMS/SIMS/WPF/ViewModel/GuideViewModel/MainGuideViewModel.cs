@@ -19,6 +19,8 @@ using PdfSharp.Drawing;
 using PdfSharp.Drawing.Layout;
 using System.Diagnostics;
 using SIMS.Repository;
+using Microsoft.Expression.Interactivity.Media;
+using System.Threading;
 
 namespace SIMS.WPF.ViewModel.GuideViewModel
 {
@@ -30,6 +32,7 @@ namespace SIMS.WPF.ViewModel.GuideViewModel
         private readonly TourService _tourService;
         private readonly BookedTourService _bookedTourService;
         private readonly VoucherService _voucherService;
+        private readonly SuperGuideRepository _superGuideRepo;
         public ObservableCollection<Tour> Tours { get; set; }
         public ObservableCollection<Tour> AllTours { get; set; }
         public ObservableCollection<TourRequest> TourRequests { get; set; }
@@ -37,6 +40,7 @@ namespace SIMS.WPF.ViewModel.GuideViewModel
         public Tour SelectedTour { get; set; }
         public TourRequest SelectedTourRequest { get; set; }
         private UserRepository _userRepository;
+        public bool isSuper { get; set; }
 
         private int _selectedTab;
         public int SelectedTab
@@ -52,7 +56,7 @@ namespace SIMS.WPF.ViewModel.GuideViewModel
         public DateTime EndDate { get; set; }
 
         private int _dataGridSelectedIndex;
-
+        
         public int DataGridSelectedIndex
         {
             get { return _dataGridSelectedIndex; }
@@ -60,6 +64,22 @@ namespace SIMS.WPF.ViewModel.GuideViewModel
             {
                 _dataGridSelectedIndex = value;
                 
+            }
+        }
+        private Visibility _isVisible;
+        public Visibility IsVisible {
+            get
+            {
+                return _isVisible;
+
+            }
+            set
+            {
+                if(value != null)
+                {
+                    _isVisible = value;
+                    OnPropertyChanged("IsVisible");
+                }
             }
         }
 
@@ -119,6 +139,17 @@ namespace SIMS.WPF.ViewModel.GuideViewModel
             }
         }
 
+        private string _superText;
+        public string SuperText
+        {
+            get { return _superText; }
+            set
+            {
+                _superText = value;
+                OnPropertyChanged("SuperText");
+            }
+        }
+
         private bool _tourRatingButtonEnabled;
         public bool TourRatingButtonEnabled
         {
@@ -153,17 +184,24 @@ namespace SIMS.WPF.ViewModel.GuideViewModel
             }
         }
 
+        public string lang { get; set; }
+
         private void OnPropertyChanged(string v)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(v));
         }
+        private Timer timer;
+        private ComplexTourService _complexTourService;
         #endregion
 
         #region Constructors
         public MainGuideViewModel(User guide) 
         {
+            IsVisible = Visibility.Hidden;
             _userRepository = new UserRepository();
             RequestIndex =-1;
+            isSuper = false;
+            lang = "";
             DataGridSelectedIndex = -1;
             AllDataGridSelectedIndex = -1;
             StartDate = DateTime.Now;
@@ -173,18 +211,25 @@ namespace SIMS.WPF.ViewModel.GuideViewModel
             _tourRequestService = new TourRequestService();
             Guide = guide;
             _tourService = new TourService();
+            _complexTourService = new ComplexTourService();
+            _superGuideRepo = new SuperGuideRepository();
             _bookedTourService = new BookedTourService();
             _voucherService = new VoucherService();
+            _tourRatingService = new TourRatingService();
             Tours = new ObservableCollection<Tour>(GetTours());
             AllTours = new ObservableCollection<Tour>(_tourService.GetAll());
             TourRequests = new ObservableCollection<TourRequest>(_tourRequestService.GetAll().Where(t => t.Status == RequestStatus.Waiting));
+            RemoveComplexTourRequests();
             SelectedTour = new Tour();
             StartTourButtonEnabled = !HasTourInProgress() && Tours.Count > 0 && Tours.FirstOrDefault(t => t.Status == TourStatus.NOT_STARTED) != null;
             ViewStartedTourButtonEnabled = HasTourInProgress();
             MostVisitedTourButtonEnabled = AllTours.FirstOrDefault(t => t.Status == TourStatus.FINISHED) != null;
             CancelTourButtonEnabled = false;
+
             TourRatingButtonEnabled = false;
             TourStatisticButtonEnabled = false;
+            timer = new Timer(CheckSuperGuide, null, TimeSpan.Zero, TimeSpan.FromSeconds(20));
+
         }
         #endregion
 
@@ -523,6 +568,7 @@ namespace SIMS.WPF.ViewModel.GuideViewModel
         }
 
         private ICommand _resign;
+        private TourRatingService _tourRatingService;
 
         public ICommand Resign
         {
@@ -566,6 +612,13 @@ namespace SIMS.WPF.ViewModel.GuideViewModel
             TourRequestStatisticsView tourRequestStatisticsView = new TourRequestStatisticsView();
             tourRequestStatisticsView.ShowDialog();
         }
+
+        public void Dispose()
+        {
+            // Dispose of the timer when the child window is disposed
+            timer?.Dispose();
+        }
+
         public void GeneratePDFFile()
         {
             if (StartDate.CompareTo(EndDate) < 0)
@@ -906,6 +959,7 @@ namespace SIMS.WPF.ViewModel.GuideViewModel
             {
                 TourRequests.Add(t);
             }
+            RemoveComplexTourRequests();
         }
 
         private void AcceptTourRequestButton_Click()
@@ -959,6 +1013,84 @@ namespace SIMS.WPF.ViewModel.GuideViewModel
             Guide.Active = false;
             _userRepository.Update(Guide);
             Close();
+        }
+
+        public void CheckSuperGuide(object? state)
+        {
+            bool super = _superGuideRepo.IsSuperOwner(Guide);
+           string superGuide =  _tourRatingService.CheckSuperGuide();
+            if(superGuide != null && !super)
+            {
+                _superGuideRepo.Save(Guide, superGuide);
+                lang = superGuide;
+                IsVisible = Visibility.Visible;
+                isSuper = true;
+                SuperText = "Super vodic (" + superGuide + ")";
+                MessageBox.Show("Postali ste super vodic");
+            }
+            else if(superGuide == null && super) {
+                _superGuideRepo.Delete(Guide);
+                MessageBox.Show("Vise niste super vodic");
+                isSuper = false;
+                lang = "";
+            }
+            if (super && superGuide != null)
+            {
+                SuperText = "Super vodic (" + superGuide + ")";
+                IsVisible = Visibility.Visible;
+            }
+        }
+
+        public void RemoveComplexTourRequests()
+        {
+            List<BookedTour> bookedTours = _bookedTourService.GetByUser(Guide.Id);
+            List<ComplexTourRequest> complexTourRequests = _complexTourService.GetAll();
+            List<int> tourRequestId = new List<int>();
+            foreach( ComplexTourRequest ct in complexTourRequests)
+            {
+                tourRequestId.AddRange(ct.TourRequestsId);
+            }
+            List<TourRequest> tourRequests = _tourRequestService.GetRequestsById(tourRequestId);
+
+            List<int> idToRemove = new List<int>();
+
+            foreach ( TourRequest ct in tourRequests)
+            {
+                if(ct.Guide != null)
+                {
+                    if (ct.Guide.Id == Guide.Id)
+                    {
+                        idToRemove.Add(ct.Id);
+                    }
+                }
+            }
+
+            idToRemove.ForEach(id =>
+            {
+                foreach(ComplexTourRequest ct in complexTourRequests)
+                {
+                    if (ct.TourRequestsId.Contains(id))
+                    {
+                        ct.TourRequestsId.ForEach(tr =>
+                        {
+                            TourRequest t = TourRequests.FirstOrDefault(x => x.Id == tr);
+                            if (t != null)
+                                TourRequests.Remove(t);
+                        });
+                    }
+                }
+            });
+            /*
+            tourRequestId.Clear();
+            foreach (ComplexTourRequest ct in complexTourRequests)
+            {
+                tourRequestId.AddRange(ct.TourRequestsId);
+            }
+            foreach (TourRequest t in _tourRequestService.GetRequestsById(tourRequestId))
+            {
+                TourRequests.Add(t);
+            }
+            */
         }
         #endregion
 
