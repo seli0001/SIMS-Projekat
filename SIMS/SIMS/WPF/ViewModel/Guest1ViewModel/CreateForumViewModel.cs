@@ -1,6 +1,7 @@
 ﻿using SIMS.Domain.Model;
 using SIMS.Repository;
 using SIMS.Service.Services;
+using SIMS.WPF.ViewModel.OwnerViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,7 +13,7 @@ using System.Windows.Input;
 
 namespace SIMS.WPF.ViewModel.Guest1ViewModel
 {
-    public class CreateForumViewModel
+    class CreateForumViewModel : MainViewModel
     {
 
         public ObservableCollection<Location> Locations { get; set; }
@@ -45,18 +46,25 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
             }
         }
 
-        private string comment;
-        public string Comment { get; set; }
+        private string _comment;
+        public string GuestComment
+        {
+            get => _comment;
+            set
+            {
+                _comment = value;
+                OnPropertyChanged();
+            }
+        }
 
         private void CreateForum()
         {
-            Forum forum = new Forum(_accommodationRepository.GetByLocation(SelectedLocation), DateOnly.FromDateTime(DateTime.Today), Comment, LoggedInUser);
-            if (true)
-            {
-                _forumRepository.Save(forum);
-                MessageBox.Show("Forum made");
-                guest1MainViewModel.CurrentView = ForumVM;
-            }
+            List<Comment> comments = new List<Comment>();
+            Forum forum = new Forum(SelectedLocation, DateOnly.FromDateTime(DateTime.Today), comments, LoggedInUser);
+            forum = _forumRepository.Save(forum);
+            Comment newComment = new Comment(LoggedInUser, GuestComment, "Guest", 0, forum);
+            forum.Comments.Add(newComment);
+            guest1MainViewModel.CurrentView = ForumVM;
         }
     }
 }

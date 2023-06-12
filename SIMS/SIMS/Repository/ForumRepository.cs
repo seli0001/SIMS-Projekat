@@ -71,7 +71,7 @@ namespace SIMS.Repository
             forum.IsOpen = false;
         }
 
-        public void AddComment(string comment, Forum forumm)
+        public void AddComment(Comment comment, Forum forumm)
         {
             _forums = GetAll();
             Forum forum = _forums.FirstOrDefault(forum => forum.Id == forumm.Id);
