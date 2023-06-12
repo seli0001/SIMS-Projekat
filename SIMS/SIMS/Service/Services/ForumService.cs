@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SIMS.Domain.Model
+namespace SIMS.Service.Services
 {
-    public class Forums
+    public class ForumService
     {
     }
 }

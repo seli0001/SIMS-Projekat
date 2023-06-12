@@ -35,6 +35,11 @@ namespace SIMS.Service.Services
             return _reservationRepository.GetByUserId(id);
         }
 
+        public List<Reservation> GetByOwnerId(int id)
+        {
+            return _reservationRepository.GetByOwnerId(id);
+        }
+
         public Reservation Save(Reservation reservation)
         {
             return _reservationRepository.Save(reservation);
@@ -110,12 +115,22 @@ namespace SIMS.Service.Services
 
                 if (availableDateFrom < bookedReservation.FromDate && availableDateFrom.AddDays(reservation.TimeOfStay) < bookedReservation.FromDate)
                 {
-                    return availableDateFrom;
+                    if(availableDateFrom > DateOnly.FromDateTime(DateTime.Now))
+                    {
+                        return availableDateFrom;
+                    }
                 }
 
                 availableDateFrom = bookedReservation.ToDate;
             }
-            return availableDateFrom;
+            if (availableDateFrom > DateOnly.FromDateTime(DateTime.Now))
+            {
+                return availableDateFrom;
+            }
+            else
+            {
+                return DateOnly.FromDateTime(DateTime.Now);
+            }
         }
 
         public bool checkAvailabilityForAcc(Reservation reservation, DateOnly fromDate, DateOnly toDate)

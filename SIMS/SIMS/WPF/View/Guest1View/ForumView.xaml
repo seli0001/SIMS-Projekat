@@ -15,15 +15,18 @@
                   SelectedItem="{Binding Path=SelectedForum, UpdateSourceTrigger=PropertyChanged}"
                   AutoGenerateColumns="False" IsReadOnly="True">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Owner" Binding="{Binding ForumOwner.Name}" Width="*" />
+                        <DataGridTextColumn Header="Owner" Binding="{Binding ForumOwner.Username}" Width="*" />
                         <DataGridTextColumn Header="Date" Binding="{Binding FromDate}" Width="*" />
-                        <DataGridTextColumn Header="Accomodation" Binding="{Binding Accomodation.Name}" Width="*" />
+                        <DataGridTextColumn Header="Location" Binding="{Binding Location.Country}" Width="*" />
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
 
             <Label Content="Guest1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0" />
             <Button Content="Open a new forum" Command="{Binding CreateForumCommand}" HorizontalAlignment="Left" Margin="123,554,0,0" VerticalAlignment="Top" Height="42" Width="227"/>
+
+            <Button Content="Comment on forum" Command="{Binding CommentForumCommand}" HorizontalAlignment="Left" Margin="123,507,0,0" VerticalAlignment="Top" Height="42" Width="227"/>
+            <Button Content="Close forum" Command="{Binding CloseForumCommand}" HorizontalAlignment="Left" Margin="32,505,0,0" VerticalAlignment="Top" Height="91" Width="86"/>
         </Grid>
     </Grid>
 </UserControl>
