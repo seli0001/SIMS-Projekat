@@ -16,6 +16,11 @@ namespace SIMS.Service.Services
             _complexTourRepository = Injector.Injector.CreateInstance<IComplexTourRepository>();
         }
 
+        public List<ComplexTourRequest> GetAll()
+        {
+            return _complexTourRepository.GetAll();
+        }
+
         public void ChangeStatus( int userId)
         {
             _complexTourRepository.ChangeStatus(userId);

@@ -1,4 +1,5 @@
-﻿using SIMS.Domain.Model;
+﻿using HarfBuzzSharp;
+using SIMS.Domain.Model;
 using SIMS.Domain.RepositoryInterface;
 using System;
 using System.Collections.Generic;
@@ -46,6 +47,20 @@ namespace SIMS.Service.Services
             }
             reported.Valid = false;
             SaveRating(reported);
+        }
+
+        public string CheckSuperGuide()
+        {
+            List<TourRating> tourRatings = GetAll();
+            var result = tourRatings.GroupBy(tr => tr.bookedTour.Tour.Language).Select(group => new { Language = group.Key, AverageRating = group.Average(tour => ((double)tour.TourReview + (double)tour.GuideKnown + (double)tour.GuideLanguage)/3.0), counts = group.Count() });
+            foreach(var item in result)
+            {
+                if (item.counts > 5 && item.AverageRating > 4.5)
+                {
+                    return item.Language;
+                }
+            }
+            return null;
         }
     }
 }

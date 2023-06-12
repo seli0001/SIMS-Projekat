@@ -13,5 +13,6 @@ namespace SIMS.Domain.RepositoryInterface
         public void add(string name,List<TourRequest> tours,int userId);
         public List<ComplexTourRequest> GetByUser(int userId);
         public void ChangeStatus(int userId);
+        public List<ComplexTourRequest> GetAll();
     }
 }

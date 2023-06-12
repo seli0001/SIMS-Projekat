@@ -37,10 +37,12 @@ namespace SIMS.Domain.Model
 
         public bool Notify { get; set; }
         public User User { get; set; }
+        public User Guide { get; set; }
         public TourRequest() {
             User = new User();
             Notify = false;
             TourTime = new DateTime();
+            Guide = null;
         }
         public TourRequest(int id, Location location, string description, string language, int maxNumberOfPeople, DateTime startDate, DateTime endDate, RequestStatus status,int userId)
         {
@@ -73,6 +75,7 @@ namespace SIMS.Domain.Model
             User.Id.ToString(),
             Notify.ToString(),
             TourTime.ToString(),
+            Guide == null ? "": Guide.Id.ToString(),
         };
             return csvValues;
         }
@@ -90,7 +93,7 @@ namespace SIMS.Domain.Model
             User.Id= int.Parse(csvValues[8]);
             Notify = bool.Parse(csvValues[9]);
             TourTime = DateTime.Parse(csvValues[10]);
-
+            Guide = csvValues[11] != "" ? new User() { Id = int.Parse(csvValues[11]) } : null;
         }
 
 
