@@ -1,4 +1,5 @@
 ﻿using SIMS.Domain.Model;
+using SIMS.Domain.RepositoryInterface;
 using SIMS.Serializer;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SIMS.Repository
 {
-    class ForumRepository
+    class ForumRepository : IForumRepository
     {
         private const string _filePath = "../../../../SIMS/Resources/Data/Forums.csv";
         private readonly Serializer<Forum> _serializer;
@@ -16,6 +17,7 @@ namespace SIMS.Repository
         private readonly LocationRepository _locationRepository;
         private readonly UserRepository _userRepository;
         private readonly CommentRepository _commentRepository;
+        private readonly AccommodationRepository _accommodationRepository;
 
         private List<Forum> _forums;
 
@@ -25,21 +27,23 @@ namespace SIMS.Repository
             _locationRepository = new LocationRepository();
             _userRepository = new UserRepository();
             _commentRepository = new CommentRepository();
+            _accommodationRepository = new AccommodationRepository();
             _forums = new List<Forum>();
         }
 
-        public int GetNextId(List<Forum> forums)
+        public int NextId()
         {
-            if (forums.Count < 1)
+            _forums = _serializer.FromCSV(_filePath);
+            if (_forums.Count < 1)
             {
-                return 0;
+                return 1;
             }
-            return forums.Max(forum => forum.Id) + 1;
+            return _forums.Max(c => c.Id) + 1;
         }
 
         public Forum Save(Forum forum)
         {
-            forum.Id = GetNextId(_forums);
+            forum.Id = NextId();
             _forums = _serializer.FromCSV(_filePath);
             _forums.Add(forum);
             _serializer.ToCSV(_filePath, _forums);
@@ -78,5 +82,40 @@ namespace SIMS.Repository
             forum.Comments.Add(comment);
         }
 
+        public bool CheckForOwner(User owner)
+        {
+            _forums = GetAll();
+            List<Comment> ownerComments = new List<Comment>(_commentRepository.GetByOwnerId(owner.Id));
+            foreach(Forum forum in _forums)
+            {
+                if (!commentExist(forum, ownerComments) && forumIsOnLocation(forum.Location, owner))
+                    return true;
+            }
+
+            return false;
+        }
+
+        private bool commentExist(Forum forum, List<Comment> ownerComments)
+        {
+            foreach(Comment comm in ownerComments)
+            {
+                if (forum.Comments.Any(comment => comment.Id == comm.Id))
+                    return true;
+            }
+
+            return false;
+        }
+
+        private bool forumIsOnLocation(Location location, User owner)
+        {
+            List<Accommodation> accommodations = new List<Accommodation>(_accommodationRepository.GetByUser(owner));
+            foreach(Accommodation acc in accommodations)
+            {
+                if (acc.Location.Id == location.Id)
+                    return true;
+            }
+
+            return false;
+        }
     }
 }

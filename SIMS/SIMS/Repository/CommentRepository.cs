@@ -60,6 +60,12 @@ namespace SIMS.Repository
             return _comments.Where(comment => comment.Forum.Id == id).ToList();
         }
 
+        public List<Comment> GetByOwnerId(int id)
+        {
+            _comments = GetAll();
+            return _comments.Where(ownerComment => ownerComment.Author.Id == id).ToList();
+        }
+
         public Comment Update(Comment comment)
         {
             _comments = GetAll();

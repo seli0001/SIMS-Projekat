@@ -20,13 +20,24 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
         private readonly CommentRepository _commentRepository;
         private readonly OwnerCommentRepository _ownerCommentRepository;
 
-        private Visibility _isVisible;
-        public Visibility IsVisible
+        private Visibility _isVisibleComment;
+        public Visibility IsVisibleComment
         {
-            get => _isVisible;
+            get => _isVisibleComment;
             set
             {
-                _isVisible = value;
+                _isVisibleComment = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Visibility _isVisibleButton;
+        public Visibility IsVisibleButton
+        {
+            get => _isVisibleButton;
+            set
+            {
+                _isVisibleButton = value;
                 OnPropertyChanged();
             }
         }
@@ -148,10 +159,19 @@ namespace SIMS.WPF.ViewModel.OwnerViewModel
 
         private void setVisibility()
         {
+
             List<Accommodation> ownersAcc = new List<Accommodation>(_accommodationService.GetByUser(LoggedInUser));
             if (checkAcc(ownersAcc, SelectedForum.Location.Id))
-                IsVisible = Visibility.Visible;
-            else IsVisible = Visibility.Hidden;
+            {
+                IsVisibleButton = Visibility.Visible;
+                IsVisibleComment = Visibility.Visible;
+            }
+            else
+            {
+                IsVisibleButton = Visibility.Hidden;
+                IsVisibleComment = Visibility.Hidden;
+            }
+            if (!SelectedForum.IsOpen) IsVisibleComment = Visibility.Hidden;
 
         }
 
