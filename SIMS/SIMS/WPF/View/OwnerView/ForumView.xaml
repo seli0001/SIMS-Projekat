@@ -61,11 +61,11 @@
                         Margin="0 10 10 20"
                         Command="{Binding ReportCommentCommand}"
                         IsEnabled="{Binding IsCommentEnabled}"
-                        Visibility="{Binding IsVisible}"
+                        Visibility="{Binding IsVisibleButton}"
                         Style="{StaticResource ButtonTheme}"/>
             </Grid>
 
-            <WrapPanel Grid.Row="1" Visibility="{Binding IsVisible}">
+            <WrapPanel Grid.Row="1" Visibility="{Binding IsVisibleComment}">
                 
                 <TextBlock Text="Ostavite komentar:" 
                            Style="{StaticResource TextTheme}"/>
