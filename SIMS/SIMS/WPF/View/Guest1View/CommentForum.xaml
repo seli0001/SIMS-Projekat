@@ -24,7 +24,7 @@
         <TextBox HorizontalAlignment="Center"
                  Margin="0,403,0,0"
                  TextWrapping="Wrap"
-                 Text="{Binding Path=Comment}"
+                 Text="{Binding Path=GuestComment}"
                  VerticalAlignment="Top"
                  Width="276" Height="108" />
 

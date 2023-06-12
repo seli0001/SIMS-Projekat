@@ -16,10 +16,14 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
     {
         public Forum SelectedForum { get; set; }
         private ForumRepository _forumRepositoy { get; set; }
+        private CommentRepository _commentRepositoy { get; set; }
+        public User LoggedInUser { get; set; }
         public CommentForumViewModel(User loggedInUser, Forum selectedForum)
         {
             _forumRepositoy = new ForumRepository();
             SelectedForum = selectedForum;
+            _commentRepositoy = new CommentRepository();
+            LoggedInUser = loggedInUser;
         }
 
         private ICommand _commentForumCommand;
@@ -33,7 +37,7 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
         }
 
         private string comment;
-        public string Comment
+        public string GuestComment
         {
             get { return comment; }
             set
@@ -41,7 +45,7 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
                 if (comment != value)
                 {
                     comment = value;
-                    OnPropertyChanged(nameof(Comment));
+                    OnPropertyChanged();
                 }
             }
         }
@@ -52,8 +56,9 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
             if(SelectedForum.IsOpen == true)
             {
                 MessageBox.Show("tu je");
-               // _forumRepositoy.AddComment(Comment, SelectedForum);
-               // OnPropertyChanged(nameof(Comments));
+                Comment newComment = new Comment(LoggedInUser, GuestComment, "Guest", 0, SelectedForum);
+                newComment = _commentRepositoy.Save(newComment);
+                SelectedForum.Comments.Add(newComment);
             }
             else
             {
