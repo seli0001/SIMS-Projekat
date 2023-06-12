@@ -35,6 +35,15 @@ namespace SIMS.Repository
             return forums.Max(forum => forum.Id) + 1;
         }
 
+        public Forum Save(Forum forum)
+        {
+            forum.Id = GetNextId(_forums);
+            _forums = _serializer.FromCSV(_filePath);
+            _forums.Add(forum);
+            _serializer.ToCSV(_filePath, _forums);
+            return forum;
+        }
+
         public List<Forum> GetAll()
         {
             _forums = _serializer.FromCSV(_filePath);

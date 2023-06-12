@@ -81,6 +81,19 @@ namespace SIMS.Repository
             return locations;
         }
 
+        public List<Location> getLocationsForForum()
+        {
+            List<Location> allLocations = new List<Location>(_locationRepository.GetAll());
+            List<Location> locations = new List<Location>();
+            List<Accommodation> accommodations = new List<Accommodation>(_accommodationRepository.GetAll());
+            foreach (Location location in allLocations)
+            {
+                if (accommodationExist(location, accommodations))
+                    locations.Add(location);
+            }
+            return locations;
+        }
+
         private bool isTopLocation(Location location)
         {
             List<Location> topLocations = GetTopLocations();

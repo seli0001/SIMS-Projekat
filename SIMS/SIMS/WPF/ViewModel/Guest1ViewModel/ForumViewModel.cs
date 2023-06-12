@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace SIMS.WPF.ViewModel.Guest1ViewModel
@@ -49,7 +50,8 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
         {
             foreach (var forum in Forums)
             {
-                forum.Accommodation = _accommodationRepository.GetById(forum.Accommodation.Id);
+                var acc = _accommodationRepository.GetById(forum.Accommodation.Id);
+                forum.Accommodation = acc;
             }
         }
 
@@ -63,7 +65,7 @@ namespace SIMS.WPF.ViewModel.Guest1ViewModel
                 return _createForumCommand ?? (_createForumCommand = new CommandBase(
                     () =>
                     {
-                        CreateForumVM = new CreateForumViewModel(LoggedInUser);
+                        CreateForumVM = new CreateForumViewModel(LoggedInUser, guest1MainViewModel);
                         guest1MainViewModel.CurrentView = CreateForumVM;
                     }, true));
             }
